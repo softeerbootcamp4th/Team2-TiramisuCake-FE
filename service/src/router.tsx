@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
-import { ROUTER_PATH } from "./lib/constants";
-import Main from "./pages/Main";
-import CommentsLounge from "./pages/CommentsLounge";
-import LotteryLounge from "./pages/LotteryLounge";
-import QuizLounge from "./pages/QuizLounge";
+import { ROUTER_PATH } from "./constants/lib/constants";
 import App from "./App";
+import MainPage from "./pages/MainPage";
+import CommentsLoungePage from "./pages/CommentsLoungePage";
+import LotteryLoungePage from "./pages/LotteryLoungePage";
+import QuizLoungePage from "./pages/QuizLoungePage";
 
 export const router = createBrowserRouter([
   {
@@ -12,19 +12,19 @@ export const router = createBrowserRouter([
     children: [
       {
         path: ROUTER_PATH.MAIN,
-        element: <Main />,
+        element: <MainPage />,
       },
       {
         path: ROUTER_PATH.COMMENTS_LOUNGE,
-        element: <CommentsLounge />,
+        element: <CommentsLoungePage />,
       },
       {
         path: ROUTER_PATH.LOTTERY_LOUNGE,
-        element: <LotteryLounge />,
+        element: <LotteryLoungePage />,
       },
       {
         path: ROUTER_PATH.QUIZ_LOUNGE,
-        element: <QuizLounge />,
+        element: <QuizLoungePage />,
       },
     ],
   },
