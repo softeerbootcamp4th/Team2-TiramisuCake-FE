@@ -1,19 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 import plugin from 'tailwindcss/plugin';
-export const darkMode = ["class"];
+export const darkMode = ['class'];
 export const content = [
   './pages/**/*.{ts,tsx}',
   './components/**/*.{ts,tsx}',
   './app/**/*.{ts,tsx}',
   './src/**/*.{ts,tsx}',
 ];
-export const prefix = "";
+export const prefix = '';
 export const theme = {
   colors: {
-    white: "#FFFFFF",
-    black: "#000000",
-    red: "#FB4545",
-    "sky": "#DBF2F9",
+    white: '#FFFFFF',
+    black: '#000000',
+    red: '#FB4545',
+    sky: '#DBF2F9',
     'yellow-0': '#FFFBE8',
     'yellow-50': '#FFFAD2',
     'yellow-100': '#FFF6C0',
@@ -49,37 +49,37 @@ export const theme = {
     'gray-900': '#3E4547',
   },
   backgroundColor: {
-    'button-primary': '#55A7BA'
+    'button-primary': '#55A7BA',
   },
   textColor: {
-    primary: '#3A8BA0'
+    primary: '#3A8BA0',
   },
   boxShadow: {
-    '20': '0px 2px 10px 0px rgba(0, 0, 0, 0.10)',
-    '40': '0px 2px 15px 0px rgba(0, 0, 0, 0.15)'
+    20: '0px 2px 10px 0px rgba(0, 0, 0, 0.10)',
+    40: '0px 2px 15px 0px rgba(0, 0, 0, 0.15)',
   },
   fontSize: {
-    'h-xl':['100px', '120px'],
-    'h-l':['54px', '65px'],
-    'h-m':['36px','54px'],
-    'h-s':['30px', '36px'],
-    'b-xxl': ['24px','29px'],
+    'h-xl': ['100px', '120px'],
+    'h-l': ['54px', '65px'],
+    'h-m': ['36px', '54px'],
+    'h-s': ['30px', '36px'],
+    'b-xxl': ['24px', '29px'],
     'b-xl': ['20px', '24px'],
-    'b-l':['18px', '26px'],
-    'b-m':['16px', '26px'],
-    'b-s':['14px','18px'],
-    'd-s':['12px','16px'],
-    'd-xs':['10px','14px']
+    'b-l': ['18px', '26px'],
+    'b-m': ['16px', '26px'],
+    'b-s': ['14px', '18px'],
+    'd-s': ['12px', '16px'],
+    'd-xs': ['10px', '14px'],
   },
   extend: {
     fontFamily: {
-      'pretend': ['Pretendard','Montserrat'],
-    }
-  }
+      pretend: ['Pretendard', 'Montserrat'],
+    },
+  },
 };
 export const plugins = [
   // eslint-disable-next-line no-undef
-  require("tailwindcss-animate"),
+  require('tailwindcss-animate'),
   plugin(function ({ addUtilities }) {
     const newUtilities = {
       '.lottery-effect': {
@@ -98,9 +98,8 @@ export const plugins = [
         borderRadius: '8px',
         background: 'var(--Common-white-0, #FFF)',
         boxShadow: '0px 1px 13px 0px #DEE6EF',
-        backdropFilter: 'blur(20px)'
-      }
-
+        backdropFilter: 'blur(20px)',
+      },
     };
 
     addUtilities(newUtilities, ['responsive', 'hover']);
