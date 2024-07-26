@@ -20,12 +20,5 @@
   "[typescriptreact]": {
     "editor.formatOnSave": true
   },
-  "files.associations": {
-    "*html": "html",
-    "*.css": "tailwindcss"
-  },
-  "editor.quickSuggestions": {
-    "strings": true
-  },
   "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs"
 }
