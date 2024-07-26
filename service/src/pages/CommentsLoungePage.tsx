@@ -1,5 +1,5 @@
 function CommentsLoungePage() {
-  return <div>CommentsLounge</div>;
+  return <div className="text-yello-0">CommentsLounge</div>;
 }
 
 export default CommentsLoungePage;
