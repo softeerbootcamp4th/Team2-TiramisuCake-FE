@@ -46,7 +46,7 @@ export const theme = {
     "gray-600": "#7A8183",
     "gray-700": "#5C6365",
     "gray-800": "#3E4547",
-    "gray-900": "#3E4547",
+    "gray-900": "#040F11",
   },
   boxShadow: {
     20: "0px 2px 10px 0px rgba(0, 0, 0, 0.10)",
@@ -68,6 +68,18 @@ export const theme = {
   extend: {
     fontFamily: {
       pretend: ["Pretendard", "Montserrat"],
+    },
+    boxShadow: {
+      custom: "0px 1px 13px 0px #DEE6EF",
+    },
+    backdropBlur: {
+      custom: "22.5px",
+    },
+    colors: {
+      "custom-white": "var(--Common-white-0, #FFF)",
+    },
+    backgroundImage: {
+      "gradient-to-b": "linear-gradient(180deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.15) 100%)",
     },
   },
 };
