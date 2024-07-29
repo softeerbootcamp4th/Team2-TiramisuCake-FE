@@ -1,46 +1,55 @@
 {
-  "hash": "c5929a97",
+  "hash": "7240c41c",
   "configHash": "3cde77e9",
-  "lockfileHash": "0a297610",
-  "browserHash": "dff3d8e0",
+  "lockfileHash": "332f2d56",
+  "browserHash": "01aa1658",
   "optimized": {
     "react": {
       "src": "../../../../../../.yarn/berry/cache/react-npm-18.3.1-af38f3c1ae-10c0.zip/node_modules/react/index.js",
       "file": "react.js",
-      "fileHash": "f8f9968a",
+      "fileHash": "a45871f0",
       "needsInterop": true
     },
     "react/jsx-dev-runtime": {
       "src": "../../../../../../.yarn/berry/cache/react-npm-18.3.1-af38f3c1ae-10c0.zip/node_modules/react/jsx-dev-runtime.js",
       "file": "react_jsx-dev-runtime.js",
-      "fileHash": "e8e1106e",
+      "fileHash": "9abfa65e",
       "needsInterop": true
     },
     "react/jsx-runtime": {
       "src": "../../../../../../.yarn/berry/cache/react-npm-18.3.1-af38f3c1ae-10c0.zip/node_modules/react/jsx-runtime.js",
       "file": "react_jsx-runtime.js",
-      "fileHash": "eb870fa0",
+      "fileHash": "a1f254c9",
       "needsInterop": true
     },
     "react-dom/client": {
       "src": "../../__virtual__/react-dom-virtual-870fc62e31/4/.yarn/berry/cache/react-dom-npm-18.3.1-a805663f38-10c0.zip/node_modules/react-dom/client.js",
       "file": "react-dom_client.js",
-      "fileHash": "339a948a",
+      "fileHash": "b227dfcb",
       "needsInterop": true
     },
     "react-router-dom": {
       "src": "../../__virtual__/react-router-dom-virtual-b2265dcc59/4/.yarn/berry/cache/react-router-dom-npm-6.25.1-34c67f5632-10c0.zip/node_modules/react-router-dom/dist/index.js",
       "file": "react-router-dom.js",
-      "fileHash": "c72da95b",
+      "fileHash": "a0e9916b",
       "needsInterop": false
+    },
+    "lodash": {
+      "src": "../../../../../../.yarn/berry/cache/lodash-npm-4.17.21-6382451519-10c0.zip/node_modules/lodash/lodash.js",
+      "file": "lodash.js",
+      "fileHash": "ab1e17ad",
+      "needsInterop": true
     }
   },
   "chunks": {
-    "chunk-G5N44AFG": {
-      "file": "chunk-G5N44AFG.js"
+    "chunk-OAUDMIWW": {
+      "file": "chunk-OAUDMIWW.js"
     },
-    "chunk-UNZCQLPC": {
-      "file": "chunk-UNZCQLPC.js"
+    "chunk-DVO5YGY6": {
+      "file": "chunk-DVO5YGY6.js"
+    },
+    "chunk-5WRI5ZAA": {
+      "file": "chunk-5WRI5ZAA.js"
     }
   }
 }
