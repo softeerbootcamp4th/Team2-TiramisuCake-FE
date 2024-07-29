@@ -1,26 +1,74 @@
-import React from 'react';
-
+import { useEffect, useState } from 'react';
+/**
+ * Button Component
+ * @param type : 사용할 버튼 타입
+ * @param text : 버튼 내부 텍스트
+ * @param isArrow : Arrow 표시 여부
+ * @param isActive : 버튼 활성화 여부
+ * @param handleClick : 버튼 클릭 핸들러
+ * @returns
+ */
 interface ButtonProp {
   type: State;
   text: string;
   isArrow?: boolean;
-  handleOnClick: () => void;
+  isActive?: boolean;
+  handleClick: () => void;
 }
 
-type State = 'square' | 'round' | 'reaction' | 'big-round';
+type State = 'square' | 'squareWithBorder' | 'round' | 'reaction' | 'bigRound';
 
-const styled : Record<string, string> = {
-  squre : '',
-  round: '',
-  reaction: '',
-  big-round: ''
-}
+const Button = ({
+  type,
+  text,
+  isArrow = false,
+  isActive = true,
+  handleClick,
+}: ButtonProp) => {
+  const [isReactionClicked, setIsReactionClicked] = useState(false);
 
-const Button = ({ type, text, isArrow = false, handleOnClick }: ButtonProp) => {
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isReactionClicked) {
+      timer = setTimeout(() => {
+        setIsReactionClicked(false);
+      }, 3000);
+    }
+    return () => clearTimeout(timer);
+  }, [isReactionClicked]);
+
+  const buttonStyle: Record<string, string> = {
+    square: `${isActive ? 'bg-primary' : 'bg-gray-400'}`,
+    squareWithBorder: `border border-primary`,
+    round: `rounded-[10px] ${isActive ? 'bg-primary' : 'bg-gray-400'}`,
+    reaction: `bg-white rounded-[5px] shadow-20`,
+    bigRound: `rounded-sm w-[356px] px-2.5 ${isActive ? 'bg-primary' : 'bg-gray-400'}`,
+  };
+
+  const textStyle: Record<string, string> = {
+    square: 'text-white text-b-xl font-semibold',
+    squareWithBorder: 'text-primary text-b-xl font-semibold',
+    round: 'text-white text-b-s font-semibold',
+    reaction: `${isReactionClicked ? 'text-primary' : 'text-black'} text-b-m font-semibold`,
+    bigRound: 'text-white text-b-m font-bold',
+  };
+
+  const handleBtnClick = () => {
+    handleClick();
+    if (type == 'reaction') setIsReactionClicked(true);
+  };
+
   return (
-    <button onClick={handleOnClick}>
-      <span>{text}</span>
-      {isArrow} ? <img src="/assets/arrow-white-small.svg" alt="arrow" />
+    <button
+      className={`px-2.5 py-2 flex items-center ${buttonStyle[type]}`}
+      onClick={handleBtnClick}
+    >
+      <span className={`${textStyle[type]} `}>{text}</span>
+      {isArrow ? (
+        <img className="ml-2" src="/svg/arrow-white-small.svg" alt="arrow" />
+      ) : (
+        ''
+      )}
     </button>
   );
 };
