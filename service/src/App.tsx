@@ -9,7 +9,6 @@ function App() {
     <>
       <div className="relative">
         <Header />
-        <div className="lottery-effect font-pretend">pretendard 하잉 안녕하세요오 Montserrat</div>
         <main className="pt-14">
           <Outlet />
         </main>
