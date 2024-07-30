@@ -53,7 +53,7 @@ const Button = ({
   };
 
   const textStyle: Record<string, string> = {
-    square: 'text-white text-b-xl font-semibold',
+    square: 'text-white text-b-m',
     squareWithBorder: 'text-primary text-b-xl font-semibold',
     round: 'text-white text-b-s font-semibold',
     roundDone: 'text-primary text-b-s font-semibold',
@@ -71,7 +71,7 @@ const Button = ({
       className={`flex items-center ${buttonStyle[type]}`}
       onClick={handleBtnClick}
     >
-      <span className={`${textStyle[type]} `}>{text}</span>
+      <span className={`${textStyle[type]}`}>{text}</span>
       {isArrow ? (
         <img className="ml-2" src="/svg/arrow-white-small.svg" alt="arrow" />
       ) : (
