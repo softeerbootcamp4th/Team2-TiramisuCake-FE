@@ -69,7 +69,8 @@ export const theme = {
   },
   extend: {
     fontFamily: {
-      pretend: ['Pretendard', 'Montserrat'],
+      pretend: ['Pretendard'],
+      montserrat: ['Montserrat'],
     },
     boxShadow: {
       custom: '0px 1px 13px 0px #DEE6EF',
