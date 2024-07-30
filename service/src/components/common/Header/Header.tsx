@@ -9,7 +9,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white w-full h-14 flex fixed items-center justify-between px-6 shadow-md">
+    <header className="bg-white w-full h-14 flex fixed items-center justify-between px-6 shadow-md z-10">
       <div className="flex items-center">
         <Link to="/">
           <img
@@ -21,7 +21,7 @@ const Header = () => {
           />
         </Link>
       </div>
-      <nav className="flex space-x-12 mr-20">
+      <nav className="flex space-x-12 mr-20 font-Pretendard font-bold">
         <Link
           to="/"
           onClick={() => handleTabClick("event")}
