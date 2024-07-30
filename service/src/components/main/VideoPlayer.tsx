@@ -73,7 +73,7 @@ const VideoPlayer = () => {
           />
           {isFullscreen ? (
             <img
-              src="/svg/close.svg"
+              src="/svg/Close.svg"
               className="absolute top-[-64px] right-0 z-30 cursor-pointer"
               onClick={() => setIsFullscreen(false)}
               alt="close fullscreen button"
