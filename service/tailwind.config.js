@@ -13,6 +13,8 @@ export const theme = {
     white: '#FFFFFF',
     black: '#000000',
     red: '#FB4545',
+    primary: '#55A7BA',
+    transparent: 'transparent',
     sky: '#DBF2F9',
     'yellow-0': '#FFFBE8',
     'yellow-50': '#FFFAD2',
