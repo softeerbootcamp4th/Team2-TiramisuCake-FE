@@ -1,9 +1,7 @@
-import React from 'react';
 import splitSentences from '@/utils/splitSentence';
 import downArrow from '/svg/downarrow.svg';
-import { InformItem } from '@/types/eventInfoItem';
 import Button from '../common/Button/Button';
-import Badge from '../common/Badge/Badge';
+import EventInfoCard from './EventInfoCard/EventInfoCard';
 
 interface EventSectionProps {
   startDate: '2024.09.02';
@@ -34,58 +32,17 @@ const informs = [
   },
 ];
 
-const InformCard: React.FC<InformItem> = (props) => {
-  return (
-    <div className="w-[36.5rem] h-[21.8rem] flex flex-col items-center justify-between p-6 border border-custom-white bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom">
-      <div className="w-full">
-        {props.when && props.hint && (
-          <div className="text-center inline-flex flex-row justify-center gap-2">
-            <Badge type="lightblue" text={props.when} />
-            <Badge type="white" text={`힌트: ${props.hint}`} />
-          </div>
-        )}
-        {props.winner && props.remaining && (
-          <div className="text-center inline-flex flex-row justify-center gap-2">
-            <Badge type="lightblue" text={`추첨 ${props.winner}`} />
-            <Badge type="lightblue" text={`남은 경품 ${props.remaining}`} />
-          </div>
-        )}
-        <h2 className=" text-b-xxl font-bold mt-2 mb-4 text-center text-gray-800">
-          {props.title}
-        </h2>
-        <p className="text-sm font-Pretendard text-d-s self-stretch text-gray-600 text-center">
-          {splitSentences(props.eventInformation)}
-        </p>
-      </div>
-      <div className="flex justify-center items-center w-full h-full">
-        {props.imageUrl.map((img, index) => (
-          <div
-            key={index}
-            className="flex justify-center items-center w-full h-full"
-          >
-            <img
-              src={img}
-              alt={`image-${index}`}
-              className="mx-4"
-              style={{ width: '246px', height: '134px', objectFit: 'contain' }}
-            />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
 const handleLogin = () => {
   console.log('login modal 해야 함');
 };
+
 const EventSection = ({ startDate, endDate }: EventSectionProps) => {
   return (
     <div
       className="bg-cover bg-center bg-no-repeat min-h-screen min-w-screen flex items-center justify-center"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <div className="flex flex-col w-[73rem] items-center h-[41.6rem]">
+      <div className="flex flex-col w-[73rem] items-center h-[41.6rem] justify-center">
         <div className="flex flex-col self-stretch items-center my-4">
           <span className="text-center font-Pretendard text-green-500 font-medium text-b-s">
             {startDate}-{endDate}
@@ -106,7 +63,7 @@ const EventSection = ({ startDate, endDate }: EventSectionProps) => {
         </div>
         <div className="flex items-center flex-row text-center">
           {informs.map((inform, index) => (
-            <InformCard key={index} {...inform} />
+            <EventInfoCard key={index} {...inform} />
           ))}
         </div>
         <img className="mt-auto" src={downArrow} alt="Down Arrow" />
