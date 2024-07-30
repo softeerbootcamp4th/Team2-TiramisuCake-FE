@@ -3,7 +3,7 @@ const EventInfoFooter = () => {
     <footer className="w-screen h-[39.5rem] p-[4rem_33.25rem_4rem_8rem] flex items-center flex-shrink-0 bg-green-950">
       <div className="max-w-[48.75rem] mx-auto px-4 flex flex-col items-start gap-6 text-white font-pretendard">
         <div className="space-y-2">
-          <h2 className="font-pretendard whitespace-nowrap">이벤트 관련 유의사항</h2>
+          <h2 className="font-Pretendard font-bold whitespace-nowrap">이벤트 관련 유의사항</h2>
           <div className="space-y-1 text-sm">
             <p className="whitespace-nowrap">이벤트 기간 : 2024.09.02(월) ~2024.09.15(일) 총 14일</p>
             <p className="whitespace-nowrap">
