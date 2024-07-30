@@ -20,7 +20,7 @@ const informs = [
     title: "'24시간 내차' 이벤트",
     eventInformation:
       "하단의 The new IONIQ 5 정보를 바탕으로 빠르게 문장 퀴즈를 맞춰. 24시간 렌트권과 신차 할인권을 얻을 수 있어요.",
-    imageUrl: ["svg/렌트권.svg", "svg/할인쿠폰.svg"],
+    imageUrl: ["/image 162.png", "/image 163.png"],
   },
   {
     추첨: "1555명",
@@ -54,16 +54,14 @@ const InformCard: React.FC<InformItem> = (props) => {
       </div>
       <div className="flex justify-center items-center w-full h-full">
         {props.imageUrl.map((img, index) => (
-          <svg
-            key={index}
-            viewBox="0 0 246 134"
-            width="246"
-            height="134"
-            preserveAspectRatio="xMidYMid meet"
-            className="flex items-center justify-center mx-4"
-          >
-            <image href={img} width="246" height="134" />
-          </svg>
+          <div key={index} className="flex justify-center items-center w-full h-full">
+            <img
+              src={img}
+              alt={`image-${index}`}
+              className="mx-4"
+              style={{ width: "246px", height: "134px", objectFit: "contain" }}
+            />
+          </div>
         ))}
       </div>
     </div>
