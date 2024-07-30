@@ -1,12 +1,12 @@
-const backgroundImage = "/CarSection.png";
-const RendingSection = () => {
+const backgroundImage = '/CarSection.png';
+const CarInfoSection = () => {
   return (
     <div>
-    <div
-      className="bg-cover bg-center bg-no-repeat min-h-screen min-w-screen flex items-center justify-center bg-opacity-50 backdrop-blur-xl"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
-    />
+      <div
+        className='bg-cover bg-center bg-no-repeat min-h-screen min-w-screen flex items-center justify-center bg-opacity-50 backdrop-blur-xl'
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      />
     </div>
   );
 };
-export default RendingSection;
+export default CarInfoSection;
