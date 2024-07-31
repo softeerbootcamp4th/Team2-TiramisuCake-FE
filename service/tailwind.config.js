@@ -69,7 +69,8 @@ export const theme = {
   },
   extend: {
     fontFamily: {
-      pretend: ['Pretendard', 'Montserrat'],
+      pretend: ['Pretendard'],
+      montserrat: ['Montserrat'],
     },
     boxShadow: {
       custom: '0px 1px 13px 0px #DEE6EF',
@@ -83,6 +84,8 @@ export const theme = {
     backgroundImage: {
       'gradient-to-b':
         'linear-gradient(180deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.15) 100%)',
+      'gradient-text':
+        'linear-gradient(180deg, #FFF 39.36%, rgba(255, 255, 255, 0.60) 83.14%)',
     },
   },
 };
