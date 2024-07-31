@@ -44,7 +44,7 @@ const Button = ({
   }, [isReactionClicked]);
 
   const buttonStyle: Record<string, string> = {
-    square: `px-3 py-2.5 ${isActive ? 'bg-primary' : 'bg-gray-400'}`,
+    square: `px-2.5 py-2 ${isActive ? 'bg-primary' : 'bg-gray-400'}`,
     squareWithBorder: `px-3 py-2.5 border border-primary`,
     round: `p-2.5 rounded-[10px] ${isActive ? 'bg-primary' : 'bg-gray-400'}`,
     roundDone: `p-2.5 rounded-[10px] bg-white`,
@@ -73,7 +73,7 @@ const Button = ({
     >
       <span className={`${textStyle[type]}`}>{text}</span>
       {isArrow ? (
-        <img className="ml-2" src="/svg/arrow-white-small.svg" alt="arrow" />
+        <img className='ml-2' src='/svg/arrow-white-small.svg' alt='arrow' />
       ) : (
         ''
       )}
