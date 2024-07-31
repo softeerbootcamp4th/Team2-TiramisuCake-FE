@@ -1,11 +1,15 @@
 import Button from '../common/Button/Button';
 import { useNavigate } from 'react-router-dom';
+
 const backgroundImage = '/Rending.png';
 const gifFile = '/gifs.gif';
 const downarrow = '/svg/BigArrow.svg';
-const blurBackground = 'svg/bg.svg';
 
-const RendingSection = () => {
+interface RendingSectionProps {
+  onArrowClick: () => void;
+}
+
+const RendingSection = ({ onArrowClick }: RendingSectionProps) => {
   const navigate = useNavigate();
   const showComments = () => {
     navigate('/comments');
@@ -18,7 +22,7 @@ const RendingSection = () => {
       >
         <div className="flex w-[54.125rem] flex-col items-center gap-9 z-5">
           <div
-            className="text-h-xl text-center font-montserrat text-6xl font-bold leading-tight"
+            className="text-[6rem] text-center font-montserrat text-6xl font-bold leading-tight"
             style={{
               backgroundImage:
                 'linear-gradient(180deg, #FFF 39.36%, rgba(255, 255, 255, 0.80) 83.14%)',
@@ -43,7 +47,12 @@ const RendingSection = () => {
             handleClick={showComments}
           />
           <div className=" mt-40 ">
-            <img className="hover:cursor-pointer" src={downarrow} alt="Arrow" />
+            <img
+              className="hover:cursor-pointer"
+              src={downarrow}
+              alt="Arrow"
+              onClick={onArrowClick}
+            />
           </div>
         </div>
       </div>
