@@ -50,18 +50,18 @@ const VideoPlayer = () => {
   return (
     <>
       <div
-        className={`w-full h-screen cursor-pointer flex justify-center items-center ${isFullscreen ? 'bg-[#00000033]' : 'bg-transparent'}`}
+        className={`w-screen h-screen cursor-pointer flex justify-center  ${isFullscreen ? 'bg-[#00000033] items-center' : 'bg-transparent'}`}
       >
         <div
-          className={`z-20 ${isFullscreen ? 'relative w-[1184px] h-[638px] m-auto' : 'relative w-[784px] h-[422px]'}`}
+          className={`z-20  ${isFullscreen ? 'relative w-[1184px] h-[638px] my-auto' : 'relative w-[784px] h-[422px] mt-[313px]'}`}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
           <video
             ref={videoRef}
-            src="/newIONIQ.mp4"
-            typeof="video/mp4"
-            className="w-full h-full z-20 object-fill"
+            src='/newIONIQ.mp4'
+            typeof='video/mp4'
+            className='w-full h-full z-20 object-fill'
             autoPlay
             muted
             loop
@@ -73,22 +73,22 @@ const VideoPlayer = () => {
           />
           {isFullscreen ? (
             <img
-              src="/svg/Close.svg"
-              className="absolute top-[-64px] right-0 z-30 cursor-pointer"
+              src='/svg/Close.svg'
+              className='absolute top-[-64px] right-0 z-30 cursor-pointer'
               onClick={() => setIsFullscreen(false)}
-              alt="close fullscreen button"
+              alt='close fullscreen button'
             />
           ) : (
-            <div className="flex gap-2 absolute top-12 right-12 z-30">
+            <div className='flex gap-2 absolute top-12 right-12 z-30'>
               <img
                 onClick={handleMuteUnMute}
-                alt="sound on-off button"
+                alt='sound on-off button'
                 src={isMuted ? 'svg/sound-off.svg' : 'svg/sound-on.svg'}
               />
               <img
                 onClick={() => setIsFullscreen(true)}
-                src="svg/full.svg"
-                alt="full screen button"
+                src='svg/full.svg'
+                alt='full screen button'
               />
             </div>
           )}
@@ -96,22 +96,22 @@ const VideoPlayer = () => {
             <>
               <img
                 onClick={handlePlayPause}
-                alt="play-pause button"
+                alt='play-pause button'
                 src={isPlaying ? '/svg/stop.svg' : '/svg/play.svg'}
-                className="absolute cursor-pointer top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30"
+                className='absolute cursor-pointer top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30'
               />
               {isFullscreen && (
                 <>
-                  <div className="absolute w-full bottom-[-8px] z-30 flex flex-col gap-2 items-end text-white">
-                    <div className="flex justify-between w-full px-6">
-                      <div className="flex">
+                  <div className='absolute w-full bottom-[-8px] z-30 flex flex-col gap-2 items-end text-white'>
+                    <div className='flex justify-between w-full px-6'>
+                      <div className='flex'>
                         <span>
                           {Math.floor(progress / 60)}:
                           {Math.floor(progress % 60)
                             .toString()
                             .padStart(2, '0')}
                         </span>
-                        <span className="mx-1"> / </span>
+                        <span className='mx-1'> / </span>
                         <span>
                           {Math.floor(duration / 60)}:
                           {Math.floor(duration % 60)
@@ -121,7 +121,7 @@ const VideoPlayer = () => {
                       </div>
                       <img
                         onClick={handleMuteUnMute}
-                        alt="sound on-off button"
+                        alt='sound on-off button'
                         src={
                           isMuted
                             ? '/svg/sound-off-icon.svg'
@@ -130,13 +130,13 @@ const VideoPlayer = () => {
                       />
                     </div>
 
-                    <div className="w-full flex items-center">
+                    <div className='w-full flex items-center'>
                       <div
-                        className="relative w-full h-2 bg-white cursor-pointer"
+                        className='relative w-full h-2 bg-white cursor-pointer'
                         onClick={handleProgressClick}
                       >
                         <div
-                          className="absolute top-0 left-0 h-full bg-primary"
+                          className='absolute top-0 left-0 h-full bg-primary'
                           style={{ width: `${(progress / duration) * 100}%` }}
                         />
                       </div>
