@@ -1,5 +1,4 @@
 import splitSentences from '@/utils/splitSentence';
-import downArrow from '/svg/downarrow.svg';
 import Button from '../common/Button/Button';
 import EventInfoCard from './EventInfoCard/EventInfoCard';
 
@@ -9,6 +8,7 @@ interface EventSectionProps {
   onArrowClick: () => void;
 }
 
+const downArrow = '/svg/downarrow.svg';
 const backgroundImage = 'image158.png';
 const title = '신차 출시 기념 EVENT';
 const description =

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { TabContext } from '@/hooks/useTabContext';
+import { TabContext } from '../context/useTabContext';
 
 export const TabProvider = ({
   children

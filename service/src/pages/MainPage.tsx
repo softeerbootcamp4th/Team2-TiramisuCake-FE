@@ -2,7 +2,7 @@ import CarInfoSection from '@/components/MainPage/CarInfoSection';
 import EventSection from '@/components/MainPage/EventSection';
 import RendingSection from '@/components/MainPage/RendingSection';
 import { useEffect, useRef } from 'react';
-import { useTabContext } from '@/hooks/useTabContext';
+import { useTabContext } from '@/store/context/useTabContext';
 
 const MainPage = () => {
   const { activeTab, setActiveTab } = useTabContext();

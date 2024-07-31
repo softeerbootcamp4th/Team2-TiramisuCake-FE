@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useTabContext } from '@/hooks/useTabContext';
+import { useTabContext } from '@/store/context/useTabContext';
 
 const Header = () => {
   const { activeTab, setActiveTab } = useTabContext();
