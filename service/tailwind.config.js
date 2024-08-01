@@ -88,6 +88,8 @@ export const theme = {
         'linear-gradient(180deg, #FFF 39.36%, rgba(255, 255, 255, 0.60) 83.14%)',
       'gradient-attend':
         'linear-gradient(to bottom, #55A7BA 44.5%, #BBE0E6 100%)',
+      'gradient-text-to-right':
+        'linear-gradient(90deg, #55A7BA 45%, #ECD0A6 100%)',
     },
   },
 };
