@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Header from './Header';
-import './t.css';
+import './Carousel.css';
 import VideoPlayer from './VideoPlayer';
 
 const data = [
@@ -78,9 +78,8 @@ const Carousel = () => {
           return (
             <div
               key={item.id}
-              className={`carousel-item ${isActive ? 'active' : 'adjacent'} ${isDiffTwo ? 'shorter' : ''}`}
+              className={`carousel-item ${isActive ? 'active bg-transparent' : 'adjacent bg-gradient-light-gray backdrop-blur-blur-40'} ${isDiffTwo ? 'shorter' : ''}`}
               onClick={() => handleSlideClick(item.id - 1)}
-              style={{ backgroundColor: isActive ? 'transparent' : 'gray' }}
             >
               <div className='carousel-item-content'>
                 {isActive && (

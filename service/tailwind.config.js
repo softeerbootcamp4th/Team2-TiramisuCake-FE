@@ -77,6 +77,7 @@ export const theme = {
     },
     backdropBlur: {
       custom: '22.5px',
+      'blur-40': '20px',
     },
     colors: {
       'custom-white': 'var(--Common-white-0, #FFF)',
@@ -84,6 +85,8 @@ export const theme = {
     backgroundImage: {
       'gradient-to-b':
         'linear-gradient(180deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.15) 100%)',
+      'gradient-light-gray':
+        'linear-gradient(180deg, rgba(255, 255, 255, 0.60) 0%, rgba(255, 255, 255, 0.18) 100%)',
     },
   },
 };
