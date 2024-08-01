@@ -17,6 +17,8 @@ const carInfoReducer = (
       return { ...state, isFullScreen: true };
     case CARINFO_ACTION.EXIT_FULL_SCREEN:
       return { ...state, isFullScreen: false };
+    case CARINFO_ACTION.SELECT_CURRENT_INDEX:
+      return { ...state, currentIndex: action.payload.index };
     default:
       return state;
   }

@@ -52,17 +52,17 @@ const data = [
 interface CarouselProps {}
 
 const Carousel = () => {
-  const [currentIdx, setCurrentIdx] = useState(0);
-  const { state, openCarDetail } = useCarInfoContext();
+  // const [currentIdx, setCurrentIdx] = useState(0);
+  const { state, openCarDetail, selectCurrentIndex } = useCarInfoContext();
 
   const handleSlideClick = (index: number) => {
     if (index >= 0 && index < data.length) {
-      setCurrentIdx(index);
+      selectCurrentIndex({ index: index });
     }
   };
 
   const getVisibleItems = () => {
-    switch (currentIdx) {
+    switch (state.currentIndex) {
       case 0:
         return [data[0], data[1], data[2]];
       case 1:
@@ -84,12 +84,14 @@ const Carousel = () => {
     <div className='carousel-container'>
       <div
         className='bg-cover bg-center bg-no-repeat h-full w-full flex items-center justify-center blur-sm absolute top-0 transition-transform duration-500 ease-in-out'
-        style={{ backgroundImage: `url(${data[currentIdx].backgroundImgUrl})` }}
+        style={{
+          backgroundImage: `url(${data[state.currentIndex].backgroundImgUrl})`,
+        }}
       />
       <div className='flex gap-4 items-center z-10'>
         {visibleItems.map((item) => {
-          const isActive = item.id === data[currentIdx].id;
-          const isDiffTwo = Math.abs(currentIdx - (item.id - 1)) === 2;
+          const isActive = item.id === data[state.currentIndex].id;
+          const isDiffTwo = Math.abs(state.currentIndex - (item.id - 1)) === 2;
 
           return (
             <div
@@ -136,7 +138,7 @@ const Carousel = () => {
           );
         })}
       </div>
-      <CarouselBar currentIdx={currentIdx} />
+      <CarouselBar currentIdx={state.currentIndex} />
       {state.isCarDetailOpen && <CarDetailInfo />}
     </div>
   );

@@ -1,7 +1,7 @@
 import { ReactNode, useMemo, useReducer } from 'react';
 import { CarInfoContext, initialState } from '../context/useCarInfoContext';
 import carInfoReducer from '../reducer/carInfoReducer';
-import { CARINFO_ACTION } from '../types/carInfoTypes';
+import { CARINFO_ACTION, SelectCurrentIndexProps } from '../types/carInfoTypes';
 
 export const CarInfoProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(carInfoReducer, initialState);
@@ -22,6 +22,10 @@ export const CarInfoProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: CARINFO_ACTION.EXIT_FULL_SCREEN });
   };
 
+  const selectCurrentIndex = (payload: SelectCurrentIndexProps) => {
+    dispatch({ type: CARINFO_ACTION.SELECT_CURRENT_INDEX, payload });
+  };
+
   const contextValue = useMemo(
     () => ({
       state,
@@ -29,6 +33,7 @@ export const CarInfoProvider = ({ children }: { children: ReactNode }) => {
       closeCarDetail,
       enterFullScreen,
       exitFullScreen,
+      selectCurrentIndex,
     }),
     [state]
   );

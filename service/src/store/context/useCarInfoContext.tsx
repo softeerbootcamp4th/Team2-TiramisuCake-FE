@@ -4,6 +4,7 @@ import { CarInfoState } from '../types/carInfoTypes';
 export const initialState: CarInfoState = {
   isCarDetailOpen: false,
   isFullScreen: false,
+  currentIndex: 0,
 };
 
 export const CarInfoContext = createContext<{
@@ -12,12 +13,14 @@ export const CarInfoContext = createContext<{
   closeCarDetail: () => void;
   enterFullScreen: () => void;
   exitFullScreen: () => void;
+  selectCurrentIndex: (payload: { index: number }) => void;
 }>({
   state: initialState,
   openCarDetail: () => null,
   closeCarDetail: () => null,
   enterFullScreen: () => null,
   exitFullScreen: () => null,
+  selectCurrentIndex: () => null,
 });
 
 export const useCarInfoContext = () => {
