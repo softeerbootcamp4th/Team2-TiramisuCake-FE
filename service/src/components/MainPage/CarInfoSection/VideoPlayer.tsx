@@ -50,10 +50,10 @@ const VideoPlayer = () => {
   return (
     <>
       <div
-        className={` w-screen min-h-screen cursor-pointer flex justify-center  ${isFullscreen ? 'bg-[#00000033] items-center -mr-[200px]' : 'bg-transparent'}`}
+        className={` w-screen min-h-screen absolute top-0 cursor-pointer flex justify-center  ${isFullscreen ? 'bg-[#00000033] items-center -mr-[200px]' : 'bg-transparent'}`}
       >
         <div
-          className={`z-20  ${isFullscreen ? 'absolute w-[1184px] h-[638px] mx-auto left-1/2 -translate-x-1/2' : 'relative w-[784px] h-[422px] mt-[293px]'}`}
+          className={`z-20  ${isFullscreen ? 'absolute w-[1184px] h-[638px] mx-auto left-1/2 -translate-x-1/2' : 'relative w-[784px] h-[422px] mt-[313px]'}`}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -61,7 +61,7 @@ const VideoPlayer = () => {
             ref={videoRef}
             src='/newIONIQ.mp4'
             typeof='video/mp4'
-            className='w-full h-full z-20 object-fill'
+            className='w-full h-full object-fill'
             autoPlay
             muted
             loop

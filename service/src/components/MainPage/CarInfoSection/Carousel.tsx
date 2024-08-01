@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Header from './Header';
 import './Carousel.css';
 import VideoPlayer from './VideoPlayer';
+import CarouselBar from './CarouselBar';
 
 const data = [
   {
@@ -88,7 +89,11 @@ const Carousel = () => {
                     {item.id === 1 ? (
                       <VideoPlayer />
                     ) : (
-                      <img src={item.backgroundImgUrl} alt={item.title} />
+                      <img
+                        src={item.backgroundImgUrl}
+                        alt={item.title}
+                        className='w-[784px] h-[422px]'
+                      />
                     )}
                   </>
                 )}
@@ -97,6 +102,7 @@ const Carousel = () => {
           );
         })}
       </div>
+      <CarouselBar currentIdx={currentIdx} />
     </div>
   );
 };
