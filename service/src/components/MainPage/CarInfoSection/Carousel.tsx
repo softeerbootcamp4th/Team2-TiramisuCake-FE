@@ -110,7 +110,7 @@ const Carousel = () => {
                         <img
                           src={item.thumbnailUrl}
                           alt={item.title}
-                          className='w-full h-full'
+                          className='w-full h-full object-cover'
                         />
                         <div className='w-full h-full absolute top-0 bg-gradient-bottom-gray' />
                         <div className='absolute top-12 right-12'>
