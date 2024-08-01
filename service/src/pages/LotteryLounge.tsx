@@ -34,7 +34,14 @@ const LotteryLoungePage = () => {
               </div>
             </div>
           </div>
-          <LotteryCanvas />
+          <div className='relative w-[784px] h-[400px]'>
+            <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0 flex justify-center items-center gap-8'>
+              <img src='/svg/복권진함/다이아.svg' alt='SVG 1' />
+              <img src='/svg/복권진함/다이아.svg' alt='SVG 2' />
+              <img src='/svg/복권진함/다이아.svg' alt='SVG 3' />
+            </div>
+            <LotteryCanvas />
+          </div>
           <Attendance />
         </div>
       </div>
