@@ -38,7 +38,7 @@ const data = [
 ];
 
 const Carousel = () => {
-  const [currentIdx, setCurrentIdx] = useState(2);
+  const [currentIdx, setCurrentIdx] = useState(0);
 
   const handleSlideClick = (index: number) => {
     if (index >= 0 && index < data.length) {
