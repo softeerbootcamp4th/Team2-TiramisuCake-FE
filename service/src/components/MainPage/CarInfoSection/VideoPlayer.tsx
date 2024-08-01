@@ -1,6 +1,9 @@
+import { useVideoContext } from '@/store/context/useVideoContext';
 import React, { useEffect, useRef, useState } from 'react';
 
 const VideoPlayer = () => {
+  const { isOpen, setIsOpen } = useVideoContext();
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
@@ -35,6 +38,16 @@ const VideoPlayer = () => {
       videoRef.current.muted = !videoRef.current.muted;
       setIsMuted(videoRef.current.muted);
     }
+  };
+
+  const handleFullScreen = () => {
+    setIsFullscreen(false);
+    setIsOpen(false);
+  };
+
+  const handleMiniScreen = () => {
+    setIsFullscreen(true);
+    setIsOpen(true);
   };
 
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -75,7 +88,7 @@ const VideoPlayer = () => {
             <img
               src='/svg/Close.svg'
               className='absolute top-[-64px] right-0 z-30 cursor-pointer'
-              onClick={() => setIsFullscreen(false)}
+              onClick={handleFullScreen}
               alt='close fullscreen button'
             />
           ) : (
@@ -86,7 +99,7 @@ const VideoPlayer = () => {
                 src={isMuted ? 'svg/sound-off.svg' : 'svg/sound-on.svg'}
               />
               <img
-                onClick={() => setIsFullscreen(true)}
+                onClick={handleMiniScreen}
                 src='svg/full.svg'
                 alt='full screen button'
               />
