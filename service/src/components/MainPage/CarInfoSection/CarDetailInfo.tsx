@@ -1,5 +1,4 @@
 import CarDetail from '@/components/common/CarDetail/CarDetail';
-import React from 'react';
 
 const CarDetailInfo = () => {
   return (

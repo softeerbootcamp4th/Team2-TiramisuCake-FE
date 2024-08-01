@@ -4,7 +4,6 @@ import './Carousel.css';
 import VideoPlayer from './VideoPlayer';
 import CarouselBar from './CarouselBar';
 import Button from '@/components/common/Button/Button';
-import CarDetail from '@/components/common/CarDetail/CarDetail';
 import CarDetailInfo from './CarDetailInfo';
 import { useCarInfoContext } from '@/store/context/useCarInfoContext';
 
