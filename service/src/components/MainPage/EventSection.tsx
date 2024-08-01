@@ -1,13 +1,14 @@
 import splitSentences from '@/utils/splitSentence';
-import downArrow from '/svg/downarrow.svg';
 import Button from '../common/Button/Button';
 import EventInfoCard from './EventInfoCard/EventInfoCard';
 
 interface EventSectionProps {
   startDate: '2024.09.02';
   endDate: '2024.09.15';
+  onArrowClick: () => void;
 }
 
+const downArrow = '/svg/downarrow.svg';
 const backgroundImage = 'image158.png';
 const title = '신차 출시 기념 EVENT';
 const description =
@@ -36,7 +37,11 @@ const handleLogin = () => {
   console.log('login modal 해야 함');
 };
 
-const EventSection = ({ startDate, endDate }: EventSectionProps) => {
+const EventSection = ({
+  startDate,
+  endDate,
+  onArrowClick,
+}: EventSectionProps) => {
   return (
     <div
       className="bg-cover bg-center bg-no-repeat min-h-screen min-w-screen flex items-center justify-center"
@@ -66,7 +71,12 @@ const EventSection = ({ startDate, endDate }: EventSectionProps) => {
             <EventInfoCard key={index} {...inform} />
           ))}
         </div>
-        <img className="mt-auto" src={downArrow} alt="Down Arrow" />
+        <img
+          className="mt-auto hover:cursor-pointer"
+          src={downArrow}
+          alt="arrow"
+          onClick={onArrowClick}
+        />
       </div>
     </div>
   );
