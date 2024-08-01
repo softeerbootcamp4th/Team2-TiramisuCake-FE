@@ -1,9 +1,7 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { useState, ReactNode } from 'react';
 import { TabContext } from '../context/useTabContext';
 
-export const TabProvider = ({
-  children
-}:ReactNode) => {
+export const TabProvider = ({ children }: { children: ReactNode }) => {
   const [activeTab, setActiveTab] = useState('');
 
   return (
