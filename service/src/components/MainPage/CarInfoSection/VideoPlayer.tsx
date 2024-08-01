@@ -50,10 +50,10 @@ const VideoPlayer = () => {
   return (
     <>
       <div
-        className={`w-screen h-screen cursor-pointer flex justify-center  ${isFullscreen ? 'bg-[#00000033] items-center' : 'bg-transparent'}`}
+        className={` w-screen min-h-screen cursor-pointer flex justify-center  ${isFullscreen ? 'bg-[#00000033] items-center -mr-[200px]' : 'bg-transparent'}`}
       >
         <div
-          className={`z-20  ${isFullscreen ? 'relative w-[1184px] h-[638px] my-auto' : 'relative w-[784px] h-[422px] mt-[313px]'}`}
+          className={`z-20  ${isFullscreen ? 'absolute w-[1184px] h-[638px] mx-auto left-1/2 -translate-x-1/2' : 'relative w-[784px] h-[422px] mt-[293px]'}`}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -98,7 +98,7 @@ const VideoPlayer = () => {
                 onClick={handlePlayPause}
                 alt='play-pause button'
                 src={isPlaying ? '/svg/stop.svg' : '/svg/play.svg'}
-                className='absolute cursor-pointer top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30'
+                className='absolute cursor-pointer top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 w-[56px] h-[76px]'
               />
               {isFullscreen && (
                 <>

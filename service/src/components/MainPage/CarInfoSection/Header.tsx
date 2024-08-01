@@ -1,10 +1,13 @@
-import React from 'react';
+interface HeaderProps {
+  title: string;
+  subTitle: string;
+}
 
-const Header = () => {
+const Header = ({ title, subTitle }: HeaderProps) => {
   return (
-    <div className='text-white flex flex-col justify-center items-center absolute top-[186px] left-1/2 transform -translate-x-1/2'>
-      <p className='text-b-m'>새롭게 돌아온 The new IONIQ 5를 소개합니다.</p>
-      <h2 className='font-montserrat text-h-l font-bold'>The new IONIQ 5</h2>
+    <div className='text-white flex flex-col justify-center items-center absolute top-[172px] left-1/2 transform -translate-x-1/2 min-w-fit whitespace-nowrap'>
+      <p className='text-b-m'>{subTitle}</p>
+      <h2 className='font-montserrat text-h-l font-bold'>{title}</h2>
     </div>
   );
 };
