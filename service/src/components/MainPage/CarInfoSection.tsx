@@ -1,3 +1,5 @@
+import VideoPlayer from './VideoPlayer';
+
 const backgroundImage = '/CarSection.png';
 const CarInfoSection = () => {
   return (
@@ -5,7 +7,9 @@ const CarInfoSection = () => {
       <div
         className='bg-cover bg-center bg-no-repeat min-h-screen min-w-screen flex items-center justify-center bg-opacity-50 backdrop-blur-xl'
         style={{ backgroundImage: `url(${backgroundImage})` }}
-      />
+      >
+        <VideoPlayer />
+      </div>
     </div>
   );
 };

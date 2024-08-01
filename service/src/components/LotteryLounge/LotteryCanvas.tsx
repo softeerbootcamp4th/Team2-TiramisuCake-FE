@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 const LotteryCanvas = () => {
-  const textVisible = useState(true);
+  const textVisible = true;
 
   const gradientStyle = {
     background:
@@ -10,7 +10,6 @@ const LotteryCanvas = () => {
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
     opacity: textVisible ? 1 : 0,
-    transition: 'opacity 0.3s ease-out',
   };
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
