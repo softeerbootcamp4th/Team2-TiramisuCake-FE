@@ -91,6 +91,8 @@ export const theme = {
         'linear-gradient(to bottom, #55A7BA 44.5%, #BBE0E6 100%)',
       'gradient-light-gray':
         'linear-gradient(180deg, rgba(255, 255, 255, 0.60) 0%, rgba(255, 255, 255, 0.18) 100%)',
+      'gradient-bottom-gray':
+        'linear-gradient(180deg, rgba(0, 0, 0, 0.00) 71.16%, rgba(4, 15, 17, 0.60) 96.42%)',
     },
   },
 };
