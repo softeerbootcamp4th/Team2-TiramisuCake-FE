@@ -4,6 +4,9 @@ import './Carousel.css';
 import VideoPlayer from './VideoPlayer';
 import CarouselBar from './CarouselBar';
 import Button from '@/components/common/Button/Button';
+import CarDetail from '@/components/common/CarDetail/CarDetail';
+import CarDetailInfo from './CarDetailInfo';
+import { useCarInfoContext } from '@/store/context/useCarInfoContext';
 
 const data = [
   {
@@ -51,6 +54,7 @@ interface CarouselProps {}
 
 const Carousel = () => {
   const [currentIdx, setCurrentIdx] = useState(0);
+  const { state, openCarDetail } = useCarInfoContext();
 
   const handleSlideClick = (index: number) => {
     if (index >= 0 && index < data.length) {
@@ -76,10 +80,6 @@ const Carousel = () => {
   };
 
   const visibleItems = getVisibleItems();
-
-  const handleButtonClick = () => {
-    console.log('눌렀지롱');
-  };
 
   return (
     <div className='carousel-container'>
@@ -116,7 +116,7 @@ const Carousel = () => {
                           <Button
                             type='square'
                             text='자세히 보기'
-                            handleClick={handleButtonClick}
+                            handleClick={openCarDetail}
                           />
                         </div>
                         <div className='flex flex-col gap-4 absolute bottom-12 left-12 text-white'>
@@ -138,6 +138,7 @@ const Carousel = () => {
         })}
       </div>
       <CarouselBar currentIdx={currentIdx} />
+      {state.isCarDetailOpen && <CarDetailInfo />}
     </div>
   );
 };

@@ -1,12 +1,12 @@
-import { VideoProvider } from '@/store/provider/VideoProvider';
+import { CarInfoProvider } from '@/store/provider/CarInfoProvider';
 import Carousel from './Carousel';
 const CarInfoSection = () => {
   return (
-    <VideoProvider>
+    <CarInfoProvider>
       <div>
         <Carousel />
       </div>
-    </VideoProvider>
+    </CarInfoProvider>
   );
 };
 export default CarInfoSection;

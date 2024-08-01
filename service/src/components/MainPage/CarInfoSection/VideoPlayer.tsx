@@ -1,13 +1,12 @@
-import { useVideoContext } from '@/store/context/useVideoContext';
+import { useCarInfoContext } from '@/store/context/useCarInfoContext';
 import React, { useEffect, useRef, useState } from 'react';
 
 const VideoPlayer = () => {
-  const { isOpen, setIsOpen } = useVideoContext();
+  const { state, enterFullScreen, exitFullScreen } = useCarInfoContext();
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -40,16 +39,6 @@ const VideoPlayer = () => {
     }
   };
 
-  const handleFullScreen = () => {
-    setIsFullscreen(false);
-    setIsOpen(false);
-  };
-
-  const handleMiniScreen = () => {
-    setIsFullscreen(true);
-    setIsOpen(true);
-  };
-
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (videoRef.current) {
       const rect = e.currentTarget.getBoundingClientRect();
@@ -63,10 +52,10 @@ const VideoPlayer = () => {
   return (
     <>
       <div
-        className={` w-screen min-h-screen absolute top-0 cursor-pointer flex justify-center  ${isFullscreen ? 'bg-[#00000033] items-center -mr-[200px]' : 'bg-transparent'}`}
+        className={` w-screen min-h-screen absolute top-0 cursor-pointer flex justify-center  ${state.isFullScreen ? 'bg-[#00000033] items-center -mr-[200px]' : 'bg-transparent'}`}
       >
         <div
-          className={`z-20  ${isFullscreen ? 'absolute w-[1184px] h-[638px] mx-auto left-1/2 -translate-x-1/2' : 'relative w-[784px] h-[422px] mt-[313px]'}`}
+          className={`z-20  ${state.isFullScreen ? 'absolute w-[1184px] h-[638px] mx-auto left-1/2 -translate-x-1/2' : 'relative w-[784px] h-[422px] mt-[313px]'}`}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -84,11 +73,11 @@ const VideoPlayer = () => {
               }
             }}
           />
-          {isFullscreen ? (
+          {state.isFullScreen ? (
             <img
               src='/svg/Close.svg'
               className='absolute top-[-64px] right-0 z-30 cursor-pointer'
-              onClick={handleFullScreen}
+              onClick={exitFullScreen}
               alt='close fullscreen button'
             />
           ) : (
@@ -99,7 +88,7 @@ const VideoPlayer = () => {
                 src={isMuted ? 'svg/sound-off.svg' : 'svg/sound-on.svg'}
               />
               <img
-                onClick={handleMiniScreen}
+                onClick={enterFullScreen}
                 src='svg/full.svg'
                 alt='full screen button'
               />
@@ -113,7 +102,7 @@ const VideoPlayer = () => {
                 src={isPlaying ? '/svg/stop.svg' : '/svg/play.svg'}
                 className='absolute cursor-pointer top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 w-[56px] h-[76px]'
               />
-              {isFullscreen && (
+              {state.isFullScreen && (
                 <>
                   <div className='absolute w-full bottom-[-8px] z-30 flex flex-col gap-2 items-end text-white'>
                     <div className='flex justify-between w-full px-6'>
