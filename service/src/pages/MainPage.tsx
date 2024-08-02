@@ -1,8 +1,8 @@
-import CarInfoSection from '@/components/MainPage/CarInfoSection';
 import EventSection from '@/components/MainPage/EventSection';
 import RendingSection from '@/components/MainPage/RendingSection';
 import { useEffect, useRef } from 'react';
 import { useTabContext } from '@/store/context/useTabContext';
+import CarInfoSection from '@/components/MainPage/CarInfoSection/CarInfoSection';
 
 const MainPage = () => {
   const { activeTab, setActiveTab } = useTabContext();
@@ -36,8 +36,8 @@ const MainPage = () => {
       </div>
       <div ref={eventSectionRef}>
         <EventSection
-          startDate="2024.09.02"
-          endDate="2024.09.15"
+          startDate='2024.09.02'
+          endDate='2024.09.15'
           onArrowClick={() => setActiveTab('ioniq5')}
         />
       </div>

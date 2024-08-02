@@ -11,4 +11,4 @@
 
 #!.yarn/cache
 .pnp.*
-install-state.gz
+.yarn/install-state.gz
