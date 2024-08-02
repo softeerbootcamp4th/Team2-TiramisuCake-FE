@@ -1,6 +1,13 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
+import LoseModal from './Modal/LoseModal';
 
 const LotteryCanvas = () => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   const textVisible = true;
 
   const gradientStyle = {
@@ -105,29 +112,41 @@ const LotteryCanvas = () => {
     if (canvasRef.current) {
       canvasRef.current.style.transition = 'opacity 1s';
       canvasRef.current.style.opacity = '0';
+      setTimeout(() => setIsModalOpen(true), 500);
     }
   };
   return (
-    <canvas
-      ref={canvasRef}
-      width={784}
-      height={400}
-      className='relative top-0 left-0 cursor-pointer'
-      onMouseDown={startDrawing}
-      onMouseMove={draw}
-      onMouseUp={endDrawing}
-      onMouseLeave={endDrawing}
-      onTouchStart={startDrawing}
-      onTouchMove={draw}
-      onTouchEnd={endDrawing}
-    >
-      <span
-        style={gradientStyle}
-        className='absolute text-[27px] text-center font-semibold'
+    <>
+      <canvas
+        ref={canvasRef}
+        width={784}
+        height={400}
+        className='relative top-0 left-0 cursor-pointer'
+        onMouseDown={startDrawing}
+        onMouseMove={draw}
+        onMouseUp={endDrawing}
+        onMouseLeave={endDrawing}
+        onTouchStart={startDrawing}
+        onTouchMove={draw}
+        onTouchEnd={endDrawing}
       >
-        마우스로 드래그해 복권을 긁어보세요
-      </span>
-    </canvas>
+        <span
+          style={gradientStyle}
+          className='absolute text-[27px] text-center font-semibold'
+        >
+          마우스로 드래그해 복권을 긁어보세요
+        </span>
+      </canvas>
+      {isModalOpen && (
+        <div className='fixed inset-0 flex items-center justify-center z-50'>
+          <div
+            className='absolute inset-0 bg-black opacity-50'
+            onClick={closeModal}
+          ></div>
+          <LoseModal onClose={closeModal} />
+        </div>
+      )}
+    </>
   );
 };
 export default LotteryCanvas;

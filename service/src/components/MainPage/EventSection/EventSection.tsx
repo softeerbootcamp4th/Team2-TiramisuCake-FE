@@ -1,6 +1,10 @@
+import { useState } from 'react';
 import splitSentences from '@/utils/splitSentence';
-import Button from '../common/Button/Button';
+import Button from '../../common/Button/Button';
 import EventInfoCard from './EventInfoCard/EventInfoCard';
+import LoginModal from './LoginModal/LoginModal';
+
+//          <div className='absolute inset-0 bg-gray opacity-50'>
 
 interface EventSectionProps {
   startDate: '2024.09.02';
@@ -33,48 +37,59 @@ const informs = [
   },
 ];
 
-const handleLogin = () => {
-  console.log('login modal 해야 함');
-};
-
 const EventSection = ({
   startDate,
   endDate,
   onArrowClick,
 }: EventSectionProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div
-      className="bg-cover bg-center bg-no-repeat min-h-screen min-w-screen flex items-center justify-center"
+      className='bg-cover bg-center bg-no-repeat min-h-screen min-w-screen flex items-center justify-center'
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <div className="flex flex-col w-[73rem] items-center h-[41.6rem] justify-center">
-        <div className="flex flex-col self-stretch items-center my-4">
-          <span className="text-center font-Pretendard text-green-500 font-medium text-b-s">
+      {isModalOpen && (
+        <div className='fixed inset-0 flex items-center justify-center z-50'>
+          <LoginModal onClose={handleCloseModal} />
+        </div>
+      )}
+      <div className='flex flex-col w-[73rem] items-center h-[41.6rem] justify-center'>
+        <div className='flex flex-col self-stretch items-center my-4'>
+          <span className='text-center font-Pretendard text-green-500 font-medium text-b-s'>
             {startDate}-{endDate}
           </span>
-          <div className="font-bold text-[2.25rem] self-stretch text-center text-gray-900 line-height-[3.375rem]">
+          <div className='font-bold text-[2.25rem] self-stretch text-center text-gray-900 line-height-[3.375rem]'>
             {title}
           </div>
         </div>
-        <div className=" font-Pretendard font-normal text-gray-800 text-center">
+        <div className=' font-Pretendard font-normal text-gray-800 text-center'>
           {splitSentences(description)}
         </div>
-        <div className="flex my-6 py-2 px-3">
+        <div className='flex my-6 py-2 px-3'>
           <Button
-            type="square"
-            text="번호 인증하고 이벤트 참여하기"
-            handleClick={handleLogin}
+            type='square'
+            text='번호 인증하고 이벤트 참여하기'
+            handleClick={handleOpenModal}
           ></Button>
         </div>
-        <div className="flex items-center flex-row text-center">
+        <div className='flex items-center flex-row text-center'>
           {informs.map((inform, index) => (
             <EventInfoCard key={index} {...inform} />
           ))}
         </div>
         <img
-          className="mt-auto hover:cursor-pointer"
+          className='mt-auto hover:cursor-pointer '
           src={downArrow}
-          alt="arrow"
+          alt='arrow'
           onClick={onArrowClick}
         />
       </div>

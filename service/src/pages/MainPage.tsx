@@ -1,4 +1,4 @@
-import EventSection from '@/components/MainPage/EventSection';
+import EventSection from '@/components/MainPage/EventSection/EventSection';
 import RendingSection from '@/components/MainPage/RendingSection';
 import { useEffect, useRef } from 'react';
 import { useTabContext } from '@/store/context/useTabContext';

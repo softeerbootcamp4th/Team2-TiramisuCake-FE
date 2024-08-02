@@ -14,6 +14,7 @@ export const theme = {
     black: '#000000',
     red: '#FB4545',
     primary: '#55A7BA',
+    hyundai: '#0E2B5C',
     transparent: 'transparent',
     sky: '#DBF2F9',
     'yellow-0': '#FFFBE8',
@@ -89,10 +90,13 @@ export const theme = {
         'linear-gradient(180deg, #FFF 39.36%, rgba(255, 255, 255, 0.60) 83.14%)',
       'gradient-attend':
         'linear-gradient(to bottom, #55A7BA 44.5%, #BBE0E6 100%)',
-      'gradient-light-gray':
+        'gradient-text-to-right':
+        'linear-gradient(90deg, #55A7BA 45%, #ECD0A6 100%)',
+        'gradient-light-gray':
         'linear-gradient(180deg, rgba(255, 255, 255, 0.60) 0%, rgba(255, 255, 255, 0.18) 100%)',
       'gradient-bottom-gray':
         'linear-gradient(180deg, rgba(0, 0, 0, 0.00) 71.16%, rgba(4, 15, 17, 0.60) 96.42%)',
+
     },
   },
 };
