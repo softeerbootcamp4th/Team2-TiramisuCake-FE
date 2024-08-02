@@ -17,6 +17,7 @@ interface InputProps {
   type: InputType;
   inputText: string;
   buttonText: string;
+  showButton?: boolean;
   required?: boolean;
   isError?: boolean;
   handleClick: () => void;
@@ -28,6 +29,7 @@ const Input = ({
   type,
   inputText,
   buttonText,
+  showButton = false,
   required = false,
   isError = false,
   handleClick,
@@ -69,11 +71,11 @@ const Input = ({
   }, [value, debouncedSetIsValue]);
   return (
     <div
-      className={`p-2.5 flex w-[356px] h-[58px] bg-gray-50 rounded-[5px] justify-between items-center ${isFocus ? 'border border-primary' : ''}`}
+      className={`p-2.5 flex w-[356px] h-[58px rounded-[5px] justify-between items-center ${isFocus ? 'border border-primary bg-white' : 'bg-gray-50'}`}
     >
-      <div className="flex">
+      <div className='flex'>
         <input
-          type="text"
+          type='text'
           value={value}
           placeholder={inputText}
           required={required}
@@ -81,21 +83,23 @@ const Input = ({
           onFocus={handleFocus}
           onBlur={handleFocus}
           disabled={disabled}
-          className="bg-transparent outline-none"
+          className='bg-transparent outline-none'
         ></input>
         {isError ? (
-          <img src="/svg/error.svg" alt="error" className="w-[22px] h-[22px]" />
+          <img src='/svg/error.svg' alt='error' className='w-[22px] h-[22px]' />
         ) : (
           ''
         )}
       </div>
 
-      <Button
-        type={buttonType}
-        isActive={buttonActive}
-        text={buttonText}
-        handleClick={handleButtonClick}
-      />
+      {showButton && (
+        <Button
+          type={buttonType}
+          isActive={buttonActive}
+          text={buttonText}
+          handleClick={handleButtonClick}
+        />
+      )}
     </div>
   );
 };
