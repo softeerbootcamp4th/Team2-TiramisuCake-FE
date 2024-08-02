@@ -68,10 +68,10 @@ const Button = ({
 
   return (
     <button
-      className={`flex items-center ${buttonStyle[type]}`}
+      className={`flex items-center justify-center ${buttonStyle[type]}`}
       onClick={handleBtnClick}
     >
-      <span className={`${textStyle[type]}`}>{text}</span>
+      <span className={`text-center ${textStyle[type]}`}>{text}</span>
       {isArrow ? (
         <img className='ml-2' src='/svg/arrow-white-small.svg' alt='arrow' />
       ) : (
