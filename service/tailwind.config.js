@@ -14,6 +14,7 @@ export const theme = {
     black: '#000000',
     red: '#FB4545',
     primary: '#55A7BA',
+    hyundai: '#0E2B5C',
     transparent: 'transparent',
     sky: '#DBF2F9',
     'yellow-0': '#FFFBE8',
