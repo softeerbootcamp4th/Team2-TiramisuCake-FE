@@ -12,6 +12,9 @@ const checkAuthorization = () => {
 const checkbox = 'svg/check-off.svg';
 
 const LoginModal = ({ onClose }: CloseProps) => {
+  const commonClass = 'flex flex-col items-start gap-2 self-stretch';
+  const textCommonClass = 'text-[0.875rem] text-gray-600 text-left';
+
   return (
     <div className='flex w-[26rem] flex-col items-end gap-4'>
       <img src='/svg/close.svg' onClick={onClose} className='cursor-pointer' />
@@ -22,8 +25,8 @@ const LoginModal = ({ onClose }: CloseProps) => {
             The new IONIQ 5 신차 추첨 이벤트 참여와
             <br /> 경품 지급을 위한 전화번호 인증입니다.
           </div>
-          <div className='flex flex-col items-start gap-2 self-stretch'>
-            <div className='text-[0.875rem] text-gray-600 text-left'> 성명</div>
+          <div className={commonClass}>
+            <div className={textCommonClass}> 성명</div>
             <Input
               type='active'
               inputText='이름을 입력해주세요'
@@ -32,10 +35,8 @@ const LoginModal = ({ onClose }: CloseProps) => {
               handleClick={checkAuthorization}
             />
           </div>
-          <div className='mt-6 flex flex-col items-start gap-2 self-stretch'>
-            <div className='text-[0.875rem] text-gray-600 text-left'>
-              전화번호 입력
-            </div>
+          <div className={`mt-6 ${commonClass}`}>
+            <div className={textCommonClass}>전화번호 입력</div>
             <Input
               type='active'
               inputText='전화번호를 입력해주세요'
@@ -45,10 +46,8 @@ const LoginModal = ({ onClose }: CloseProps) => {
               handleClick={checkAuthorization}
             />
           </div>
-          <div className='mt-6 flex flex-col items-start gap-2 self-stretch'>
-            <div className='text-[0.875rem] text-gray-600 text-left'>
-              인증번호 입력
-            </div>
+          <div className={`mt-6 ${commonClass}`}>
+            <div className={textCommonClass}>인증번호 입력</div>
             <Input
               type='active'
               inputText='인증번호를 입력해주세요'
