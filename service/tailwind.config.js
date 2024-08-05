@@ -85,19 +85,22 @@ export const theme = {
       'custom-white': 'var(--Common-white-0, #FFF)',
     },
     backgroundImage: {
+      'custom-gradient':
+        'linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0))',
       'gradient-to-b':
         'linear-gradient(180deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.15) 100%)',
       'gradient-text':
         'linear-gradient(180deg, #FFF 39.36%, rgba(255, 255, 255, 0.60) 83.14%)',
       'gradient-attend':
         'linear-gradient(to bottom, #55A7BA 44.5%, #BBE0E6 100%)',
-        'gradient-text-to-right':
+      'gradient-text-to-right':
         'linear-gradient(90deg, #55A7BA 45%, #ECD0A6 100%)',
-        'gradient-light-gray':
+      'gradient-light-gray':
         'linear-gradient(180deg, rgba(255, 255, 255, 0.60) 0%, rgba(255, 255, 255, 0.18) 100%)',
       'gradient-bottom-gray':
         'linear-gradient(180deg, rgba(0, 0, 0, 0.00) 71.16%, rgba(4, 15, 17, 0.60) 96.42%)',
-
+      'gradient-bottom-yellow':
+        'linear-gradient(180deg, #55A7BA 10%, #FFFBE8 100%)',
     },
   },
 };
