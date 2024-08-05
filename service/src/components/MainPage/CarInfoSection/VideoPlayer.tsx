@@ -75,7 +75,7 @@ const VideoPlayer = () => {
           />
           {state.isFullScreen ? (
             <img
-              src='/svg/Close.svg'
+              src='/svg/closeIcon.svg'
               className='absolute top-[-64px] right-0 z-30 cursor-pointer'
               onClick={exitFullScreen}
               alt='close fullscreen button'
