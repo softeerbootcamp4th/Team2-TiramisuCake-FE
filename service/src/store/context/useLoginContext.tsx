@@ -1,4 +1,4 @@
-import { createContext, useContext, Dispatch, SetStateAction } from 'react';
+import { createContext, useContext } from 'react';
 
 interface LoginContextType {
   isLogined: boolean;

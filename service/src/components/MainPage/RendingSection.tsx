@@ -12,7 +12,7 @@ interface RendingSectionProps {
 const RendingSection = ({ onArrowClick }: RendingSectionProps) => {
   const navigate = useNavigate();
   const showComments = () => {
-    navigate('/comments');
+    navigate('/comments-lounge');
   };
   return (
     <>

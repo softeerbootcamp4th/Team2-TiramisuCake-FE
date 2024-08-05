@@ -4,6 +4,7 @@ import MainPage from './pages/MainPage';
 import LotteryLoungePage from './pages/LotteryLounge';
 import { ROUTER_PATH } from './constants/lib/constants';
 import QuizLoungePage from './pages/QuizLoungePage';
+import CommentsLoungePage from './pages/CommentsLoungePage';
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,16 @@ export const router = createBrowserRouter([
     children: [
       {
         element: <QuizLoungePage />,
+        index: true,
+      },
+    ],
+  },
+  {
+    element: <App />,
+    path: ROUTER_PATH.COMMENTS_LOUNGE,
+    children: [
+      {
+        element: <CommentsLoungePage />,
         index: true,
       },
     ],
