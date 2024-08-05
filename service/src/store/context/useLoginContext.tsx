@@ -2,7 +2,7 @@ import { createContext, useContext, Dispatch, SetStateAction } from 'react';
 
 interface LoginContextType {
   isLogined: boolean;
-  setIsLogined: Dispatch<SetStateAction<boolean>>;
+  setIsLogined: (value: boolean) => void;
 }
 
 const initialLoginContext: LoginContextType = {
