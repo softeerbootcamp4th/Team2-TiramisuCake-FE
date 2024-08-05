@@ -4,7 +4,7 @@ import QuizTitle from '@/components/QuizLounge/QuizTitle';
 function QuizLoungePage() {
   const data = {
     title:
-      '가나다 라바 마사 전용 카메라를 통해 \n 보다 선명하게 후방을 확인할 수 있다',
+      '가나다 라마 바사 전용 카메라를 통해 \n 보다 선명하게 후방을 확인할 수 있다',
     startIndex: 0,
     endIndex: 9,
   };

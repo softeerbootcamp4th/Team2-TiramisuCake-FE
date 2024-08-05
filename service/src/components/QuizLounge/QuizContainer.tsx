@@ -1,45 +1,131 @@
+import { useState, useRef, useEffect } from 'react';
+import { motion, PanInfo } from 'framer-motion';
 import shuffleArray from '@/utils/shuffleArray';
 import TextCard from './TextCard';
+import { transform } from 'lodash';
 
 interface QuizContainerProps {
   answer: string[];
 }
 
 const QuizContainer = ({ answer }: QuizContainerProps) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const filteredAnswer = answer.filter((char) => char !== ' ');
-  const shuffleAnswer = shuffleArray(filteredAnswer);
 
-  const getRandomInt = (min: number, max: number) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  const [shuffleAnswer, setShuffleAnswer] = useState<string[]>([]);
+  const [positions, setPositions] = useState<{ top: number; left: number }[]>(
+    []
+  );
+  const [correctPositions, setCorrectPositions] = useState<boolean[]>(
+    Array(answer.length).fill(false)
+  );
+
+  useEffect(() => {
+    const shuffled = shuffleArray([...filteredAnswer]);
+    setShuffleAnswer(shuffled);
+
+    const initialPositions = shuffled.map((_, index) => ({
+      top: Math.random() * 100,
+      left: index * 117,
+    }));
+    setPositions(initialPositions);
+  }, [answer]);
+
+  const handleDragEnd = (
+    event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo,
+    index: number
+  ) => {
+    if (!containerRef.current) return;
+
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const droppedX = info.point.x - containerRect.left;
+    const droppedIndex = Math.round(droppedX / 117);
+
+    // 드롭된 위치가 유효한지 확인
+    if (droppedIndex >= 0 && droppedIndex < answer.length) {
+      const isCorrectPosition =
+        filteredAnswer[droppedIndex] === shuffleAnswer[index];
+      console.log(
+        isCorrectPosition,
+        answer[droppedIndex],
+        shuffleAnswer[index]
+      );
+
+      if (isCorrectPosition) {
+        // 정답 위치라면 correctPositions 배열을 업데이트합니다.
+        setCorrectPositions((prev) =>
+          prev.map((pos, i) => (i === index ? true : pos))
+        );
+
+        const answerElement =
+          document.querySelectorAll('.answer')[droppedIndex];
+        console.log(answerElement);
+        const answerRect = answerElement?.getBoundingClientRect();
+
+        if (answerRect) {
+          console.log(answerRect.top, answerRect.left);
+          setPositions((prev) =>
+            prev.map((pos, i) =>
+              i === index
+                ? {
+                    top: answerRect.top - containerRect.top,
+                    left: answerRect.left - containerRect.left,
+                  }
+                : pos
+            )
+          );
+        }
+        // 정답 위치에 고정
+      } else {
+        // 정답 위치가 아니라면 원래 위치로 돌아갑니다.
+        setPositions((prev) => [...prev]);
+      }
+    } else {
+      // 정답 위치가 유효하지 않으면 원래 위치로 돌아갑니다.
+      setPositions((prev) => [...prev]);
+    }
   };
-
-  // 각 문자의 수평 위치를 계산하는 변수
-  let position = -41;
 
   return (
     <div>
       <div className='flex gap-3 mt-12'>
         {answer.map((char, index) =>
           char !== ' ' ? (
-            <TextCard key={index} type='empty' />
+            <div key={index} className='answer'>
+              <TextCard type='empty' />
+            </div>
           ) : (
             <div key={index} className='w-4' />
           )
         )}
       </div>
-      <div className='mt-[3.8rem] h-[178px] relative w-full'>
+      <div ref={containerRef} className='mt-[3.8rem] h-[178px] relative w-full'>
         {shuffleAnswer.map((char, index) => {
-          const topPosition = getRandomInt(0, 100); // 수직 위치는 랜덤
-          const leftPosition = position; // 수평 위치는 증가
-          position += 117; // 각 문자 간의 간격을 50px로 설정 (필요에 따라 조정 가능)
+          const isCorrect = correctPositions[index];
+          const positionStyle = isCorrect
+            ? {
+                top: `${positions[index].top}px`,
+                left: `${positions[index].left}px`,
+                transform: 'none',
+              } // 정답 위치에 고정
+            : {
+                top: `${positions[index].top}px`,
+                left: `${positions[index].left}px`,
+              };
+
           return (
-            <div
+            <motion.div
               key={index}
               className='absolute'
-              style={{ top: `${topPosition}%`, left: `${leftPosition}px` }}
+              style={positionStyle}
+              drag={isCorrect ? false : true}
+              onDragEnd={(event, info) => handleDragEnd(event, info, index)}
+              animate={positionStyle}
+              //transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             >
               <TextCard type='answer' answerChar={char} />
-            </div>
+            </motion.div>
           );
         })}
       </div>

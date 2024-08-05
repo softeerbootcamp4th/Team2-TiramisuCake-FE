@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Header from './Header';
 import './Carousel.css';
 import VideoPlayer from './VideoPlayer';
