@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, PanInfo } from 'framer-motion';
 import shuffleArray from '@/utils/shuffleArray';
 import TextCard from './TextCard';
-import { transform } from 'lodash';
 
 interface QuizContainerProps {
   answer: string[];
