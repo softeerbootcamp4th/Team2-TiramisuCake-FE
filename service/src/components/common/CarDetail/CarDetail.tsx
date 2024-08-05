@@ -64,7 +64,7 @@ const CarDetail = ({
         )}
       </div>
       <img
-        src='/svg/Close.svg'
+        src='/svg/closeicon.svg'
         className='absolute top-[-49px] right-0'
         onClick={closeCarDetail}
       />

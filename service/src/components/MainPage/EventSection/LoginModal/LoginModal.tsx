@@ -17,7 +17,11 @@ const LoginModal = ({ onClose }: CloseProps) => {
 
   return (
     <div className='flex w-[26rem] flex-col items-end gap-4'>
-      <img src='/svg/close.svg' onClick={onClose} className='cursor-pointer' />
+      <img
+        src='/svg/closeIcon.svg'
+        onClick={onClose}
+        className='cursor-pointer'
+      />
       <div className='flex p-9 flex-col justify-center items-center gap-6 bg-white'>
         <div className='self-stretch gap-4 text-center'>
           <div className='font-bold text-h-s py-2'>전화번호 인증</div>
