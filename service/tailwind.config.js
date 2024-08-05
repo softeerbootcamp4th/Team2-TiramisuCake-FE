@@ -28,7 +28,7 @@ export const theme = {
     'yellow-700': '#A85500',
     'yellow-800': '#8A4209',
     'yellow-900': '#75360E',
-    'yellow-950`': '#451B03',
+    'yellow-950': '#451B03',
     'green-50': '#F1F9FA',
     'green-100': '#DBEFF2',
     'green-200': '#BBE0E6',
@@ -90,13 +90,12 @@ export const theme = {
         'linear-gradient(180deg, #FFF 39.36%, rgba(255, 255, 255, 0.60) 83.14%)',
       'gradient-attend':
         'linear-gradient(to bottom, #55A7BA 44.5%, #BBE0E6 100%)',
-        'gradient-text-to-right':
+      'gradient-text-to-right':
         'linear-gradient(90deg, #55A7BA 45%, #ECD0A6 100%)',
-        'gradient-light-gray':
+      'gradient-light-gray':
         'linear-gradient(180deg, rgba(255, 255, 255, 0.60) 0%, rgba(255, 255, 255, 0.18) 100%)',
       'gradient-bottom-gray':
         'linear-gradient(180deg, rgba(0, 0, 0, 0.00) 71.16%, rgba(4, 15, 17, 0.60) 96.42%)',
-
     },
   },
 };
@@ -112,8 +111,9 @@ export const plugins = [
         backdropFilter: 'blur(22.5px)',
       },
       '.quiz-effect': {
-        borderRadius: '8px',
-        background: 'var(--Common-white-0, #FFF)',
+        border: '0.952px solid #FFF',
+        background:
+          'linear-gradient(180deg, rgba(255, 255, 255, 0.70)0%, rgba(255, 255, 255, 0.21)100%)',
         boxShadow: '0px 1px 13px 0px #DEE6EF',
         backdropFilter: 'blur(20px)',
       },
