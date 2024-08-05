@@ -1,19 +1,38 @@
 import Button from '@/components/common/Button/Button';
 import Input from '@/components/common/Input/Input';
+import { useState } from 'react';
+import { useLoginContext } from '@/store/context/useLoginContext';
 
 interface CloseProps {
   onClose: () => void;
 }
 
-const checkAuthorization = () => {
-  console.log('goto');
+const sendCode = () => {
+  console.log('인증');
 };
-
 const checkbox = 'svg/check-off.svg';
+const checked = 'svg/check-on.svg';
 
 const LoginModal = ({ onClose }: CloseProps) => {
   const commonClass = 'flex flex-col items-start gap-2 self-stretch';
   const textCommonClass = 'text-[0.875rem] text-gray-600 text-left';
+  const [isChecked, setIsChecked] = useState(false);
+  const [marketingChecked, setMarketingChecked] = useState(false);
+  const { setIsLogined } = useLoginContext();
+
+  const handleCheck = () => {
+    setIsChecked((prev) => !prev);
+  };
+
+  const handleMarketingCheck = () => {
+    setMarketingChecked((prev) => !prev);
+  };
+
+  const checkAuthorization = () => {
+    localStorage.setItem('Token', 'hehehe');
+
+    setIsLogined(true);
+  };
 
   return (
     <div className='flex w-[26rem] flex-col items-end gap-4'>
@@ -46,8 +65,9 @@ const LoginModal = ({ onClose }: CloseProps) => {
               inputText='전화번호를 입력해주세요'
               buttonText='인증번호 전송'
               required
+              isPhone
               showButton
-              handleClick={checkAuthorization}
+              handleClick={() => console.log('입력중')}
             />
           </div>
           <div className={`mt-6 ${commonClass}`}>
@@ -57,17 +77,25 @@ const LoginModal = ({ onClose }: CloseProps) => {
               inputText='인증번호를 입력해주세요'
               buttonText='전송'
               showButton
-              handleClick={() => console.log('입력중')}
+              handleClick={sendCode}
             />
           </div>
           <div className='mt-4 my-2 flex flex-row items-start'>
-            <img src={checkbox} />
+            <img
+              className='cursor-pointer'
+              src={isChecked ? checked : checkbox}
+              onClick={handleCheck}
+            />
             <div className='py-1 ml-2 text-gray-800 text-b-s'>
               개인정보 수집 이용 동의 <span className=' text-red'>(필수)</span>
             </div>
           </div>
           <div className='mb-2 flex flex-row items-start'>
-            <img src={checkbox} />
+            <img
+              className='cursor-pointer'
+              src={marketingChecked ? checked : checkbox}
+              onClick={handleMarketingCheck}
+            />
             <div className='px-2 py-1 text-gray-800 text-b-s items-center'>
               마케팅 활용 및 광고 수신 동의
             </div>

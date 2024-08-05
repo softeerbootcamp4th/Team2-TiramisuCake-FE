@@ -49,9 +49,7 @@ const LoseModal = ({ onClose }: LoseModalProps) => {
         <div className='py-2 font-semibold text-h-m text-transparent bg-clip-text bg-gradient-text-to-right'>
           잠깐! 친구 초대하고 복권을 더 긁어봐요
         </div>
-        <div className='text-b-l text-gray-700 mb-4'>
-          오늘은 아쉽지만, 내일 또 기회가 있어요
-        </div>
+        <div className='text-b-l text-gray-700 mb-4'>좋은 문구 추천좀..</div>
         <div className='border border-primary flex h-10 p-2 items-center justify-center text-center gap-4'>
           <span className='text-primary text-b-s'>초대링크</span>
           <span id='shareURL' className='text-gray-500 text-b-m'>

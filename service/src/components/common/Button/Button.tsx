@@ -45,7 +45,7 @@ const Button = ({
 
   const buttonStyle: Record<string, string> = {
     square: `px-2.5 py-2 ${isActive ? 'bg-primary' : 'bg-gray-400'}`,
-    squareWithBorder: `px-3 py-2.5 border border-primary`,
+    squareWithBorder: `px-2 py-[7px] border border-primary`,
     round: `p-2.5 rounded-[10px] ${isActive ? 'bg-primary' : 'bg-gray-400'}`,
     roundDone: `p-2.5 rounded-[10px] bg-white`,
     reaction: `px-2.5 py-2 bg-white rounded-[5px] shadow-20`,
@@ -54,7 +54,7 @@ const Button = ({
 
   const textStyle: Record<string, string> = {
     square: 'text-white text-b-m',
-    squareWithBorder: 'text-primary text-b-xl font-semibold',
+    squareWithBorder: 'text-primary text-b-m font-semibold',
     round: 'text-white text-b-s font-semibold',
     roundDone: 'text-primary text-b-s font-semibold',
     reaction: `${isReactionClicked ? 'text-primary' : 'text-black'} text-b-m font-semibold`,

@@ -1,10 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import splitSentences from '@/utils/splitSentence';
-import Button from '../../common/Button/Button';
+import Button from '@/components/common/Button/Button';
 import EventInfoCard from './EventInfoCard/EventInfoCard';
 import LoginModal from './LoginModal/LoginModal';
-
-//          <div className='absolute inset-0 bg-gray opacity-50'>
+import { useLoginContext } from '@/store/context/useLoginContext';
 
 interface EventSectionProps {
   startDate: '2024.09.02';
@@ -24,7 +24,7 @@ const informs = [
     hint: '인테리어',
     title: "'24시간 내차' 이벤트",
     eventInformation:
-      '하단의 The new IONIQ 5 정보를 바탕으로 빠르게 문장 퀴즈를 맞춰. 24시간 렌트권과 신차 할인권을 얻을 수 있어요.',
+      '하단의 The new IONIQ 5 정보를 바탕으로 빠르게 문장 퀴즈를 맞춰 \n 24시간 렌트권과 신차 할인권을 얻을 수 있어요.',
     imageUrl: ['/image 162.png', '/image 163.png'],
   },
   {
@@ -42,7 +42,10 @@ const EventSection = ({
   endDate,
   onArrowClick,
 }: EventSectionProps) => {
+  const { isLogined } = useLoginContext();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigator = useNavigate();
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -51,6 +54,12 @@ const EventSection = ({
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+  const goQuizLounge = () => {
+    navigator('/quiz-lounge');
+  };
+  const goLotteryLounge = () => {
+    navigator('/lottery-lounge');
+  };
 
   return (
     <div
@@ -58,7 +67,7 @@ const EventSection = ({
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       {isModalOpen && (
-        <div className='fixed inset-0 flex items-center justify-center z-50'>
+        <div className='fixed inset-0 flex items-center justify-center z-[99] backdrop-blur-sm'>
           <LoginModal onClose={handleCloseModal} />
         </div>
       )}
@@ -74,18 +83,54 @@ const EventSection = ({
         <div className=' font-Pretendard font-normal text-gray-800 text-center'>
           {splitSentences(description)}
         </div>
-        <div className='flex my-6 py-2 px-3'>
-          <Button
-            type='square'
-            text='번호 인증하고 이벤트 참여하기'
-            handleClick={handleOpenModal}
-          ></Button>
-        </div>
-        <div className='flex items-center flex-row text-center'>
-          {informs.map((inform, index) => (
-            <EventInfoCard key={index} {...inform} />
-          ))}
-        </div>
+        {isLogined ? (
+          <div className='my-8'>
+            <div className='flex items-center flex-row text-center'>
+              {informs.map((inform, index) => (
+                <EventInfoCard key={index} {...inform} />
+              ))}
+            </div>
+            <div className='mt-6 flex flex-row mx-6'>
+              <div className='ml-[180px] mr-6'>
+                <Button
+                  type='squareWithBorder'
+                  text='튜토리얼'
+                  handleClick={goQuizLounge}
+                />
+              </div>
+              <div className='mr-[435px]'>
+                <Button
+                  type='square'
+                  text='바로가기'
+                  handleClick={goQuizLounge}
+                />
+              </div>
+              <div>
+                <Button
+                  type='square'
+                  text='복권 긁으러 가기'
+                  handleClick={goLotteryLounge}
+                />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className='flex my-6 py-2 px-3'>
+              <Button
+                type='square'
+                text='번호 인증하고 이벤트 참여하기'
+                handleClick={handleOpenModal}
+              ></Button>
+            </div>
+            <div className='flex items-center flex-row text-center'>
+              {informs.map((inform, index) => (
+                <EventInfoCard key={index} {...inform} />
+              ))}
+            </div>
+          </>
+        )}
+
         <img
           className='mt-auto hover:cursor-pointer '
           src={downArrow}
