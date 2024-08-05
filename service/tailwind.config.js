@@ -78,6 +78,7 @@ export const theme = {
     backdropBlur: {
       custom: '22.5px',
       'blur-40': '20px',
+      'blur-60': '30px',
     },
     colors: {
       'custom-white': 'var(--Common-white-0, #FFF)',
