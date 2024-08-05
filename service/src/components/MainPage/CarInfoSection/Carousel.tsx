@@ -6,6 +6,7 @@ import CarouselBar from './CarouselBar';
 import Button from '@/components/common/Button/Button';
 import CarDetailInfo from './CarDetailInfo';
 import { useCarInfoContext } from '@/store/context/useCarInfoContext';
+import CarouselBg from './CarouselBg';
 
 const data = [
   {
@@ -82,12 +83,7 @@ const Carousel = () => {
 
   return (
     <div className='carousel-container'>
-      <div
-        className='bg-cover bg-center bg-no-repeat h-full w-full flex items-center justify-center blur-sm absolute top-0 transition-transform duration-500 ease-in-out'
-        style={{
-          backgroundImage: `url(${data[state.currentIndex].backgroundImgUrl})`,
-        }}
-      />
+      <CarouselBg currentIdx={state.currentIndex} />
       <div className='flex gap-4 items-center z-10'>
         {visibleItems.map((item) => {
           const isActive = item.id === data[state.currentIndex].id;
