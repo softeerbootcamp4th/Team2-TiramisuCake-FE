@@ -1,4 +1,5 @@
 import QuizContainer from '@/components/QuizLounge/QuizContainer';
+import QuizFooter from '@/components/QuizLounge/QuizFooter';
 import QuizTitle from '@/components/QuizLounge/QuizTitle';
 
 function QuizLoungePage() {
@@ -19,6 +20,7 @@ function QuizLoungePage() {
     >
       <QuizTitle quizTitle={slicedQuizTitle} answer={answer} />
       <QuizContainer answer={answer} />
+      <QuizFooter />
     </div>
   );
 }
