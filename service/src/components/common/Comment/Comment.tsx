@@ -16,7 +16,7 @@ const commentMessage: Record<string, string> = {
 
 const Comment = ({ userName, type, isUser = false }: CommentProps) => {
   const bgStyle = isUser
-    ? 'bg-white rounded shadow-40'
+    ? 'bg-white rounded shadow-40 cursor-pointer'
     : 'bg-primary rounded-3xl';
   const userNameStyle = isUser ? 'text-gray-600' : 'text-white';
   const messageStyle = isUser ? 'text-primary' : 'text-white';
