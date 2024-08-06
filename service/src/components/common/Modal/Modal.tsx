@@ -6,8 +6,8 @@ interface ModalProps {
 
 const Modal = ({ handleClose, children }: PropsWithChildren<ModalProps>) => {
   return (
-    <div className='fixed inset-0 w-screen flex items-center justify-center z-[99] backdrop-blur-sm'>
-      <div className='w-[38.5rem] p-9 bg-white flex flex-col items-center gap-10 relative'>
+    <div className='fixed inset-0 w-screen flex items-center justify-center z-[99] backdrop-blur-20'>
+      <div className='bg-white flex flex-col items-center gap-10 relative'>
         <img
           src='/svg/closeIcon.svg'
           onClick={handleClose}
