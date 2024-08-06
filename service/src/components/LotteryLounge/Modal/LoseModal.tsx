@@ -1,4 +1,5 @@
 import Badge from '@/components/common/Badge/Badge';
+import Modal from '@/components/common/Modal/Modal';
 
 interface LoseModalProps {
   onClose: () => void;
@@ -38,12 +39,7 @@ const copyMyUrl = () => {
 
 const LoseModal = ({ onClose }: LoseModalProps) => {
   return (
-    <div className='absolute w-[40rem] h-[32.8rem] inline-flex flex-col gap-6 items-end'>
-      <img
-        src='/svg/closeIcon.svg'
-        onClick={onClose}
-        className='cursor-pointer'
-      />
+    <Modal handleClose={onClose}>
       <div className='w-full p-9 flex-col flex items-center text-center bg-white'>
         <Badge type='blue' text='초대한 친구 수만큼 +1'></Badge>
         <div className='py-2 font-semibold text-h-m text-transparent bg-clip-text bg-gradient-text-to-right'>
@@ -65,7 +61,7 @@ const LoseModal = ({ onClose }: LoseModalProps) => {
           />
         </div>
       </div>
-    </div>
+    </Modal>
   );
 };
 export default LoseModal;

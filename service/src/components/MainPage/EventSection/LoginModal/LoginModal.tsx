@@ -1,5 +1,6 @@
 import Button from '@/components/common/Button/Button';
 import Input from '@/components/common/Input/Input';
+import Modal from '@/components/common/Modal/Modal';
 
 interface CloseProps {
   onClose: () => void;
@@ -16,12 +17,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
   const textCommonClass = 'text-[0.875rem] text-gray-600 text-left';
 
   return (
-    <div className='flex w-[26rem] flex-col items-end gap-4'>
-      <img
-        src='/svg/closeIcon.svg'
-        onClick={onClose}
-        className='cursor-pointer'
-      />
+    <Modal handleClose={onClose}>
       <div className='flex p-9 flex-col justify-center items-center gap-6 bg-white'>
         <div className='self-stretch gap-4 text-center'>
           <div className='font-bold text-h-s py-2'>전화번호 인증</div>
@@ -81,7 +77,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
           </div>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 };
 export default LoginModal;
