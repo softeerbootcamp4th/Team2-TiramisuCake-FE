@@ -78,11 +78,13 @@ export const theme = {
     },
     backdropBlur: {
       custom: '22.5px',
+      'blur-20': '10px',
       'blur-40': '20px',
       'blur-60': '30px',
     },
     colors: {
       'custom-white': 'var(--Common-white-0, #FFF)',
+      'modal-bg': 'var(--Alpha-Black50, rgba(165, 174, 174, 0.30))',
     },
     backgroundImage: {
       'custom-gradient':
