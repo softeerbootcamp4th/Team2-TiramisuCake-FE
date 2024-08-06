@@ -24,5 +24,4 @@ function QuizLoungePage() {
     </div>
   );
 }
-
 export default QuizLoungePage;
