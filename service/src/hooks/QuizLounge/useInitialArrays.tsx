@@ -8,11 +8,6 @@ const useInitialArrays = (answer: string[]) => {
   const [positions, setPositions] = useState<{ top: number; left: number }[]>(
     []
   );
-
-  const [initialPositions, setInitialPositions] = useState<
-    { top: number; left: number }[]
-  >([]);
-
   useEffect(() => {
     const shuffled = shuffleArray([...filteredAnswer]);
     setShuffleAnswer(shuffled);
@@ -22,13 +17,11 @@ const useInitialArrays = (answer: string[]) => {
       left: index * 117,
     }));
     setPositions(initialPositions);
-    setInitialPositions(initialPositions);
   }, [answer]);
 
   return {
     filteredAnswer,
     shuffleAnswer,
-    initialPositions,
     positions,
     setPositions,
   };

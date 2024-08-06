@@ -15,13 +15,8 @@ const QuizContainer = ({ answer }: QuizContainerProps) => {
   const [openModal, setOpenModal] = useState(false);
 
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const {
-    filteredAnswer,
-    shuffleAnswer,
-    initialPositions,
-    positions,
-    setPositions,
-  } = useInitialArrays(answer);
+  const { filteredAnswer, shuffleAnswer, positions, setPositions } =
+    useInitialArrays(answer);
 
   const [correctPositions, setCorrectPositions] = useState<boolean[]>(
     Array(filteredAnswer.length).fill(false)
@@ -43,7 +38,7 @@ const QuizContainer = ({ answer }: QuizContainerProps) => {
   }, [allCorrect]);
 
   const handleDragEnd = (
-    event: MouseEvent | TouchEvent | PointerEvent,
+    _event: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo,
     index: number
   ) => {
