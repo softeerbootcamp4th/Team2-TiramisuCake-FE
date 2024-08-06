@@ -16,8 +16,7 @@
 
 .carousel-item {
   transition:
-    transform 0.5s ease,
-    flex 0.5s ease,
+    flex 0.5s ease-in-out,
     width 0.5s ease,
     opacity 0.5s ease;
   cursor: pointer;
