@@ -138,7 +138,11 @@ const QuizContainer = ({ answer }: QuizContainerProps) => {
                 }
                 initial={false}
               >
-                <TextCard type='answer' answerChar={char} />
+                <TextCard
+                  type='answer'
+                  answerChar={char}
+                  isCorrect={isCorrect}
+                />
               </motion.div>
             );
           })}
