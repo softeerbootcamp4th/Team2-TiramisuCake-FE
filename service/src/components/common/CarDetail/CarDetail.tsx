@@ -1,5 +1,6 @@
 import { useCarInfoContext } from '@/store/context/useCarInfoContext';
 import { useState } from 'react';
+import splitSentences from '@/utils/splitSentence';
 
 interface CarDetailProps {
   leftImageUrl: string;
@@ -43,7 +44,7 @@ const CarDetail = ({
         ) : (
           <div className='absolute bottom-12 left-12 w-full text-white flex flex-col gap-4'>
             <p className='text-b-xxl font-semibold'>{leftTitle}</p>
-            <p className='text-b-m spa'>{leftDescription}</p>
+            <p className='text-b-m spa'>{splitSentences(leftDescription)}</p>
           </div>
         )}
       </div>
@@ -59,12 +60,12 @@ const CarDetail = ({
         ) : (
           <div className='absolute bottom-12 left-12 w-full text-white flex flex-col gap-4'>
             <p className='text-b-xxl font-semibold'>{rightTitle}</p>
-            <p className='text-b-m'>{rightDescription}</p>
+            <p className='text-b-m'>{splitSentences(rightDescription)}</p>
           </div>
         )}
       </div>
       <img
-        src='/svg/closeicon.svg'
+        src='/svg/closeIcon.svg'
         className='absolute top-[-49px] right-0'
         onClick={closeCarDetail}
       />
