@@ -79,11 +79,14 @@ export const theme = {
     backdropBlur: {
       custom: '22.5px',
       'blur-40': '20px',
+      'blur-60': '30px',
     },
     colors: {
       'custom-white': 'var(--Common-white-0, #FFF)',
     },
     backgroundImage: {
+      'custom-gradient':
+        'linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0))',
       'gradient-to-b':
         'linear-gradient(180deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.15) 100%)',
       'gradient-text':
@@ -96,6 +99,8 @@ export const theme = {
         'linear-gradient(180deg, rgba(255, 255, 255, 0.60) 0%, rgba(255, 255, 255, 0.18) 100%)',
       'gradient-bottom-gray':
         'linear-gradient(180deg, rgba(0, 0, 0, 0.00) 71.16%, rgba(4, 15, 17, 0.60) 96.42%)',
+      'gradient-bottom-yellow':
+        'linear-gradient(180deg, #55A7BA 10%, #FFFBE8 100%)',
     },
   },
 };
