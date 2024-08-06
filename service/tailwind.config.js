@@ -69,6 +69,12 @@ export const theme = {
     'd-xs': ['10px', '14px'],
   },
   extend: {
+    translate: {
+      'custom-4': '-54px',
+      'custom-5': '-108px',
+      'custom-2': '54px',
+      'custom-1': '108px',
+    },
     fontFamily: {
       pretend: ['Pretendard'],
       montserrat: ['Montserrat'],

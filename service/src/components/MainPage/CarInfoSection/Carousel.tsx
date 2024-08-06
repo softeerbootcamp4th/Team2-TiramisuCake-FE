@@ -49,10 +49,7 @@ const data = [
   },
 ];
 
-interface CarouselProps {}
-
 const Carousel = () => {
-  // const [currentIdx, setCurrentIdx] = useState(0);
   const { state, openCarDetail, selectCurrentIndex } = useCarInfoContext();
 
   const handleSlideClick = (index: number) => {
@@ -80,10 +77,26 @@ const Carousel = () => {
 
   const visibleItems = getVisibleItems();
 
+  const getTransformClass = (id: number) => {
+    switch (id) {
+      case 1:
+        return 'translate-x-custom-1';
+      case 2:
+        return 'translate-x-custom-2';
+      case 3:
+        return '';
+      case 4:
+        return 'translate-x-custom-4';
+      case 5:
+        return 'translate-x-custom-5';
+      default:
+        return '';
+    }
+  };
   return (
     <div className='carousel-container'>
       <CarouselBg currentIdx={state.currentIndex} />
-      <div className='flex gap-4 items-center z-10'>
+      <div className='flex gap-4 z-10 items-center'>
         {visibleItems.map((item) => {
           const isActive = item.id === data[state.currentIndex].id;
           const isDiffTwo = Math.abs(state.currentIndex - (item.id - 1)) === 2;
@@ -91,7 +104,7 @@ const Carousel = () => {
           return (
             <div
               key={item.id}
-              className={`carousel-item ${isActive ? 'active bg-transparent' : 'adjacent bg-gradient-light-gray backdrop-blur-blur-40'} ${isDiffTwo ? 'shorter' : ''}`}
+              className={`carousel-item ${isActive ? 'active bg-transparent' : `transform ${getTransformClass(state.currentIndex + 1)} adjacent bg-gradient-light-gray backdrop-blur-blur-40`} ${isDiffTwo ? 'shorter' : ''}`}
               onClick={() => handleSlideClick(item.id - 1)}
             >
               <div className='carousel-item-content'>
@@ -101,7 +114,12 @@ const Carousel = () => {
                     {item.id === 1 ? (
                       <VideoPlayer />
                     ) : (
-                      <div className='w-[784px] h-[422px] relative'>
+                      <div
+                        className='w-[784px] h-[422px] relative'
+                        style={{
+                          transform: `translateX(${-(item.id - 3) * 53.5}px)`,
+                        }}
+                      >
                         <img
                           src={item.thumbnailUrl}
                           alt={item.title}
@@ -133,7 +151,7 @@ const Carousel = () => {
           );
         })}
       </div>
-      <CarouselBar currentIdx={state.currentIndex} />
+      <CarouselBar />
       {state.isCarDetailOpen && <CarDetailInfo />}
     </div>
   );
