@@ -1,5 +1,6 @@
 import Comment from '@/components/common/Comment/Comment';
 
+//bg-gradient-to-b from-white to-none
 const CommentsLoungePage = () => {
   return (
     <>
@@ -21,21 +22,27 @@ const CommentsLoungePage = () => {
           The New IONIQ 5
         </div>
         <div className='flex w-[36.5rem] flex-col items-center gap-9'>
-          <div className='flex w-[24rem] h-[560px] flex-col items-start gap-[0.625rem] px-8 py-10 bg-white bg-opacity-20 backdrop-blur-md rounded-3xl relative'>
-            <div className='absolute top-0 left-0 right-0 h-20p bg-custom-gradient pointer-events-none'></div>
-            <div className='flex flex-col items-center gap-5 self-stretch'>
-              <div className='opacity-40'>
+          <div className='flex overflow-hidden w-[24rem] h-[560px] flex-col items-start gap-2 px-8 py-10 bg-white bg-opacity-20 backdrop-blur-md rounded-3xl relative'>
+            <div
+              className='absolute inset-0 pointer-events-none z-10 overflow-y-auto'
+              style={{
+                maskImage:
+                  'linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,1) 40%, rgba(0,0,0,1))',
+                WebkitMaskImage:
+                  'linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,1) 40%, rgba(0,0,0,1))',
+              }}
+            >
+              <div className='flex flex-col items-center gap-4 self-stretch'>
                 <Comment userName='익명의 너구리' type='car'></Comment>
-              </div>
-              <div className='opacity-60'>
                 <Comment userName='익명의 돌고래' type='exiting'></Comment>
-              </div>
-              <div className='opacity-80'>
                 <Comment userName='익명의 돌고래' type='good'></Comment>
+                <Comment userName='익명의 돌고래' type='funny'></Comment>
+                <Comment userName='익명의 돌고래' type='exiting'></Comment>
+                <Comment userName='익명의 오소리' type='gift'></Comment>
+                <Comment userName='익명의 다람쥐(나)' type='funny'></Comment>
+                <Comment userName='익명의 돌고래' type='exiting'></Comment>
+                <Comment userName='익명의 돌고래' type='gift'></Comment>
               </div>
-              <Comment userName='익명의 돌고래' type='funny'></Comment>
-              <Comment userName='익명의 돌고래' type='exiting'></Comment>
-              <Comment userName='익명의 돌고래' type='gift'></Comment>
             </div>
           </div>
           <div className='flex flex-col items-center gap-4 self-stretch'>
