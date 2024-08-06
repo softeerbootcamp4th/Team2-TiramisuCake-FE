@@ -1,7 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { motion, PanInfo } from 'framer-motion';
 import TextCard from './TextCard';
 import useInitialArrays from '@/hooks/QuizLounge/useInitialArrays';
+import useResetTransform from '@/hooks/QuizLounge/useResetTransform';
 
 interface QuizContainerProps {
   answer: string[];
@@ -13,8 +14,6 @@ const QuizContainer = ({ answer }: QuizContainerProps) => {
     Array(answer.length).fill(false)
   );
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [resetTransform, setResetTransform] = useState<number | null>(null);
-
   const {
     filteredAnswer,
     shuffleAnswer,
@@ -22,6 +21,8 @@ const QuizContainer = ({ answer }: QuizContainerProps) => {
     positions,
     setPositions,
   } = useInitialArrays(answer);
+
+  const { resetTransform, setResetTransform } = useResetTransform();
 
   const handleDragEnd = (
     event: MouseEvent | TouchEvent | PointerEvent,
@@ -39,11 +40,6 @@ const QuizContainer = ({ answer }: QuizContainerProps) => {
     if (droppedIndex >= 0 && droppedIndex < answer.length) {
       const isCorrectPosition =
         filteredAnswer[droppedIndex] === shuffleAnswer[index];
-      console.log(
-        isCorrectPosition,
-        filteredAnswer[droppedIndex],
-        shuffleAnswer[index]
-      );
 
       if (isCorrectPosition) {
         // 정답 위치라면 correctPositions 배열을 업데이트합니다.
@@ -69,32 +65,14 @@ const QuizContainer = ({ answer }: QuizContainerProps) => {
                 : pos
             )
           );
-          // 바로 이동하도록 애니메이션 설정
-          setTimeout(() => {
-            setPositions((prev) =>
-              prev.map((pos, i) => (i === index ? { top, left } : pos))
-            );
-          }, 0);
         }
       } else {
-        console.log('hihi', initialPositions[index]);
         setResetTransform(index);
       }
     } else {
-      console.log('helloooo');
       setResetTransform(index);
     }
   };
-
-  useEffect(() => {
-    if (resetTransform !== null) {
-      // Transform 초기화 후 다시 드래그할 수 있도록 상태를 업데이트
-      const timer = setTimeout(() => {
-        setResetTransform(null);
-      }, 500); // 500ms 후에 resetTransform을 null로 설정
-      return () => clearTimeout(timer);
-    }
-  }, [resetTransform]);
 
   return (
     <div>
