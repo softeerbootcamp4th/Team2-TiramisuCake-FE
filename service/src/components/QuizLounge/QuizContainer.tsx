@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, PanInfo } from 'framer-motion';
-import shuffleArray from '@/utils/shuffleArray';
 import TextCard from './TextCard';
+import useInitialArrays from '@/hooks/QuizLounge/useInitialArrays';
 
 interface QuizContainerProps {
   answer: string[];
@@ -9,33 +9,19 @@ interface QuizContainerProps {
 
 const QuizContainer = ({ answer }: QuizContainerProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const filteredAnswer = answer.filter((char) => char !== ' ');
-
-  const [shuffleAnswer, setShuffleAnswer] = useState<string[]>([]);
-  const [positions, setPositions] = useState<{ top: number; left: number }[]>(
-    []
-  );
   const [correctPositions, setCorrectPositions] = useState<boolean[]>(
     Array(answer.length).fill(false)
   );
-
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [initialPositions, setInitialPositions] = useState<
-    { top: number; left: number }[]
-  >([]);
   const [resetTransform, setResetTransform] = useState<number | null>(null);
 
-  useEffect(() => {
-    const shuffled = shuffleArray([...filteredAnswer]);
-    setShuffleAnswer(shuffled);
-
-    const initialPositions = shuffled.map((_, index) => ({
-      top: Math.random() * 100,
-      left: index * 117,
-    }));
-    setPositions(initialPositions);
-    setInitialPositions(initialPositions);
-  }, [answer]);
+  const {
+    filteredAnswer,
+    shuffleAnswer,
+    initialPositions,
+    positions,
+    setPositions,
+  } = useInitialArrays(answer);
 
   const handleDragEnd = (
     event: MouseEvent | TouchEvent | PointerEvent,
