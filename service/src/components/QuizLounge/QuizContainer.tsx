@@ -19,6 +19,12 @@ const QuizContainer = ({ answer }: QuizContainerProps) => {
     Array(answer.length).fill(false)
   );
 
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [initialPositions, setInitialPositions] = useState<
+    { top: number; left: number }[]
+  >([]);
+  const [resetTransform, setResetTransform] = useState<number | null>(null);
+
   useEffect(() => {
     const shuffled = shuffleArray([...filteredAnswer]);
     setShuffleAnswer(shuffled);
@@ -28,6 +34,7 @@ const QuizContainer = ({ answer }: QuizContainerProps) => {
       left: index * 117,
     }));
     setPositions(initialPositions);
+    setInitialPositions(initialPositions);
   }, [answer]);
 
   const handleDragEnd = (
@@ -36,6 +43,7 @@ const QuizContainer = ({ answer }: QuizContainerProps) => {
     index: number
   ) => {
     if (!containerRef.current) return;
+    setIsDragging(false);
 
     const containerRect = containerRef.current.getBoundingClientRect();
     const droppedX = info.point.x - containerRect.left;
@@ -47,7 +55,7 @@ const QuizContainer = ({ answer }: QuizContainerProps) => {
         filteredAnswer[droppedIndex] === shuffleAnswer[index];
       console.log(
         isCorrectPosition,
-        answer[droppedIndex],
+        filteredAnswer[droppedIndex],
         shuffleAnswer[index]
       );
 
@@ -63,28 +71,44 @@ const QuizContainer = ({ answer }: QuizContainerProps) => {
         const answerRect = answerElement?.getBoundingClientRect();
 
         if (answerRect) {
-          console.log(answerRect.top, answerRect.left);
+          const top = answerRect.top - containerRect.top;
+          const left = answerRect.left - containerRect.left;
           setPositions((prev) =>
             prev.map((pos, i) =>
               i === index
                 ? {
-                    top: answerRect.top - containerRect.top,
-                    left: answerRect.left - containerRect.left,
+                    top,
+                    left,
                   }
                 : pos
             )
           );
+          // 바로 이동하도록 애니메이션 설정
+          setTimeout(() => {
+            setPositions((prev) =>
+              prev.map((pos, i) => (i === index ? { top, left } : pos))
+            );
+          }, 0);
         }
-        // 정답 위치에 고정
       } else {
-        // 정답 위치가 아니라면 원래 위치로 돌아갑니다.
-        setPositions((prev) => [...prev]);
+        console.log('hihi', initialPositions[index]);
+        setResetTransform(index);
       }
     } else {
-      // 정답 위치가 유효하지 않으면 원래 위치로 돌아갑니다.
-      setPositions((prev) => [...prev]);
+      console.log('helloooo');
+      setResetTransform(index);
     }
   };
+
+  useEffect(() => {
+    if (resetTransform !== null) {
+      // Transform 초기화 후 다시 드래그할 수 있도록 상태를 업데이트
+      const timer = setTimeout(() => {
+        setResetTransform(null);
+      }, 500); // 500ms 후에 resetTransform을 null로 설정
+      return () => clearTimeout(timer);
+    }
+  }, [resetTransform]);
 
   return (
     <div>
@@ -102,26 +126,32 @@ const QuizContainer = ({ answer }: QuizContainerProps) => {
       <div ref={containerRef} className='mt-[3.8rem] h-[178px] relative w-full'>
         {shuffleAnswer.map((char, index) => {
           const isCorrect = correctPositions[index];
-          const positionStyle = isCorrect
-            ? {
-                top: `${positions[index].top}px`,
-                left: `${positions[index].left}px`,
-                transform: 'none',
-              } // 정답 위치에 고정
-            : {
-                top: `${positions[index].top}px`,
-                left: `${positions[index].left}px`,
-              };
+          const positionStyle = {
+            top: `${positions[index].top}px`,
+            left: `${positions[index].left}px`,
+          };
+
+          const animateStyle = isCorrect
+            ? { x: 0, y: 0, transition: { duration: 0 } }
+            : resetTransform === index
+              ? { x: 0, y: 0 }
+              : {};
 
           return (
             <motion.div
               key={index}
-              className='absolute'
+              className='absolute cursor-grab'
               style={positionStyle}
-              drag={isCorrect ? false : true}
+              drag={!isCorrect}
+              onDragStart={() => setIsDragging(true)}
               onDragEnd={(event, info) => handleDragEnd(event, info, index)}
-              animate={positionStyle}
-              //transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              animate={animateStyle}
+              transition={
+                isDragging && !isCorrect
+                  ? { type: 'spring', stiffness: 300, damping: 20 }
+                  : { duration: 0 }
+              }
+              initial={false}
             >
               <TextCard type='answer' answerChar={char} />
             </motion.div>
