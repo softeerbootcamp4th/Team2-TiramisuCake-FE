@@ -1,10 +1,15 @@
 import { Outlet } from "react-router-dom";
+import Header from "./components/common/Header";
+import UserContextProvider from "./store/provider/UserContextProvider";
 
 function App() {
   return (
-    <>
-      <Outlet />
-    </>
+        <UserContextProvider>
+        <div className="min-w-screen min-h-screen">
+        <Header />
+        <Outlet />
+      </div>
+      </UserContextProvider>
   );
 }
 
