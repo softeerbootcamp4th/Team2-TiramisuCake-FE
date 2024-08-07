@@ -3,10 +3,14 @@ export function getValidation(str: string): boolean {
   return regex.test(str);
 }
 
-export function getNumberValidation(str: string): boolean {
+export function getNumberValidation(
+  str: string,
+  min: number,
+  max: number
+): boolean {
   const regex = /^[0-9]*$/;
   if (!regex.test(str)) return false;
 
   const number = parseInt(str, 10);
-  return number >= 1 && number <= 50;
+  return number >= min && number <= max;
 }

@@ -12,7 +12,7 @@ const NumberOfWinnersModal = ({ handleClose }: Props) => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
-    if (getNumberValidation(e.target.value)) {
+    if (getNumberValidation(e.target.value, 1, 50)) {
       setValue(e.target.value);
       setError('');
     } else {
