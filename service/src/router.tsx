@@ -15,35 +15,17 @@ export const router = createBrowserRouter([
         element: <MainPage />,
         index: true, //기본 경로
       },
-    ],
-  },
-  {
-    element: <App />,
-    path: ROUTER_PATH.LOTTERY_LOUNGE,
-    children: [
       {
         element: <LotteryLoungePage />,
-        index: true, //기본 경로
+        path: ROUTER_PATH.LOTTERY_LOUNGE,
       },
-    ],
-  },
-  {
-    element: <App />,
-    path: ROUTER_PATH.QUIZ_LOUNGE,
-    children: [
       {
         element: <QuizLoungePage />,
-        index: true,
+        path: ROUTER_PATH.QUIZ_LOUNGE,
       },
-    ],
-  },
-  {
-    element: <App />,
-    path: ROUTER_PATH.COMMENTS_LOUNGE,
-    children: [
       {
         element: <CommentsLoungePage />,
-        index: true,
+        path: ROUTER_PATH.COMMENTS_LOUNGE,
       },
     ],
   },

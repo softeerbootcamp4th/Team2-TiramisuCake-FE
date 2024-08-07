@@ -28,7 +28,7 @@ export const theme = {
     'yellow-700': '#A85500',
     'yellow-800': '#8A4209',
     'yellow-900': '#75360E',
-    'yellow-950`': '#451B03',
+    'yellow-950': '#451B03',
     'green-50': '#F1F9FA',
     'green-100': '#DBEFF2',
     'green-200': '#BBE0E6',
@@ -69,6 +69,12 @@ export const theme = {
     'd-xs': ['10px', '14px'],
   },
   extend: {
+    translate: {
+      'custom-4': '-54px',
+      'custom-5': '-108px',
+      'custom-2': '54px',
+      'custom-1': '108px',
+    },
     fontFamily: {
       pretend: ['Pretendard'],
       montserrat: ['Montserrat'],
@@ -78,11 +84,13 @@ export const theme = {
     },
     backdropBlur: {
       custom: '22.5px',
+      'blur-20': '10px',
       'blur-40': '20px',
       'blur-60': '30px',
     },
     colors: {
       'custom-white': 'var(--Common-white-0, #FFF)',
+      'modal-bg': 'var(--Alpha-Black50, rgba(165, 174, 174, 0.30))',
     },
     backgroundImage: {
       'custom-gradient':
@@ -116,8 +124,9 @@ export const plugins = [
         backdropFilter: 'blur(22.5px)',
       },
       '.quiz-effect': {
-        borderRadius: '8px',
-        background: 'var(--Common-white-0, #FFF)',
+        border: '0.952px solid #FFF',
+        background:
+          'linear-gradient(180deg, rgba(255, 255, 255, 0.70)0%, rgba(255, 255, 255, 0.21)100%)',
         boxShadow: '0px 1px 13px 0px #DEE6EF',
         backdropFilter: 'blur(20px)',
       },

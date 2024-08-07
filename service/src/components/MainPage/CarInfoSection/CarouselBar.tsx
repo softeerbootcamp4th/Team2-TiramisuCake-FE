@@ -1,9 +1,6 @@
 import { useCarInfoContext } from '@/store/context/useCarInfoContext';
 
-interface CarouselBarProps {
-  currentIdx: number;
-}
-const CarouselBar = ({ currentIdx }: CarouselBarProps) => {
+const CarouselBar = () => {
   const { state, selectCurrentIndex } = useCarInfoContext();
   return (
     <div className={`flex gap-2 mt-8 ${state.isFullScreen ? 'z-0' : 'z-10'}`}>
