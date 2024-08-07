@@ -1,11 +1,11 @@
-import { createBrowserRouter } from "react-router-dom";
-import App from "./App";
-import LoginPage from "./pages/LoginPage";
-import EventManagementPage from "./pages/EventManagementPage";
-import WinManagementPage from "./pages/WinManagementPage";
-import EventMetricsPage from "./pages/EventMetricsPage";
-import { ROUTER_PATH } from "./lib/constants";
-import MainPage from "./pages/MainPage";
+import { createBrowserRouter } from 'react-router-dom';
+import App from './App';
+import LoginPage from './pages/LoginPage';
+import EventManagementPage from './pages/EventManagementPage';
+import WinManagementPage from './pages/WinManagementPage';
+import EventMetricsPage from './pages/EventMetricsPage';
+import { ROUTER_PATH } from './lib/constants';
+import MainPage from './pages/MainPage';
 
 export const router = createBrowserRouter([
   {
@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
       {
         element: <EventMetricsPage />,
         path: ROUTER_PATH.EVENT_METRICS,
-      }
-    ]
+      },
+    ],
   },
 ]);
