@@ -1,24 +1,30 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-// import { ROUTER_PATH } from '@/lib/constants';
+import { getValidation } from '@/utils/getValidation';
+import { ROUTER_PATH } from '@/lib/constants';
 import { ChangeEvent, useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [id, setId] = useState('');
+  const [idError, setIdError] = useState('');
+
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleIdInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setId(e.target.value);
+    const newId = e.target.value;
+    if (getValidation(newId)) {
+      setId(e.target.value);
+      setIdError('');
+    } else setIdError('아이디는 영어 소문자와 숫자의 조합만 가능합니다.');
   };
 
   const handlePWInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newPW = e.target.value;
-    const regx = /^[a-z0-9]*$/;
 
-    if (regx.test(newPW)) {
+    if (getValidation(newPW)) {
       setPassword(newPW);
       setPasswordError('');
     } else {
@@ -28,10 +34,12 @@ const LoginPage = () => {
 
   const handleBtnClick = () => {
     console.log(id, password);
+    navigate(ROUTER_PATH.MAIN);
   };
 
   const handleIdClearClick = () => {
     setId('');
+    setIdError('');
   };
 
   const handlePWClearClick = () => {
@@ -70,6 +78,7 @@ const LoginPage = () => {
                 className='absolute top-[35%] right-2 cursor-pointer'
               />
             </div>
+            <div className='text-red mt-1 text-sm'>{idError}</div>
           </div>
           <div className='flex flex-col gap-1'>
             <span>비밀번호</span>
