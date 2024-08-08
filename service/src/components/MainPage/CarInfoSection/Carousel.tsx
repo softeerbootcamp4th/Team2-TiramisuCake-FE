@@ -13,39 +13,35 @@ const data = [
     title: 'The IONIQ 5',
     subTitle: '새롭게 돌아온 The new IONIQ 5를 소개합니다.',
     thumbnailUrl: '/thumbnail1.svg',
-    backgroundImgUrl: '/CarSection.png',
+    backgroundImgUrl: '/bg1.png',
   },
   {
     id: 2,
     title: 'Interior 2',
     subTitle: '내부 인테리어',
     thumbnailUrl: '/thumbnail2.svg',
-
-    backgroundImgUrl: '/bg1.svg',
+    backgroundImgUrl: '/bg2.svg',
   },
   {
     id: 3,
     title: 'Performance 3',
     subTitle: '성능',
     thumbnailUrl: '/thumbnail1.svg',
-
-    backgroundImgUrl: '/bg2.svg',
+    backgroundImgUrl: '/bg3.svg',
   },
   {
     id: 4,
     title: 'Interior 4',
     subTitle: '내부 인테리어',
     thumbnailUrl: '/thumbnail2.svg',
-
-    backgroundImgUrl: '/bg1.svg',
+    backgroundImgUrl: '/bg4.svg',
   },
   {
     id: 5,
     title: 'Performance 5',
     subTitle: '성능',
     thumbnailUrl: '/thumbnail1.svg',
-
-    backgroundImgUrl: '/bg2.svg',
+    backgroundImgUrl: '/bg5.svg',
   },
 ];
 

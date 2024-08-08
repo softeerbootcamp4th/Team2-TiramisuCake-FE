@@ -16,7 +16,7 @@ const CarouselBg = ({ currentIdx }: { currentIdx: number }) => {
         <div
           className={`bg-cover bg-center bg-no-repeat h-full w-full flex items-center justify-center absolute top-0 transition-transform duration-500 ease-in-out ${currentIdx === 1 ? 'opacity-100' : 'opacity-0'}`}
           style={{
-            backgroundImage: `url('/svg//bg2.svg')`,
+            backgroundImage: `url('/svg/bg2.svg')`,
           }}
         />
         <div
@@ -28,7 +28,7 @@ const CarouselBg = ({ currentIdx }: { currentIdx: number }) => {
         <div
           className={`bg-cover bg-center bg-no-repeat h-full w-full flex items-center justify-center absolute top-0 transition-transform duration-500 ease-in-out ${currentIdx === 2 ? 'opacity-100' : 'opacity-0'}`}
           style={{
-            backgroundImage: `url('/svg//bg3.svg')`,
+            backgroundImage: `url('/svg/bg3.svg')`,
           }}
         />
         <div
@@ -39,7 +39,7 @@ const CarouselBg = ({ currentIdx }: { currentIdx: number }) => {
         <div
           className={`bg-cover bg-center bg-no-repeat h-full w-full flex items-center justify-center absolute top-0 transition-transform duration-500 ease-in-out ${currentIdx === 3 ? 'opacity-100' : 'opacity-0'}`}
           style={{
-            backgroundImage: `url('/svg//bg4.svg')`,
+            backgroundImage: `url('/svg/bg4.svg')`,
           }}
         />
         <div
@@ -51,7 +51,7 @@ const CarouselBg = ({ currentIdx }: { currentIdx: number }) => {
         <div
           className={`bg-cover bg-center bg-no-repeat h-full w-full flex items-center justify-center absolute top-0 transition-transform duration-500 ease-in-out ${currentIdx === 4 ? 'opacity-100' : 'opacity-0'}`}
           style={{
-            backgroundImage: `url('/svg//bg5.svg')`,
+            backgroundImage: `url('/svg/bg5.svg')`,
           }}
         />
         <div
