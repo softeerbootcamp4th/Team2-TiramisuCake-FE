@@ -14,7 +14,7 @@ interface WinnerListProps {
 
 const WinnerList = ({ title, winners, onClick }: WinnerListProps) => {
   return (
-    <div className='bg-white rounded-lg px-4 pt-4 pb-2 w-[30rem]'>
+    <div className='bg-white rounded-lg px-4 pt-4 pb-2 w-full'>
       <div className='text-lg font-semibold mb-2'>{title}</div>
       <hr className='border-gray-300 my-2 mx-auto w-[95%]' />
       <div className='flex justify-between'>

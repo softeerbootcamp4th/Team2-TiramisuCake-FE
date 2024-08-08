@@ -37,7 +37,7 @@ const WinnersListContainer = ({
   };
 
   return (
-    <ListContainer>
+    <ListContainer width={pageType === 'main' ? '30rem' : '39rem'}>
       <div className='flex flex-row py-4 items-center mr-6'>
         <div className='px-4 text-left text-lg mr-auto'>당첨자 목록</div>
         {pageType === 'main' ? (

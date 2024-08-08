@@ -5,7 +5,7 @@ import UserContextProvider from './store/provider/UserContextProvider';
 function App() {
   return (
     <UserContextProvider>
-      <div className='min-w-screen min-h-screen'>
+      <div className='min-w-screen min-h-screen flex flex-col'>
         <Header />
         <Outlet />
       </div>

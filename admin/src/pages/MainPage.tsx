@@ -1,33 +1,10 @@
-import EditButton from '@/components/common/Button/EditButton';
-import ListContainer from '@/components/common/List/ListContainer';
-import WinnerList from '@/components/common/List/WinnerList';
 import ManageContainer from '@/components/common/ManageContainer';
 import EventManagement from '@/components/section/EventManagement';
-import { ROUTER_PATH } from '@/lib/constants';
-import List from '@/components/common/List/list';
-import { useNavigate } from 'react-router-dom';
 import SetRaffleWinnerContainer from '@/components/common/Container/SetRaffleWinnerContainer';
 import SetFCFSWinnerContainer from '@/components/common/Container/SetFCFSWinnerContainer';
 import WinnersListContainer from '@/components/common/Container/WinnersListContainer';
 
-const Event1 = [
-  { id: '1', period: '2024.09.02(월) 10:00:00 ~ 12:00:00' },
-  { id: '2', period: '2024.09.05(목) 10:00:00 ~ 12:00:00' },
-  { id: '3', period: '2024.09.09(월) 10:00:00 ~ 12:00:00' },
-  { id: '4', period: '2024.09.12(목) 10:00:00 ~ 12:00:00' },
-];
-
 const MainPage = () => {
-  const navigator = useNavigate();
-
-  const showEventManage = () => {
-    navigator(ROUTER_PATH.EVENT_MANAGE);
-  };
-
-  const showEventMetrics = () => {
-    navigator(ROUTER_PATH.EVENT_METRICS);
-  };
-
   return (
     <div className='items-center justify-center flex flex-row gap-4 mt-10'>
       <EventManagement />

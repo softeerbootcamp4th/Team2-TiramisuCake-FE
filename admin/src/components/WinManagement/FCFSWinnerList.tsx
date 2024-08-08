@@ -6,7 +6,7 @@ const FCFSWinnerList = () => {
   const tabStyled = 'py-1 border-r border-gray-600 flex-1 text-center';
 
   return (
-    <div className='w-[373px] flex flex-col items-center'>
+    <div className='w-[373px] flex flex-col pb-8 items-center'>
       <div className='font-bold'>선착순 당첨자 목록</div>
       <div className='flex flex-col gap-7 w-full items-center mt-2'>
         <div

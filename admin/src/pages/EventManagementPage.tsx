@@ -65,14 +65,14 @@ const EventManagementPage = () => {
   };
 
   return (
-    <div className='bg-slate-100 m-8 h-full w-full'>
+    <div className='min-w-screen h-full m-10 flex-1 bg-[#F3F5F7] '>
       <div className='text-black text-center text-4xl font-bold pt-10'>
         이벤트 관리
       </div>
       <div className='text-gray-800 text-sm text-center my-3'>
         이벤트 오픈 / 종료 시간 설정
       </div>
-      <div className='ml-16 w-fit'>
+      <div className='ml-16 w-fit mt-10'>
         <ListContainer width='39rem'>
           <div className='flex flex-row px-4 text-left text-lg py-4'>
             <span className='my-auto font-semibold'>
