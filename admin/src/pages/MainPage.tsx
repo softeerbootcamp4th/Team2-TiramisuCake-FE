@@ -3,7 +3,6 @@ import ListContainer from '@/components/common/List/ListContainer';
 import WinnerList from '@/components/common/List/WinnerList';
 import ManageContainer from '@/components/common/ManageContainer';
 import EventManagement from '@/components/section/EventManagement';
-import EditButton from '@/components/common/Button/EditButton';
 import { ROUTER_PATH } from '@/lib/constants';
 import List from '@/components/common/List/list';
 import { useNavigate } from 'react-router-dom';
