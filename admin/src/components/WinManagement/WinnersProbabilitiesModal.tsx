@@ -1,21 +1,36 @@
 import { useState } from 'react';
 import Modal from '../common/Modal';
 import InputField from './InputField';
+import { getNumberValidation } from '@/utils/getValidation';
+
 interface Props {
   handleClose: () => void;
 }
 
 const WinnersProbabilitiesModal = ({ handleClose }: Props) => {
-  const [firstCount, setFirstCount] = useState('');
-  const [secondCount, setSecondCount] = useState('');
-  const [thirdCount, setThirdCount] = useState('');
+  const [counts, setCounts] = useState({ first: '', second: '', third: '' });
+  const [errors, setErrors] = useState({ first: '', second: '', third: '' });
 
-  const [firstError, setFirstError] = useState('');
-  const [secondError, setSecondError] = useState('');
-  const [thirdError, setThirdError] = useState('');
+  const handleInputChange = (
+    type: 'first' | 'second' | 'third',
+    value: string,
+    min: number,
+    max: number
+  ) => {
+    if (getNumberValidation(value, min, max)) {
+      setCounts((prev) => ({ ...prev, [type]: value }));
+      setErrors((prev) => ({ ...prev, [type]: '' }));
+    } else {
+      setCounts((prev) => ({ ...prev, [type]: '' }));
+      setErrors((prev) => ({
+        ...prev,
+        [type]: `${min}~${max}의 숫자만 입력 가능`,
+      }));
+    }
+  };
 
   const handleButtonClick = () => {
-    console.log(firstCount, secondCount, thirdCount);
+    console.log(counts.first, counts.second, counts.third);
   };
 
   return (
@@ -25,26 +40,32 @@ const WinnersProbabilitiesModal = ({ handleClose }: Props) => {
         <div className='flex flex-col gap-[1.2rem] items-center w-full'>
           <InputField
             label='1등'
-            value={firstCount}
-            setValue={setFirstCount}
-            error={firstError}
-            setError={setFirstError}
+            value={counts.first}
+            setValue={(value) => handleInputChange('first', value, 1, 5)}
+            error={errors.first}
+            setError={(error) =>
+              setErrors((prev) => ({ ...prev, first: error }))
+            }
             validationRange={[1, 5]}
           />
           <InputField
             label='2등'
-            value={secondCount}
-            setValue={setSecondCount}
-            error={secondError}
-            setError={setSecondError}
+            value={counts.second}
+            setValue={(value) => handleInputChange('second', value, 1, 10)}
+            error={errors.second}
+            setError={(error) =>
+              setErrors((prev) => ({ ...prev, second: error }))
+            }
             validationRange={[1, 10]}
           />
           <InputField
             label='3등'
-            value={thirdCount}
-            setValue={setThirdCount}
-            error={thirdError}
-            setError={setThirdError}
+            value={counts.third}
+            setValue={(value) => handleInputChange('third', value, 1, 100)}
+            error={errors.third}
+            setError={(error) =>
+              setErrors((prev) => ({ ...prev, third: error }))
+            }
             validationRange={[1, 100]}
           />
         </div>
