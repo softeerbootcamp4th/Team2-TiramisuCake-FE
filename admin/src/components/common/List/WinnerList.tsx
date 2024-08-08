@@ -6,11 +6,11 @@ type Winner = {
   probability: string;
 };
 
-type WinnerListProps = {
+interface WinnerListProps {
   title: string;
   winners: Winner[];
   onClick: () => void;
-};
+}
 
 const WinnerList = ({ title, winners, onClick }: WinnerListProps) => {
   return (

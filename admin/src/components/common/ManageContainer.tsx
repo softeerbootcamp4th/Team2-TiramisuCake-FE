@@ -1,6 +1,5 @@
 import { PropsWithChildren } from 'react';
 /**
- * Modal Component
  * @param Element
  * @returns
  */
