@@ -18,7 +18,7 @@ const NumberOfWinnersModal = ({ handleClose }: Props) => {
       setError('');
     } else {
       setValue('');
-      setError('1~50의 숫자만 입력 가능합니다.');
+      setError('1~50의 숫자만 입력 가능');
     }
   };
 
@@ -38,9 +38,13 @@ const NumberOfWinnersModal = ({ handleClose }: Props) => {
   return (
     <Modal handleButtonClick={handleButtonClick} handleCloseClick={handleClose}>
       <div className='w-[137px]'>
-        <div>인원 수 입력</div>
+        <div className='mb-2'>인원 수 입력</div>
         <Input className='h-12' onChange={handleInputChange} value={value} />
-        <ErrorMessage message={error} />
+        {error ? (
+          <ErrorMessage message={error} />
+        ) : (
+          <div className='h-[17.1px]'></div>
+        )}
       </div>
     </Modal>
   );
