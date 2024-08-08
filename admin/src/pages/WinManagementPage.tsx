@@ -14,11 +14,11 @@ type WinnerListModal = {
 
 const WinManagementPage = () => {
   const [numberModalOpen, setNumberModalOpen] = useState(false);
-  const [probabilitiesModalOpen, setProbabilitiesModalOpen] = useState(true);
+  const [probabilitiesModalOpen, setProbabilitiesModalOpen] = useState(false);
   const [winnerListModal, setWinnerListModal] = useState<WinnerListModal>({
     state: 'raffle',
   });
-  const [winnerListModalOpen, setWinnerListModalOpen] = useState(true);
+  const [winnerListModalOpen, setWinnerListModalOpen] = useState(false);
 
   return (
     <div className='min-w-screen max-h-screen p-11'>
