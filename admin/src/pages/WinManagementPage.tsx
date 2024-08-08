@@ -22,13 +22,13 @@ const WinManagementPage = () => {
 
   return (
     <div className='min-w-screen h-full m-10 flex-1 bg-[#F3F5F7] flex  flex-col items-center gap-10'>
-      <div className='flex flex-col w-full gap-2.5 items-center mt-[3.125rem]'>
+      <div className='flex flex-col w-full gap-2.5 items-center mt-10'>
         <h1 className='text-4xl font-bold'>당첨 관리</h1>
         <p className='text-sm mb-1'>
           선착순 당첨 인원 수 설정 / 당첨 / 당첨자 목록 조회
         </p>
       </div>
-      <div className='flex w-full h-full gap-10 mx-auto justify-evenly'>
+      <div className='flex w-full h-full gap-10 ml-16 justify-evenly'>
         <div className='w-full flex flex-col items-center justify-center'>
           <SetFCFSWinnerContainer
             pageType='manage'

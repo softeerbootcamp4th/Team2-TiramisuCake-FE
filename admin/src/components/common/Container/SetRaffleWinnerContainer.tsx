@@ -32,7 +32,7 @@ const SetRaffleWinnerContainer = ({
   };
 
   return (
-    <ListContainer>
+    <ListContainer width={pageType === 'main' ? '30rem' : '39rem'}>
       <WinnerList
         title='당첨자 추첨'
         winners={winners}

@@ -34,7 +34,7 @@ const SetFCFSWinnerContainer = ({
     }
   };
   return (
-    <ListContainer>
+    <ListContainer width={pageType === 'main' ? '30rem' : '39rem'}>
       <div className='flex flex-row px-4 text-left text-lg py-4'>
         <span className='my-auto font-semibold'>선착순 당첨 인원 수 설정</span>
         <div className='ml-auto text-[16px] mr-3'>
