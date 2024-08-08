@@ -11,7 +11,7 @@ const QuizTitle = ({ quizTitle, answer }: QuizTitleProps) => {
       </div>
       <div className='mt-1 text-h-m font-bold text-gray-800 tracking-[-0.36px] whitespace-pre-wrap text-center'>
         <span className='text-primary'>
-          '{answer.map((char, index) => (char === ' ' ? ' ' : 0))}'
+          '{answer.map((char, _index) => (char === ' ' ? ' ' : 0))}'
         </span>
         {quizTitle}
       </div>
