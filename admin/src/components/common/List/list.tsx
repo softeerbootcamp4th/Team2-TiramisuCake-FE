@@ -1,5 +1,3 @@
-import EditButton from '@/components/common/Button/EditButton';
-
 type Event = {
   id: string;
   period: string;
@@ -19,15 +17,15 @@ interface ListProps {
             <EditButton text='수정하기' onClick={onClick} />
           </div>
  */
-const List = ({ onClick, events }: ListProps) => {
+const List = ({ events }: ListProps) => {
   return (
-    <div>
+    <div className='mb-2'>
       {events.map((event) => (
         <div
           key={event.id}
           className={`flex items-center justify-between p-3 bg-white rounded-lg`}
         >
-          <div className='flex items-center space-x-4'>
+          <div className='ml-4 flex items-center space-x-4'>
             <div className='flex items-center justify-center w-10 h-10 rounded-full bg-gray-200'>
               <span className='text-lg font-medium'>{event.id}</span>
             </div>

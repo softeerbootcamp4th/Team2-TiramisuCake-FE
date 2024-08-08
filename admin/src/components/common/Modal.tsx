@@ -22,7 +22,7 @@ const Modal = ({
   handleButtonClick,
 }: PropsWithChildren<ModalProps>) => {
   return (
-    <div className='shadow-custom p-3 flex flex-col gap-4 items-center max-w-[374px] rounded-lg'>
+    <div className='shadow-custom p-3 flex flex-col gap-4 items-center max-w-[600px] bg-white rounded-lg'>
       <div className='flex flex-col items-end w-full'>
         <img
           src='/svg/close.svg'
@@ -32,7 +32,7 @@ const Modal = ({
       </div>
       {children}
       {isButton && (
-        <Button className='w-[140px] mb-4' onClick={handleButtonClick}>
+        <Button className='w-[140px] mb-3' onClick={handleButtonClick}>
           저장
         </Button>
       )}
