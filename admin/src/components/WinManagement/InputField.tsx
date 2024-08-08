@@ -25,7 +25,7 @@ const InputField = ({
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (getNumberValidation(e.target.value, min, max)) {
       setValue(e.target.value);
-      setError('');
+      if (error) setError('');
     } else {
       setValue('');
       setError('1~10의 숫자만 입력 가능');
@@ -36,7 +36,7 @@ const InputField = ({
     if (error) {
       const timer = setTimeout(() => {
         setError('');
-      }, 3000);
+      }, 300);
       return () => clearTimeout(timer);
     }
   }, [error, setError]);
