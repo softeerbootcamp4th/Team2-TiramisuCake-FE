@@ -1,6 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { DonutChart } from '@/components/ui/donutChart';
 
+import { Chart } from '@/components/ui/Barchart';
+
 const EventMetricsPage = () => {
   return (
     <div className='max-w-full h-full flex-1 m-10 bg-[#F3F5F7] flex flex-col items-center gap-12'>
@@ -13,8 +15,10 @@ const EventMetricsPage = () => {
         </div>
       </div>
       <div className='flex justify-evenly gap-[3.125rem]'>
-        <div>무야호</div>
-        <hr className='w-[1px] h-[364px] bg-gray-600' />
+        <div className='flex gap-4 bg-white'>
+          <Chart />
+        </div>
+        <hr className='w-[1px] h-[510px] bg-gray-600' />
         <div className='flex gap-[1.2rem]'>
           <DonutChart
             title='선착순 이벤트 참여율'
