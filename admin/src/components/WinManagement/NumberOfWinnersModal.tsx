@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import Modal from '../common/Modal';
 import { Input } from '../ui/input';
 import { getNumberValidation } from '@/utils/getValidation';
+import ErrorMessage from '../common/ErrorMessage';
 interface Props {
   handleClose: () => void;
 }
@@ -39,7 +40,7 @@ const NumberOfWinnersModal = ({ handleClose }: Props) => {
       <div className='w-[137px]'>
         <div>인원 수 입력</div>
         <Input className='h-12' onChange={handleInputChange} value={value} />
-        <div className='text-xs text-red mt-1 whitespace-nowrap'>{error}</div>
+        <ErrorMessage message={error} />
       </div>
     </Modal>
   );

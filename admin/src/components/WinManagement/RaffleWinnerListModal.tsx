@@ -1,11 +1,11 @@
+import RaffleWinnerList from './RaffleWinnerList';
 import Modal from '../common/Modal';
-import WinnerList from './WinnerList';
 
 interface Props {
   handleClose: () => void;
 }
 
-const WinnerListModal = ({ handleClose }: Props) => {
+const RaffleWinnerListModal = ({ handleClose }: Props) => {
   return (
     <Modal
       handleButtonClick={() => {
@@ -13,9 +13,9 @@ const WinnerListModal = ({ handleClose }: Props) => {
       }}
       handleCloseClick={handleClose}
     >
-      <WinnerList />
+      <RaffleWinnerList />
     </Modal>
   );
 };
 
-export default WinnerListModal;
+export default RaffleWinnerListModal;

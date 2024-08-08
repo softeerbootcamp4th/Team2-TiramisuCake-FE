@@ -1,12 +1,21 @@
 import NumberOfWinnersModal from '@/components/WinManagement/NumberOfWinnersModal';
-import WinnerListModal from '@/components/WinManagement/WinnerListModal';
+import WinnerListModal from '@/components/WinManagement/FCFSWinnerListModal';
 import WinnersProbabilitiesModal from '@/components/WinManagement/WinnersProbabilitiesModal';
 import { useState } from 'react';
+import RaffleWinnerListModal from '@/components/WinManagement/RaffleWinnerListModal';
+import FCFSWinnerListModal from '@/components/WinManagement/FCFSWinnerListModal';
+
+type WinnerListModal = {
+  state: 'raffle' | 'FCFS';
+};
 
 const WinManagementPage = () => {
   const [numberModalOpen, setNumberModalOpen] = useState(true);
   const [probabilitiesModalOpen, setProbabilitiesModalOpen] = useState(true);
-  const [winnerListModal, setWinnerListModal] = useState(true);
+  const [winnerListModal, setWinnerListModal] = useState<WinnerListModal>({
+    state: 'raffle',
+  });
+  const [winnerListModalOpen, setWinnerListModalOpen] = useState(true);
 
   return (
     <div className='min-w-screen max-h-screen p-11'>
@@ -37,10 +46,16 @@ const WinManagementPage = () => {
               )}
             </div>
             <div>
-              {winnerListModal ? (
-                <WinnerListModal
-                  handleClose={() => setWinnerListModal(false)}
-                />
+              {winnerListModalOpen ? (
+                winnerListModal.state === 'raffle' ? (
+                  <RaffleWinnerListModal
+                    handleClose={() => setWinnerListModalOpen(false)}
+                  />
+                ) : (
+                  <FCFSWinnerListModal
+                    handleClose={() => setWinnerListModalOpen(false)}
+                  />
+                )
               ) : (
                 <div className='w-[374px] h-[548px]'></div>
               )}

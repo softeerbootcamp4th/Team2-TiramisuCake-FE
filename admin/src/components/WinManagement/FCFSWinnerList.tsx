@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const WinnerList = () => {
+const FCFSWinnerList = () => {
   const [selectedIndex, setSelectedIndex] = useState(1);
 
   const tabStyled = 'py-1 border-r border-gray-600 flex-1 text-center';
@@ -8,7 +8,7 @@ const WinnerList = () => {
   return (
     <div className='w-[373px] flex flex-col items-center'>
       <div className='font-bold'>선착순 당첨자 목록</div>
-      <div className='flex flex-col gap-7 w-full items-center'>
+      <div className='flex flex-col gap-7 w-full items-center mt-2'>
         <div
           className='rounded-xl w-[192px] text-xs border border-gray-600 flex cursor-pointer 
         '
@@ -60,4 +60,4 @@ const WinnerList = () => {
   );
 };
 
-export default WinnerList;
+export default FCFSWinnerList;
