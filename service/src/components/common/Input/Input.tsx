@@ -44,7 +44,7 @@ const Input = ({
   const [isFocus, setIsFocus] = useState(false);
   const buttonActive = isValue ? true : false;
   const buttonType = type === 'active' ? 'round' : 'roundDone';
-  const [isValid, setIsValid] = useState(true);
+  const [_isValid, setIsValid] = useState(true);
 
   const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value.replace(/\D/g, ''); // 숫자만 추출

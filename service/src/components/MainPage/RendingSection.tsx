@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const backgroundImage = '/main.png';
 const gifFile = '/gifs.gif';
 const downarrow = '/svg/BigArrow.svg';
-const jsonfile = '/softeer (1).json';
+// const jsonfile = '/softeer (1).json';
 interface RendingSectionProps {
   onArrowClick: () => void;
 }
