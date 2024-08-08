@@ -4,13 +4,16 @@ import WinnersProbabilitiesModal from '@/components/WinManagement/WinnersProbabi
 import { useState } from 'react';
 import RaffleWinnerListModal from '@/components/WinManagement/RaffleWinnerListModal';
 import FCFSWinnerListModal from '@/components/WinManagement/FCFSWinnerListModal';
+import SetFCFSWinnerContainer from '@/components/common/Container/SetFCFSWinnerContainer';
+import SetRaffleWinnerContainer from '@/components/common/Container/SetRaffleWinnerContainer';
+import WinnersListContainer from '@/components/common/Container/WinnersListContainer';
 
 type WinnerListModal = {
   state: 'raffle' | 'FCFS';
 };
 
 const WinManagementPage = () => {
-  const [numberModalOpen, setNumberModalOpen] = useState(true);
+  const [numberModalOpen, setNumberModalOpen] = useState(false);
   const [probabilitiesModalOpen, setProbabilitiesModalOpen] = useState(true);
   const [winnerListModal, setWinnerListModal] = useState<WinnerListModal>({
     state: 'raffle',
@@ -27,7 +30,22 @@ const WinManagementPage = () => {
           </p>
         </div>
         <div className='flex w-full h-full'>
-          <div className='w-full'></div>
+          <div className='w-full'>
+            <SetFCFSWinnerContainer
+              pageType='manage'
+              handleModalOpen={() => setNumberModalOpen(true)}
+            />
+            <SetRaffleWinnerContainer
+              pageType='manage'
+              handleModalOpen={() => setProbabilitiesModalOpen(true)}
+            />
+            <WinnersListContainer
+              pageType='manage'
+              handleModalOpen={() => setWinnerListModalOpen(true)}
+              selectRaffleModal={() => setWinnerListModal({ state: 'raffle' })}
+              selectFCFSModal={() => setWinnerListModal({ state: 'FCFS' })}
+            />
+          </div>
           <div className='w-full flex gap-10'>
             <div className='flex flex-col gap-8'>
               {numberModalOpen ? (
