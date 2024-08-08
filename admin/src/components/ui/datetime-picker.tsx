@@ -237,7 +237,7 @@ function genMonths(locale: Locale) {
   }));
 }
 
-function genYears(locale: Locale, yearRange = 50) {
+function genYears(_locale: Locale, yearRange = 50) {
   const today = new Date();
   return Array.from({ length: yearRange * 2 + 1 }, (_, i) => ({
     value: today.getFullYear() - yearRange + i,
@@ -300,8 +300,8 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        IconLeft: ({ ...props }) => <ChevronLeft className='h-4 w-4' />,
-        IconRight: ({ ...props }) => <ChevronRight className='h-4 w-4' />,
+        IconLeft: () => <ChevronLeft className='h-4 w-4' />,
+        IconRight: () => <ChevronRight className='h-4 w-4' />,
         CaptionLabel: ({ displayMonth }) => {
           return (
             <div className='inline-flex gap-2'>
