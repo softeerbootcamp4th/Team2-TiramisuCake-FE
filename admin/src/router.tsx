@@ -1,30 +1,35 @@
-import { createBrowserRouter } from "react-router-dom";
-import { ROUTER_PATH } from "./lib/constants";
-import Main from "./pages/Main";
-import CommentsLounge from "./pages/CommentsLounge";
-import LotteryLounge from "./pages/LotteryLounge";
-import QuizLounge from "./pages/QuizLounge";
-import App from "./App";
+import { createBrowserRouter } from 'react-router-dom';
+import App from './App';
+import LoginPage from './pages/LoginPage';
+import EventManagementPage from './pages/EventManagementPage';
+import WinManagementPage from './pages/WinManagementPage';
+import EventMetricsPage from './pages/EventMetricsPage';
+import { ROUTER_PATH } from './lib/constants';
+import MainPage from './pages/MainPage';
 
 export const router = createBrowserRouter([
   {
     element: <App />,
     children: [
       {
+        element: <LoginPage />,
+        index: true,
+      },
+      {
+        element: <MainPage />,
         path: ROUTER_PATH.MAIN,
-        element: <Main />,
       },
       {
-        path: ROUTER_PATH.COMMENTS_LOUNGE,
-        element: <CommentsLounge />,
+        element: <EventManagementPage />,
+        path: ROUTER_PATH.EVENT_MANAGE,
       },
       {
-        path: ROUTER_PATH.LOTTERY_LOUNGE,
-        element: <LotteryLounge />,
+        element: <WinManagementPage />,
+        path: ROUTER_PATH.WIN_MANAGE,
       },
       {
-        path: ROUTER_PATH.QUIZ_LOUNGE,
-        element: <QuizLounge />,
+        element: <EventMetricsPage />,
+        path: ROUTER_PATH.EVENT_METRICS,
       },
     ],
   },

@@ -1,0 +1,54 @@
+.carousel-container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 313px;
+  align-items: center;
+  overflow: hidden;
+  min-width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.carousel {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.carousel-item {
+  transition:
+    flex 0.5s ease-in-out,
+    width 0.5s ease,
+    opacity 0.5s ease;
+  cursor: pointer;
+  flex: 0 0 auto;
+  width: 84px;
+  height: 350px;
+  opacity: 0.5;
+}
+.carousel-item.active {
+  flex: 0 0 auto;
+  width: 784px;
+  max-width: 784px;
+  height: 422px;
+  opacity: 1;
+  background-color: transparent;
+}
+
+.carousel-item.adjacent {
+  flex: 0 0 auto;
+  width: 84px;
+  opacity: 0.75;
+}
+
+.carousel-item.shorter {
+  height: 240px;
+}
+
+.carousel-item-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
