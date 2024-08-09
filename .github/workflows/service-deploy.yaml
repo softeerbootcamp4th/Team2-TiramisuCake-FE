@@ -1,46 +1,57 @@
 name: Front Deployment
+
 on:
- push:
-  branches:
-   - main
+  push:
+    branches:
+      - main
+   
 jobs:
- build:
-  name: react build & deploy
-  runs-on: ubuntu-latest
-  steps:
-   - name: checkout Github Action
-    uses: actions/checkout@v3
-   - name: Get yarn cache directory
-    id: yarn-cache-dir
-    run: |
-     echo "::set-output name=dir::$(yarn config get cache)"
-   - uses: actions/cache@v3
-    id: yarn-cache
-    with:
-     path: ${{ steps.yarn-cache-dir.outputs.dir }}
-     key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
-     restore-keys: |
-      ${{ runner.os }}-node-
-   - name: install yarn service dir  
-     working-directory: ./service
-     run: yarn install --frozen-lockfile
-   - name: yarn build service dir
-     working-directory: ./service
-     run: yarn build
-   - name: Configure AWS credentials
-    uses: aws-actions/configure-aws-credentials@v1
-     with:
-      role-to-assume: ${{ secrets.AWS_ARN }}
-      aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-   - name: Upload to S3
-    env:
-     BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME_A}}
-    run: |
-     aws s3 sync \
-      ./service/build s3://$BUCKET_NAME
-   - name: CloudFront Invalidation
-    env:
-     CLOUD_FRONT_ID: ${{ secrets.AWS_CLOUDFRONT_ID_A}}
-    run: |
-     aws cloudfront create-invalidation \
-      --distribution-id $CLOUD_FRONT_ID --paths /*
+  build:
+    name: react build & deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # 레포지토리에 접근하여 CI 서버로 코드를 내려받는 과정입니다.
+      - name: checkout Github Action
+        uses: actions/checkout@v3
+
+      # workflow가 실행될 때 필요한 파일 중에서 거의 바뀌지 않는 파일들을 GitHub의 캐시에 올려놓고 CI 서버로 내려받습니다.
+      - name: Get yarn cache directory
+        id: yarn-cache-dir
+        run: echo "dir=$(yarn config get cache)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        with:
+          path: ${{ env.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: install yarn service dir  
+        working-directory: ./service
+        run: yarn install --frozen-lockfile
+
+      - name: yarn build service dir
+        working-directory: ./service
+        run: yarn build
+
+      # AWS에 접근하기 위한 권한을 받아옵니다.
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.AWS_ARN }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      # S3에 build 파일을 올립니다.
+      - name: Upload to S3
+        env:
+          BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME_A }}
+        run: |
+          aws s3 sync ./service/build s3://$BUCKET_NAME --delete
+
+      # CloudFront 캐시 무효화
+      - name: CloudFront Invalidation
+        env:
+          CLOUD_FRONT_ID: ${{ secrets.AWS_CLOUDFRONT_ID_A }}
+        run: |
+          aws cloudfront create-invalidation --distribution-id $CLOUD_FRONT_ID --paths "/*"
