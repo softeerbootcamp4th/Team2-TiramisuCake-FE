@@ -20,19 +20,20 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            .yarn/cache
-            .yarn/build-state.yml
-            .pnp.*
+            service/.yarn/cache
+            service/.yarn/build-state.yml
+            service/.pnp.*
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
 
       - name: Install dependencies with Yarn
-        run: yarn install 
+        working-directory: ./service
+        run: yarn install --immutable
 
       - name: Build the project
-        run: yarn build
         working-directory: ./service
+        run: yarn build
 
       # AWS에 접근하기 위한 권한을 받아옵니다.
       - name: Configure AWS credentials
