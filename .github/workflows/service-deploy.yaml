@@ -50,10 +50,10 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ARN }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
-      # S3에 build 파일을 올립니다.
+      # S3에 dist 파일을 올립니다.
       - name: Upload to S3
         run: |
-          aws s3 sync ./service/build s3://${{ secrets.AWS_S3_BUCKET_NAME_A }} --delete
+          aws s3 sync ./service/dist s3://${{ secrets.AWS_S3_BUCKET_NAME_A }} --delete
 
       # CloudFront 캐시 무효화
       - name: CloudFront Invalidation
