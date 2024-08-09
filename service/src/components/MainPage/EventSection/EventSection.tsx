@@ -7,6 +7,7 @@ import LoginModal from './LoginModal/LoginModal';
 import { useLoginContext } from '@/store/context/useLoginContext';
 import Bouncing from '@/components/common/Bouncing/Bouncing';
 import { motion } from 'framer-motion';
+import { SCROLL_MOTION } from '@/constants/animation';
 
 interface EventSectionProps {
   startDate: '2024.09.02';
@@ -44,7 +45,6 @@ const EventSection = ({
   startDate,
   endDate,
   onArrowClick,
-  isVisible,
 }: EventSectionProps) => {
   const { isLogined } = useLoginContext();
 
@@ -77,21 +77,19 @@ const EventSection = ({
       )}
       <div className='flex flex-col w-[73rem] items-center h-[41.6rem] justify-center'>
         <div className='flex flex-col self-stretch items-center my-4'>
-          <span className='text-center font-Pretendard text-green-500 font-medium text-b-s'>
+          <span className='text-center font-Pretendard text-green-500 font-medium text-b-m'>
             {startDate}-{endDate}
           </span>
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
-            className='font-bold text-[2.25rem] self-stretch text-center text-gray-900 line-height-[3.375rem]'
+            {...SCROLL_MOTION}
+            className='font-bold text-h-l self-stretch text-center text-gray-900 line-height-[3.375rem]'
           >
             {title}
           </motion.div>
         </div>
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
-          className=' font-Pretendard font-normal text-gray-800 text-center'
+          {...SCROLL_MOTION}
+          className='font-Pretendard text-b-xl font-normal text-gray-800 text-center'
         >
           {splitSentences(description)}
         </motion.div>
@@ -128,13 +126,13 @@ const EventSection = ({
           </div>
         ) : (
           <>
-            <div className='flex my-6 py-2 px-3'>
+            <motion.div {...SCROLL_MOTION} className='flex my-6 py-2 px-3'>
               <Button
                 type='square'
                 text='번호 인증하고 이벤트 참여하기'
                 handleClick={handleOpenModal}
               ></Button>
-            </div>
+            </motion.div>
             <div className='flex items-center flex-row text-center'>
               {informs.map((inform, index) => (
                 <EventInfoCard key={index} {...inform} />

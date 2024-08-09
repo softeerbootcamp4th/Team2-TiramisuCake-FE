@@ -1,6 +1,8 @@
 import { InformItem } from '@/types/eventInfoItem';
 import Badge from '@/components/common/Badge/Badge';
 import splitSentences from '@/utils/splitSentence';
+import { motion } from 'framer-motion';
+import { SCROLL_MOTION } from '@/constants/animation';
 
 const EventInfoCard = ({
   when,
@@ -12,7 +14,10 @@ const EventInfoCard = ({
   imageUrl,
 }: InformItem) => {
   return (
-    <div className='w-[36.5rem] h-[21.8rem] flex flex-col items-center justify-center p-6 border border-custom-white bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom'>
+    <motion.div
+      {...SCROLL_MOTION}
+      className='w-[36.5rem] h-[21.8rem] flex flex-col items-center justify-center p-6 border border-custom-white bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom'
+    >
       <div className='w-full'>
         {when && hint && (
           <div className='text-center inline-flex flex-row justify-center gap-3'>
@@ -48,7 +53,7 @@ const EventInfoCard = ({
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
