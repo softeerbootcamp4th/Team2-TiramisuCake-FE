@@ -13,7 +13,6 @@ interface EventSectionProps {
   startDate: '2024.09.02';
   endDate: '2024.09.15';
   onArrowClick: () => void;
-  isVisible: boolean;
 }
 
 const downArrow = '/svg/downarrow.svg';
