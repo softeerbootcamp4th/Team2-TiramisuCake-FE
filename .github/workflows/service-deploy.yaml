@@ -52,10 +52,8 @@ jobs:
 
       # S3에 build 파일을 올립니다.
       - name: Upload to S3
-        env:
-          BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME_A }}
         run: |
-          aws s3 sync ./service/build s3://$BUCKET_NAME --delete
+          aws s3 sync ./service/build s3://${{ secrets.AWS_S3_BUCKET_NAME_A }} --delete
 
       # CloudFront 캐시 무효화
       - name: CloudFront Invalidation
