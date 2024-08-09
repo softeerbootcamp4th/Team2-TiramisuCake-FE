@@ -33,7 +33,7 @@ jobs:
 
       - name: Install dependencies with Yarn
         working-directory: ./admin
-        run: yarn install --immutable
+        run: yarn install --frozen-lockfile
 
       - name: Build the project
         working-directory: ./admin
