@@ -19,14 +19,16 @@ const WinnerList = ({ title, winners, onClick }: WinnerListProps) => {
       <hr className='border-gray-300 my-2 mx-auto w-[95%]' />
       <div className='flex justify-between'>
         <div className='font-bold my-auto'>당첨 인원 및 확률</div>
-        <div className='flex-1 ml-3 p-2'>
+        <div className='flex-1 ml-4 p-2'>
           {winners.map((winner, index) => (
-            <div key={index} className='flex justify-between items-center my-1'>
-              <div>
-                {winner.rank} : {winner.count}
+            <div key={index} className='flex justify-between my-1'>
+              <div className='flex w-full items-center'>
+                <div className='flex-1 text-left'>
+                  {winner.rank} : {winner.count}
+                </div>
+                <div className='flex-none text-center'>|</div>
+                <div className='flex-1 text-right'>{winner.probability}</div>
               </div>
-              <div className='mx-2'>|</div>
-              <div>{winner.probability}</div>
             </div>
           ))}
         </div>
