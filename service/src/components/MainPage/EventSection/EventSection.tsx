@@ -7,8 +7,8 @@ import LoginModal from './LoginModal/LoginModal';
 import { useLoginContext } from '@/store/context/useLoginContext';
 
 interface EventSectionProps {
-  startDate: '2024.09.02';
-  endDate: '2024.09.15';
+  startDate: string;
+  endDate: string;
   onArrowClick: () => void;
 }
 
@@ -73,7 +73,7 @@ const EventSection = ({
       )}
       <div className='flex flex-col w-[73rem] items-center h-[41.6rem] justify-center'>
         <div className='flex flex-col self-stretch items-center my-4'>
-          <span className='text-center font-Pretendard text-green-500 font-medium text-b-s'>
+          <span className='text-center font-Pretendard text-green-500 font-medium text-b-m'>
             {startDate}-{endDate}
           </span>
           <div className='font-bold text-[2.25rem] self-stretch text-center text-gray-900 line-height-[3.375rem]'>

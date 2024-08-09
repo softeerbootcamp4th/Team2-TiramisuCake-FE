@@ -6,7 +6,7 @@ import { Chart } from '@/components/ui/Barchart';
 const EventMetricsPage = () => {
   return (
     <div className='max-w-full h-full flex-1 m-10 bg-[#F3F5F7] flex flex-col items-center gap-12'>
-      <div className='mt-[3.125rem]'>
+      <div className='mt-[1.5rem]'>
         <div className='text-black text-center text-4xl font-bold mt-6'>
           이벤트 지표
         </div>
@@ -30,9 +30,7 @@ const EventMetricsPage = () => {
           />
         </div>
       </div>
-      <div>
-        <Button className='w-[226px] h-9'>새로고침하기</Button>
-      </div>
+      <Button className='w-[226px] h-9'>새로고침하기</Button>
     </div>
   );
 };
