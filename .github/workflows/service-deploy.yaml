@@ -12,27 +12,27 @@ jobs:
 
     steps:
       # 레포지토리에 접근하여 CI 서버로 코드를 내려받는 과정입니다.
-      - name: checkout Github Action
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      # yarn 캐시 디렉토리를 수동으로 설정합니다.
-      - name: Setup yarn cache directory
-        run: echo "YARN_CACHE_DIR=$(yarn cache dir)" >> $GITHUB_ENV
-
-      - uses: actions/cache@v3
+      # yarn의 캐시를 설정합니다.
+      - name: Cache Yarn dependencies
+        uses: actions/cache@v3
         with:
-          path: ${{ env.YARN_CACHE_DIR }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          path: |
+            .yarn/cache
+            .yarn/build-state.yml
+            .pnp.*
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-yarn-
 
-      - name: install yarn service dir  
-        working-directory: ./service
-        run: yarn install --frozen-lockfile
+      - name: Install dependencies with Yarn
+        run: yarn install --immutable
 
-      - name: yarn build service dir
-        working-directory: ./service
+      - name: Build the project
         run: yarn build
+        working-directory: ./service
 
       # AWS에 접근하기 위한 권한을 받아옵니다.
       - name: Configure AWS credentials
