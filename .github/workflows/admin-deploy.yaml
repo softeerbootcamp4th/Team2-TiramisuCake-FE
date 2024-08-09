@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: react admin build & deploy
+    name: react build & deploy
     runs-on: ubuntu-latest
 
     permissions:
@@ -24,9 +24,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            service/.yarn/cache
-            service/.yarn/build-state.yml
-            service/.pnp.*
+            admin/.yarn/cache
+            admin/.yarn/build-state.yml
+            admin/.pnp.*
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
@@ -51,8 +51,8 @@ jobs:
 
       # S3에 dist 파일을 올립니다.
       - name: Upload to S3
-        run: aws s3 sync ./admin/dist s3://${{ secrets.AWS_S3_BUCKET_NAME_A }} --delete
+        run: aws s3 sync ./service/dist s3://${{ secrets.AWS_S3_BUCKET_NAME_B }} --delete
 
       # CloudFront 캐시 무효화
       - name: CloudFront Invalidation
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_ID_A }} --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_ID_B }} --paths "/*"
