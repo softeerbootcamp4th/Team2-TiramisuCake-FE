@@ -35,6 +35,10 @@ jobs:
         working-directory: ./service
         run: yarn build
 
+      - name: echo test
+        run: |
+          echo ${{ secrets.AWS_ARN }}
+
       # AWS에 접근하기 위한 권한을 받아옵니다.
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
