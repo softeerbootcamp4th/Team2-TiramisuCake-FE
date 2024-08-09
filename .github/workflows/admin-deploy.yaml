@@ -51,7 +51,7 @@ jobs:
 
       # S3에 dist 파일을 올립니다.
       - name: Upload to S3
-        run: aws s3 sync ./service/dist s3://${{ secrets.AWS_S3_BUCKET_NAME_B }} --delete
+        run: aws s3 sync ./admin/dist s3://${{ secrets.AWS_S3_BUCKET_NAME_B }} --delete
 
       # CloudFront 캐시 무효화
       - name: CloudFront Invalidation
