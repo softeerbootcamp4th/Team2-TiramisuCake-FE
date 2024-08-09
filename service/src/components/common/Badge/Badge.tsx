@@ -24,9 +24,9 @@ const Badge = ({ type, text }: BadgeProp) => {
   };
 
   return (
-    <button className={`flex items-center ${buttonStyle[type]}`}>
+    <div className={`flex items-center ${buttonStyle[type]}`}>
       <span className={`${textStyle[type]}`}>{text}</span>
-    </button>
+    </div>
   );
 };
 
