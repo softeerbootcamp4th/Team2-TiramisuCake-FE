@@ -1,4 +1,5 @@
 name: Front Deployment
+
 on:
   push:
     branches:
@@ -12,7 +13,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-      
+
     steps:
       # 레포지토리에 접근하여 CI 서버로 코드를 내려받는 과정입니다.
       - name: Checkout repository
@@ -38,9 +39,8 @@ jobs:
         working-directory: ./service
         run: yarn build
 
-      - name: echo test
-        run: |
-          echo ${{ secrets.AWS_ARN }}
+      - name: Echo test
+        run: echo ${{ secrets.AWS_ARN }}
 
       # AWS에 접근하기 위한 권한을 받아옵니다.
       - name: Configure AWS credentials
@@ -49,14 +49,10 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ARN }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
-      # S3에 dist 파일을 올립니다.
+      # S3에 dist 파일을 올립니다.
       - name: Upload to S3
-        run: |
-          aws s3 sync ./service/dist s3://${{ secrets.AWS_S3_BUCKET_NAME_A }} --delete
+        run: aws s3 sync ./service/dist s3://${{ secrets.AWS_S3_BUCKET_NAME_A }} --delete
 
       # CloudFront 캐시 무효화
       - name: CloudFront Invalidation
-        env:
-          CLOUD_FRONT_ID: ${{ secrets.AWS_CLOUDFRONT_ID_A }}
-        run: |
-          aws cloudfront create-invalidation --distribution-id $CLOUD_FRONT_ID --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_ID_A }} --paths "/*"
