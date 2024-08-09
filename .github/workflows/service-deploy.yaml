@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-   
+
 jobs:
   build:
     name: react build & deploy
@@ -15,14 +15,13 @@ jobs:
       - name: checkout Github Action
         uses: actions/checkout@v3
 
-      # workflow가 실행될 때 필요한 파일 중에서 거의 바뀌지 않는 파일들을 GitHub의 캐시에 올려놓고 CI 서버로 내려받습니다.
-      - name: Get yarn cache directory
-        id: yarn-cache-dir
-        run: echo "dir=$(yarn config get cache)" >> $GITHUB_ENV
+      # yarn 캐시 디렉토리를 수동으로 설정합니다.
+      - name: Setup yarn cache directory
+        run: echo "YARN_CACHE_DIR=$(yarn cache dir)" >> $GITHUB_ENV
 
       - uses: actions/cache@v3
         with:
-          path: ${{ env.dir }}
+          path: ${{ env.YARN_CACHE_DIR }}
           key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-node-
