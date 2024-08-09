@@ -1,4 +1,10 @@
 # Team2-TiramisuCake-FE
+**배포 URL**
+
+🔗 service : https://softeer.site/
+
+🔗 admin : https://d3qmq1ffhp5il9.cloudfront.net/
+
 **커밋 컨벤션**
 - label : subject
 label은 issue label을 참고,
@@ -20,3 +26,5 @@ dev branch에 직접 PR 올리는 것 금지!
 
 회고
 https://www.notion.so/bside/3f4a3606067143fbb54bd5e584afe762
+
+
