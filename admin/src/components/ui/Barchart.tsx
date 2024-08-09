@@ -32,7 +32,8 @@ const chartData = [
   { date: '2024-09-14', participant: 209 },
   { date: '2024-09-15', participant: 214 },
 ];
-
+const firstDate = chartData[0].date;
+const lastDate = chartData[chartData.length - 1].date;
 const chartConfig = {
   participant: {
     label: 'participant',
@@ -46,7 +47,7 @@ export function Chart() {
       <CardHeader className='text-center'>
         <CardDescription>The new IONIQ 5와 그린라이트🟢</CardDescription>
         <CardTitle>
-          이벤트 기간(2024.09.02~2024.09.15) 일자별 이벤트 방문자 수
+          이벤트 기간({firstDate}~{lastDate}) 일자별 이벤트 방문자 수
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -72,7 +73,7 @@ export function Chart() {
           </BarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className='flex-col items-start gap-2 text-sm'>
+      <CardFooter className='flex-col gap-2 text-sm'>
         <div className='leading-none text-muted-foreground text-center'>
           메인 페이지 클릭 방문 수 트래킹 총 결과 값
         </div>

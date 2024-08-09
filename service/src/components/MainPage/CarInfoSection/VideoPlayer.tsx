@@ -52,10 +52,10 @@ const VideoPlayer = () => {
   return (
     <>
       <div
-        className={`mt-[313px] w-screen min-h-screen absolute top-0 cursor-pointer flex justify-center  ${state.isFullScreen ? 'bg-[#00000033] items-center -mr-[200px]' : 'bg-transparent'}`}
+        className={`w-screen min-h-screen absolute top-0 cursor-pointer flex justify-center  ${state.isFullScreen ? 'bg-[#00000033] items-center -mr-[200px]' : 'bg-transparent'}`}
       >
         <div
-          className={`z-20  ${state.isFullScreen ? 'absolute w-[1184px] h-[638px] mx-auto left-1/2 -translate-x-1/2' : 'translate-x-custom-1 transform w-[784px] h-[422px]'}`}
+          className={`z-20  ${state.isFullScreen ? 'absolute w-[1184px] h-[638px] mx-auto left-1/2 -translate-x-1/2' : 'translate-x-custom-1 transform w-[784px] h-[422px] mt-[313px] '}`}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >

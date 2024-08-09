@@ -1,8 +1,12 @@
 import QuizContainer from '@/components/QuizLounge/QuizContainer';
 import QuizFooter from '@/components/QuizLounge/QuizFooter';
 import QuizTitle from '@/components/QuizLounge/QuizTitle';
+import { useEffect } from 'react';
 
 function QuizLoungePage() {
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
   const data = {
     title:
       '디지털 센터 미러 전용 카메라를 통해 \n 보다 선명하게 후방을 확인할 수 있다',
