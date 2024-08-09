@@ -5,11 +5,14 @@ import Button from '@/components/common/Button/Button';
 import EventInfoCard from './EventInfoCard/EventInfoCard';
 import LoginModal from './LoginModal/LoginModal';
 import { useLoginContext } from '@/store/context/useLoginContext';
+import Bouncing from '@/components/common/Bouncing/Bouncing';
+import { motion } from 'framer-motion';
 
 interface EventSectionProps {
   startDate: '2024.09.02';
   endDate: '2024.09.15';
   onArrowClick: () => void;
+  isVisible: boolean;
 }
 
 const downArrow = '/svg/downarrow.svg';
@@ -41,6 +44,7 @@ const EventSection = ({
   startDate,
   endDate,
   onArrowClick,
+  isVisible,
 }: EventSectionProps) => {
   const { isLogined } = useLoginContext();
 
@@ -76,13 +80,21 @@ const EventSection = ({
           <span className='text-center font-Pretendard text-green-500 font-medium text-b-s'>
             {startDate}-{endDate}
           </span>
-          <div className='font-bold text-[2.25rem] self-stretch text-center text-gray-900 line-height-[3.375rem]'>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
+            className='font-bold text-[2.25rem] self-stretch text-center text-gray-900 line-height-[3.375rem]'
+          >
             {title}
-          </div>
+          </motion.div>
         </div>
-        <div className=' font-Pretendard font-normal text-gray-800 text-center'>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
+          className=' font-Pretendard font-normal text-gray-800 text-center'
+        >
           {splitSentences(description)}
-        </div>
+        </motion.div>
         {isLogined ? (
           <div className='my-8'>
             <div className='flex items-center flex-row text-center'>
@@ -130,13 +142,16 @@ const EventSection = ({
             </div>
           </>
         )}
-
-        <img
-          className='mt-auto hover:cursor-pointer '
-          src={downArrow}
-          alt='arrow'
-          onClick={onArrowClick}
-        />
+        <div className='mt-auto'>
+          <Bouncing>
+            <img
+              className=' hover:cursor-pointer '
+              src={downArrow}
+              alt='arrow'
+              onClick={onArrowClick}
+            />
+          </Bouncing>
+        </div>
       </div>
     </div>
   );
