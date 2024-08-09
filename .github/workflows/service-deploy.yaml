@@ -10,6 +10,10 @@ jobs:
     name: react build & deploy
     runs-on: ubuntu-latest
 
+    permissions:
+      id-token: write
+      contents: read
+      
     steps:
       # 레포지토리에 접근하여 CI 서버로 코드를 내려받는 과정입니다.
       - name: Checkout repository
