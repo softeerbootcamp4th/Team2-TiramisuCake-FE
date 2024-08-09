@@ -3111,7 +3111,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lucide-react@npm:0.424.0":
+"lucide-react@npm:^0.424.0":
   version: 0.424.0
   resolution: "lucide-react@npm:0.424.0"
   peerDependencies:
@@ -4398,7 +4398,7 @@ __metadata:
     eslint-plugin-react-hooks: "npm:^4.6.2"
     eslint-plugin-react-refresh: "npm:^0.4.7"
     framer-motion: "npm:^11.3.8"
-    lucide-react: "npm:0.424.0"
+    lucide-react: "npm:^0.424.0"
     postcss: "npm:^8.4.39"
     react: "npm:^18.3.1"
     react-day-picker: "npm:8.10.1"
