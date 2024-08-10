@@ -1,9 +1,8 @@
-export interface getCodeRequestBody {
+export interface sendCodeRequestBody {
   phoneNumber: string;
 }
 
-export interface confirmVerificationRequestBody extends getCodeRequestBody {
-  phoneNumber: string;
+export interface confirmVerificationRequestBody extends sendCodeRequestBody {
   verificationCode: string;
 }
 

@@ -1,6 +1,6 @@
 import { HEADERS } from '@/constants/lib/constants';
 import {
-  getCodeRequestBody,
+  sendCodeRequestBody,
   confirmVerificationRequestBody,
   loginRequestBody,
 } from '@/types/Authorization/request';
@@ -12,10 +12,10 @@ import {
   reIssueResponse,
 } from '@/types/Authorization/response';
 
-export const getAuthCode = async (
+export const sendAuthCode = async (
   phoneNumber: string
 ): Promise<codeResponse> => {
-  const requestBody: getCodeRequestBody = {
+  const requestBody: sendCodeRequestBody = {
     phoneNumber,
   };
 
