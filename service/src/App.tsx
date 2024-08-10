@@ -5,16 +5,13 @@ import Footer from './components/common/Footer/Footer';
 import Tooltip from './components/common/Tooltip/Tooltip';
 import { TabProvider } from './store/provider/TabProvider';
 
-
 const App = () => {
   return (
     <>
       <TabProvider>
-        <div className="relative">
+        <div className='relative'>
           <Header />
-          <main className="pt-14">
-            <Outlet />
-          </main>
+          <Outlet />
           <EventInfoFooter />
           <Footer />
           <Tooltip />
