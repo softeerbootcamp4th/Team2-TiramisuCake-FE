@@ -3,14 +3,14 @@ import {
   sendCodeRequestBody,
   confirmVerificationRequestBody,
   loginRequestBody,
-} from '@/types/Authorization/request';
+} from '@/types/authorization/request';
 
 import {
   codeResponse,
   confirmResponse,
   loginResponse,
   reIssueResponse,
-} from '@/types/Authorization/response';
+} from '@/types/authorization/response';
 
 export const sendAuthCode = async (
   phoneNumber: string
@@ -27,9 +27,9 @@ export const sendAuthCode = async (
   if (!response.ok) {
     throw new Error(`Error: ${response.status}`);
   }
-  const data: codeResponse = await response.json();
+  //const data: codeResponse = await response.json();
 
-  return data;
+  return response.json();
 };
 
 export const confirmVerification = async (
@@ -45,8 +45,8 @@ export const confirmVerification = async (
     throw new Error(`Error: ${response.status}`);
   }
 
-  const data: confirmResponse = await response.json();
-  return data;
+  //const data: confirmResponse = await response.json();
+  return response.json();
 };
 
 export const login = async (body: loginRequestBody): Promise<loginResponse> => {
@@ -60,8 +60,8 @@ export const login = async (body: loginRequestBody): Promise<loginResponse> => {
     throw new Error(`Error: ${response.status}`);
   }
 
-  const data: loginResponse = await response.json();
-  return data;
+  //const data: loginResponse = await response.json();
+  return response.json();
 };
 
 export const reissueToken = async (

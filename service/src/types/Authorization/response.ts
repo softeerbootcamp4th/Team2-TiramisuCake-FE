@@ -17,7 +17,7 @@ export interface loginResponse {
   isSuccess: boolean;
   code: string;
   message: string;
-  result: {
+  result?: {
     accessToken: string;
     refreshToken: string;
     expiredTime: string;
