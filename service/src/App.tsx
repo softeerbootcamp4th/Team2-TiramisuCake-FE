@@ -11,7 +11,9 @@ const App = () => {
       <TabProvider>
         <div className='relative'>
           <Header />
-          <Outlet />
+          <main>
+            <Outlet />
+          </main>
           <EventInfoFooter />
           <Footer />
           <Tooltip />
