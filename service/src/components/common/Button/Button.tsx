@@ -62,7 +62,9 @@ const Button = ({
   };
 
   const handleBtnClick = () => {
-    handleClick();
+    if (isActive) {
+      handleClick();
+    }
     if (type == 'reaction') setIsReactionClicked(true);
   };
 
