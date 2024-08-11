@@ -5,6 +5,7 @@ import Button from '@/components/common/Button/Button';
 import EventInfoCard from './EventInfoCard/EventInfoCard';
 import LoginModal from './LoginModal/LoginModal';
 import { useLoginContext } from '@/store/context/useLoginContext';
+import { LoginModalProvider } from '@/store/context/loginModalContext';
 
 interface EventSectionProps {
   startDate: string;
@@ -68,7 +69,9 @@ const EventSection = ({
     >
       {isModalOpen && (
         <div className='fixed inset-0 flex items-center justify-center z-[99] backdrop-blur-sm'>
-          <LoginModal onClose={handleCloseModal} />
+          <LoginModalProvider>
+            <LoginModal onClose={handleCloseModal} />
+          </LoginModalProvider>
         </div>
       )}
       <div className='flex flex-col w-[73rem] items-center h-[41.6rem] justify-center'>
