@@ -1,4 +1,3 @@
-'use client';
 import { useState } from 'react';
 import { Calendar } from '../ui/calendar';
 import { TimePicker } from '@/components/ui/datetime-picker';
