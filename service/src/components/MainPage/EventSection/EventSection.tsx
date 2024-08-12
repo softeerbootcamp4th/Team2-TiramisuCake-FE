@@ -10,7 +10,6 @@ import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
 import { useEventDateContext } from '@/store/context/useEventDateContext';
 import { useEventInfo } from '@/apis/main/query';
-import { EventInfoResponse } from '@/types/main/eventInfoType';
 
 interface EventSectionProps {
   onArrowClick: () => void;
@@ -25,7 +24,6 @@ const EventSection = ({ onArrowClick }: EventSectionProps) => {
 
   const { startDate, endDate, setStartDate, setEndDate } =
     useEventDateContext();
-  const [eventData, setEventData] = useState<EventInfoResponse>();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigator = useNavigate();
 
@@ -44,7 +42,6 @@ const EventSection = ({ onArrowClick }: EventSectionProps) => {
   };
   useEffect(() => {
     if (!isLoading && data) {
-      setEventData(data);
       setStartDate(data.result.startDate);
       setEndDate(data.result.endDate);
     }
@@ -73,29 +70,29 @@ const EventSection = ({ onArrowClick }: EventSectionProps) => {
             {...SCROLL_MOTION}
             className='font-bold text-h-l self-stretch text-center text-gray-900 line-height-[3.375rem]'
           >
-            {eventData?.result.eventTitle}
+            {data?.result.eventTitle}
           </motion.div>
         </div>
         <motion.div
           {...SCROLL_MOTION}
           className='font-Pretendard text-b-xl font-normal text-gray-800 text-center'
         >
-          {splitSentences(eventData?.result.eventDescription!)}
+          {splitSentences(data?.result.eventDescription!)}
         </motion.div>
         {isLogined ? (
           <div className='my-8'>
             <div className='flex items-center flex-row text-center'>
-              {eventData?.result.eventInfoList?.[0] && (
+              {data?.result.eventInfoList?.[0] && (
                 <EventInfoCard
-                  fcfsInfo={eventData?.result.fcfsInfo}
-                  eventInfo={eventData.result.eventInfoList[0]}
+                  fcfsInfo={data?.result.fcfsInfo}
+                  eventInfo={data.result.eventInfoList[0]}
                 />
               )}
-              {eventData?.result.eventInfoList?.[1] && (
+              {data?.result.eventInfoList?.[1] && (
                 <EventInfoCard
-                  totalDrawWinner={eventData?.result.totalDrawWinner}
-                  remainDrawCount={eventData?.result.remainDrawCount}
-                  eventInfo={eventData.result.eventInfoList[1]}
+                  totalDrawWinner={data?.result.totalDrawWinner}
+                  remainDrawCount={data?.result.remainDrawCount}
+                  eventInfo={data.result.eventInfoList[1]}
                 />
               )}
             </div>
@@ -133,17 +130,17 @@ const EventSection = ({ onArrowClick }: EventSectionProps) => {
               ></Button>
             </motion.div>
             <div className='flex items-center flex-row text-center'>
-              {eventData?.result.eventInfoList?.[0] && (
+              {data?.result.eventInfoList?.[0] && (
                 <EventInfoCard
-                  fcfsInfo={eventData?.result.fcfsInfo}
-                  eventInfo={eventData.result.eventInfoList[0]}
+                  fcfsInfo={data?.result.fcfsInfo}
+                  eventInfo={data.result.eventInfoList[0]}
                 />
               )}
-              {eventData?.result.eventInfoList?.[1] && (
+              {data?.result.eventInfoList?.[1] && (
                 <EventInfoCard
-                  totalDrawWinner={eventData?.result.totalDrawWinner}
-                  remainDrawCount={eventData?.result.remainDrawCount}
-                  eventInfo={eventData.result.eventInfoList[1]}
+                  totalDrawWinner={data?.result.totalDrawWinner}
+                  remainDrawCount={data?.result.remainDrawCount}
+                  eventInfo={data.result.eventInfoList[1]}
                 />
               )}
             </div>
