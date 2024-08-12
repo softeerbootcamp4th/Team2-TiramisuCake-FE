@@ -1,6 +1,5 @@
 import { useCarInfoContext } from '@/store/context/useCarInfoContext';
 import { useState } from 'react';
-import splitSentences from '@/utils/splitSentence';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
 
@@ -43,7 +42,7 @@ const CarDetail = ({
       >
         <img src={leftImageUrl} className='h-full w-full object-cover' />
         {activeImage !== 'left' ? (
-          <div className='absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center'>
+          <div className='absolute top-0 left-0 w-full h-full border-none bg-black bg-opacity-50 flex justify-center items-center'>
             <motion.p
               {...SCROLL_MOTION}
               className='text-white text-b-xxl font-semibold'
