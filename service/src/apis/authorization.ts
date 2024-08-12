@@ -3,14 +3,14 @@ import {
   SendCodeRequestBody,
   ConfirmVerificationRequestBody,
   LoginRequestBody,
-} from '@/types/authorization/request';
+} from '@/types/Authorization/request';
 
 import {
   CodeResponse,
   ConfirmResponse,
   LoginResponse,
   ReIssueResponse,
-} from '@/types/authorization/response';
+} from '@/types/Authorization/response';
 
 const baseURL = `${import.meta.env.VITE_SITE_URL}`;
 
