@@ -22,7 +22,7 @@ const WinManagementPage = () => {
 
   return (
     <div className='min-w-screen h-full m-10 flex-1 bg-[#F3F5F7] flex  flex-col items-center gap-10'>
-      <div className='flex flex-col w-full gap-2.5 items-center mt-10'>
+      <div className='flex flex-col w-full gap-2.5 items-center mt-8'>
         <h1 className='text-4xl font-bold'>당첨 관리</h1>
         <p className='text-sm mb-1'>
           선착순 당첨 인원 수 설정 / 당첨 / 당첨자 목록 조회

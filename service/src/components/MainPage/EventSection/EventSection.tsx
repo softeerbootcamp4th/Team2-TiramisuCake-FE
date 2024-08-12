@@ -10,8 +10,8 @@ import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
 
 interface EventSectionProps {
-  startDate: '2024.09.02';
-  endDate: '2024.09.15';
+  startDate: string;
+  endDate: string;
   onArrowClick: () => void;
 }
 

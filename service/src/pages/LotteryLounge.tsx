@@ -1,6 +1,7 @@
 import Button from '@/components/common/Button/Button';
 import Attendance from '@/components/LotteryLounge/Attendance';
 import LotteryCanvas from '@/components/LotteryLounge/LotteryCanvas';
+import { useEffect } from 'react';
 
 const backgroundImage = '/Lottery.png';
 const sample = () => {
@@ -11,6 +12,9 @@ const linkcount = 2;
 const todayleft = 3;
 
 const LotteryLoungePage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div>
       <div

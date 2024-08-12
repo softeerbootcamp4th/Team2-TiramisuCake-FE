@@ -33,7 +33,7 @@ jobs:
 
       - name: Install dependencies with Yarn
         working-directory: ./admin
-        run: yarn install --immutable-cache
+        run: yarn install --immutable
 
       - name: Build the project
         working-directory: ./admin

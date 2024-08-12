@@ -45,19 +45,7 @@ const EventManagementPage = () => {
     // 저장 로직 추가
     setIsWinModalOpen(false);
   };
-  /*
-  const [date, setDate] = useState<Date | undefined>(undefined);
-  const [startFCFSTime, setstartFCFSTime] = useState<Date | undefined>(
-    undefined
-  );
-  const [endFCFSTime, setEndFCFSTime] = useState<Date | undefined>(undefined);
-  const [startRaffletime, setStartRaffleTime] = useState<Date | undefined>(
-    undefined
-  );
-  const [endRaffletime, setEndRaffleTime] = useState<Date | undefined>(
-    undefined
-  );
-*/
+
   const navigator = useNavigate();
 
   const showEventMetrics = () => {
@@ -66,7 +54,7 @@ const EventManagementPage = () => {
 
   return (
     <div className='min-w-screen h-full m-10 flex-1 bg-[#F3F5F7] '>
-      <div className='text-black text-center text-4xl font-bold pt-10'>
+      <div className='text-black text-center text-4xl font-bold pt-8'>
         이벤트 관리
       </div>
       <div className='text-gray-800 text-sm text-center my-3'>

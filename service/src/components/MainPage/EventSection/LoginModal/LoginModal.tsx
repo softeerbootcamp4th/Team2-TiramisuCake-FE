@@ -33,6 +33,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
     localStorage.setItem('Token', 'hehehe');
 
     setIsLogined(true);
+    onClose();
   };
 
   return (
