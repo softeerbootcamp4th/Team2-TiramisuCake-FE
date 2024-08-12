@@ -1,10 +1,31 @@
+import { useEffect, useState } from 'react';
+import Button from '@/components/common/Button/Button';
 import Comment from '@/components/common/Comment/Comment';
-import { useEffect } from 'react';
+import { useQueryGetComments } from '@/apis/commentsLounge/query';
 
 const CommentsLoungePage = () => {
+  const [isDisabled, setIsDisabled] = useState(false);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const { data, isLoading } = useQueryGetComments();
+  console.log(data);
+
+  const handleBtnClick = () => {
+    setIsDisabled(true);
+    sendInfoToServer();
+    setTimeout(() => {
+      setIsDisabled(false);
+    }, 1000);
+  };
+
+  const sendInfoToServer = () => {
+    // 여기에 서버로 정보 전송하는 로직 추가
+    console.log('Information sent to server');
+  };
+
   return (
     <>
       <div className='bg-gradient-bottom-yellow min-h-screen w-[80vw] flex relative justify-center items-center m-auto'>
@@ -29,13 +50,38 @@ const CommentsLoungePage = () => {
           </div>
           <div className='comment-container'>
             <div className='flex-row flex space-x-4'>
-              <Comment isUser type='exiting' />
-              <Comment isUser type='gift' />
-              <Comment isUser type='funny' />
+              <Button
+                type='reaction'
+                text='👏 기대돼요'
+                isActive={!isDisabled}
+                handleClick={handleBtnClick}
+              />
+              <Button
+                type='reaction'
+                text='🎁 경품 당첨되고 싶어요'
+                isActive={!isDisabled}
+                handleClick={handleBtnClick}
+              />
+              <Button
+                type='reaction'
+                text='😝 재밌을 것 같아요'
+                isActive={!isDisabled}
+                handleClick={handleBtnClick}
+              />
             </div>
             <div className='px-4 flex-row flex space-x-4'>
-              <Comment isUser type='car' />
-              <Comment isUser type='good' />
+              <Button
+                type='reaction'
+                text='🚗 The new IONIQ 5 최고'
+                isActive={!isDisabled}
+                handleClick={handleBtnClick}
+              />
+              <Button
+                type='reaction'
+                text='👍 좋은 이벤트에요'
+                isActive={!isDisabled}
+                handleClick={handleBtnClick}
+              />
             </div>
             <div className='text-b-s text-gray-800'>
               신차 이벤트에 대한 기대평을 자유롭게 선택해보세요.
