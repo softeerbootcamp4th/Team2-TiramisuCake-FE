@@ -48,7 +48,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
     setMarketingConsent(!marketingConsent);
   };
 
-  const [cookies, setCookie] = useCookies(['accessToken', 'refreshToken']);
+  const [cookies, setCookies] = useCookies(['accessToken', 'refreshToken']);
 
   const { setIsLogined } = useLoginContext();
 
@@ -107,14 +107,14 @@ const LoginModal = ({ onClose }: CloseProps) => {
         //const expiresAt = parseISO(response.result.expiredTime);
         //const maxAge = differenceInSeconds(expiresAt, new Date());
 
-        setCookie('accessToken', response.result.accessToken, {
+        setCookies('accessToken', response.result.accessToken, {
           path: '/',
           maxAge: 100000,
           secure: true, // HTTPS에서만 사용
           sameSite: 'strict',
         });
 
-        setCookie('refreshToken', response.result.refreshToken, {
+        setCookies('refreshToken', response.result.refreshToken, {
           path: '/',
           maxAge: 604800, // 7일 동안 유효
           secure: true,
