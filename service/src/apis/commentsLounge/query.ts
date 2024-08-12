@@ -5,7 +5,6 @@ export const useQueryGetComments = (cursor?: number) => {
   const { isLoading, data } = useQuery({
     queryKey: ['getComments', cursor],
     queryFn: () => getComments(cursor),
-    refetchInterval: 2000,
   });
   return { isLoading, data };
 };

@@ -1,5 +1,5 @@
-export interface CommentType {
-  comment: string;
+export interface CommentsType {
+  commentType: number;
   isMine: boolean;
   nickName: string;
 }

@@ -1,17 +1,15 @@
 interface CommentProps {
   userName?: string;
-  type: CommentType;
+  type: number;
   isUser?: boolean;
 }
 
-type CommentType = 'funny' | 'exiting' | 'gift' | 'good' | 'car';
-
-const commentMessage: Record<string, string> = {
-  funny: '😝 재밌을 것 같아요',
-  exiting: '👏 기대돼요',
-  gift: '🎁 경품 당첨되고 싶어요',
-  good: '👍 좋은 이벤트에요',
-  car: '🚗 The new IONIQ 5 최고',
+const commentMessage: Record<number, string> = {
+  1: '👏 기대돼요',
+  2: '🎁 경품 당첨되고 싶어요',
+  3: '😝 재밌을 것 같아요',
+  4: '🚗 The new IONIQ 5 최고',
+  5: '👍 좋은 이벤트에요',
 };
 
 const Comment = ({ userName, type, isUser = false }: CommentProps) => {
