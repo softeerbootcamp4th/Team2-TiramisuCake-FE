@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import splitSentences from '@/utils/splitSentence';
 import Button from '@/components/common/Button/Button';
 import EventInfoCard from './EventInfoCard/EventInfoCard';
 import LoginModal from './LoginModal/LoginModal';
@@ -10,6 +9,7 @@ import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
 import { useEventDateContext } from '@/store/context/useEventDateContext';
 import { useEventInfo } from '@/apis/main/query';
+import { ROUTER_PATH } from '@/constants/lib/constants';
 
 interface EventSectionProps {
   onArrowClick: () => void;
@@ -35,10 +35,10 @@ const EventSection = ({ onArrowClick }: EventSectionProps) => {
     setIsModalOpen(false);
   };
   const goQuizLounge = () => {
-    navigator('/quiz-lounge');
+    navigator(ROUTER_PATH.QUIZ_LOUNGE);
   };
   const goLotteryLounge = () => {
-    navigator('/lottery-lounge');
+    navigator(ROUTER_PATH.LOTTERY_LOUNGE);
   };
   useEffect(() => {
     if (!isLoading && data) {
@@ -48,7 +48,11 @@ const EventSection = ({ onArrowClick }: EventSectionProps) => {
   }, [isLoading, data]);
 
   if (isLoading) {
-    return <div>...잠시만 기다려주세요.</div>;
+    return (
+      <h1 className='text-h-m text-center justify-center'>
+        ...잠시만 기다려주세요.
+      </h1>
+    );
   }
 
   return (
@@ -75,9 +79,9 @@ const EventSection = ({ onArrowClick }: EventSectionProps) => {
         </div>
         <motion.div
           {...SCROLL_MOTION}
-          className='font-Pretendard text-b-xl font-normal text-gray-800 text-center'
+          className='font-Pretendard text-b-xl font-normal text-gray-800 text-center whitespace-pre-wrap'
         >
-          {splitSentences(data?.result.eventDescription!)}
+          {data?.result.eventDescription!}
         </motion.div>
         {isLogined ? (
           <div className='my-8'>
