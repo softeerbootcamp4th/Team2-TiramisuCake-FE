@@ -15,6 +15,8 @@ export interface EventInfo {
 export interface EventResult {
   startDate: string;
   endDate: string;
+  eventTitle: string;
+  eventDescription: string;
   fcfsInfo: string;
   totalDrawWinner: string;
   remainDrawCount: string;
