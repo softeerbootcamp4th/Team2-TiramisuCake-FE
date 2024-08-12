@@ -1,19 +1,17 @@
 import Button from '@/components/common/Button/Button';
 import Input from '@/components/common/Input/Input';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useLoginContext } from '@/store/context/useLoginContext';
 import Modal from '@/components/common/Modal/Modal';
 import { sendAuthCode, confirmVerification, login } from '@/apis/authorization';
-import useLoginModalStateContext from '@/hooks/useLoginModalStateContext';
-import useLoginModalDispatchContext from '@/hooks/useLoginModalDispatchContext';
-import { LOGIN_ACTION } from '@/store/types/loginModalTypes';
 import './LoginModal.css';
 import {
-  confirmVerificationRequestBody,
-  loginRequestBody,
+  ConfirmVerificationRequestBody,
+  LoginRequestBody,
 } from '@/types/authorization/request';
 import { useCookies } from 'react-cookie';
 import { parseISO, differenceInSeconds } from 'date-fns';
+import { validatePhoneNumber } from '@/utils/checkPhoneNumber';
 
 interface CloseProps {
   onClose: () => void;
@@ -26,25 +24,44 @@ const LoginModal = ({ onClose }: CloseProps) => {
   const [timer, setTimer] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
+
+  const [name, setName] = useState('');
+  const [validPhoneNumber, setValidPhoneNumber] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [codeVerified, setCodeVerified] = useState(false);
+  const [code, setCode] = useState('');
+  const [privacyConsent, setPrivacyConsent] = useState(false);
+  const [marketingConsent, setMarketingConsent] = useState(false);
+  const [allValid, setAllValid] = useState(false);
+
+  const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const rawValue = e.target.value.replace(/\D/g, ''); // 숫자만 추출
+    setPhoneNumber(rawValue);
+    setValidPhoneNumber(validatePhoneNumber(rawValue));
+  };
+
+  const handlePrivacyConsentChange = () => {
+    setPrivacyConsent(!privacyConsent);
+  };
+
+  const handleMarketingConsentChange = () => {
+    setMarketingConsent(!marketingConsent);
+  };
+
   const [cookies, setCookie] = useCookies(['accessToken', 'refreshToken']);
 
   const { setIsLogined } = useLoginContext();
-  const state = useLoginModalStateContext();
-  const dispatch = useLoginModalDispatchContext();
 
-  const handleCheck = () => {
-    dispatch({ type: LOGIN_ACTION.SET_CHECKED, payload: !state.isChecked });
+  const handleNameInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
   };
-
-  const handleMarketingCheck = () => {
-    dispatch({
-      type: LOGIN_ACTION.SET_MARKETING_CHECKED,
-      payload: !state.marketingChecked,
-    });
+  const handleCodeInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCode(e.target.value);
   };
 
   const handleSendAuthCode = async (phoneNumber: string) => {
     try {
+      console.log(phoneNumber);
       const response = await sendAuthCode(phoneNumber);
       console.log('인증번호 전송 성공:', response);
       if (response.isSuccess && response.result) {
@@ -64,11 +81,11 @@ const LoginModal = ({ onClose }: CloseProps) => {
       console.error('인증번호 전송 실패:', error);
     }
   };
-  const handleVerification = async (body: confirmVerificationRequestBody) => {
+  const handleVerification = async (body: ConfirmVerificationRequestBody) => {
     try {
       const response = await confirmVerification(body);
       if (response.isSuccess) {
-        dispatch({ type: LOGIN_ACTION.SET_VERIFIED, payload: true });
+        setCodeVerified(true);
         setTimer(0);
       } else {
         console.error('잘못된 인증번호입니다. 다시 입력해주세요');
@@ -78,7 +95,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
     }
   };
 
-  const handleLogin = async (body: loginRequestBody) => {
+  const handleLogin = async (body: LoginRequestBody) => {
     try {
       const response = await login(body);
       if (!response) {
@@ -117,6 +134,14 @@ const LoginModal = ({ onClose }: CloseProps) => {
     setSeconds(timer % 60);
   }, [timer]);
 
+  useEffect(() => {
+    if (privacyConsent && codeVerified) {
+      setAllValid(true);
+    } else {
+      setAllValid(false);
+    }
+  }, [privacyConsent, codeVerified]);
+
   return (
     <Modal handleClose={onClose}>
       <div className='flex p-9 flex-col justify-center items-center gap-6'>
@@ -133,13 +158,8 @@ const LoginModal = ({ onClose }: CloseProps) => {
               inputText='이름을 입력해주세요'
               buttonText=''
               required
-              value={state.name}
-              onChange={(e) =>
-                dispatch({
-                  type: LOGIN_ACTION.SET_NAME,
-                  payload: e.target.value,
-                })
-              }
+              value={name}
+              onChange={(e) => handleNameInputChange(e)}
             />
           </div>
           <div className={`mt-6 commonClass`}>
@@ -149,16 +169,11 @@ const LoginModal = ({ onClose }: CloseProps) => {
               inputText='전화번호를 입력해주세요'
               buttonText='인증번호 전송'
               required
-              isPhone
               showButton
-              value={state.phoneNumber}
-              onChange={(e) =>
-                dispatch({
-                  type: LOGIN_ACTION.SET_PHONE_NUMBER,
-                  payload: e.target.value,
-                })
-              }
-              handleButtonClick={() => handleSendAuthCode(state.phoneNumber)}
+              isActivated={validPhoneNumber}
+              value={phoneNumber}
+              onChange={(e) => handlePhoneNumberChange(e)}
+              handleButtonClick={() => handleSendAuthCode(phoneNumber)}
             />
           </div>
           <div className={`mt-6 commonClass`}>
@@ -173,22 +188,17 @@ const LoginModal = ({ onClose }: CloseProps) => {
               </div>
             </div>
             <Input
-              type={state.isVerified ? 'disabled' : 'active'}
+              type={codeVerified ? 'disabled' : 'active'}
               inputText='인증번호를 입력해주세요'
-              buttonText={state.isVerified ? '인증완료' : '전송'}
+              buttonText={codeVerified ? '인증완료' : '전송'}
               showButton
               required
-              value={state.verificationCode}
-              onChange={(e) =>
-                dispatch({
-                  type: LOGIN_ACTION.SET_VERIFICATION_CODE,
-                  payload: e.target.value,
-                })
-              }
+              value={code}
+              onChange={(e) => handleCodeInputChange(e)}
               handleButtonClick={() =>
                 handleVerification({
-                  phoneNumber: state.phoneNumber,
-                  verificationCode: state.verificationCode,
+                  phoneNumber: phoneNumber,
+                  verificationCode: code,
                 })
               }
             />
@@ -196,8 +206,8 @@ const LoginModal = ({ onClose }: CloseProps) => {
           <div className='mt-4 my-2 flex flex-row items-start'>
             <img
               className='cursor-pointer'
-              src={state.isChecked ? checked : checkbox}
-              onClick={handleCheck}
+              src={privacyConsent ? checked : checkbox}
+              onClick={handlePrivacyConsentChange}
             />
             <div className='py-1 ml-2 text-gray-800 text-b-s'>
               개인정보 수집 이용 동의 <span className=' text-red'>(필수)</span>
@@ -206,8 +216,8 @@ const LoginModal = ({ onClose }: CloseProps) => {
           <div className='mb-2 flex flex-row items-start'>
             <img
               className='cursor-pointer'
-              src={state.marketingChecked ? checked : checkbox}
-              onClick={handleMarketingCheck}
+              src={marketingConsent ? checked : checkbox}
+              onClick={handleMarketingConsentChange}
             />
             <div className='px-2 py-1 text-gray-800 text-b-s items-center'>
               마케팅 활용 및 광고 수신 동의
@@ -219,14 +229,14 @@ const LoginModal = ({ onClose }: CloseProps) => {
               text='완료'
               handleClick={() =>
                 handleLogin({
-                  name: state.name,
-                  phoneNumber: state.phoneNumber,
-                  hasCodeVerified: state.isVerified,
-                  privacyConsent: state.isChecked,
-                  marketingConsent: state.marketingChecked,
+                  name: name,
+                  phoneNumber: phoneNumber,
+                  hasCodeVerified: codeVerified,
+                  privacyConsent: privacyConsent,
+                  marketingConsent: marketingConsent,
                 })
               }
-              isActive={state.allValid}
+              isActive={allValid}
             />
           </div>
         </div>
