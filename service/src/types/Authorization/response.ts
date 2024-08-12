@@ -1,4 +1,4 @@
-export type codeResponse = {
+export type CodeResponse = {
   isSuccess: boolean;
   code: string;
   message: string;
@@ -7,13 +7,13 @@ export type codeResponse = {
   };
 };
 
-export interface confirmResponse {
+export interface ConfirmResponse {
   isSuccess: boolean;
   code: string;
   message: string;
 }
 
-export interface loginResponse {
+export interface LoginResponse {
   isSuccess: boolean;
   code: string;
   message: string;
@@ -24,4 +24,4 @@ export interface loginResponse {
   };
 }
 
-export interface reIssueResponse extends loginResponse {}
+export interface ReIssueResponse extends LoginResponse {}

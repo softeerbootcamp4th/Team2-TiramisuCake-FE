@@ -1,4 +1,4 @@
-export interface loginModalState {
+export interface LoginModalState {
   name: string;
   phoneNumber: string;
   verificationCode: string;
@@ -8,7 +8,7 @@ export interface loginModalState {
   allValid: boolean;
 }
 
-export type loginAction =
+export type LoginAction =
   | { type: LOGIN_ACTION.SET_VERIFIED; payload: boolean }
   | { type: LOGIN_ACTION.SET_CHECKED; payload: boolean }
   | { type: LOGIN_ACTION.SET_MARKETING_CHECKED; payload: boolean }

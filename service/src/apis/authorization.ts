@@ -1,23 +1,23 @@
 import { HEADERS } from '@/constants/lib/constants';
 import {
-  sendCodeRequestBody,
-  confirmVerificationRequestBody,
-  loginRequestBody,
+  SendCodeRequestBody,
+  ConfirmVerificationRequestBody,
+  LoginRequestBody,
 } from '@/types/authorization/request';
 
 import {
-  codeResponse,
-  confirmResponse,
-  loginResponse,
-  reIssueResponse,
+  CodeResponse,
+  ConfirmResponse,
+  LoginResponse,
+  ReIssueResponse,
 } from '@/types/authorization/response';
 
 const baseURL = `${import.meta.env.VITE_SITE_URL}`;
 
 export const sendAuthCode = async (
   phoneNumber: string
-): Promise<codeResponse> => {
-  const requestBody: sendCodeRequestBody = {
+): Promise<CodeResponse> => {
+  const requestBody: SendCodeRequestBody = {
     phoneNumber,
   };
 
@@ -35,8 +35,8 @@ export const sendAuthCode = async (
 };
 
 export const confirmVerification = async (
-  body: confirmVerificationRequestBody
-): Promise<confirmResponse> => {
+  body: ConfirmVerificationRequestBody
+): Promise<ConfirmResponse> => {
   const response = await fetch(`${baseURL}/verification/confirm`, {
     method: 'POST',
     headers: HEADERS,
@@ -51,7 +51,7 @@ export const confirmVerification = async (
   return response.json();
 };
 
-export const login = async (body: loginRequestBody): Promise<loginResponse> => {
+export const login = async (body: LoginRequestBody): Promise<LoginResponse> => {
   const response = await fetch(`${baseURL}/login`, {
     method: 'POST',
     headers: HEADERS,
@@ -69,7 +69,7 @@ export const login = async (body: loginRequestBody): Promise<loginResponse> => {
 export const reissueToken = async (
   accessToken: string,
   refreshToken: string
-): Promise<reIssueResponse> => {
+): Promise<ReIssueResponse> => {
   const response = await fetch(`${baseURL}/reissue`, {
     method: 'GET',
     headers: {
@@ -83,6 +83,6 @@ export const reissueToken = async (
     throw new Error(`Error: ${response.status}`);
   }
 
-  const data: reIssueResponse = await response.json();
+  const data: ReIssueResponse = await response.json();
   return data;
 };

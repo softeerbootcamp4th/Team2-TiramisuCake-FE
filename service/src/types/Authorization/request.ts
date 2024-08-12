@@ -1,12 +1,12 @@
-export interface sendCodeRequestBody {
+export interface SendCodeRequestBody {
   phoneNumber: string;
 }
 
-export interface confirmVerificationRequestBody extends sendCodeRequestBody {
+export interface ConfirmVerificationRequestBody extends SendCodeRequestBody {
   verificationCode: string;
 }
 
-export interface loginRequestBody {
+export interface LoginRequestBody {
   name: string;
   phoneNumber: string;
   hasCodeVerified: boolean;
