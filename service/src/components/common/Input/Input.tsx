@@ -25,7 +25,7 @@ interface InputProps {
   showButton?: boolean;
   required?: boolean;
   isError?: boolean;
-  isPhone?: boolean;
+  isActivated?: boolean;
   handleButtonClick?: (object?: any) => Promise<void>;
   //부모 컴포넌트에서 변경된 값 사용
   value?: string;
@@ -41,7 +41,7 @@ const Input = ({
   showButton = false,
   required = false,
   isError = false,
-  isPhone = false,
+  isActivated = true,
   handleButtonClick,
   value = '',
   onChange,
@@ -49,27 +49,13 @@ const Input = ({
   const [isValue, setIsValue] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
-  const buttonActive = isValue ? true : false;
   const buttonType = type === 'active' ? 'round' : 'roundDone';
-  //핸드폰 검사
-  const [isValid, setIsValid] = useState(false);
-  const phoneActive = isValid ? true : false;
-
-  const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const rawValue = e.target.value.replace(/\D/g, ''); // 숫자만 추출
-
-    setIsValid(validatePhoneNumber(rawValue));
-
-    if (onChange) {
-      onChange(e);
-    }
-  };
 
   useEffect(() => {
     if (type === 'disabled') setDisabled(true);
   }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
       onChange(e);
     }
@@ -103,7 +89,7 @@ const Input = ({
           value={value}
           placeholder={inputText}
           required={required}
-          onChange={isPhone ? handlePhoneNumberChange : handleInputChange}
+          onChange={onChange}
           onFocus={handleFocus}
           onBlur={handleFocus}
           disabled={disabled}
@@ -119,7 +105,7 @@ const Input = ({
       {showButton && (
         <Button
           type={buttonType}
-          isActive={isPhone ? phoneActive : buttonActive}
+          isActive={isActivated}
           text={buttonText}
           handleClick={() => handleButtonClick(value)}
         />
