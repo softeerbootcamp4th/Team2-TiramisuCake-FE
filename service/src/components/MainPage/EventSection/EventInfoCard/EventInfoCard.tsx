@@ -34,7 +34,7 @@ const EventInfoCard = ({
         <h2 className=' text-b-xxl font-bold mt-2 mb-4 text-center text-gray-800'>
           {title}
         </h2>
-        <p className='text-sm font-Pretendard text-d-s self-stretch text-gray-600 text-center whitespace-pre-wrap'>
+        <p className='text-b-s font-Pretendard self-stretch text-gray-600 text-center whitespace-pre-wrap'>
           {splitSentences(eventInformation)}
         </p>
       </div>

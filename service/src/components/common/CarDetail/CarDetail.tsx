@@ -53,7 +53,7 @@ const CarDetail = ({
             {...SCROLL_MOTION}
             className='absolute bottom-12 left-12 w-full text-white flex flex-col gap-4'
           >
-            <p className='text-b-xxl font-semibold'>{leftTitle}</p>
+            <p className='text-h-m font-semibold'>{leftTitle}</p>
             <p className='text-b-m spa'>{splitSentences(leftDescription)}</p>
           </motion.div>
         )}
@@ -77,7 +77,7 @@ const CarDetail = ({
             {...SCROLL_MOTION}
             className='absolute bottom-12 left-12 w-full text-white flex flex-col gap-4'
           >
-            <p className='text-b-xxl font-semibold'>{rightTitle}</p>
+            <p className='text-h-s font-semibold'>{rightTitle}</p>
             <p className='text-b-m'>{splitSentences(rightDescription)}</p>
           </motion.div>
         )}

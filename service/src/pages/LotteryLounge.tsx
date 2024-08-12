@@ -29,7 +29,7 @@ const LotteryLoungePage = () => {
               handleClick={sample}
             />
             <div className='text-center'>
-              <div className='font-semibold text-h-s mb-2'>
+              <div className='font-semibold text-h-m mb-2'>
                 복권을 통해 <span className='text-primary'>나의 경품</span>을
                 확인하세요!
               </div>

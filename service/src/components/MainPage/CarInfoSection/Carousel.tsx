@@ -113,7 +113,7 @@ const Carousel = () => {
                       <VideoPlayer />
                     ) : (
                       <div
-                        className='w-[784px] h-[422px] relative'
+                        className='w-[784px] h-[422px] relative transform duration-200'
                         style={{
                           transform: `translateX(${-(item.id - 3) * 53.5}px)`,
                         }}
@@ -121,7 +121,7 @@ const Carousel = () => {
                         <img
                           src={item.thumbnailUrl}
                           alt={item.title}
-                          className='w-full h-full object-cover'
+                          className='w-full h-full object-cover transform duration-200'
                         />
                         <div className='w-full h-full absolute top-0 bg-gradient-bottom-gray' />
                         <div className='absolute top-12 right-12'>
@@ -135,10 +135,10 @@ const Carousel = () => {
                           className='flex flex-col gap-4 absolute bottom-12 left-12 text-white'
                           {...SCROLL_MOTION}
                         >
-                          <h3 className='text-b-xl font-semibold'>
+                          <h3 className='text-b-xxl font-semibold'>
                             Living Space
                           </h3>
-                          <p className='text-b-s'>
+                          <p className='text-b-m'>
                             편안한 거주 공간 (Living Space) 테마를 반영하여 더
                             넓은 실내 공간을 즐길 수 있도록 연출합니다.
                           </p>
