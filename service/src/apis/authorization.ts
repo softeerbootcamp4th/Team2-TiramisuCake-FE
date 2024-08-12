@@ -26,9 +26,7 @@ export const sendAuthCode = async (
     headers: HEADERS,
     body: JSON.stringify(requestBody),
   });
-  if (!response.ok) {
-    throw new Error(`Error: ${response.status}`);
-  }
+
   //const data: codeResponse = await response.json();
 
   return response.json();
@@ -43,10 +41,6 @@ export const confirmVerification = async (
     body: JSON.stringify(body),
   });
 
-  if (!response.ok) {
-    throw new Error(`Error: ${response.status}`);
-  }
-
   //const data: confirmResponse = await response.json();
   return response.json();
 };
@@ -57,10 +51,6 @@ export const login = async (body: LoginRequestBody): Promise<LoginResponse> => {
     headers: HEADERS,
     body: JSON.stringify(body),
   });
-
-  if (!response.ok) {
-    throw new Error(`Error: ${response.status}`);
-  }
 
   //const data: loginResponse = await response.json();
   return response.json();
@@ -78,10 +68,6 @@ export const reissueToken = async (
       'Authorization-Refresh': refreshToken,
     },
   });
-
-  if (!response.ok) {
-    throw new Error(`Error: ${response.status}`);
-  }
 
   const data: ReIssueResponse = await response.json();
   return data;
