@@ -8,50 +8,17 @@ import { useCarInfoContext } from '@/store/context/useCarInfoContext';
 import CarouselBg from './CarouselBg';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
+import { CarInfoList } from '@/types/main/carInfoType';
 
-const data = [
-  {
-    id: 1,
-    title: 'The IONIQ 5',
-    subTitle: '새롭게 돌아온 The new IONIQ 5를 소개합니다.',
-    thumbnailUrl: '/thumbnail1.svg',
-    backgroundImgUrl: '/bg1.png',
-  },
-  {
-    id: 2,
-    title: 'Interior 2',
-    subTitle: '내부 인테리어',
-    thumbnailUrl: '/thumbnail2.svg',
-    backgroundImgUrl: '/bg2.svg',
-  },
-  {
-    id: 3,
-    title: 'Performance 3',
-    subTitle: '성능',
-    thumbnailUrl: '/thumbnail1.svg',
-    backgroundImgUrl: '/bg3.svg',
-  },
-  {
-    id: 4,
-    title: 'Interior 4',
-    subTitle: '내부 인테리어',
-    thumbnailUrl: '/thumbnail2.svg',
-    backgroundImgUrl: '/bg4.svg',
-  },
-  {
-    id: 5,
-    title: 'Performance 5',
-    subTitle: '성능',
-    thumbnailUrl: '/thumbnail1.svg',
-    backgroundImgUrl: '/bg5.svg',
-  },
-];
+interface CarouselProps {
+  carInfoList: CarInfoList[];
+}
 
-const Carousel = () => {
+const Carousel = ({ carInfoList }: CarouselProps) => {
   const { state, openCarDetail, selectCurrentIndex } = useCarInfoContext();
 
   const handleSlideClick = (index: number) => {
-    if (index >= 0 && index < data.length) {
+    if (index >= 0 && index < carInfoList.length) {
       selectCurrentIndex({ index: index });
     }
   };
@@ -59,17 +26,17 @@ const Carousel = () => {
   const getVisibleItems = () => {
     switch (state.currentIndex) {
       case 0:
-        return [data[0], data[1], data[2]];
+        return [carInfoList[0], carInfoList[1], carInfoList[2]];
       case 1:
-        return [data[0], data[1], data[2], data[3]];
+        return [carInfoList[0], carInfoList[1], carInfoList[2], carInfoList[3]];
       case 2:
-        return data;
+        return carInfoList;
       case 3:
-        return [data[1], data[2], data[3], data[4]];
+        return [carInfoList[1], carInfoList[2], carInfoList[3], carInfoList[4]];
       case 4:
-        return [data[2], data[3], data[4]];
+        return [carInfoList[2], carInfoList[3], carInfoList[4]];
       default:
-        return data;
+        return carInfoList;
     }
   };
 
@@ -96,7 +63,7 @@ const Carousel = () => {
       <CarouselBg currentIdx={state.currentIndex} />
       <div className='flex gap-4 z-10 items-center'>
         {visibleItems.map((item) => {
-          const isActive = item.id === data[state.currentIndex].id;
+          const isActive = item.id === carInfoList[state.currentIndex].id;
           const isDiffTwo = Math.abs(state.currentIndex - (item.id - 1)) === 2;
 
           return (
@@ -119,7 +86,7 @@ const Carousel = () => {
                         }}
                       >
                         <img
-                          src={item.thumbnailUrl}
+                          src={item.imgUrl}
                           alt={item.title}
                           className='w-full h-full object-cover transform duration-200'
                         />
@@ -136,12 +103,9 @@ const Carousel = () => {
                           {...SCROLL_MOTION}
                         >
                           <h3 className='text-b-xxl font-semibold'>
-                            Living Space
+                            {item.imgTitle}
                           </h3>
-                          <p className='text-b-m'>
-                            편안한 거주 공간 (Living Space) 테마를 반영하여 더
-                            넓은 실내 공간을 즐길 수 있도록 연출합니다.
-                          </p>
+                          <p className='text-b-m'>{item.imgContent}</p>
                         </motion.div>
                       </div>
                     )}
@@ -153,7 +117,11 @@ const Carousel = () => {
         })}
       </div>
       <CarouselBar />
-      {state.isCarDetailOpen && <CarDetailInfo />}
+      {state.isCarDetailOpen && (
+        <CarDetailInfo
+          carDetailInfoList={carInfoList[state.currentIndex].carDetailInfoList}
+        />
+      )}
     </div>
   );
 };
