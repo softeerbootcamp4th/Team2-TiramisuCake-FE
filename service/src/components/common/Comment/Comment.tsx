@@ -1,5 +1,5 @@
 interface CommentProps {
-  userName?: string;
+  userName: string;
   type: number;
   isUser?: boolean;
 }
@@ -16,11 +16,11 @@ const Comment = ({ userName, type, isUser = false }: CommentProps) => {
   const bgStyle = isUser
     ? 'bg-white rounded shadow-40 cursor-pointer'
     : 'bg-primary rounded-3xl';
-  const userNameStyle = isUser ? 'text-gray-600' : 'text-white';
+  const userNameStyle = isUser ? 'text-gray-600' : 'text-green-200';
   const messageStyle = isUser ? 'text-primary' : 'text-white';
 
   return (
-    <div className={`w-fit flex gap-2.5 items-center p-2 ${bgStyle}`}>
+    <div className={`w-fit flex gap-2.5 items-center p-2.5 ${bgStyle}`}>
       {!isUser && <div className={`${userNameStyle}`}>{userName}</div>}
       <div className={`${messageStyle} font-semibold`}>
         {commentMessage[type]}

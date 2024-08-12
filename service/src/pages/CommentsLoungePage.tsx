@@ -18,7 +18,6 @@ const CommentsLoungePage = () => {
   }, []);
 
   const { data, isLoading } = useQueryGetComments();
-  console.log(data);
 
   const mutation = useMutationPostComment();
 
@@ -45,7 +44,6 @@ const CommentsLoungePage = () => {
         }, 1000);
       },
     });
-    console.log('Information sent to server');
   };
 
   return (
@@ -55,14 +53,13 @@ const CommentsLoungePage = () => {
           The New IONIQ 5
         </div>
         <div className='flex w-[36.5rem] flex-col items-center gap-9'>
-          <div className='flex overflow-hidden w-[24rem] h-[560px] flex-col items-start gap-2 px-8 py-10 bg-white bg-opacity-20 backdrop-blur-md rounded-3xl relative'>
-            <div className='comment-mask'>
-              {isLoading ? (
-                <>야호</>
-              ) : (
-                <CommentsContainer comments={data.result.comments} />
-              )}
-            </div>
+          <div className='flex overflow-hidden w-[24rem] h-[560px] flex-col gap-2 px-8 py-10 bg-white bg-opacity-20 backdrop-blur-md rounded-3xl relative'>
+            <div className='comment-mask' />
+            {isLoading ? (
+              <>야호</>
+            ) : (
+              <CommentsContainer comments={data.result.comments} />
+            )}
           </div>
           <div className='comment-container'>
             <div className='flex-row flex space-x-4'>
