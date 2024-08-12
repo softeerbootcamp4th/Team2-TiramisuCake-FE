@@ -8,9 +8,9 @@ import './LoginModal.css';
 import {
   ConfirmVerificationRequestBody,
   LoginRequestBody,
-} from '@/types/authorization/request';
+} from '@/types/Authorization/request';
 import { useCookies } from 'react-cookie';
-import { parseISO, differenceInSeconds } from 'date-fns';
+//import { parseISO, differenceInSeconds } from 'date-fns';
 import { validatePhoneNumber } from '@/utils/checkPhoneNumber';
 
 interface CloseProps {
@@ -28,7 +28,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
   const [name, setName] = useState('');
   const [validPhoneNumber, setValidPhoneNumber] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [codeVerified, setCodeVerified] = useState(false);
+  const [codeVerified, setCodeVerified] = useState(true);
   const [code, setCode] = useState('');
   const [privacyConsent, setPrivacyConsent] = useState(false);
   const [marketingConsent, setMarketingConsent] = useState(false);
@@ -97,17 +97,19 @@ const LoginModal = ({ onClose }: CloseProps) => {
 
   const handleLogin = async (body: LoginRequestBody) => {
     try {
+      console.log(body);
       const response = await login(body);
+      console.log(response);
       if (!response) {
         throw new Error('Empty response from server');
       }
       if (response.isSuccess && response.result) {
-        const expiresAt = parseISO(response.result.expiredTime);
-        const maxAge = differenceInSeconds(expiresAt, new Date());
+        //const expiresAt = parseISO(response.result.expiredTime);
+        //const maxAge = differenceInSeconds(expiresAt, new Date());
 
         setCookie('accessToken', response.result.accessToken, {
           path: '/',
-          maxAge: maxAge,
+          maxAge: 100000,
           secure: true, // HTTPS에서만 사용
           sameSite: 'strict',
         });

@@ -1,8 +1,8 @@
 import React, { createContext, Dispatch, ReactNode, useReducer } from 'react';
-import { loginAction, loginModalState } from '../types/loginModalTypes';
+import { LoginAction, LoginModalState } from '../types/loginModalTypes';
 import { loginModalReducer } from '../reducer/loginModalReducer';
 
-const initialState: loginModalState = {
+const initialState: LoginModalState = {
   name: '',
   phoneNumber: '',
   verificationCode: '',
@@ -12,11 +12,11 @@ const initialState: loginModalState = {
   allValid: false,
 };
 
-export const LoginModalStateContext = createContext<loginModalState | null>(
+export const LoginModalStateContext = createContext<LoginModalState | null>(
   null
 );
 export const LoginModalDispatchContext =
-  createContext<Dispatch<loginAction> | null>(null);
+  createContext<Dispatch<LoginAction> | null>(null);
 
 export const LoginModalProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(loginModalReducer, initialState);

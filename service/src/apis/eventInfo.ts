@@ -1,4 +1,4 @@
-import { EventInfoResponse } from '@/store/types/eventInfoTypes';
+import { EventInfoResponse } from '@/types/main/eventInfoType';
 import { HEADERS } from '@/constants/lib/constants';
 const baseURL = `${import.meta.env.VITE_SITE_URL}/main`;
 

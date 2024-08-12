@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getCarDetailInfo } from './api';
 import { getEventInfo } from '@/apis/eventInfo';
-import { EventInfoResponse } from '@/store/types/eventInfoTypes';
+import { EventInfoResponse } from '@/types/main/eventInfoType';
 
 export const useQueryGetCarDetailInfo = () => {
   const { data, isLoading } = useQuery({
