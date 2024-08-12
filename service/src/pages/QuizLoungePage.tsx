@@ -1,7 +1,9 @@
+import ExitModal from '@/components/common/Modal/ExitModal/ExitModal';
 import QuizContainer from '@/components/QuizLounge/QuizContainer';
 import QuizFooter from '@/components/QuizLounge/QuizFooter';
 import QuizTitle from '@/components/QuizLounge/QuizTitle';
 import { useEffect } from 'react';
+import { useBlocker } from 'react-router-dom';
 
 function QuizLoungePage() {
   useEffect(() => {
@@ -14,6 +16,10 @@ function QuizLoungePage() {
     endIndex: 9,
   };
 
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) =>
+      currentLocation.pathname !== nextLocation.pathname
+  );
   const answer = data.title.slice(data.startIndex, data.endIndex).split('');
   const slicedQuizTitle = data.title.slice(data.endIndex);
 
@@ -25,6 +31,13 @@ function QuizLoungePage() {
       <QuizTitle quizTitle={slicedQuizTitle} answer={answer} />
       <QuizContainer answer={answer} />
       <QuizFooter />
+      {blocker.state === 'blocked' && (
+        <ExitModal
+          handleClose={() => blocker.reset()}
+          handleCancel={() => blocker.reset()}
+          handleConfirm={() => blocker.proceed()}
+        />
+      )}
     </div>
   );
 }

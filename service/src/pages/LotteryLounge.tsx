@@ -1,7 +1,9 @@
 import Button from '@/components/common/Button/Button';
+import ExitModal from '@/components/common/Modal/ExitModal/ExitModal';
 import Attendance from '@/components/LotteryLounge/Attendance';
 import LotteryCanvas from '@/components/LotteryLounge/LotteryCanvas';
 import { useEffect } from 'react';
+import { useBlocker } from 'react-router-dom';
 
 const backgroundImage = '/Lottery.png';
 const sample = () => {
@@ -15,6 +17,12 @@ const LotteryLoungePage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) =>
+      currentLocation.pathname !== nextLocation.pathname
+  );
+
   return (
     <div>
       <div
@@ -49,6 +57,13 @@ const LotteryLoungePage = () => {
           <Attendance />
         </div>
       </div>
+      {blocker.state === 'blocked' && (
+        <ExitModal
+          handleClose={() => blocker.reset()}
+          handleCancel={() => blocker.reset()}
+          handleConfirm={() => blocker.proceed()}
+        />
+      )}
     </div>
   );
 };
