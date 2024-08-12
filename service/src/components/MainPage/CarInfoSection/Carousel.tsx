@@ -6,6 +6,8 @@ import Button from '@/components/common/Button/Button';
 import CarDetailInfo from './CarDetailInfo';
 import { useCarInfoContext } from '@/store/context/useCarInfoContext';
 import CarouselBg from './CarouselBg';
+import { motion } from 'framer-motion';
+import { SCROLL_MOTION } from '@/constants/animation';
 
 const data = [
   {
@@ -129,7 +131,10 @@ const Carousel = () => {
                             handleClick={openCarDetail}
                           />
                         </div>
-                        <div className='flex flex-col gap-4 absolute bottom-12 left-12 text-white'>
+                        <motion.div
+                          className='flex flex-col gap-4 absolute bottom-12 left-12 text-white'
+                          {...SCROLL_MOTION}
+                        >
                           <h3 className='text-b-xl font-semibold'>
                             Living Space
                           </h3>
@@ -137,7 +142,7 @@ const Carousel = () => {
                             편안한 거주 공간 (Living Space) 테마를 반영하여 더
                             넓은 실내 공간을 즐길 수 있도록 연출합니다.
                           </p>
-                        </div>
+                        </motion.div>
                       </div>
                     )}
                   </>

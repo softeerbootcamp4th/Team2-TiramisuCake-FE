@@ -142,7 +142,7 @@ const EventSection = ({
         <div className='mt-auto'>
           <Bouncing>
             <img
-              className=' hover:cursor-pointer '
+              className='hover:cursor-pointer mt-6 '
               src={downArrow}
               alt='arrow'
               onClick={onArrowClick}
