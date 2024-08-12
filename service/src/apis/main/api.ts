@@ -1,4 +1,6 @@
+const baseURL = `${import.meta.env.VITE_SITE_URL}`;
+
 export const getCarDetailInfo = async () => {
-  const res = await fetch('https://softeer.shop/main/car');
+  const res = await fetch(`${baseURL}/main/car`);
   return res.json();
 };
