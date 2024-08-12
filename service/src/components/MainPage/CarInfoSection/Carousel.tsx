@@ -8,24 +8,7 @@ import { useCarInfoContext } from '@/store/context/useCarInfoContext';
 import CarouselBg from './CarouselBg';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
-
-interface CarDetailInfoList {
-  id: number;
-  title: string;
-  subTitle: string;
-  imgUrl: string;
-  content: string;
-}
-interface CarInfoList {
-  id: number;
-  title: string;
-  subTitle: string;
-  backgroundImgUrl: string;
-  imgTitle: string;
-  imgContent: string;
-  imgUrl: string;
-  carDetailInfoList: CarDetailInfoList[];
-}
+import { CarInfoList } from '@/types/main/carInfoType';
 
 interface CarouselProps {
   carInfoList: CarInfoList[];
@@ -134,7 +117,11 @@ const Carousel = ({ carInfoList }: CarouselProps) => {
         })}
       </div>
       <CarouselBar />
-      {state.isCarDetailOpen && <CarDetailInfo />}
+      {state.isCarDetailOpen && (
+        <CarDetailInfo
+          carDetailInfoList={carInfoList[state.currentIndex].carDetailInfoList}
+        />
+      )}
     </div>
   );
 };
