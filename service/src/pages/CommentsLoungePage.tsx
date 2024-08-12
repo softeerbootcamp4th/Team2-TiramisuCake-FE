@@ -1,6 +1,10 @@
 import Comment from '@/components/common/Comment/Comment';
+import { useEffect } from 'react';
 
 const CommentsLoungePage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <div className='bg-gradient-bottom-yellow min-h-screen w-[80vw] flex relative justify-center items-center m-auto'>
