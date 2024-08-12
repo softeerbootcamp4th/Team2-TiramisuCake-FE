@@ -55,7 +55,7 @@ const Button = ({
   const textStyle: Record<string, string> = {
     square: 'text-white text-b-m',
     squareWithBorder: 'text-primary text-b-m font-semibold',
-    round: 'text-white text-b-s font-semibold',
+    round: 'min-w-[100px] text-white text-b-s font-semibold',
     roundDone: 'text-primary text-b-s font-semibold',
     reaction: `${isReactionClicked ? 'text-primary' : 'text-black'} text-b-m font-semibold`,
     bigRound: 'text-white text-b-m font-bold',
