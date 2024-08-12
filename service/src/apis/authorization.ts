@@ -12,6 +12,8 @@ import {
   reIssueResponse,
 } from '@/types/authorization/response';
 
+const baseURL = `${import.meta.env.VITE_SITE_URL}`;
+
 export const sendAuthCode = async (
   phoneNumber: string
 ): Promise<codeResponse> => {
@@ -19,7 +21,7 @@ export const sendAuthCode = async (
     phoneNumber,
   };
 
-  const response = await fetch(`api/verification/send`, {
+  const response = await fetch(`${baseURL}/verification/send`, {
     method: 'POST',
     headers: HEADERS,
     body: JSON.stringify(requestBody),
@@ -35,7 +37,7 @@ export const sendAuthCode = async (
 export const confirmVerification = async (
   body: confirmVerificationRequestBody
 ): Promise<confirmResponse> => {
-  const response = await fetch('/api/verification/confirm', {
+  const response = await fetch(`${baseURL}/verification/confirm`, {
     method: 'POST',
     headers: HEADERS,
     body: JSON.stringify(body),
@@ -50,7 +52,7 @@ export const confirmVerification = async (
 };
 
 export const login = async (body: loginRequestBody): Promise<loginResponse> => {
-  const response = await fetch('/api/login', {
+  const response = await fetch(`${baseURL}/login`, {
     method: 'POST',
     headers: HEADERS,
     body: JSON.stringify(body),
@@ -68,7 +70,7 @@ export const reissueToken = async (
   accessToken: string,
   refreshToken: string
 ): Promise<reIssueResponse> => {
-  const response = await fetch('/api/reissue', {
+  const response = await fetch(`${baseURL}/reissue`, {
     method: 'GET',
     headers: {
       ...HEADERS,
