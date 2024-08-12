@@ -5,7 +5,9 @@ import Button from '@/components/common/Button/Button';
 import EventInfoCard from './EventInfoCard/EventInfoCard';
 import LoginModal from './LoginModal/LoginModal';
 import { useLoginContext } from '@/store/context/useLoginContext';
-import { LoginModalProvider } from '@/store/context/loginModalContext';
+import Bouncing from '@/components/common/Bouncing/Bouncing';
+import { motion } from 'framer-motion';
+import { SCROLL_MOTION } from '@/constants/animation';
 
 interface EventSectionProps {
   startDate: string;
@@ -69,9 +71,7 @@ const EventSection = ({
     >
       {isModalOpen && (
         <div className='fixed inset-0 flex items-center justify-center z-[99] backdrop-blur-sm'>
-          <LoginModalProvider>
-            <LoginModal onClose={handleCloseModal} />
-          </LoginModalProvider>
+          <LoginModal onClose={handleCloseModal} />
         </div>
       )}
       <div className='flex flex-col w-[73rem] items-center h-[41.6rem] justify-center'>
@@ -79,13 +79,19 @@ const EventSection = ({
           <span className='text-center font-Pretendard text-green-500 font-medium text-b-m'>
             {startDate}-{endDate}
           </span>
-          <div className='font-bold text-[2.25rem] self-stretch text-center text-gray-900 line-height-[3.375rem]'>
+          <motion.div
+            {...SCROLL_MOTION}
+            className='font-bold text-h-l self-stretch text-center text-gray-900 line-height-[3.375rem]'
+          >
             {title}
-          </div>
+          </motion.div>
         </div>
-        <div className=' font-Pretendard font-normal text-gray-800 text-center'>
+        <motion.div
+          {...SCROLL_MOTION}
+          className='font-Pretendard text-b-xl font-normal text-gray-800 text-center'
+        >
           {splitSentences(description)}
-        </div>
+        </motion.div>
         {isLogined ? (
           <div className='my-8'>
             <div className='flex items-center flex-row text-center'>
@@ -119,13 +125,13 @@ const EventSection = ({
           </div>
         ) : (
           <>
-            <div className='flex my-6 py-2 px-3'>
+            <motion.div {...SCROLL_MOTION} className='flex my-6 py-2 px-3'>
               <Button
                 type='square'
                 text='번호 인증하고 이벤트 참여하기'
                 handleClick={handleOpenModal}
               ></Button>
-            </div>
+            </motion.div>
             <div className='flex items-center flex-row text-center'>
               {informs.map((inform, index) => (
                 <EventInfoCard key={index} {...inform} />
@@ -133,13 +139,16 @@ const EventSection = ({
             </div>
           </>
         )}
-
-        <img
-          className='mt-auto hover:cursor-pointer '
-          src={downArrow}
-          alt='arrow'
-          onClick={onArrowClick}
-        />
+        <div className='mt-auto'>
+          <Bouncing>
+            <img
+              className='hover:cursor-pointer mt-6 '
+              src={downArrow}
+              alt='arrow'
+              onClick={onArrowClick}
+            />
+          </Bouncing>
+        </div>
       </div>
     </div>
   );

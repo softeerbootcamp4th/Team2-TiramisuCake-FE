@@ -1,5 +1,7 @@
 import Button from '../common/Button/Button';
 import { useNavigate } from 'react-router-dom';
+import Bouncing from '../common/Bouncing/Bouncing';
+import { motion } from 'framer-motion';
 
 const backgroundImage = '/main.png';
 const gifFile = '/gifs.gif';
@@ -21,7 +23,7 @@ const RendingSection = ({ onArrowClick }: RendingSectionProps) => {
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
         <div className='flex w-[54.125rem] flex-col items-center gap-9 z-5'>
-          <div
+          <motion.div
             className='text-[6rem] text-center font-montserrat text-6xl font-bold leading-tight'
             style={{
               backgroundImage:
@@ -30,9 +32,15 @@ const RendingSection = ({ onArrowClick }: RendingSectionProps) => {
               backgroundClip: 'text',
               color: 'transparent',
             }}
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{
+              duration: 0.5,
+              ease: 'easeOut',
+            }}
           >
             The New IONIQ 5
-          </div>
+          </motion.div>
           <div className='flex'>
             <img
               src={gifFile}
@@ -47,12 +55,14 @@ const RendingSection = ({ onArrowClick }: RendingSectionProps) => {
             handleClick={showComments}
           />
           <div className=' mt-40 '>
-            <img
-              className='hover:cursor-pointer'
-              src={downarrow}
-              alt='Arrow'
-              onClick={onArrowClick}
-            />
+            <Bouncing>
+              <img
+                className='hover:cursor-pointer'
+                src={downarrow}
+                alt='Arrow'
+                onClick={onArrowClick}
+              />
+            </Bouncing>
           </div>
         </div>
       </div>
