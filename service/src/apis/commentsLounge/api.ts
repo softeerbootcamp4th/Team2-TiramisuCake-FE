@@ -2,7 +2,10 @@ import { HEADERS } from '@/constants/lib/constants';
 
 const baseURL = import.meta.env.VITE_SITE_URL;
 export const getComments = async (cursor?: number) => {
-  const res = await fetch(`${baseURL}/comments?cursor=${cursor}`, {
+  const url = cursor
+    ? `${baseURL}/comment?cursor=${cursor}`
+    : `${baseURL}/comment`;
+  const res = await fetch(url, {
     method: 'GET',
     headers: HEADERS,
   });
@@ -10,7 +13,7 @@ export const getComments = async (cursor?: number) => {
 };
 
 export const postComment = async (commentType: number) => {
-  const res = await fetch(`${baseURL}/comments?commentType=${commentType}`, {
+  const res = await fetch(`${baseURL}/comment?commentType=${commentType}`, {
     method: 'POST',
     headers: HEADERS,
   });

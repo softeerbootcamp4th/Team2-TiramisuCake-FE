@@ -5,14 +5,15 @@ export const useQueryGetComments = (cursor?: number) => {
   const { isLoading, data } = useQuery({
     queryKey: ['getComments', cursor],
     queryFn: () => getComments(cursor),
+    refetchInterval: 2000,
   });
   return { isLoading, data };
 };
 
-export const useMutationPostComment = (type: number) => {
+export const useMutationPostComment = () => {
   const mutation = useMutation({
-    mutationKey: ['postComment', type],
-    mutationFn: () => postComment(type),
+    mutationKey: ['postComment'],
+    mutationFn: (commentType: number) => postComment(commentType),
   });
   return mutation;
 };
