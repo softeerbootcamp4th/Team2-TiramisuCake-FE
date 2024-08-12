@@ -4,7 +4,6 @@ import EventSection from '@/components/MainPage/EventSection/EventSection';
 import RendingSection from '@/components/MainPage/RendingSection';
 import CarInfoSection from '@/components/MainPage/CarInfoSection/CarInfoSection';
 import useScrollControl from '@/hooks/MainPage/useScrollControl';
-import { EventDateProvider } from '@/store/provider/EventDateProvider';
 const MainPage = () => {
   const { activeTab, setActiveTab } = useTabContext();
 
@@ -21,7 +20,7 @@ const MainPage = () => {
   });
 
   return (
-    <EventDateProvider>
+    <>
       <div ref={rendingSectionRef}>
         <RendingSection onArrowClick={() => setActiveTab('event')} />
       </div>
@@ -31,7 +30,7 @@ const MainPage = () => {
       <div ref={carInfoSectionRef}>
         <CarInfoSection />
       </div>
-    </EventDateProvider>
+    </>
   );
 };
 
