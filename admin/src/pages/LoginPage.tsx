@@ -2,16 +2,29 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { getValidation } from '@/utils/getValidation';
 import { ROUTER_PATH } from '@/lib/constants';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useMutationPostLogin } from '@/apis/login/query';
+import { useCookies } from 'react-cookie';
 const LoginPage = () => {
   const [id, setId] = useState('');
   const [idError, setIdError] = useState('');
 
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
+
+  const [cookies, setCookies] = useCookies(['accessToken', 'refreshToken']);
   const navigate = useNavigate();
+
+  const mutation = useMutationPostLogin();
+
+  useEffect(() => {
+    const accessToken = cookies.accessToken;
+
+    if (accessToken) {
+      navigate(ROUTER_PATH.MAIN, { replace: true });
+    }
+  }, [cookies, navigate]);
 
   const handleIdInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newId = e.target.value;
@@ -32,9 +45,36 @@ const LoginPage = () => {
     }
   };
 
-  const handleBtnClick = () => {
-    console.log(id, password);
-    navigate(ROUTER_PATH.MAIN);
+  const handleBtnClick = (e: React.FormEvent) => {
+    e.preventDefault();
+    mutation.mutate(
+      { account: id, password: password },
+      {
+        onSuccess: (data) => {
+          console.log(data);
+
+          setCookies('accessToken', data.result.accessToken, {
+            path: '/',
+            maxAge: 100000, // Todo 수정
+            secure: true,
+            sameSite: 'strict',
+          });
+
+          setCookies('refreshToken', data.result.refreshToken, {
+            path: '/',
+            maxAge: 604800,
+            secure: true,
+            sameSite: 'strict',
+          });
+          navigate(ROUTER_PATH.MAIN);
+        },
+        onError: () => {
+          console.log('로그인 실패 ㅠㅠ');
+          setId('');
+          setPassword('');
+        },
+      }
+    );
   };
 
   const handleIdClearClick = () => {
@@ -47,16 +87,6 @@ const LoginPage = () => {
     setPasswordError('');
   };
 
-  //todo 서버 연동시 처리
-
-  // const onSuccess = () => {
-  //   navigate(ROUTER_PATH.MAIN);
-  // }
-
-  // const onError = () => {
-  //   setId('');
-  //   setPassword('');
-  // }
   return (
     <div className='w-full h-screen flex justify-center items-center '>
       <div className='flex flex-col gap-9 items-center justify-evenly w-[560px] h-[564px] py-7 px-4 bg-[#F3F5F7]'>
@@ -67,7 +97,10 @@ const LoginPage = () => {
             관리자 기능은 로그인 후 이용 가능합니다.
           </p>
         </div>
-        <div className='flex flex-col gap-4 w-[387px]'>
+        <form
+          className='flex flex-col gap-4 w-[387px]'
+          onSubmit={handleBtnClick}
+        >
           <div className='flex flex-col gap-1'>
             <span>아이디</span>
             <div className='relative'>
@@ -92,8 +125,8 @@ const LoginPage = () => {
             </div>
             <div className='text-red mt-1 text-sm'>{passwordError}</div>
           </div>
-          <Button onClick={handleBtnClick}>로그인</Button>
-        </div>
+          <Button type='submit'>로그인</Button>
+        </form>
       </div>
     </div>
   );

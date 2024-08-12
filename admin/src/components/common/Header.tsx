@@ -1,10 +1,11 @@
 import { ROUTER_PATH } from '@/lib/constants';
-import { useUserContext } from '@/store/context/useUserContext';
+import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
-  const { user } = useUserContext();
   const navigate = useNavigate();
+  const [cookie, , removeCookie] = useCookies(['accessToken']);
+  const accessToken = cookie.accessToken;
 
   const handleMainTabClick = () => {
     navigate(ROUTER_PATH.MAIN);
@@ -16,8 +17,12 @@ const Header = () => {
   const handleWinManageTabClick = () => {
     navigate(ROUTER_PATH.WIN_MANAGE);
   };
+
+  const handleLogOutBtnClick = () => {
+    removeCookie('accessToken', { path: '/' });
+  };
   return (
-    <div className='w-screen h-[87px] flex justify-between bg-[#F3F5F7] items-center py-4 px-56 z-50 '>
+    <div className='w-screen min-x-[1300px] h-[87px] flex justify-between bg-[#F3F5F7] items-center py-4 px-56 z-50 '>
       <div
         className='flex gap-4 items-end cursor-pointer'
         onClick={handleMainTabClick}
@@ -34,8 +39,11 @@ const Header = () => {
             당첨 관리
           </span>
         </div>
-        <div className='text-[#3A8BA0] font-bold cursor-pointer'>
-          {user.isLoggedIn ? 'ADMIN' : '로그인 필요'}
+        <div
+          className='text-[#3A8BA0] font-bold cursor-pointer'
+          onClick={handleLogOutBtnClick}
+        >
+          {accessToken ? 'ADMIN' : '로그인 필요'}
         </div>
       </div>
     </div>
