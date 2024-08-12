@@ -8,7 +8,7 @@ import './LoginModal.css';
 import {
   ConfirmVerificationRequestBody,
   LoginRequestBody,
-} from '@/types/authorization/request';
+} from '@/types/Authorization/request';
 import { useCookies } from 'react-cookie';
 import { parseISO, differenceInSeconds } from 'date-fns';
 import { validatePhoneNumber } from '@/utils/checkPhoneNumber';
