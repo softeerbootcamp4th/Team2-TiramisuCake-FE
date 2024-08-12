@@ -1,0 +1,13 @@
+.commonClass {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  align-self: stretch;
+}
+
+.textCommonClass {
+  font-size: 0.875rem;
+  color: #7a8183;
+  text-align: left;
+}

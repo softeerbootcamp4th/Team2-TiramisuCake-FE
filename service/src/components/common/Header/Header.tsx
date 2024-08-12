@@ -9,7 +9,7 @@ const Header = () => {
   };
 
   return (
-    <header className='bg-white w-full h-14 flex fixed items-center justify-between px-6 shadow-md z-50'>
+    <header className='bg-white bg-opacity-20 w-full h-14 flex fixed items-center justify-between px-6 shadow-md z-50'>
       <div className='flex items-center'>
         <Link to='/'>
           <img

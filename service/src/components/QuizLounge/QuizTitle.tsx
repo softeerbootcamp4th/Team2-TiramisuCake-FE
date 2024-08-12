@@ -9,7 +9,7 @@ const QuizTitle = ({ quizTitle, answer }: QuizTitleProps) => {
       <div className='px-3 py-2 bg-black text-white rounded-[0.625rem] text-b-xxl font-bold'>
         Q
       </div>
-      <div className='mt-1 text-h-m font-bold text-gray-800 tracking-[-0.36px] whitespace-pre-wrap text-center'>
+      <div className='mt-1 text-h-l font-bold text-gray-800 tracking-[-0.36px] whitespace-pre-wrap text-center'>
         <span className='text-primary'>
           '{answer.map((char, _index) => (char === ' ' ? ' ' : 0))}'
         </span>
