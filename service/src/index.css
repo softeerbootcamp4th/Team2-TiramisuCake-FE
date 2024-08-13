@@ -34,12 +34,7 @@
 }
 
 .comment-mask {
-  position: absolute;
   inset: 0;
-  z-index: 10;
-  height: 134px;
-  pointer-events: none;
-  overflow-y: auto;
   padding: 1rem;
   mask-image: linear-gradient(
     to bottom,
@@ -53,4 +48,9 @@
     rgba(0, 0, 0, 1) 40%,
     rgba(0, 0, 0, 1)
   );
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
+
+/* .comment-mask::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/

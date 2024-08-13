@@ -33,7 +33,6 @@ const CommentsLoungePage = () => {
   const sendCommentToServer = (commentType: number) => {
     mutation.mutate(commentType, {
       onSuccess: () => {
-        console.log('yey!!!!!');
         queryClient.invalidateQueries({
           queryKey: ['getComments'],
         });
@@ -53,12 +52,13 @@ const CommentsLoungePage = () => {
           The New IONIQ 5
         </div>
         <div className='flex w-[36.5rem] flex-col items-center gap-9'>
-          <div className='flex overflow-hidden w-[24rem] h-[560px] flex-col gap-2 px-8 py-10 bg-white bg-opacity-20 backdrop-blur-md rounded-3xl relative'>
-            <div className='comment-mask' />
+          <div className='flex overflow-hidden w-[24rem] h-[560px] flex-col gap-2 px-8 py-10 bg-white bg-opacity-20 rounded-3xl relative'>
             {isLoading ? (
-              <>야호</>
+              <>Loading ... </>
             ) : (
-              <CommentsContainer comments={data.result.comments} />
+              <>
+                <CommentsContainer comments={data.result.comments} />
+              </>
             )}
           </div>
           <div className='comment-container'>

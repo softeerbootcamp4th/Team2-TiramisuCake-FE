@@ -7,7 +7,7 @@ interface CommentsProps {
 
 const CommentsContainer = ({ comments }: CommentsProps) => {
   return (
-    <div className='overflow-y-auto w-[24rem] h-[560px] flex flex-col gap-2.5 items-center px-8 py-10 absolute top-0 left-0 '>
+    <div className='overflow-y-auto w-[24rem] h-[560px] flex flex-col gap-2.5 items-center px-8 py-10 absolute top-0 left-0 comment-mask'>
       {comments.map((comment, index) =>
         comment.isMine ? (
           <Comment
