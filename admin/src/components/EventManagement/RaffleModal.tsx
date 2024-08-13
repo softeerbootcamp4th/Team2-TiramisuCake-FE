@@ -20,7 +20,7 @@ const RaffleModal = ({ isOpen, handleClose, handleSave }: RaffleModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className='fixed bottom-[44px] right-[319px] flex w-fit h-[175px] flex-row'>
+    <div className='left-[780px] top-[710px] flex fixed inset-0  w-fit h-[175px] flex-row'>
       <Modal handleCloseClick={handleClose} handleButtonClick={handleSave}>
         <div className='flex flex-row mx-4 '>
           <div className='flex flex-row'>
@@ -32,7 +32,7 @@ const RaffleModal = ({ isOpen, handleClose, handleSave }: RaffleModalProps) => {
               />
             </div>
             <div className='space-y-2 ml-4 my-auto'>
-              <p>오픈 시간</p>
+              <p>종료 시간</p>
               <TimePicker date={endRaffletime} onChange={setEndRaffleTime} />
             </div>
           </div>

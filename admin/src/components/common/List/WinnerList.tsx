@@ -2,7 +2,7 @@ import EditButton from '../Button/EditButton';
 
 type Winner = {
   rank: string;
-  count: number;
+  winnerNum: number;
   probability: string;
 };
 
@@ -24,7 +24,7 @@ const WinnerList = ({ title, winners, onClick }: WinnerListProps) => {
             <div key={index} className='flex justify-between my-1'>
               <div className='flex w-full items-center'>
                 <div className='flex-1 text-left'>
-                  {winner.rank} : {winner.count}
+                  {winner.rank} : {winner.winnerNum}
                 </div>
                 <div className='flex-none text-center'>|</div>
                 <div className='flex-1 text-right'>{winner.probability}</div>
