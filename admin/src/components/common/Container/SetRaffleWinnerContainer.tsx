@@ -2,12 +2,8 @@ import ListContainer from '../List/ListContainer';
 import WinnerList from '../List/WinnerList';
 import { ROUTER_PATH } from '@/lib/constants';
 import { useNavigate } from 'react-router-dom';
+import { useCombinedData } from '@/apis/main/query';
 
-const winners = [
-  { rank: '1등', count: 14, probability: '0.xxx' },
-  { rank: '2등', count: 140, probability: '0.xxxx' },
-  { rank: '3등', count: 1400, probability: '0.xxxxxx' },
-];
 interface Props {
   pageType?: 'main' | 'manage';
   handleModalOpen?: () => void;
@@ -17,6 +13,13 @@ const SetRaffleWinnerContainer = ({
   pageType = 'main',
   handleModalOpen,
 }: Props) => {
+  const { winnerData } = useCombinedData();
+
+  if (!winnerData) {
+    return <div>없는데용</div>;
+  }
+  const drawEventList = winnerData?.result.drawEventList;
+
   const navigator = useNavigate();
 
   const showWinnerManage = () => {
@@ -35,7 +38,7 @@ const SetRaffleWinnerContainer = ({
     <ListContainer width={pageType === 'main' ? '30rem' : '39rem'}>
       <WinnerList
         title='당첨자 추첨'
-        winners={winners}
+        winners={drawEventList}
         onClick={handleEditButtonClick}
       />
     </ListContainer>

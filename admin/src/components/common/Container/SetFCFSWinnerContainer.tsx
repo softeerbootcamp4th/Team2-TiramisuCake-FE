@@ -3,13 +3,7 @@ import EditButton from '../Button/EditButton';
 import { useNavigate } from 'react-router-dom';
 import { ROUTER_PATH } from '@/lib/constants';
 import List from '../List/list';
-
-const Event2 = [
-  { id: '1', period: '2024.09.02(월)', winners: 25 },
-  { id: '2', period: '2024.09.05(목)', winners: 25 },
-  { id: '3', period: '2024.09.09(월)', winners: 25 },
-  { id: '4', period: '2024.09.12(목)', winners: 25 },
-];
+import { useCombinedData } from '@/apis/main/query';
 
 interface Props {
   pageType?: 'main' | 'manage';
@@ -20,6 +14,8 @@ const SetFCFSWinnerContainer = ({
   pageType = 'main',
   handleModalOpen,
 }: Props) => {
+  const { winnerData } = useCombinedData();
+  const fcfsList = winnerData?.result.fcfsEventList;
   const navigator = useNavigate();
 
   const showWinnerManage = () => {
@@ -41,7 +37,7 @@ const SetFCFSWinnerContainer = ({
           <EditButton text='수정하기' onClick={handleEditButtonClick} />
         </div>
       </div>
-      <List onClick={showWinnerManage} events={Event2} />
+      <List onClick={showWinnerManage} events={fcfsList} />
     </ListContainer>
   );
 };
