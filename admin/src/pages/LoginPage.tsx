@@ -5,7 +5,7 @@ import { ROUTER_PATH } from '@/lib/constants';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutationPostLogin } from '@/apis/login/query';
-import { useCookies } from 'react-cookie';
+import { getCookie, setCookie } from '@/utils/cookie';
 const LoginPage = () => {
   const [id, setId] = useState('');
   const [idError, setIdError] = useState('');
@@ -13,18 +13,17 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-  const [cookies, setCookies] = useCookies(['accessToken', 'refreshToken']);
   const navigate = useNavigate();
 
   const mutation = useMutationPostLogin();
 
   useEffect(() => {
-    const accessToken = cookies.accessToken;
+    const accessToken = getCookie('accessToken');
 
     if (accessToken) {
       navigate(ROUTER_PATH.MAIN, { replace: true });
     }
-  }, [cookies, navigate]);
+  }, [navigate]);
 
   const handleIdInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newId = e.target.value;
@@ -53,14 +52,14 @@ const LoginPage = () => {
         onSuccess: (data) => {
           console.log(data);
 
-          setCookies('accessToken', data.result.accessToken, {
+          setCookie('accessToken', data.result.accessToken, {
             path: '/',
             maxAge: 100000, // Todo 수정
             secure: true,
             sameSite: 'strict',
           });
 
-          setCookies('refreshToken', data.result.refreshToken, {
+          setCookie('refreshToken', data.result.refreshToken, {
             path: '/',
             maxAge: 604800,
             secure: true,
