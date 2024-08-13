@@ -4,16 +4,20 @@ import ListContainer from '../common/List/ListContainer';
 import ManageContainer from '../common/ManageContainer';
 import { ROUTER_PATH } from '@/lib/constants';
 import { useNavigate } from 'react-router-dom';
+import { useCombinedData } from '@/apis/main/query';
 
-const Event1 = [
-  { id: '1', period: '2024.09.02(월) 10:00:00 ~ 12:00:00' },
-  { id: '2', period: '2024.09.05(목) 10:00:00 ~ 12:00:00' },
-  { id: '3', period: '2024.09.09(월) 10:00:00 ~ 12:00:00' },
-  { id: '4', period: '2024.09.12(목) 10:00:00 ~ 12:00:00' },
-];
+import { getWeekDay } from '@/utils/getWeekDay';
 
 const EventManagement = () => {
+  const { eventsData } = useCombinedData();
+  const fcfsData = eventsData?.result.fcfsEventList;
+  const drawData = eventsData?.result.drawEvent;
+  console.log(drawData);
   const navigator = useNavigate();
+
+  if (!eventsData) {
+    return <div>없는데용</div>;
+  }
 
   const showEventManage = () => {
     navigator(ROUTER_PATH.EVENT_MANAGE);
@@ -36,14 +40,24 @@ const EventManagement = () => {
             <EditButton text='수정하기' onClick={showEventManage} />
           </div>
         </div>
-        <List onClick={showEventManage} events={Event1} />
+        <List onClick={showEventManage} events={fcfsData} />
       </ListContainer>
       <ListContainer>
         <div className='px-4 text-left text-lg pt-4'>추첨 이벤트</div>
         <div className='text-center py-1'>
           <span className='font-semibold'>복권 긁기 이벤트 </span>
           <span className='text-sm'>
-            2024.09.02(월) 00:00:00 ~ 2024.09.15(일) 23:59:59
+            {drawData.startDate +
+              getWeekDay(drawData.startDate) +
+              ' ' +
+              drawData.startTime +
+              ' ' +
+              '~' +
+              ' ' +
+              drawData.endDate +
+              getWeekDay(drawData.endDate) +
+              ' ' +
+              drawData.endTime}
           </span>
         </div>
         <div className='h-[4.1rem] relative flex w-full items-end pb-4'>
