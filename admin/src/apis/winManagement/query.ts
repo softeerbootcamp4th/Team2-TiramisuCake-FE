@@ -7,10 +7,10 @@ import {
   postRaffleWinner,
 } from './api';
 
-export const useQueryGetRaffleWinners = (round: number) => {
+export const useQueryGetRaffleWinners = (rank: number) => {
   const { data, isLoading } = useQuery({
-    queryKey: ['getRaffleWinners', round],
-    queryFn: () => getRaffleWinners(round),
+    queryKey: ['getRaffleWinners', rank],
+    queryFn: () => getRaffleWinners(rank),
   });
   return { data, isLoading };
 };

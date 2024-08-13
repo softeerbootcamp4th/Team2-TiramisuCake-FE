@@ -2,8 +2,8 @@ import { BASE_URL } from '@/constants/api';
 import { getCookie } from '@/utils/cookie';
 const accessToken = getCookie('accessToken');
 
-export const getRaffleWinners = async (round: number) => {
-  const res = await fetch(`${BASE_URL}/winner/draw/${round}`, {
+export const getRaffleWinners = async (rank: number) => {
+  const res = await fetch(`${BASE_URL}/winner/draw/${rank}`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
