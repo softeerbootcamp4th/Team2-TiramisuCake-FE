@@ -1,31 +1,69 @@
 import { CommentsType } from '@/types/comment/commentType';
-import Comment from '../common/Comment/Comment';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import Comment from '@/components/common/Comment/Comment';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { getCommentsForScroll } from '@/apis/commentsLounge/api';
 
-interface CommentsProps {
-  comments: CommentsType[];
+interface ResponseType {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: {
+    nextCursor: number;
+    totalComments: number;
+    comments: CommentsType[];
+  };
 }
 
-const CommentsContainer = ({ comments }: CommentsProps) => {
+const CommentsContainer = () => {
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery<ResponseType>({
+    queryKey: ['comments'],
+    queryFn: ({ pageParam }) =>
+      getCommentsForScroll(pageParam as undefined | number),
+    initialPageParam: undefined,
+    getNextPageParam: (lastPage) => {
+      return lastPage.result.nextCursor !== -1
+        ? lastPage.result.nextCursor
+        : undefined;
+    },
+  });
   return (
-    <div className='overflow-y-auto w-[24rem] h-[560px] flex flex-col gap-2.5 items-center px-8 py-10 absolute top-0 left-0 comment-mask'>
-      {comments.map((comment, index) =>
-        comment.isMine ? (
-          <Comment
-            key={index}
-            userName={comment.nickName}
-            type={comment.commentType}
-            isUser={true}
-          />
+    <InfiniteScroll
+      dataLength={
+        data?.pages.flatMap((page) => page.result.comments).length || 0
+      }
+      next={fetchNextPage}
+      hasMore={!!hasNextPage}
+      loader={<div>Loading...</div>}
+      scrollableTarget='scrollableDiv'
+      inverse={true}
+      className='w-[24rem] h-[560px]'
+    >
+      <div
+        id='scrollableDiv'
+        className='overflow-y-auto w-[24rem] h-[560px] flex flex-col-reverse items-center px-8 py-10 comment-mask relative bg-white bg-opacity-20 rounded-3xl'
+      >
+        {data ? (
+          data?.pages.map((page, pageIndex) => (
+            <div
+              key={pageIndex}
+              className=' flex flex-col gap-2.5 items-center '
+            >
+              {page.result.comments.reverse().map((comment, index) => (
+                <Comment
+                  key={index}
+                  userName={comment.nickName}
+                  type={comment.commentType}
+                  isUser={comment.isMine}
+                />
+              ))}
+            </div>
+          ))
         ) : (
-          <Comment
-            key={index}
-            userName={comment.nickName}
-            type={comment.commentType}
-            isUser={false}
-          />
-        )
-      )}
-    </div>
+          <></>
+        )}
+      </div>
+    </InfiniteScroll>
   );
 };
 

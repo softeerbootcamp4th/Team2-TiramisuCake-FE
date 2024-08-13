@@ -52,5 +52,7 @@
   scrollbar-width: none; /* Firefox */
 }
 
-/* .comment-mask::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera*/
+.infinite-scroll-component__outerdiv {
+  width: 24rem;
+  height: 560px;
+}

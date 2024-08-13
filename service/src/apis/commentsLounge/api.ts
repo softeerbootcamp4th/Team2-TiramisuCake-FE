@@ -12,6 +12,17 @@ export const getComments = async (cursor?: number) => {
   return res.json();
 };
 
+export const getCommentsForScroll = async (cursor: number | undefined) => {
+  const url = cursor
+    ? `${baseURL}/comment?cursor=${cursor}`
+    : `${baseURL}/comment`;
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: HEADERS,
+  });
+  return res.json();
+};
+
 export const postComment = async (commentType: number) => {
   const res = await fetch(`${baseURL}/comment?commentType=${commentType}`, {
     method: 'POST',
