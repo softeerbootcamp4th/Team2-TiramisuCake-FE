@@ -26,7 +26,8 @@ export const useQueryGetFCFSWinners = (round: number) => {
 export const useMutationPostFCFSWinner = () => {
   const mutation = useMutation({
     mutationKey: ['postFCFSWinners'],
-    mutationFn: (fcfsWinnerNum: number) => postFCFSWinner(fcfsWinnerNum),
+    mutationFn: ({ fcfsWinnerNum }: { fcfsWinnerNum: number }) =>
+      postFCFSWinner(fcfsWinnerNum),
   });
   return mutation;
 };

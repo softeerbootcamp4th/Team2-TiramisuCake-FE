@@ -24,6 +24,7 @@ export const getFCFSWinners = async (round: number) => {
 
 export const postFCFSWinner = async (fcfsWinnerNum: number) => {
   const res = await fetch(`${BASE_URL}/winner/fcfs`, {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
@@ -42,7 +43,7 @@ export const postRaffleWinner = async ({
   secondWinnerNum: number;
   thirdWinnerNum: number;
 }) => {
-  const res = await fetch(`${BASE_URL}/winner/fcfs`, {
+  const res = await fetch(`${BASE_URL}/winner/draw`, {
     method: 'POST', // HTTP 메서드 추가
     headers: {
       'Content-Type': 'application/json',

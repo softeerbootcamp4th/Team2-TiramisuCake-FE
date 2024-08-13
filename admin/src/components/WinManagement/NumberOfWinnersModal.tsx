@@ -3,6 +3,7 @@ import Modal from '../common/Modal';
 import { Input } from '../ui/input';
 import { getNumberValidation } from '@/utils/getValidation';
 import ErrorMessage from '../common/ErrorMessage';
+import { useMutationPostFCFSWinner } from '@/apis/winManagement/query';
 interface Props {
   handleClose: () => void;
 }
@@ -10,6 +11,7 @@ interface Props {
 const NumberOfWinnersModal = ({ handleClose }: Props) => {
   const [value, setValue] = useState('');
   const [error, setError] = useState('');
+  const mutation = useMutationPostFCFSWinner();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
@@ -32,8 +34,23 @@ const NumberOfWinnersModal = ({ handleClose }: Props) => {
 
   const handleButtonClick = () => {
     console.log(value);
-    setError('');
-    setValue('');
+    mutation.mutate(
+      {
+        fcfsWinnerNum: Number(value),
+      },
+      {
+        onSuccess: (data) => {
+          console.log(data);
+        },
+        onError: () => {
+          console.log('실패');
+        },
+        onSettled: () => {
+          setError('');
+          setValue('');
+        },
+      }
+    );
   };
   return (
     <Modal handleButtonClick={handleButtonClick} handleCloseClick={handleClose}>

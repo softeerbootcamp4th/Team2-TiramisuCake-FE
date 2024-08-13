@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Modal from '../common/Modal';
 import InputField from './InputField';
 import { getNumberValidation } from '@/utils/getValidation';
+import { useMutationPostRaffleWinner } from '@/apis/winManagement/query';
 
 interface Props {
   handleClose: () => void;
@@ -10,6 +11,7 @@ interface Props {
 const WinnersProbabilitiesModal = ({ handleClose }: Props) => {
   const [counts, setCounts] = useState({ first: '', second: '', third: '' });
   const [errors, setErrors] = useState({ first: '', second: '', third: '' });
+  const mutation = useMutationPostRaffleWinner();
 
   const handleInputChange = (
     type: 'first' | 'second' | 'third',
@@ -31,6 +33,25 @@ const WinnersProbabilitiesModal = ({ handleClose }: Props) => {
 
   const handleButtonClick = () => {
     console.log(counts.first, counts.second, counts.third);
+    mutation.mutate(
+      {
+        firstWinnerNum: Number(counts.first),
+        secondWinnerNum: Number(counts.second),
+        thirdWinnerNum: Number(counts.third),
+      },
+      {
+        onSuccess: (data) => {
+          console.log(data);
+        },
+        onError: () => {
+          console.log('실패');
+        },
+        onSettled: () => {
+          setCounts({ first: '', second: '', third: '' });
+          setErrors({ first: '', second: '', third: '' });
+        },
+      }
+    );
   };
 
   return (
