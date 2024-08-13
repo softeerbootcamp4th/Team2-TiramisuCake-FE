@@ -14,14 +14,13 @@ const SetRaffleWinnerContainer = ({
   handleModalOpen,
 }: Props) => {
   const { winnerData } = useCombinedData();
-
-  if (!winnerData) {
-    return <div>없는데용</div>;
-  }
   const drawEventList = winnerData?.result.drawEventList;
 
   const navigator = useNavigate();
 
+  if (!winnerData) {
+    return <div>없는데용</div>;
+  }
   const showWinnerManage = () => {
     navigator(ROUTER_PATH.WIN_MANAGE);
   };

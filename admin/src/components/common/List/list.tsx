@@ -21,14 +21,6 @@ const isEvent = (event: Event | totalWinner): event is Event => {
   return (event as Event).startTime !== undefined;
 };
 
-/**
- * {index < events.length - 1 && (
-            <hr className='border-gray-300 w-[90%] mx-auto' />
-          )}
-            <div className='mr-4'>
-            <EditButton text='수정하기' onClick={onClick} />
-          </div>
- */
 const List = ({ events = [] }: ListProps) => {
   return (
     <div className='mb-2'>
