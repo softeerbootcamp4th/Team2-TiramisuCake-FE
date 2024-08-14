@@ -1,4 +1,4 @@
-import List from '../common/List/list';
+import List from '../common/List/List';
 import EditButton from '../common/Button/EditButton';
 import ListContainer from '../common/List/ListContainer';
 import ManageContainer from '../common/ManageContainer';
