@@ -1,5 +1,6 @@
 import Button from '../../Button/Button';
 import Modal from '../Modal';
+import ReactDOM from 'react-dom';
 
 interface ExitModalProps {
   handleClose: () => void;
@@ -11,7 +12,11 @@ const ExitModal = ({
   handleCancel,
   handleConfirm,
 }: ExitModalProps) => {
-  return (
+  const portalRoot = document.getElementById('portal-root');
+
+  if (!portalRoot) return null;
+
+  return ReactDOM.createPortal(
     <Modal handleClose={handleClose}>
       <div className='p-12 flex flex-col gap-3 items-center min-w-[412px] '>
         <h1 className='text-h-s font-bold'>지금 나가시겠습니까?</h1>
@@ -25,7 +30,8 @@ const ExitModal = ({
           <Button type='mediumRound' text='아니오' handleClick={handleCancel} />
         </div>
       </div>
-    </Modal>
+    </Modal>,
+    portalRoot
   );
 };
 

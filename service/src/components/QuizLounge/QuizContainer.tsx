@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, memo } from 'react';
 import { motion, PanInfo } from 'framer-motion';
 import TextCard from './TextCard';
 import useInitialArrays from '@/hooks/QuizLounge/useInitialArrays';
@@ -175,4 +175,4 @@ const QuizContainer = ({
   );
 };
 
-export default QuizContainer;
+export default memo(QuizContainer);

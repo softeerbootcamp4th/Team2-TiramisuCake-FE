@@ -2,8 +2,15 @@ import ExitModal from '@/components/common/Modal/ExitModal/ExitModal';
 import QuizContainer from '@/components/QuizLounge/QuizContainer';
 import QuizFooter from '@/components/QuizLounge/QuizFooter';
 import QuizTitle from '@/components/QuizLounge/QuizTitle';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useBlocker } from 'react-router-dom';
+
+const data = {
+  title:
+    '디지털 센터 미러 전용 카메라를 통해 \n 보다 선명하게 후방을 확인할 수 있다',
+  startIndex: 0,
+  endIndex: 9,
+};
 
 function QuizLoungePage() {
   const [isGameEnded, setIsGameEnded] = useState(false);
@@ -11,18 +18,17 @@ function QuizLoungePage() {
   useEffect(() => {
     window.scroll(0, 0);
   }, []);
-  const data = {
-    title:
-      '디지털 센터 미러 전용 카메라를 통해 \n 보다 선명하게 후방을 확인할 수 있다',
-    startIndex: 0,
-    endIndex: 9,
-  };
 
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) =>
       !isGameEnded && currentLocation.pathname !== nextLocation.pathname
   );
-  const answer = data.title.slice(data.startIndex, data.endIndex).split('');
+
+  const answer = useMemo(
+    () => data.title.slice(data.startIndex, data.endIndex).split(''),
+    [data]
+  );
+
   const slicedQuizTitle = data.title.slice(data.endIndex);
 
   return (

@@ -1,13 +1,13 @@
 import {
-  loginModalState,
-  loginAction,
+  LoginModalState,
+  LoginAction,
   LOGIN_ACTION,
 } from '../types/loginModalTypes';
 
 export const loginModalReducer = (
-  state: loginModalState,
-  action: loginAction
-): loginModalState => {
+  state: LoginModalState,
+  action: LoginAction
+): LoginModalState => {
   switch (action.type) {
     case LOGIN_ACTION.SET_VERIFICATION_CODE:
       return { ...state, verificationCode: action.payload };
