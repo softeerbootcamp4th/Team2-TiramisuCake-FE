@@ -1,12 +1,11 @@
-import { BASE_URL } from '@/constants/api';
+import { AuthorizationHeader, BASE_URL } from '@/constants/api';
 import {
-  GetFCFSWinnerRequest,
-  GetRaffleWinnerRequest,
   PostFCFSWinnerRequest,
+  PostRaffleWinnerRequest,
 } from '@/type/winManagement/type';
 import { getCookie } from '@/utils/cookie';
 
-export const getRaffleWinners = async ({ rank }: GetRaffleWinnerRequest) => {
+export const getRaffleWinners = async (rank: number) => {
   const accessToken = getCookie('accessToken');
   const res = await fetch(`${BASE_URL}/winner/draw/${rank}`, {
     headers: {
@@ -17,20 +16,14 @@ export const getRaffleWinners = async ({ rank }: GetRaffleWinnerRequest) => {
   return res.json();
 };
 
-export const getFCFSWinners = async ({ round }: GetFCFSWinnerRequest) => {
-  const accessToken = getCookie('accessToken');
+export const getFCFSWinners = async (round: number) => {
   const res = await fetch(`${BASE_URL}/winner/fcfs/${round}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
+    headers: AuthorizationHeader,
   });
   return res.json();
 };
 
-export const postFCFSWinner = async ({
-  fcfsWinnerNum,
-}: PostFCFSWinnerRequest) => {
+export const postFCFSWinner = async (body: PostFCFSWinnerRequest) => {
   const accessToken = getCookie('accessToken');
   const res = await fetch(`${BASE_URL}/winner/fcfs`, {
     method: 'POST',
@@ -38,20 +31,12 @@ export const postFCFSWinner = async ({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify({ fcfsWinnerNum: fcfsWinnerNum }),
+    body: JSON.stringify(body),
   });
   return res.json();
 };
 
-export const postRaffleWinner = async ({
-  firstWinnerNum,
-  secondWinnerNum,
-  thirdWinnerNum,
-}: {
-  firstWinnerNum: number;
-  secondWinnerNum: number;
-  thirdWinnerNum: number;
-}) => {
+export const postRaffleWinner = async (body: PostRaffleWinnerRequest) => {
   const accessToken = getCookie('accessToken');
 
   const res = await fetch(`${BASE_URL}/winner/draw`, {
@@ -60,11 +45,7 @@ export const postRaffleWinner = async ({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify({
-      firstWinnerNum,
-      secondWinnerNum,
-      thirdWinnerNum,
-    }),
+    body: JSON.stringify(body),
   });
   return res.json();
 };

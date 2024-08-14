@@ -6,6 +6,10 @@ import {
   postFCFSWinner,
   postRaffleWinner,
 } from './api';
+import {
+  PostFCFSWinnerRequest,
+  PostRaffleWinnerRequest,
+} from '@/type/winManagement/type';
 
 export const useQueryGetRaffleWinners = (rank: number) => {
   const { data, isLoading } = useQuery({
@@ -26,8 +30,7 @@ export const useQueryGetFCFSWinners = (round: number) => {
 export const useMutationPostFCFSWinner = () => {
   const mutation = useMutation({
     mutationKey: ['postFCFSWinners'],
-    mutationFn: ({ fcfsWinnerNum }: { fcfsWinnerNum: number }) =>
-      postFCFSWinner(fcfsWinnerNum),
+    mutationFn: (body: PostFCFSWinnerRequest) => postFCFSWinner(body),
   });
   return mutation;
 };
@@ -35,15 +38,7 @@ export const useMutationPostFCFSWinner = () => {
 export const useMutationPostRaffleWinner = () => {
   const mutation = useMutation({
     mutationKey: ['postRaffleWinners'],
-    mutationFn: ({
-      firstWinnerNum,
-      secondWinnerNum,
-      thirdWinnerNum,
-    }: {
-      firstWinnerNum: number;
-      secondWinnerNum: number;
-      thirdWinnerNum: number;
-    }) => postRaffleWinner({ firstWinnerNum, secondWinnerNum, thirdWinnerNum }),
+    mutationFn: (body: PostRaffleWinnerRequest) => postRaffleWinner(body),
   });
 
   return mutation;
