@@ -12,7 +12,6 @@ const EventManagement = () => {
   const { data } = useEventsData();
   const fcfsData = data?.result.fcfsEventList;
   const drawData = data?.result.drawEvent;
-  console.log(drawData);
   const navigator = useNavigate();
 
   if (!data) {

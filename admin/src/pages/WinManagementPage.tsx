@@ -26,13 +26,11 @@ const WinManagementPage = () => {
   const [drawList, setDrawList] = useState<DrawEventList[]>([]);
 
   const { data } = useWinnerData();
-  console.log(data);
 
   useEffect(() => {
     if (data) {
       setFCFSList(data.result.fcfsEventList);
       setDrawList(data.result.drawEventList);
-      console.log(data.result.drawEventList);
     }
   }, [data]);
 

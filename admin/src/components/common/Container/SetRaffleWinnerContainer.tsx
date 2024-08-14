@@ -20,8 +20,6 @@ const SetRaffleWinnerContainer = ({
     navigator(ROUTER_PATH.WIN_MANAGE);
   };
 
-  console.log(drawList);
-
   const handleEditButtonClick = () => {
     if (pageType === 'manage' && handleModalOpen) {
       handleModalOpen();

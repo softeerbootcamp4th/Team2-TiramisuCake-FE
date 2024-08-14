@@ -50,8 +50,6 @@ const LoginPage = () => {
       { account: id, password: password },
       {
         onSuccess: (data) => {
-          console.log(data);
-
           setCookie('accessToken', data.result.accessToken, {
             path: '/',
             maxAge: 100000, // Todo 수정
