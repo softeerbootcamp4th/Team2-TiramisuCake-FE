@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Bouncing from '../common/Bouncing/Bouncing';
 import { motion } from 'framer-motion';
 
-const backgroundImage = '/main.png';
+const backgroundImage = 'images/rending-bg.webp';
 const gifFile = '/gifs.gif';
 const downarrow = '/svg/BigArrow.svg';
 
@@ -27,7 +27,7 @@ const RendingSection = ({ onArrowClick }: RendingSectionProps) => {
     >
       <div className='flex flex-col justify-center items-center gap-9 z-5'>
         <motion.div
-          initial={{ scale: 2, y: '50%' }}
+          initial={{ scale: 1.6, y: '50%' }}
           animate={{ scale: 1, y: 0 }}
           transition={{ duration: 1.5, ease: 'easeInOut' }}
           className='flex flex-col items-center gap-2'
