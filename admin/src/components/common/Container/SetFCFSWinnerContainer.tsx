@@ -2,7 +2,7 @@ import ListContainer from '../List/ListContainer';
 import EditButton from '../Button/EditButton';
 import { useNavigate } from 'react-router-dom';
 import { ROUTER_PATH } from '@/lib/constants';
-import List from '../List/list';
+import List from '../List/List';
 import { FCFSEventList } from '@/type/main/type';
 
 interface Props {
