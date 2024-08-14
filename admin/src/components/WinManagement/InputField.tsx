@@ -10,6 +10,7 @@ interface InputFieldProps {
   error: string;
   setError: (error: string) => void;
   validationRange: [number, number];
+  probability: number;
 }
 
 const InputField = ({
@@ -19,6 +20,7 @@ const InputField = ({
   error,
   setError,
   validationRange,
+  probability,
 }: InputFieldProps) => {
   const [min, max] = validationRange;
 
@@ -57,7 +59,7 @@ const InputField = ({
         )}{' '}
       </div>
 
-      <span>0.0000</span>
+      <span>{probability}</span>
     </div>
   );
 };

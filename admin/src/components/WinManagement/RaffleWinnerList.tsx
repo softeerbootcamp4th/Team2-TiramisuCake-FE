@@ -1,9 +1,18 @@
+import { useQueryGetRaffleWinners } from '@/apis/winManagement/query';
 import { useState } from 'react';
+
+interface Winner {
+  name: string;
+  phoneNumber: string;
+}
 
 const RaffleWinnerList = () => {
   const [selectedIndex, setSelectedIndex] = useState(1);
 
   const tabStyled = 'py-1 border-r border-gray-600 flex-1 text-center';
+
+  const { data, isLoading } = useQueryGetRaffleWinners(selectedIndex);
+  if (isLoading) return <>Loading...</>;
 
   return (
     <div className='w-[373px] flex flex-col pb-8 items-center'>
@@ -24,27 +33,27 @@ const RaffleWinnerList = () => {
 
           <span
             className={`${tabStyled} ${
-              selectedIndex === 3 ? 'bg-[#989FA1]' : 'bg-[#F5F7F8] '
+              selectedIndex === 2 ? 'bg-[#989FA1]' : 'bg-[#F5F7F8] '
             }`}
-            onClick={() => setSelectedIndex(3)}
+            onClick={() => setSelectedIndex(2)}
           >
             2등
           </span>
           <span
             className={`rounded-e-xl py-1 flex-1 text-center ${
-              selectedIndex === 4 ? 'bg-[#989FA1]' : 'bg-[#F5F7F8] '
+              selectedIndex === 3 ? 'bg-[#989FA1]' : 'bg-[#F5F7F8] '
             }`}
-            onClick={() => setSelectedIndex(4)}
+            onClick={() => setSelectedIndex(3)}
           >
             3등
           </span>
         </div>
         <div className='w-full max-h-[360px] overflow-y-scroll'>
-          {Array.from({ length: 20 }, (_, index) => (
+          {data.result.drawWinnerList.map((winner: Winner, index: number) => (
             <div key={index} className='flex justify-evenly w-full'>
-              <span>1등</span>
-              <span>홍길동</span>
-              <span>010-3333-2222</span>
+              <span>{selectedIndex}등</span>
+              <span>{winner.name}</span>
+              <span>{winner.phoneNumber}</span>
             </div>
           ))}
         </div>

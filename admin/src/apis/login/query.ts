@@ -1,16 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
 import { postLogin } from './api';
+import { LoginRequest } from '@/type/login/type';
 
 export const useMutationPostLogin = () => {
   const mutation = useMutation({
     mutationKey: ['postLogin'],
-    mutationFn: ({
-      account,
-      password,
-    }: {
-      account: string;
-      password: string;
-    }) => postLogin(account, password),
+    mutationFn: (body: LoginRequest) => postLogin(body),
   });
 
   return mutation;

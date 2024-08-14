@@ -4,18 +4,17 @@ import ListContainer from '../common/List/ListContainer';
 import ManageContainer from '../common/ManageContainer';
 import { ROUTER_PATH } from '@/lib/constants';
 import { useNavigate } from 'react-router-dom';
-import { useCombinedData } from '@/apis/main/query';
+import { useEventsData } from '@/apis/main/query';
 
 import { getWeekDay } from '@/utils/getWeekDay';
 
 const EventManagement = () => {
-  const { eventsData } = useCombinedData();
-  const fcfsData = eventsData?.result.fcfsEventList;
-  const drawData = eventsData?.result.drawEvent;
-  console.log(drawData);
+  const { data } = useEventsData();
+  const fcfsData = data?.result.fcfsEventList;
+  const drawData = data?.result.drawEvent;
   const navigator = useNavigate();
 
-  if (!eventsData) {
+  if (!data) {
     return <div>없는데용</div>;
   }
 

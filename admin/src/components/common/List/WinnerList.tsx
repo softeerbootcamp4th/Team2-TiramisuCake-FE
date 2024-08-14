@@ -1,14 +1,9 @@
+import { DrawEventList } from '@/type/main/type';
 import EditButton from '../Button/EditButton';
-
-type Winner = {
-  rank: string;
-  winnerNum: number;
-  probability: string;
-};
 
 interface WinnerListProps {
   title: string;
-  winners: Winner[];
+  winners: DrawEventList[];
   onClick: () => void;
 }
 
@@ -20,7 +15,7 @@ const WinnerList = ({ title, winners, onClick }: WinnerListProps) => {
       <div className='flex justify-between'>
         <div className='font-bold my-auto'>당첨 인원 및 확률</div>
         <div className='flex-1 ml-4 p-2'>
-          {winners.map((winner, index) => (
+          {winners?.map((winner, index) => (
             <div key={index} className='flex justify-between my-1'>
               <div className='flex w-full items-center'>
                 <div className='flex-1 text-left'>
