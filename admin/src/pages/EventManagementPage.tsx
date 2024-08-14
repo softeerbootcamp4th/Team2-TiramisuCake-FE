@@ -21,6 +21,9 @@ const EventManagementPage = () => {
   const drawData = eventsData?.result.drawEvent;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isWinModalOpen, setIsWinModalOpen] = useState(false);
+  const text = `${drawData.startDate}${getWeekDay(drawData.startDate)} ${
+    drawData.startTime
+  } ~ ${drawData.endDate}${getWeekDay(drawData.endDate)} ${drawData.endTime}`;
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -96,19 +99,7 @@ const EventManagementPage = () => {
           </div>
           <div className='ml-4 py-4 text-center flex items-center'>
             <span className='font-semibold'>복권 긁기 이벤트 </span>
-            <span className='text-sm mx-2'>
-              {drawData.startDate +
-                getWeekDay(drawData.startDate) +
-                ' ' +
-                drawData.startTime +
-                ' ' +
-                '~' +
-                ' ' +
-                drawData.endDate +
-                getWeekDay(drawData.endDate) +
-                ' ' +
-                drawData.endTime}
-            </span>
+            <span className='text-sm mx-2'>{text}</span>
             <EditButton text='수정하기' onClick={handleWinOpenModal} />
           </div>
         </ListContainer>
