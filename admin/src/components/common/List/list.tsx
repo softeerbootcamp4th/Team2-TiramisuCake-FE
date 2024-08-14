@@ -1,3 +1,4 @@
+import { FCFSEventList } from '@/type/main/type';
 import { getWeekDay } from '@/utils/getWeekDay';
 
 type Event = {
@@ -6,18 +7,12 @@ type Event = {
   endTime: string;
 };
 
-type totalWinner = {
-  round: string;
-  eventDate: string;
-  winnerNum: string;
-};
-
 interface ListProps {
   onClick: () => void;
-  events: Event[];
+  events: Event[] | FCFSEventList[];
 }
 
-const isEvent = (event: Event | totalWinner): event is Event => {
+const isEvent = (event: Event | FCFSEventList): event is Event => {
   return (event as Event).startTime !== undefined;
 };
 
@@ -42,8 +37,12 @@ const List = ({ events = [] }: ListProps) => {
                 </p>
               ) : (
                 <>
-                  <p className='text-sm '>{event.eventDate}</p>
-                  <p className=' text-sm'>| {event.winnerNum}명 |</p>
+                  <p className='text-sm '>
+                    {(event as FCFSEventList).eventDate}
+                  </p>
+                  <p className=' text-sm'>
+                    | {(event as FCFSEventList).winnerNum}명 |
+                  </p>
                 </>
               )}
             </div>

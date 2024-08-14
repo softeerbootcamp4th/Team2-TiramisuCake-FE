@@ -20,6 +20,7 @@ const Header = () => {
 
   const handleLogOutBtnClick = () => {
     removeCookie('accessToken', { path: '/' });
+    navigate('/');
   };
   return (
     <div className='w-screen min-x-[1300px] h-[87px] flex justify-between bg-[#F3F5F7] items-center py-4 px-56 z-50 '>

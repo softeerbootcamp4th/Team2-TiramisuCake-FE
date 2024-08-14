@@ -7,12 +7,7 @@ interface Props {
 
 const RaffleWinnerListModal = ({ handleClose }: Props) => {
   return (
-    <Modal
-      handleButtonClick={() => {
-        console.log('hi');
-      }}
-      handleCloseClick={handleClose}
-    >
+    <Modal isButton={false} handleCloseClick={handleClose}>
       <RaffleWinnerList />
     </Modal>
   );

@@ -1,8 +1,6 @@
 import ManageContainer from '@/components/common/ManageContainer';
 import EventManagement from '@/components/section/EventManagement';
-import SetRaffleWinnerContainer from '@/components/common/Container/SetRaffleWinnerContainer';
-import SetFCFSWinnerContainer from '@/components/common/Container/SetFCFSWinnerContainer';
-import WinnersListContainer from '@/components/common/Container/WinnersListContainer';
+import WinnerManagement from '@/components/section/WinnerManagement';
 
 const MainPage = () => {
   return (
@@ -15,9 +13,7 @@ const MainPage = () => {
         <div className='text-gray-800 text-sm text-center my-3'>
           선착순 당첨 인원 수 설정 / 당첨 / 당첨자 목록 조회
         </div>
-        <SetFCFSWinnerContainer />
-        <SetRaffleWinnerContainer />
-        <WinnersListContainer />
+        <WinnerManagement />
       </ManageContainer>
     </div>
   );
