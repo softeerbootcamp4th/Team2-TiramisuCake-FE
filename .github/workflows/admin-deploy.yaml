@@ -38,6 +38,9 @@ jobs:
       - name: Build the project
         working-directory: ./admin
         run: yarn build
+        env:
+          VITE_SITE_URL: ${{ secrets.VITE_SITE_URL }}
+          VITE_ANOTHER_ENV: ${{ secrets.VITE_ANOTHER_ENV }}
 
       - name: Echo test
         run: echo ${{ secrets.AWS_ARN }}
