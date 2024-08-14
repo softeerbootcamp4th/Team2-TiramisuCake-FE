@@ -24,9 +24,9 @@ const checkbox = 'svg/check-off.svg';
 const checked = 'svg/check-on.svg';
 
 const LoginModal = ({ onClose }: CloseProps) => {
-  const codeQuery = useMutationCode();
-  const codeVerificationQuery = useMutationCodeVerification();
-  const loginQuery = useMutationLogin();
+  const codeMutation = useMutationCode();
+  const codeVerificationMutation = useMutationCodeVerification();
+  const loginMutation = useMutationLogin();
   const [timer, setTimer] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
@@ -66,7 +66,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
   };
 
   const handleSendAuthCode = async (phoneNumber: string) => {
-    codeQuery.mutate(phoneNumber, {
+    codeMutation.mutate(phoneNumber, {
       onSuccess: (response) => {
         console.log('인증번호 전송 성공:', response);
         if (response.isSuccess && response.result) {
@@ -90,7 +90,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
   };
 
   const handleVerification = async (body: ConfirmVerificationRequestBody) => {
-    codeVerificationQuery.mutate(body, {
+    codeVerificationMutation.mutate(body, {
       onSuccess: (response) => {
         if (response.isSuccess) {
           setCodeVerified(true);
@@ -106,7 +106,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
   };
 
   const handleLogin = (body: LoginRequestBody) => {
-    loginQuery.mutate(body, {
+    loginMutation.mutate(body, {
       onSuccess: (response) => {
         console.log(response);
         if (response.isSuccess && response.result) {
@@ -115,14 +115,14 @@ const LoginModal = ({ onClose }: CloseProps) => {
 
           setCookies('accessToken', response.result.accessToken, {
             path: '/',
-            maxAge: 100000,
+            maxAge: 104800,
             secure: true,
             sameSite: 'strict',
           });
 
           setCookies('refreshToken', response.result.refreshToken, {
             path: '/',
-            maxAge: Infinity,
+            maxAge: 604800,
             secure: true,
             sameSite: 'strict',
           });
