@@ -1,6 +1,14 @@
 import Comment from '@/components/common/Comment/Comment';
+import { useTabContext } from '@/store/context/useTabContext';
+import { useEffect } from 'react';
 
 const CommentsLoungePage = () => {
+  const { setActiveTab } = useTabContext();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setActiveTab('comments');
+  }, []);
   return (
     <>
       <div className='bg-gradient-bottom-yellow min-h-screen w-[80vw] flex relative justify-center items-center m-auto'>

@@ -1,38 +1,49 @@
+import { FCFSEventList } from '@/type/main/type';
+import { getWeekDay } from '@/utils/getWeekDay';
+
 type Event = {
-  id: string;
-  period: string;
-  winners?: number;
+  round: string;
+  startTime: string;
+  endTime: string;
 };
 
 interface ListProps {
   onClick: () => void;
-  events: Event[];
+  events: Event[] | FCFSEventList[];
 }
 
-/**
- * {index < events.length - 1 && (
-            <hr className='border-gray-300 w-[90%] mx-auto' />
-          )}
-            <div className='mr-4'>
-            <EditButton text='수정하기' onClick={onClick} />
-          </div>
- */
-const List = ({ events }: ListProps) => {
+const isEvent = (event: Event | FCFSEventList): event is Event => {
+  return (event as Event).startTime !== undefined;
+};
+
+const List = ({ events = [] }: ListProps) => {
   return (
     <div className='mb-2'>
       {events.map((event) => (
         <div
-          key={event.id}
+          key={event.round}
           className={`flex items-center justify-between p-3 bg-white rounded-lg`}
         >
           <div className='ml-4 flex items-center space-x-4'>
             <div className='flex items-center justify-center w-10 h-10 rounded-full bg-gray-200'>
-              <span className='text-lg font-medium'>{event.id}</span>
+              <span className='text-lg font-medium'>{event.round}</span>
             </div>
             <div className='flex items-center space-x-24'>
-              <p className='text-sm '>{event.period}</p>
-              {event.winners !== undefined && (
-                <p className=' text-sm'>| {event.winners}명 |</p>
+              {isEvent(event) ? (
+                <p className='text-sm '>
+                  {event.startTime}
+                  {getWeekDay(event.startTime)}~{event.endTime}
+                  {getWeekDay(event.endTime)}
+                </p>
+              ) : (
+                <>
+                  <p className='text-sm '>
+                    {(event as FCFSEventList).eventDate}
+                  </p>
+                  <p className=' text-sm'>
+                    | {(event as FCFSEventList).winnerNum}명 |
+                  </p>
+                </>
               )}
             </div>
           </div>

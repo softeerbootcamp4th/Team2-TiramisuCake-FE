@@ -3,16 +3,24 @@ import Modal from '../common/Modal';
 import { Input } from '../ui/input';
 import { getNumberValidation } from '@/utils/getValidation';
 import ErrorMessage from '../common/ErrorMessage';
+import { useMutationPostFCFSWinner } from '@/apis/winManagement/query';
+import { useQueryClient } from '@tanstack/react-query';
 interface Props {
   handleClose: () => void;
+  winnerNum: number;
 }
 
-const NumberOfWinnersModal = ({ handleClose }: Props) => {
+const NumberOfWinnersModal = ({ handleClose, winnerNum }: Props) => {
   const [value, setValue] = useState('');
   const [error, setError] = useState('');
+  const mutation = useMutationPostFCFSWinner();
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    setValue(winnerNum.toString());
+  }, [winnerNum]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     if (getNumberValidation(e.target.value, 1, 50)) {
       setValue(e.target.value);
       setError('');
@@ -31,9 +39,24 @@ const NumberOfWinnersModal = ({ handleClose }: Props) => {
   }, [error]);
 
   const handleButtonClick = () => {
-    console.log(value);
-    setError('');
-    setValue('');
+    mutation.mutate(
+      {
+        fcfsWinnerNum: Number(value),
+      },
+      {
+        onSuccess: (data) => {
+          console.log(data);
+          queryClient.invalidateQueries({ queryKey: ['getWinnerData'] });
+        },
+        onError: () => {
+          console.log('실패');
+        },
+        onSettled: () => {
+          setError('');
+          setValue('');
+        },
+      }
+    );
   };
   return (
     <Modal handleButtonClick={handleButtonClick} handleCloseClick={handleClose}>

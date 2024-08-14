@@ -1,40 +1,49 @@
-import { InformItem } from '@/types/eventInfoItem';
 import Badge from '@/components/common/Badge/Badge';
-import splitSentences from '@/utils/splitSentence';
+import { motion } from 'framer-motion';
+import { SCROLL_MOTION } from '@/constants/animation';
+import { EventInfo } from '@/types/main/eventInfoType';
 
+export interface EventProps {
+  fcfsInfo?: string;
+  totalDrawWinner?: string;
+  remainDrawCount?: string;
+  eventInfo: EventInfo;
+}
+
+//todo : hint 존재 x
 const EventInfoCard = ({
-  when,
-  hint,
-  winner,
-  remaining,
-  title,
-  eventInformation,
-  imageUrl,
-}: InformItem) => {
+  fcfsInfo,
+  totalDrawWinner,
+  remainDrawCount,
+  eventInfo,
+}: EventProps) => {
   return (
-    <div className='w-[36.5rem] h-[21.8rem] flex flex-col items-center justify-center p-6 border border-custom-white bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom'>
+    <motion.div
+      {...SCROLL_MOTION}
+      className='w-[36.5rem] h-[21.8rem] flex flex-col items-center justify-center p-6 border border-custom-white bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom'
+    >
       <div className='w-full'>
-        {when && hint && (
+        {fcfsInfo && (
           <div className='text-center inline-flex flex-row justify-center gap-3'>
-            <Badge type='lightblue' text={when} />
-            <Badge type='white' text={`힌트: ${hint}`} />
+            <Badge type='lightblue' text={fcfsInfo} />
+            <Badge type='white' text={`힌트: 인테리어`} />
           </div>
         )}
-        {winner && remaining && (
+        {totalDrawWinner && (
           <div className='text-center inline-flex flex-row justify-center gap-3'>
-            <Badge type='lightblue' text={`추첨 ${winner}`} />
-            <Badge type='lightblue' text={`남은 경품 ${remaining}`} />
+            <Badge type='lightblue' text={`${totalDrawWinner}`} />
+            <Badge type='lightblue' text={`${remainDrawCount}`} />
           </div>
         )}
         <h2 className=' text-b-xxl font-bold mt-2 mb-4 text-center text-gray-800'>
-          {title}
+          {eventInfo.title}
         </h2>
-        <p className='text-sm font-Pretendard text-d-s self-stretch text-gray-600 text-center whitespace-pre-wrap'>
-          {splitSentences(eventInformation)}
+        <p className='text-b-s font-Pretendard self-stretch text-gray-600 text-center whitespace-pre-wrap'>
+          {eventInfo.content}
         </p>
       </div>
       <div className='flex justify-center items-center w-full h-full'>
-        {imageUrl.map((img, index) => (
+        {[eventInfo.rewardImage1, eventInfo.rewardImage2].map((img, index) => (
           <div
             key={index}
             className='flex justify-center items-center w-full h-full'
@@ -48,7 +57,7 @@ const EventInfoCard = ({
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

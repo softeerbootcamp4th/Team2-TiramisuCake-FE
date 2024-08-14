@@ -22,6 +22,7 @@ type State =
   | 'round'
   | 'roundDone'
   | 'reaction'
+  | 'mediumRound'
   | 'bigRound';
 
 const Button = ({
@@ -49,20 +50,25 @@ const Button = ({
     round: `p-2.5 rounded-[10px] ${isActive ? 'bg-primary' : 'bg-gray-400'}`,
     roundDone: `p-2.5 rounded-[10px] bg-white`,
     reaction: `px-2.5 py-2 bg-white rounded-[5px] shadow-20`,
+    mediumRound:
+      'rounded-[10px] min-w-[120px] p-2.5 bg-primary hover:bg-green-500',
     bigRound: `rounded-sm w-[356px] p-2.5 ${isActive ? 'bg-primary' : 'bg-gray-400'}`,
   };
 
   const textStyle: Record<string, string> = {
     square: 'text-white text-b-m',
     squareWithBorder: 'text-primary text-b-m font-semibold',
-    round: 'text-white text-b-s font-semibold',
+    round: ' text-white text-b-s font-semibold',
     roundDone: 'text-primary text-b-s font-semibold',
     reaction: `${isReactionClicked ? 'text-primary' : 'text-black'} text-b-m font-semibold`,
+    mediumRound: ' text-white text-b-m font-semibold',
     bigRound: 'text-white text-b-m font-bold',
   };
 
   const handleBtnClick = () => {
-    handleClick();
+    if (isActive) {
+      handleClick();
+    }
     if (type == 'reaction') setIsReactionClicked(true);
   };
 

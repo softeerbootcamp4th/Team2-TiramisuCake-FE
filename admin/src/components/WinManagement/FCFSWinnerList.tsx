@@ -1,9 +1,18 @@
+import { useQueryGetFCFSWinners } from '@/apis/winManagement/query';
 import { useState } from 'react';
+
+interface Winner {
+  name: string;
+  phoneNumber: string;
+}
 
 const FCFSWinnerList = () => {
   const [selectedIndex, setSelectedIndex] = useState(1);
 
   const tabStyled = 'py-1 border-r border-gray-600 flex-1 text-center';
+
+  const { data, isLoading } = useQueryGetFCFSWinners(selectedIndex);
+  if (isLoading) return <>Loading...</>;
 
   return (
     <div className='w-[373px] flex flex-col pb-8 items-center'>
@@ -47,11 +56,11 @@ const FCFSWinnerList = () => {
           </span>
         </div>
         <div className='w-full max-h-[360px] overflow-y-scroll'>
-          {Array.from({ length: 20 }, (_, index) => (
+          {data.result.fcfsWinnerList.map((winner: Winner, index: number) => (
             <div key={index} className='flex justify-evenly w-full'>
-              <span>1등</span>
-              <span>홍길동</span>
-              <span>010-3333-2222</span>
+              <span>{index + 1}</span>
+              <span>{winner.name}</span>
+              <span>{winner.phoneNumber}</span>
             </div>
           ))}
         </div>

@@ -2,23 +2,20 @@ import ListContainer from '../List/ListContainer';
 import WinnerList from '../List/WinnerList';
 import { ROUTER_PATH } from '@/lib/constants';
 import { useNavigate } from 'react-router-dom';
+import { DrawEventList } from '@/type/main/type';
 
-const winners = [
-  { rank: '1등', count: 14, probability: '0.xxx' },
-  { rank: '2등', count: 140, probability: '0.xxxx' },
-  { rank: '3등', count: 1400, probability: '0.xxxxxx' },
-];
 interface Props {
+  drawList: DrawEventList[];
   pageType?: 'main' | 'manage';
   handleModalOpen?: () => void;
 }
 
 const SetRaffleWinnerContainer = ({
+  drawList,
   pageType = 'main',
   handleModalOpen,
 }: Props) => {
   const navigator = useNavigate();
-
   const showWinnerManage = () => {
     navigator(ROUTER_PATH.WIN_MANAGE);
   };
@@ -35,7 +32,7 @@ const SetRaffleWinnerContainer = ({
     <ListContainer width={pageType === 'main' ? '30rem' : '39rem'}>
       <WinnerList
         title='당첨자 추첨'
-        winners={winners}
+        winners={drawList}
         onClick={handleEditButtonClick}
       />
     </ListContainer>

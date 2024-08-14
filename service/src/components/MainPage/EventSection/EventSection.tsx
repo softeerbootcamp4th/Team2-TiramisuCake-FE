@@ -1,49 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import splitSentences from '@/utils/splitSentence';
 import Button from '@/components/common/Button/Button';
 import EventInfoCard from './EventInfoCard/EventInfoCard';
 import LoginModal from './LoginModal/LoginModal';
 import { useLoginContext } from '@/store/context/useLoginContext';
+import Bouncing from '@/components/common/Bouncing/Bouncing';
+import { motion } from 'framer-motion';
+import { SCROLL_MOTION } from '@/constants/animation';
+import { useEventDateContext } from '@/store/context/useEventDateContext';
+import { useEventInfo } from '@/apis/main/query';
+import { ROUTER_PATH } from '@/constants/lib/constants';
 
 interface EventSectionProps {
-  startDate: string;
-  endDate: string;
   onArrowClick: () => void;
 }
 
 const downArrow = '/svg/downarrow.svg';
-const backgroundImage = 'image158.png';
-const title = '신차 출시 기념 EVENT';
-const description =
-  '현대자동차의 The new IONIQ 5 출시 기념 이벤트로 여러분을 초대합니다. 24시간 무료 렌트, 신차 할인 쿠폰 및 다양한 경품을 받아보세요.';
+const backgroundImage = '/images/event_section_bg.webp';
 
-const informs = [
-  {
-    when: '매주 월,목 오전 10시 선착순 100명',
-    hint: '인테리어',
-    title: "'24시간 내차' 이벤트",
-    eventInformation:
-      '하단의 The new IONIQ 5 정보를 바탕으로 빠르게 문장 퀴즈를 맞춰 \n 24시간 렌트권과 신차 할인권을 얻을 수 있어요.',
-    imageUrl: ['/image 162.png', '/image 163.png'],
-  },
-  {
-    winner: '1555명',
-    remaining: '1554개',
-    title: '매일 복권 긁고 경품 받기',
-    eventInformation:
-      '이벤트 기간 동안 추첨을 통해 아이패드 pro 11인치, 현대백화점 10만원권, 1만원권을 드려요. 일주일 연속 참여 시, 스타벅스 쿠폰을 무조건 받을 수 있어요.',
-    imageUrl: ['svg/ipad.svg', 'svg/money.svg'],
-  },
-];
-
-const EventSection = ({
-  startDate,
-  endDate,
-  onArrowClick,
-}: EventSectionProps) => {
+const EventSection = ({ onArrowClick }: EventSectionProps) => {
   const { isLogined } = useLoginContext();
+  const { data, isLoading } = useEventInfo();
 
+  const { startDate, endDate, setStartDate, setEndDate } =
+    useEventDateContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigator = useNavigate();
 
@@ -55,11 +35,25 @@ const EventSection = ({
     setIsModalOpen(false);
   };
   const goQuizLounge = () => {
-    navigator('/quiz-lounge');
+    navigator(ROUTER_PATH.QUIZ_LOUNGE);
   };
   const goLotteryLounge = () => {
-    navigator('/lottery-lounge');
+    navigator(ROUTER_PATH.LOTTERY_LOUNGE);
   };
+  useEffect(() => {
+    if (!isLoading && data) {
+      setStartDate(data.result.startDate);
+      setEndDate(data.result.endDate);
+    }
+  }, [isLoading, data]);
+
+  if (isLoading) {
+    return (
+      <h1 className='text-h-m text-center justify-center'>
+        ...잠시만 기다려주세요.
+      </h1>
+    );
+  }
 
   return (
     <div
@@ -76,19 +70,35 @@ const EventSection = ({
           <span className='text-center font-Pretendard text-green-500 font-medium text-b-m'>
             {startDate}-{endDate}
           </span>
-          <div className='font-bold text-[2.25rem] self-stretch text-center text-gray-900 line-height-[3.375rem]'>
-            {title}
-          </div>
+          <motion.div
+            {...SCROLL_MOTION}
+            className='font-bold text-h-l self-stretch text-center text-gray-900 line-height-[3.375rem]'
+          >
+            {data?.result.eventTitle}
+          </motion.div>
         </div>
-        <div className=' font-Pretendard font-normal text-gray-800 text-center'>
-          {splitSentences(description)}
-        </div>
+        <motion.div
+          {...SCROLL_MOTION}
+          className='font-Pretendard text-b-xl font-normal text-gray-800 text-center whitespace-pre-wrap'
+        >
+          {data?.result.eventDescription!}
+        </motion.div>
         {isLogined ? (
           <div className='my-8'>
             <div className='flex items-center flex-row text-center'>
-              {informs.map((inform, index) => (
-                <EventInfoCard key={index} {...inform} />
-              ))}
+              {data?.result.eventInfoList?.[0] && (
+                <EventInfoCard
+                  fcfsInfo={data?.result.fcfsInfo}
+                  eventInfo={data.result.eventInfoList[0]}
+                />
+              )}
+              {data?.result.eventInfoList?.[1] && (
+                <EventInfoCard
+                  totalDrawWinner={data?.result.totalDrawWinner}
+                  remainDrawCount={data?.result.remainDrawCount}
+                  eventInfo={data.result.eventInfoList[1]}
+                />
+              )}
             </div>
             <div className='mt-6 flex flex-row mx-6'>
               <div className='ml-[180px] mr-6'>
@@ -116,27 +126,40 @@ const EventSection = ({
           </div>
         ) : (
           <>
-            <div className='flex my-6 py-2 px-3'>
+            <motion.div {...SCROLL_MOTION} className='flex my-6 py-2 px-3'>
               <Button
                 type='square'
                 text='번호 인증하고 이벤트 참여하기'
                 handleClick={handleOpenModal}
               ></Button>
-            </div>
+            </motion.div>
             <div className='flex items-center flex-row text-center'>
-              {informs.map((inform, index) => (
-                <EventInfoCard key={index} {...inform} />
-              ))}
+              {data?.result.eventInfoList?.[0] && (
+                <EventInfoCard
+                  fcfsInfo={data?.result.fcfsInfo}
+                  eventInfo={data.result.eventInfoList[0]}
+                />
+              )}
+              {data?.result.eventInfoList?.[1] && (
+                <EventInfoCard
+                  totalDrawWinner={data?.result.totalDrawWinner}
+                  remainDrawCount={data?.result.remainDrawCount}
+                  eventInfo={data.result.eventInfoList[1]}
+                />
+              )}
             </div>
           </>
         )}
-
-        <img
-          className='mt-auto hover:cursor-pointer '
-          src={downArrow}
-          alt='arrow'
-          onClick={onArrowClick}
-        />
+        <div className='mt-auto'>
+          <Bouncing>
+            <img
+              className='hover:cursor-pointer mt-6 '
+              src={downArrow}
+              alt='arrow'
+              onClick={onArrowClick}
+            />
+          </Bouncing>
+        </div>
       </div>
     </div>
   );

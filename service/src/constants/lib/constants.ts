@@ -5,8 +5,6 @@ export const ROUTER_PATH = {
   COMMENTS_LOUNGE: 'comments-lounge',
 } as const;
 
-export const BASE_URL = 'https://softeer.shop/';
-
 export const HEADERS = {
   'Content-Type': 'application/json',
 };

@@ -1,9 +1,11 @@
 import Button from '@/components/common/Button/Button';
+import ExitModal from '@/components/common/Modal/ExitModal/ExitModal';
 import Attendance from '@/components/LotteryLounge/Attendance';
 import LotteryCanvas from '@/components/LotteryLounge/LotteryCanvas';
 import { useEffect } from 'react';
+import { useBlocker } from 'react-router-dom';
 
-const backgroundImage = '/Lottery.png';
+const backgroundImage = '/images/draw_bg.webp';
 const sample = () => {
   console.log('아직 api 연결 x');
 };
@@ -15,6 +17,12 @@ const LotteryLoungePage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) =>
+      currentLocation.pathname !== nextLocation.pathname
+  );
+
   return (
     <div>
       <div
@@ -29,7 +37,7 @@ const LotteryLoungePage = () => {
               handleClick={sample}
             />
             <div className='text-center'>
-              <div className='font-semibold text-h-s mb-2'>
+              <div className='font-semibold text-h-m mb-2'>
                 복권을 통해 <span className='text-primary'>나의 경품</span>을
                 확인하세요!
               </div>
@@ -49,6 +57,13 @@ const LotteryLoungePage = () => {
           <Attendance />
         </div>
       </div>
+      {blocker.state === 'blocked' && (
+        <ExitModal
+          handleClose={() => blocker.reset()}
+          handleCancel={() => blocker.reset()}
+          handleConfirm={() => blocker.proceed()}
+        />
+      )}
     </div>
   );
 };

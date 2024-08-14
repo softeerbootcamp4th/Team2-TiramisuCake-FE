@@ -1,30 +1,35 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, memo } from 'react';
 import { motion, PanInfo } from 'framer-motion';
 import TextCard from './TextCard';
 import useInitialArrays from '@/hooks/QuizLounge/useInitialArrays';
 import useResetTransform from '@/hooks/QuizLounge/useResetTransform';
 import ResultModal from './ResultModal';
+import { craftSideCannons } from '@/utils/confettiCrafter';
+import { useNavigate } from 'react-router-dom';
+import { ROUTER_PATH } from '@/constants/lib/constants';
 
 interface QuizContainerProps {
   answer: string[];
+  isGameEnded: boolean;
+  setIsGamedEnded: (isEnded: boolean) => void;
 }
 
-const QuizContainer = ({ answer }: QuizContainerProps) => {
+const QuizContainer = ({
+  answer,
+  isGameEnded,
+  setIsGamedEnded,
+}: QuizContainerProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-
+  const [allCorrect, setAllCorrect] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const { filteredAnswer, shuffleAnswer, positions, setPositions } =
-    useInitialArrays(answer);
-
+    useInitialArrays(answer, isGameEnded);
   const [correctPositions, setCorrectPositions] = useState<boolean[]>(
     Array(filteredAnswer.length).fill(false)
   );
-
-  const [allCorrect, setAllCorrect] = useState<boolean>(false);
-
   const { resetTransform, setResetTransform } = useResetTransform();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const allCorrect = correctPositions.every((pos) => pos);
@@ -34,7 +39,11 @@ const QuizContainer = ({ answer }: QuizContainerProps) => {
   }, [correctPositions]);
 
   useEffect(() => {
-    if (allCorrect) setOpenModal(true);
+    if (allCorrect) {
+      setIsGamedEnded(true);
+      craftSideCannons(1.5);
+      setTimeout(() => setOpenModal(true), 1500);
+    }
   }, [allCorrect]);
 
   const handleDragEnd = (
@@ -84,6 +93,11 @@ const QuizContainer = ({ answer }: QuizContainerProps) => {
     } else {
       setResetTransform(index);
     }
+  };
+
+  const handleModal = () => {
+    setOpenModal(false);
+    navigate(ROUTER_PATH.MAIN);
   };
 
   return (
@@ -146,7 +160,7 @@ const QuizContainer = ({ answer }: QuizContainerProps) => {
 
       {openModal && (
         <ResultModal
-          handleModal={() => setOpenModal(false)}
+          handleModal={handleModal}
           result='성공'
           title='선착순 25명 안에 들었어요'
           subTitle='[dmdkdkdkdkdkddkd]'
@@ -161,4 +175,4 @@ const QuizContainer = ({ answer }: QuizContainerProps) => {
   );
 };
 
-export default QuizContainer;
+export default memo(QuizContainer);

@@ -1,24 +1,29 @@
 'use client';
 import { useState } from 'react';
-
 import EditButton from '@/components/common/Button/EditButton';
-import List from '@/components/common/List/list';
+import List from '@/components/common/List/List';
 import ListContainer from '@/components/common/List/ListContainer';
 import { ROUTER_PATH } from '@/lib/constants';
 import { useNavigate } from 'react-router-dom';
 import FCFSModal from '@/components/EventManagement/FCFSModal';
 import RaffleModal from '@/components/EventManagement/RaffleModal';
-
-const Event1 = [
-  { id: '1', period: '2024.09.02(월) 10:00:00 ~ 12:00:00' },
-  { id: '2', period: '2024.09.05(목) 10:00:00 ~ 12:00:00' },
-  { id: '3', period: '2024.09.09(월) 10:00:00 ~ 12:00:00' },
-  { id: '4', period: '2024.09.12(목) 10:00:00 ~ 12:00:00' },
-];
-
+import { useCombinedData } from '@/apis/main/query';
+import { getWeekDay } from '@/utils/getWeekDay';
+import { useMutationDraw, useMutationFcFs } from '@/apis/event/query';
+import { DrawRequest, FcFsRequest } from '@/types/eventType';
+import { useQueryClient } from '@tanstack/react-query';
 const EventManagementPage = () => {
+  const mutationFcFs = useMutationFcFs();
+  const mutationDraw = useMutationDraw();
+  const queryClient = useQueryClient();
+  const { eventsData } = useCombinedData();
+  const fcfsData = eventsData?.result.fcfsEventList;
+  const drawData = eventsData?.result.drawEvent;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isWinModalOpen, setIsWinModalOpen] = useState(false);
+  const text = `${drawData.startDate}${getWeekDay(drawData.startDate)} ${
+    drawData.startTime
+  } ~ ${drawData.endDate}${getWeekDay(drawData.endDate)} ${drawData.endTime}`;
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -28,9 +33,17 @@ const EventManagementPage = () => {
     setIsModalOpen(false);
   };
 
-  const handleSave = () => {
-    // 저장 로직 추가
-    setIsModalOpen(false);
+  const handleSave = (body: FcFsRequest) => {
+    mutationFcFs.mutate(body, {
+      onSuccess: (data) => {
+        console.log(data);
+        queryClient.invalidateQueries({ queryKey: ['getEventsData'] });
+      },
+      onError: (error) => {
+        console.error('Error:', error);
+      },
+    });
+    //setIsModalOpen(false);
   };
 
   const handleWinOpenModal = () => {
@@ -41,9 +54,17 @@ const EventManagementPage = () => {
     setIsWinModalOpen(false);
   };
 
-  const handleWinSave = () => {
-    // 저장 로직 추가
-    setIsWinModalOpen(false);
+  const handleWinSave = (body: DrawRequest) => {
+    mutationDraw.mutate(body, {
+      onSuccess: (data) => {
+        console.log(data);
+        queryClient.invalidateQueries({ queryKey: ['getEventsData'] });
+      },
+      onError: (error) => {
+        console.error('Error:', error);
+      },
+    });
+    //setIsWinModalOpen(false);
   };
 
   const navigator = useNavigate();
@@ -70,7 +91,7 @@ const EventManagementPage = () => {
               <EditButton text='수정하기' onClick={handleOpenModal} />
             </div>
           </div>
-          <List onClick={handleOpenModal} events={Event1} />
+          <List onClick={handleOpenModal} events={fcfsData} />
         </ListContainer>
         <ListContainer width='39rem'>
           <div className='px-4 text-left text-lg pt-4 font-semibold'>
@@ -78,9 +99,7 @@ const EventManagementPage = () => {
           </div>
           <div className='ml-4 py-4 text-center flex items-center'>
             <span className='font-semibold'>복권 긁기 이벤트 </span>
-            <span className='text-sm mx-2'>
-              2024.09.02(월) 00:00:00 ~ 2024.09.15(일) 23:59:59
-            </span>
+            <span className='text-sm mx-2'>{text}</span>
             <EditButton text='수정하기' onClick={handleWinOpenModal} />
           </div>
         </ListContainer>

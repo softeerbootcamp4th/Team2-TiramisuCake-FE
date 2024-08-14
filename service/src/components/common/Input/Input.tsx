@@ -1,7 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import Button from '../Button/Button';
 import { debounce } from 'lodash';
-import { validatePhoneNumber } from '@/utils/checkPhoneNumber';
 
 /**
  *
@@ -9,9 +8,11 @@ import { validatePhoneNumber } from '@/utils/checkPhoneNumber';
  * @param inputText : input text
  * @param buttonText : button text
  * @param required : input required 여부
+ * @param showButton : input 내부 버튼 있는지 여부
  * @param isError : input error 여부
- * @param isPhone : input 전환번호 여부
  * @param handleClick : button click handler
+ * @param value : input value
+ * @param onChange : input change handler
  * @returns
  */
 
@@ -22,8 +23,11 @@ interface InputProps {
   showButton?: boolean;
   required?: boolean;
   isError?: boolean;
-  isPhone?: boolean;
-  handleClick: () => void;
+  isActivated?: boolean;
+  handleButtonClick?: (object?: any) => Promise<void>;
+  //부모 컴포넌트에서 변경된 값 사용
+  value?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 type InputType = 'active' | 'disabled';
@@ -35,48 +39,30 @@ const Input = ({
   showButton = false,
   required = false,
   isError = false,
-  isPhone = false,
-  handleClick,
+  isActivated = true,
+  handleButtonClick,
+  value = '',
+  onChange,
 }: InputProps) => {
-  const [value, setValue] = useState('');
   const [isValue, setIsValue] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
-  const buttonActive = isValue ? true : false;
   const buttonType = type === 'active' ? 'round' : 'roundDone';
-  const [_isValid, setIsValid] = useState(true);
-
-  const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const rawValue = e.target.value.replace(/\D/g, ''); // 숫자만 추출
-    let formattedValue = '';
-
-    if (rawValue.length <= 3) {
-      formattedValue = rawValue;
-    } else if (rawValue.length <= 7) {
-      formattedValue = `${rawValue.slice(0, 3)}-${rawValue.slice(3)}`;
-    } else {
-      formattedValue = `${rawValue.slice(0, 3)}-${rawValue.slice(3, 7)}-${rawValue.slice(7, 11)}`;
-    }
-
-    setValue(formattedValue);
-    setIsValid(validatePhoneNumber(formattedValue));
-  };
 
   useEffect(() => {
     if (type === 'disabled') setDisabled(true);
   }, []);
 
-  const handleButtonClick = () => {
-    handleClick();
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (onChange) {
+      onChange(e);
+    }
   };
 
   const handleFocus = () => {
     setIsFocus((prev) => !prev);
   };
+
   const debouncedSetIsValue = useCallback(
     debounce((val) => {
       setIsValue(!!val);
@@ -93,7 +79,7 @@ const Input = ({
 
   return (
     <div
-      className={`p-2.5 flex w-[356px] h-[58px rounded-[5px] justify-between items-center ${isFocus ? 'border border-primary bg-white' : 'bg-gray-50'}`}
+      className={`p-2.5 flex w-[356px] h-[58px] rounded-[5px] justify-between items-center ${isFocus ? 'border border-primary bg-white' : 'bg-gray-50'}`}
     >
       <div className='flex'>
         <input
@@ -101,7 +87,7 @@ const Input = ({
           value={value}
           placeholder={inputText}
           required={required}
-          onChange={isPhone ? handlePhoneNumberChange : handleInputChange}
+          onChange={onChange}
           onFocus={handleFocus}
           onBlur={handleFocus}
           disabled={disabled}
@@ -117,9 +103,9 @@ const Input = ({
       {showButton && (
         <Button
           type={buttonType}
-          isActive={buttonActive}
+          isActive={isActivated}
           text={buttonText}
-          handleClick={handleButtonClick}
+          handleClick={() => handleButtonClick(value)}
         />
       )}
     </div>
