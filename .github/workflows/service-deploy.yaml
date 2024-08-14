@@ -35,9 +35,13 @@ jobs:
         working-directory: ./service
         run: yarn install --immutable
 
+      # 여기에서 환경 변수를 주입하여 빌드합니다.
       - name: Build the project
         working-directory: ./service
         run: yarn build
+        env:
+          VITE_SITE_URL: ${{ secrets.VITE_SITE_URL }}
+          VITE_ANOTHER_ENV: ${{ secrets.VITE_ANOTHER_ENV }}
 
       - name: Echo test
         run: echo ${{ secrets.AWS_ARN }}
