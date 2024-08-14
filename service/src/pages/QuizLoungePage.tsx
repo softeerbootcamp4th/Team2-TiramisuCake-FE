@@ -2,10 +2,12 @@ import ExitModal from '@/components/common/Modal/ExitModal/ExitModal';
 import QuizContainer from '@/components/QuizLounge/QuizContainer';
 import QuizFooter from '@/components/QuizLounge/QuizFooter';
 import QuizTitle from '@/components/QuizLounge/QuizTitle';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useBlocker } from 'react-router-dom';
 
 function QuizLoungePage() {
+  const [isGameEnded, setIsGameEnded] = useState(false);
+
   useEffect(() => {
     window.scroll(0, 0);
   }, []);
@@ -18,7 +20,7 @@ function QuizLoungePage() {
 
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) =>
-      currentLocation.pathname !== nextLocation.pathname
+      !isGameEnded && currentLocation.pathname !== nextLocation.pathname
   );
   const answer = data.title.slice(data.startIndex, data.endIndex).split('');
   const slicedQuizTitle = data.title.slice(data.endIndex);
@@ -29,7 +31,11 @@ function QuizLoungePage() {
       style={{ backgroundImage: `url('/svg/quizBg.svg')` }}
     >
       <QuizTitle quizTitle={slicedQuizTitle} answer={answer} />
-      <QuizContainer answer={answer} />
+      <QuizContainer
+        answer={answer}
+        isGameEnded={isGameEnded}
+        setIsGamedEnded={setIsGameEnded}
+      />
       <QuizFooter />
       {blocker.state === 'blocked' && (
         <ExitModal
