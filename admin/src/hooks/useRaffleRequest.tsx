@@ -7,7 +7,7 @@ const initialRaffleTimes = {
   endRaffleTime: undefined as Date | undefined,
 };
 
-export const useRaffleTimes = () => {
+export const useRaffleRequest = () => {
   const [raffleTimes, setRaffleTimes] = useState(initialRaffleTimes);
   const [drawRequest, setDrawRequest] = useState<DrawRequest>({
     startTime: format(new Date(), 'HH:mm:ss'),

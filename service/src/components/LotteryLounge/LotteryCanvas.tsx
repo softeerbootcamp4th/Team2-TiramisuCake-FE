@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import LoseModal from './Modal/LoseModal';
+import { craftFireworks } from '@/utils/confettiCrafter';
 
 const LotteryCanvas = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -112,7 +113,10 @@ const LotteryCanvas = () => {
     if (canvasRef.current) {
       canvasRef.current.style.transition = 'opacity 1s';
       canvasRef.current.style.opacity = '0';
-      setTimeout(() => setIsModalOpen(true), 500);
+      craftFireworks(1);
+      setTimeout(() => {
+        setIsModalOpen(true);
+      }, 2000);
     }
   };
   return (

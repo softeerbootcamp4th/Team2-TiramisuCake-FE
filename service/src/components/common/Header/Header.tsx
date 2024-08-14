@@ -10,12 +10,12 @@ const Header = () => {
 
   return (
     <header
-      className={`bg-white ${activeTab === 'event' || activeTab === 'ioniq5' ? 'opacity-100' : 'opacity-0'} w-full h-14 flex fixed items-center justify-between px-6 shadow-md z-50`}
+      className={`bg-white ${activeTab === 'event' || activeTab === 'ioniq5' || activeTab === 'comments' ? 'opacity-100' : 'opacity-0'} w-full h-14 flex fixed items-center justify-between px-6 shadow-md z-50`}
     >
       <div className='flex items-center'>
         <Link to='/'>
           <img
-            onClick={() => handleTabClick('')}
+            onClick={() => handleTabClick('rending')}
             src='image 113.svg'
             alt='Hyundai logo'
             className='flex-shrink-0 px-2 ml-10 '
