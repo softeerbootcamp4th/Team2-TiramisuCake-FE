@@ -1,9 +1,13 @@
 import Comment from '@/components/common/Comment/Comment';
+import { useTabContext } from '@/store/context/useTabContext';
 import { useEffect } from 'react';
 
 const CommentsLoungePage = () => {
+  const { setActiveTab } = useTabContext();
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    setActiveTab('comments');
   }, []);
   return (
     <>
