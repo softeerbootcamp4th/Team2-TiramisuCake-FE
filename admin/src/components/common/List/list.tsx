@@ -1,5 +1,6 @@
 import { getWeekDay } from '@/utils/getWeekDay';
 
+import React from 'react';
 type Event = {
   round: string;
   startTime: string;
