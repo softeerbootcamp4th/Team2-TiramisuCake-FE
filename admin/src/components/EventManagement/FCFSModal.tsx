@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/popover';
 import { CalendarIcon } from 'lucide-react';
 import { format, setHours, setMinutes } from 'date-fns';
-import { FcFsRequest } from '@/types/eventType';
+import { FcFsRequest } from '@/type/eventManagement/eventType';
 interface FCFSModalProps {
   isOpen: boolean;
   handleClose: () => void;
