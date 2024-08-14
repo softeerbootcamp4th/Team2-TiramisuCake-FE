@@ -1,11 +1,10 @@
-import { BASE_URL } from '@/constants/api';
+import { BASE_URL, HEADERS } from '@/constants/api';
+import { LoginRequest } from '@/type/login/type';
 
-export const postLogin = async (account: string, password: string) => {
+export const postLogin = async ({ account, password }: LoginRequest) => {
   const res = await fetch(`${BASE_URL}/login`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: HEADERS,
     body: JSON.stringify({ account: account, password: password }),
   });
 

@@ -1,7 +1,12 @@
 import { BASE_URL } from '@/constants/api';
+import {
+  GetFCFSWinnerRequest,
+  GetRaffleWinnerRequest,
+  PostFCFSWinnerRequest,
+} from '@/type/winManagement/type';
 import { getCookie } from '@/utils/cookie';
 
-export const getRaffleWinners = async (rank: number) => {
+export const getRaffleWinners = async ({ rank }: GetRaffleWinnerRequest) => {
   const accessToken = getCookie('accessToken');
   const res = await fetch(`${BASE_URL}/winner/draw/${rank}`, {
     headers: {
@@ -12,7 +17,7 @@ export const getRaffleWinners = async (rank: number) => {
   return res.json();
 };
 
-export const getFCFSWinners = async (round: number) => {
+export const getFCFSWinners = async ({ round }: GetFCFSWinnerRequest) => {
   const accessToken = getCookie('accessToken');
   const res = await fetch(`${BASE_URL}/winner/fcfs/${round}`, {
     headers: {
@@ -23,7 +28,9 @@ export const getFCFSWinners = async (round: number) => {
   return res.json();
 };
 
-export const postFCFSWinner = async (fcfsWinnerNum: number) => {
+export const postFCFSWinner = async ({
+  fcfsWinnerNum,
+}: PostFCFSWinnerRequest) => {
   const accessToken = getCookie('accessToken');
   const res = await fetch(`${BASE_URL}/winner/fcfs`, {
     method: 'POST',
