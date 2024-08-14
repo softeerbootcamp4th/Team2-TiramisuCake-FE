@@ -1,7 +1,8 @@
 'use client';
 import { TimePicker } from '@/components/ui/datetime-picker';
 import Modal from '@/components/common/Modal';
-import { useRaffleTimes } from '@/hooks/useRaffleTimes'; // 커스텀 훅 import
+import { useRaffleRequest } from '@/hooks/useRaffleRequest';
+import { DrawRequest } from '@/types/eventType';
 
 interface RaffleModalProps {
   isOpen: boolean;
@@ -15,7 +16,7 @@ const RaffleModal = ({ isOpen, handleClose, handleSave }: RaffleModalProps) => {
     drawRequest,
     handleStartTimeChange,
     handleEndTimeChange,
-  } = useRaffleTimes();
+  } = useRaffleRequest();
 
   if (!isOpen) return null;
 
