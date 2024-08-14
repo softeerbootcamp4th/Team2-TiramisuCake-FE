@@ -2,6 +2,7 @@
 import { TimePicker } from '@/components/ui/datetime-picker';
 import Modal from '@/components/common/Modal';
 import { useRaffleTimes } from '@/hooks/useRaffleTimes'; // 커스텀 훅 import
+import { DrawRequest } from '@/type/eventManagement/eventType';
 
 interface RaffleModalProps {
   isOpen: boolean;

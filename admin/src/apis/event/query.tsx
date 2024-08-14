@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { FcFsRequest, DrawRequest } from '@/types/eventType';
+import { FcFsRequest, DrawRequest } from '@/type/eventManagement/eventType';
 import { postDrawData, postFcFsData } from './api';
 
 export const useMutationFcFs = () => {

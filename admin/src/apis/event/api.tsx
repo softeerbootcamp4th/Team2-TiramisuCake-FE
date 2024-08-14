@@ -1,5 +1,5 @@
 import { BASE_URL, AuthorizationHeader } from '@/constants/api';
-import { DrawRequest, FcFsRequest } from '@/types/eventType';
+import { DrawRequest, FcFsRequest } from '@/type/eventManagement/eventType';
 
 export const postFcFsData = async (body: FcFsRequest) => {
   const response = await fetch(`${BASE_URL}/event/fcfs`, {
