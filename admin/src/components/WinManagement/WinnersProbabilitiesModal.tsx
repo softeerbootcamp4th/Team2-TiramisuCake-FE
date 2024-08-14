@@ -1,17 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from '../common/Modal';
 import InputField from './InputField';
 import { getNumberValidation } from '@/utils/getValidation';
 import { useMutationPostRaffleWinner } from '@/apis/winManagement/query';
-
+import { DrawEventList } from '@/type/main/type';
+import { useQueryClient } from '@tanstack/react-query';
 interface Props {
   handleClose: () => void;
+  drawEventList: DrawEventList[];
 }
 
-const WinnersProbabilitiesModal = ({ handleClose }: Props) => {
+const WinnersProbabilitiesModal = ({ handleClose, drawEventList }: Props) => {
   const [counts, setCounts] = useState({ first: '', second: '', third: '' });
   const [errors, setErrors] = useState({ first: '', second: '', third: '' });
   const mutation = useMutationPostRaffleWinner();
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    setCounts({
+      first: drawEventList[0].winnerNum.toString(),
+      second: drawEventList[1].winnerNum.toString(),
+      third: drawEventList[2].winnerNum.toString(),
+    });
+  }, [drawEventList]);
 
   const handleInputChange = (
     type: 'first' | 'second' | 'third',
@@ -32,7 +43,6 @@ const WinnersProbabilitiesModal = ({ handleClose }: Props) => {
   };
 
   const handleButtonClick = () => {
-    console.log(counts.first, counts.second, counts.third);
     mutation.mutate(
       {
         firstWinnerNum: Number(counts.first),
@@ -40,8 +50,8 @@ const WinnersProbabilitiesModal = ({ handleClose }: Props) => {
         thirdWinnerNum: Number(counts.third),
       },
       {
-        onSuccess: (data) => {
-          console.log(data);
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['getWinnerData'] });
         },
         onError: () => {
           console.log('실패');
@@ -68,6 +78,7 @@ const WinnersProbabilitiesModal = ({ handleClose }: Props) => {
               setErrors((prev) => ({ ...prev, first: error }))
             }
             validationRange={[1, 5]}
+            probability={drawEventList[0].probability}
           />
           <InputField
             label='2등'
@@ -78,6 +89,7 @@ const WinnersProbabilitiesModal = ({ handleClose }: Props) => {
               setErrors((prev) => ({ ...prev, second: error }))
             }
             validationRange={[1, 10]}
+            probability={drawEventList[1].probability}
           />
           <InputField
             label='3등'
@@ -88,6 +100,7 @@ const WinnersProbabilitiesModal = ({ handleClose }: Props) => {
               setErrors((prev) => ({ ...prev, third: error }))
             }
             validationRange={[1, 100]}
+            probability={drawEventList[2].probability}
           />
         </div>
       </div>
