@@ -10,7 +10,7 @@ import RaffleModal from '@/components/EventManagement/RaffleModal';
 import { useCombinedData } from '@/apis/main/query';
 import { getWeekDay } from '@/utils/getWeekDay';
 import { useMutationDraw, useMutationFcFs } from '@/apis/event/query';
-import { DrawRequest, FcFsRequest } from '@/types/eventType';
+import { DrawRequest, FcFsRequest } from '@/type/eventManagement/eventType';
 import { useQueryClient } from '@tanstack/react-query';
 const EventManagementPage = () => {
   const mutationFcFs = useMutationFcFs();

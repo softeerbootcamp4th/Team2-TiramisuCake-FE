@@ -16,32 +16,24 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
-
-const chartData = [
-  { date: '2024-09-02', participant: 186 },
-  { date: '2024-09-03', participant: 305 },
-  { date: '2024-09-04', participant: 237 },
-  { date: '2024-09-06', participant: 73 },
-  { date: '2024-09-07', participant: 209 },
-  { date: '2024-09-08', participant: 214 },
-  { date: '2024-09-09', participant: 120 },
-  { date: '2024-09-10', participant: 186 },
-  { date: '2024-09-11', participant: 305 },
-  { date: '2024-09-12', participant: 237 },
-  { date: '2024-09-13', participant: 73 },
-  { date: '2024-09-14', participant: 209 },
-  { date: '2024-09-15', participant: 214 },
-];
-const firstDate = chartData[0].date;
-const lastDate = chartData[chartData.length - 1].date;
-const chartConfig = {
-  participant: {
-    label: 'participant',
-    color: '#55A7BA',
-  },
-} satisfies ChartConfig;
+import { useQueryGetMetricsData } from '@/apis/eventMetrics/query';
 
 export function Chart() {
+  const { data, isLoading } = useQueryGetMetricsData();
+  const chartData = data?.result?.visitorNumList;
+  const firstDate = data?.result?.startDate;
+  const lastDate = data?.result?.endDate;
+  console.log(data);
+  const chartConfig = {
+    visitorNum: {
+      label: 'visitorNum',
+      color: '#55A7BA',
+    },
+  } satisfies ChartConfig;
+
+  if (isLoading) {
+    return <div className='w-full h-full'>로딩중입니다 ... </div>;
+  }
   return (
     <Card>
       <CardHeader className='text-center'>
@@ -55,7 +47,7 @@ export function Chart() {
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey='date'
+              dataKey='visitDate'
               tickLine={false}
               tickMargin={10}
               axisLine={false}
@@ -66,7 +58,7 @@ export function Chart() {
               content={<ChartTooltipContent hideLabel />}
             />
             <Bar
-              dataKey='participant'
+              dataKey='visitorNum'
               fill='var(--color-participant)'
               radius={8}
             />
