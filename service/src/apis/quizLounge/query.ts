@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
-import { getFCFSEvent, getTutorialFCFSEvent } from './api';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { getFCFSEvent, getTutorialFCFSEvent, postAnswer } from './api';
 
 export const useQueryGetFCFSEvent = () => {
   const { data, isLoading } = useQuery({
@@ -21,4 +21,12 @@ export const useQueryGetTutorialFCFSEvent = () => {
     data,
     isLoading,
   };
+};
+
+export const useMutationPostAnswer = () => {
+  const mutation = useMutation({
+    mutationKey: ['postAnswer'],
+    mutationFn: (answer: string) => postAnswer(answer),
+  });
+  return mutation;
 };

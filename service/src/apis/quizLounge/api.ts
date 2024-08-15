@@ -25,3 +25,14 @@ export const getTutorialFCFSEvent = async () => {
   });
   return res.json();
 };
+
+export const postAnswer = async (answer: string) => {
+  const res = await fetch(`${baseURL}/event/answer=${answer}`, {
+    method: 'POST',
+    headers: {
+      ...HEADERS,
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return res.json();
+};
