@@ -5,7 +5,8 @@ import LotteryCanvas from '@/components/LotteryLounge/LotteryCanvas';
 import { useEffect } from 'react';
 import { useBlocker } from 'react-router-dom';
 
-const backgroundImage = '/images/draw_bg.webp';
+const backgroundImage =
+  'https://d1wv99asbppzjv.cloudfront.net/main-page/draw_bg.webp';
 const sample = () => {
   console.log('아직 api 연결 x');
 };
