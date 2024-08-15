@@ -35,7 +35,11 @@ const EventSection = ({ onArrowClick }: EventSectionProps) => {
     setIsModalOpen(false);
   };
   const goQuizLounge = () => {
-    navigator(ROUTER_PATH.QUIZ_LOUNGE);
+    navigator(`${ROUTER_PATH.QUIZ_LOUNGE}?mode=live`);
+  };
+
+  const goTutorialQuizLounge = () => {
+    navigator(`${ROUTER_PATH.QUIZ_LOUNGE}?mode=tutorial`);
   };
   const goLotteryLounge = () => {
     navigator(ROUTER_PATH.LOTTERY_LOUNGE);
@@ -105,7 +109,7 @@ const EventSection = ({ onArrowClick }: EventSectionProps) => {
                 <Button
                   type='squareWithBorder'
                   text='튜토리얼'
-                  handleClick={goQuizLounge}
+                  handleClick={goTutorialQuizLounge}
                 />
               </div>
               <div className='mr-[435px]'>

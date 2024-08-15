@@ -1,11 +1,15 @@
+import {
+  useQueryGetFCFSEvent,
+  useQueryGetTutorialFCFSEvent,
+} from '@/apis/quizLounge/query';
 import ExitModal from '@/components/common/Modal/ExitModal/ExitModal';
 import QuizContainer from '@/components/QuizLounge/QuizContainer';
 import QuizFooter from '@/components/QuizLounge/QuizFooter';
 import QuizTitle from '@/components/QuizLounge/QuizTitle';
 import { useEffect, useMemo, useState } from 'react';
-import { useBlocker } from 'react-router-dom';
+import { useBlocker, useSearchParams } from 'react-router-dom';
 
-const data = {
+const mockData = {
   title:
     '디지털 센터 미러 전용 카메라를 통해 \n 보다 선명하게 후방을 확인할 수 있다',
   startIndex: 0,
@@ -14,6 +18,15 @@ const data = {
 
 function QuizLoungePage() {
   const [isGameEnded, setIsGameEnded] = useState(false);
+  const [searchParams] = useSearchParams();
+  const mode = searchParams.get('mode');
+
+  const { data, isLoading } =
+    mode === 'tutorial'
+      ? useQueryGetTutorialFCFSEvent()
+      : useQueryGetFCFSEvent();
+
+  console.log(data);
 
   useEffect(() => {
     window.scroll(0, 0);
@@ -25,11 +38,14 @@ function QuizLoungePage() {
   );
 
   const answer = useMemo(
-    () => data.title.slice(data.startIndex, data.endIndex).split(''),
-    [data]
+    () =>
+      mockData.title.slice(mockData.startIndex, mockData.endIndex).split(''),
+    [mockData]
   );
 
-  const slicedQuizTitle = data.title.slice(data.endIndex);
+  const slicedQuizTitle = mockData.title.slice(mockData.endIndex);
+
+  if (isLoading) return <>Loading...</>;
 
   return (
     <div
