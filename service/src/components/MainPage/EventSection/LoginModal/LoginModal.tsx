@@ -15,6 +15,8 @@ import {
 } from '@/types/Authorization/request';
 //import { parseISO, differenceInSeconds } from 'date-fns';
 import { validatePhoneNumber } from '@/utils/checkPhoneNumber';
+import { useQueryClient } from '@tanstack/react-query';
+
 import { setCookie } from '@/utils/cookie';
 interface CloseProps {
   onClose: () => void;
@@ -39,7 +41,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
   const [privacyConsent, setPrivacyConsent] = useState(false);
   const [marketingConsent, setMarketingConsent] = useState(false);
   const [allValid, setAllValid] = useState(false);
-
+  const queryClient = useQueryClient();
   const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value.replace(/\D/g, ''); // 숫자만 추출
     setPhoneNumber(rawValue);
@@ -107,6 +109,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
     loginMutation.mutate(body, {
       onSuccess: (response) => {
         console.log(response);
+
         if (response.isSuccess && response.result) {
           //const expiresAt = parseISO(response.result.expiredTime);
           //const maxAge = differenceInSeconds(expiresAt, new Date());
@@ -123,6 +126,9 @@ const LoginModal = ({ onClose }: CloseProps) => {
             maxAge: 604800,
             secure: true,
             sameSite: 'strict',
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['sharedUrl', response.result.accessToken],
           });
 
           setIsLogined(true);

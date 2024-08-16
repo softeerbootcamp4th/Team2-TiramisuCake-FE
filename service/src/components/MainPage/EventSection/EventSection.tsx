@@ -16,7 +16,8 @@ interface EventSectionProps {
 }
 
 const downArrow = '/svg/downarrow.svg';
-const backgroundImage = '/images/event_section_bg.webp';
+const backgroundImage =
+  'https://d1wv99asbppzjv.cloudfront.net/main-page/event_section_bg.webp';
 
 const EventSection = ({ onArrowClick }: EventSectionProps) => {
   const { isLogined } = useLoginContext();

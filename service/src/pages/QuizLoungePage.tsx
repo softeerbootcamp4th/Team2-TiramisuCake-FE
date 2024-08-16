@@ -44,7 +44,9 @@ function QuizLoungePage() {
   return (
     <div
       className='min-w-screen min-h-screen bg-center bg-no-repeat bg-cover flex flex-col items-center'
-      style={{ backgroundImage: `url('/images/fcfs_bg.webp')` }}
+      style={{
+        backgroundImage: `url('https://d1wv99asbppzjv.cloudfront.net/main-page/fcfs_bg.webp')`,
+      }}
     >
       <QuizTitle quizTitle={slicedQuizTitle} answer={answer} />
       <QuizContainer
