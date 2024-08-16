@@ -37,7 +37,7 @@ const useScrollControl = ({
         scrollPosition >= rendingOffset &&
         scrollPosition < eventOffset - windowHeight / 2
       ) {
-        setActiveTab('');
+        setActiveTab('rending');
       } else if (
         scrollPosition >= eventOffset - windowHeight / 2 &&
         scrollPosition < carInfoOffset - windowHeight / 2
@@ -47,7 +47,13 @@ const useScrollControl = ({
         setActiveTab('ioniq5');
       }
     }
-  }, [isScrollControlled, rendingSectionRef, eventSectionRef, carInfoSectionRef, setActiveTab]);
+  }, [
+    isScrollControlled,
+    rendingSectionRef,
+    eventSectionRef,
+    carInfoSectionRef,
+    setActiveTab,
+  ]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -59,6 +65,9 @@ const useScrollControl = ({
   useEffect(() => {
     let sectionRef: RefObject<HTMLDivElement> | null = null;
     switch (activeTab) {
+      case 'rending':
+        sectionRef = rendingSectionRef;
+        break;
       case 'event':
         sectionRef = eventSectionRef;
         break;

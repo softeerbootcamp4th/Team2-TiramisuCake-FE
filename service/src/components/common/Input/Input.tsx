@@ -1,7 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import Button from '../Button/Button';
 import { debounce } from 'lodash';
-import { validatePhoneNumber } from '@/utils/checkPhoneNumber';
 
 /**
  *
@@ -11,7 +10,6 @@ import { validatePhoneNumber } from '@/utils/checkPhoneNumber';
  * @param required : input required 여부
  * @param showButton : input 내부 버튼 있는지 여부
  * @param isError : input error 여부
- * @param isPhone : input 전환번호 여부
  * @param handleClick : button click handler
  * @param value : input value
  * @param onChange : input change handler

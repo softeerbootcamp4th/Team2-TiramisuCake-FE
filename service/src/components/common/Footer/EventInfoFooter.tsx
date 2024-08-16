@@ -1,6 +1,10 @@
+import { useEventDateContext } from '@/store/context/useEventDateContext';
+import { getWeekDay } from '@/utils/getWeekDay';
+
 const EventInfoFooter = () => {
-  const startDate = '2024.09.02';
-  const endDate = '2024.09.15';
+  const { startDate, endDate } = useEventDateContext();
+  const startDay = getWeekDay(startDate);
+  const endDay = getWeekDay(endDate);
   return (
     <footer className='min-w-screen h-[39.5rem] p-[4rem_33.25rem_4rem_8rem] flex items-center flex-shrink-0 bg-green-950'>
       <div className='max-w-[48.75rem] mx-auto px-4 flex flex-col items-start gap-6 text-gray-300 font-pretendard'>
@@ -10,7 +14,9 @@ const EventInfoFooter = () => {
           </h2>
           <div className='space-y-1 text-[0.9rem] font-normal'>
             <p className='whitespace-nowrap'>
-              1. 이벤트 기간 : {startDate}(월) ~ {endDate}(일) 총 14일
+              1. 이벤트 기간 : {startDate}
+              {startDay} ~ {endDate}
+              {endDay} 총 14일
             </p>
             <p className='whitespace-nowrap'>
               2. 본 이벤트는 이벤트 페이지에서 번호 인증을 완료한 고객만 참여할

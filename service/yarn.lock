@@ -757,6 +757,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-devtools@npm:5.51.16":
+  version: 5.51.16
+  resolution: "@tanstack/query-devtools@npm:5.51.16"
+  checksum: 10c0/40f1fbad77b703b96809b06323962614f9868b6e453fbcfcc1c73f3ff4f479f4ef066706fdfb3c3be33da76122dac21725de42c0f65ac0344d3839688d672c32
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query-devtools@npm:^5.51.23":
+  version: 5.51.23
+  resolution: "@tanstack/react-query-devtools@npm:5.51.23"
+  dependencies:
+    "@tanstack/query-devtools": "npm:5.51.16"
+  peerDependencies:
+    "@tanstack/react-query": ^5.51.23
+    react: ^18 || ^19
+  checksum: 10c0/f11d53c47fc66d1f04edb7018fc9934d6019c02634eedb82be9aef305f1e61f9593bfa5e5e9f3adba9b1a4e6dc15566123b9d8b1618045571062d8bba739765c
+  languageName: node
+  linkType: hard
+
 "@tanstack/react-query@npm:^5.51.23":
   version: 5.51.23
   resolution: "@tanstack/react-query@npm:5.51.23"
@@ -806,6 +825,13 @@ __metadata:
   dependencies:
     "@babel/types": "npm:^7.20.7"
   checksum: 10c0/7ba7db61a53e28cac955aa99af280d2600f15a8c056619c05b6fc911cbe02c61aa4f2823299221b23ce0cce00b294c0e5f618ec772aa3f247523c2e48cf7b888
+  languageName: node
+  linkType: hard
+
+"@types/canvas-confetti@npm:^1":
+  version: 1.6.4
+  resolution: "@types/canvas-confetti@npm:1.6.4"
+  checksum: 10c0/4a821690f0b9cdd81b0d02c0946c5b4e9e80f189e868fd8a159884d5eb9da0bdf0bfc380a61c971cc5d7b9ca2521625d46bcb5e4653988375118f57523ebe5a4
   languageName: node
   linkType: hard
 
@@ -864,12 +890,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.14.11":
-  version: 20.14.13
-  resolution: "@types/node@npm:20.14.13"
+"@types/node@npm:^22.2.0":
+  version: 22.2.0
+  resolution: "@types/node@npm:22.2.0"
   dependencies:
-    undici-types: "npm:~5.26.4"
-  checksum: 10c0/10bb3ece675308742301c652ab8c6cb88b1ebddebed22316103c58f94fe7eff131edd5f679e487c19077fadb6b5e6b1ad9a60a2cee2869aa1f20452b9761d570
+    undici-types: "npm:~6.13.0"
+  checksum: 10c0/c17900b34faecfec204f72970bd658d0c217aaf739c1bf7690c969465b6b26b77a8be1cd9ba735aadbd1dd20b5c3e4f406ec33528bf7c6eec90744886c5d5608
   languageName: node
   linkType: hard
 
@@ -1404,6 +1430,13 @@ __metadata:
   version: 1.0.30001645
   resolution: "caniuse-lite@npm:1.0.30001645"
   checksum: 10c0/973133d930a1a75b30a77350a795934610a5d9dee9876dbb45351a2b954ddc09ac36b51cfd819b00868f9d2d337ab7ed68b6a9ce6bf9edeacdbc46cc62236295
+  languageName: node
+  linkType: hard
+
+"canvas-confetti@npm:^1.9.3":
+  version: 1.9.3
+  resolution: "canvas-confetti@npm:1.9.3"
+  checksum: 10c0/94c6f16591660d5ed4a48afb8da65902826ce6b38edc7644d62521aa9bf9ef5b950aa4396e980e7fe0a38e5f41a991a6d984721412a54c9fba4de3682c1eead0
   languageName: node
   linkType: hard
 
@@ -4598,14 +4631,17 @@ __metadata:
   dependencies:
     "@radix-ui/react-slot": "npm:^1.1.0"
     "@tanstack/react-query": "npm:^5.51.23"
+    "@tanstack/react-query-devtools": "npm:^5.51.23"
+    "@types/canvas-confetti": "npm:^1"
     "@types/lodash": "npm:^4"
-    "@types/node": "npm:^20.14.11"
+    "@types/node": "npm:^22.2.0"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
     "@typescript-eslint/eslint-plugin": "npm:^7.17.0"
     "@typescript-eslint/parser": "npm:^7.17.0"
     "@vitejs/plugin-react": "npm:^4.3.1"
     autoprefixer: "npm:^10.4.19"
+    canvas-confetti: "npm:^1.9.3"
     class-variance-authority: "npm:^0.7.0"
     clsx: "npm:^2.1.1"
     date-fns: "npm:^3.6.0"
@@ -4631,7 +4667,7 @@ __metadata:
     tailwind-merge: "npm:^2.4.0"
     tailwindcss: "npm:^3.4.6"
     tailwindcss-animate: "npm:^1.0.7"
-    typescript: "npm:^5.2.2"
+    typescript: "npm:^5.5.4"
     vite: "npm:^5.3.4"
     vite-plugin-eslint: "npm:^1.8.1"
   languageName: unknown
@@ -4749,7 +4785,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.2.2":
+"typescript@npm:^5.5.4":
   version: 5.5.4
   resolution: "typescript@npm:5.5.4"
   bin:
@@ -4759,7 +4795,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.2.2#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A^5.5.4#optional!builtin<compat/typescript>":
   version: 5.5.4
   resolution: "typescript@patch:typescript@npm%3A5.5.4#optional!builtin<compat/typescript>::version=5.5.4&hash=379a07"
   bin:
@@ -4781,10 +4817,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~5.26.4":
-  version: 5.26.5
-  resolution: "undici-types@npm:5.26.5"
-  checksum: 10c0/bb673d7876c2d411b6eb6c560e0c571eef4a01c1c19925175d16e3a30c4c428181fb8d7ae802a261f283e4166a0ac435e2f505743aa9e45d893f9a3df017b501
+"undici-types@npm:~6.13.0":
+  version: 6.13.0
+  resolution: "undici-types@npm:6.13.0"
+  checksum: 10c0/2de55181f569c77a4f08063f8bf2722fcbb6ea312a26a9e927bd1f5ea5cf3a281c5ddf23155061db083e0a25838f54813543ff13b0ac34d230d5c1205ead66c1
   languageName: node
   linkType: hard
 

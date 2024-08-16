@@ -1,6 +1,5 @@
 import { useCarInfoContext } from '@/store/context/useCarInfoContext';
 import { useState } from 'react';
-import splitSentences from '@/utils/splitSentence';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
 
@@ -9,6 +8,8 @@ interface CarDetailProps {
   rightImageUrl: string;
   leftTitle: string;
   rightTitle: string;
+  leftSubTitle: string;
+  rightSubTitle: string;
   leftDescription: string;
   rightDescription: string;
 }
@@ -18,6 +19,8 @@ const CarDetail = ({
   rightImageUrl,
   leftTitle,
   rightTitle,
+  leftSubTitle,
+  rightSubTitle,
   leftDescription,
   rightDescription,
 }: CarDetailProps) => {
@@ -37,10 +40,9 @@ const CarDetail = ({
         className={`transition-all duration-300 relative ${activeImage === 'left' ? 'w-[1000px]' : 'w-[184px] bg-black z-10'} `}
         onClick={handleLeftClick}
       >
-        <p></p>
         <img src={leftImageUrl} className='h-full w-full object-cover' />
         {activeImage !== 'left' ? (
-          <div className='absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center'>
+          <div className='absolute top-0 left-0 w-full h-full border-none bg-black bg-opacity-50 flex justify-center items-center'>
             <motion.p
               {...SCROLL_MOTION}
               className='text-white text-b-xxl font-semibold'
@@ -53,8 +55,8 @@ const CarDetail = ({
             {...SCROLL_MOTION}
             className='absolute bottom-12 left-12 w-full text-white flex flex-col gap-4'
           >
-            <p className='text-h-m font-semibold'>{leftTitle}</p>
-            <p className='text-b-m spa'>{splitSentences(leftDescription)}</p>
+            <p className='text-h-m font-semibold'>{leftSubTitle}</p>
+            <p className='text-b-m whitespace-pre-wrap'>{leftDescription}</p>
           </motion.div>
         )}
       </div>
@@ -77,8 +79,8 @@ const CarDetail = ({
             {...SCROLL_MOTION}
             className='absolute bottom-12 left-12 w-full text-white flex flex-col gap-4'
           >
-            <p className='text-h-s font-semibold'>{rightTitle}</p>
-            <p className='text-b-m'>{splitSentences(rightDescription)}</p>
+            <p className='text-h-s font-semibold'>{rightSubTitle}</p>
+            <p className='text-b-m whitespace-pre-wrap'>{rightDescription}</p>
           </motion.div>
         )}
       </div>
