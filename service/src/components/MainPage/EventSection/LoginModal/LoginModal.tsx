@@ -13,9 +13,9 @@ import {
   ConfirmVerificationRequestBody,
   LoginRequestBody,
 } from '@/types/Authorization/request';
-import { useCookies } from 'react-cookie';
 //import { parseISO, differenceInSeconds } from 'date-fns';
 import { validatePhoneNumber } from '@/utils/checkPhoneNumber';
+import { setCookie } from '@/utils/cookie';
 interface CloseProps {
   onClose: () => void;
 }
@@ -53,8 +53,6 @@ const LoginModal = ({ onClose }: CloseProps) => {
   const handleMarketingConsentChange = () => {
     setMarketingConsent(!marketingConsent);
   };
-
-  const [cookies, setCookies] = useCookies(['accessToken', 'refreshToken']);
 
   const { setIsLogined } = useLoginContext();
 
@@ -113,14 +111,14 @@ const LoginModal = ({ onClose }: CloseProps) => {
           //const expiresAt = parseISO(response.result.expiredTime);
           //const maxAge = differenceInSeconds(expiresAt, new Date());
 
-          setCookies('accessToken', response.result.accessToken, {
+          setCookie('accessToken', response.result.accessToken, {
             path: '/',
             maxAge: 104800,
             secure: true,
             sameSite: 'strict',
           });
 
-          setCookies('refreshToken', response.result.refreshToken, {
+          setCookie('refreshToken', response.result.refreshToken, {
             path: '/',
             maxAge: 604800,
             secure: true,

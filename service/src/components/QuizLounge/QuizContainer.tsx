@@ -9,26 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTER_PATH } from '@/constants/lib/constants';
 import { useMutationPostAnswer } from '@/apis/quizLounge/query';
 import TutorialResultModal from './TutorialResultModal';
-
-interface QuizContainerProps {
-  answer: string[];
-  mode: string;
-  isGameEnded: boolean;
-  setIsGamedEnded: (isEnded: boolean) => void;
-}
-
-interface ModalData {
-  isFcfsWinner: boolean;
-  fcfsResult: {
-    title: string;
-    subTitle: string;
-    qrCode?: string;
-    codeWord?: string;
-    fcfsCode?: string;
-    expirationDate?: string;
-    caution: string;
-  };
-}
+import { ModalData, QuizContainerProps } from '@/types/quizLounge/type';
 
 const QuizContainer = ({
   answer,
@@ -40,12 +21,14 @@ const QuizContainer = ({
   const [allCorrect, setAllCorrect] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
+
   const { filteredAnswer, shuffleAnswer, positions, setPositions } =
     useInitialArrays(answer, isGameEnded);
   const [correctPositions, setCorrectPositions] = useState<boolean[]>(
     Array(filteredAnswer.length).fill(false)
   );
   const { resetTransform, setResetTransform } = useResetTransform();
+
   const navigate = useNavigate();
   const mutation = useMutationPostAnswer();
   const [modalData, setModalData] = useState<ModalData>();
@@ -83,6 +66,7 @@ const QuizContainer = ({
     if (!containerRef.current) return;
     setIsDragging(false);
 
+    console.log(containerRef.current, info);
     const containerRect = containerRef.current.getBoundingClientRect();
     const droppedX = info.point.x - containerRect.left;
     const droppedIndex = Math.round(droppedX / 117);
@@ -99,7 +83,6 @@ const QuizContainer = ({
       );
 
       if (isCorrectPosition) {
-        // 정답 위치라면 correctPositions 배열을 업데이트합니다.
         setCorrectPositions((prev) =>
           prev.map((pos, i) => (i === index ? true : pos))
         );

@@ -6,12 +6,15 @@ import ExitModal from '@/components/common/Modal/ExitModal/ExitModal';
 import QuizContainer from '@/components/QuizLounge/QuizContainer';
 import QuizFooter from '@/components/QuizLounge/QuizFooter';
 import QuizTitle from '@/components/QuizLounge/QuizTitle';
+import { useTabContext } from '@/store/context/useTabContext';
 import { useEffect, useMemo, useState } from 'react';
 import { useBlocker, useSearchParams } from 'react-router-dom';
 
 function QuizLoungePage() {
   const [isGameEnded, setIsGameEnded] = useState(false);
   const [searchParams] = useSearchParams();
+  const { setActiveTab } = useTabContext();
+
   const mode = searchParams.get('mode');
 
   const { data, isLoading } =
@@ -23,6 +26,7 @@ function QuizLoungePage() {
 
   useEffect(() => {
     window.scroll(0, 0);
+    setActiveTab('quiz');
   }, []);
 
   const blocker = useBlocker(
@@ -53,7 +57,7 @@ function QuizLoungePage() {
         isGameEnded={isGameEnded}
         setIsGamedEnded={setIsGameEnded}
       />
-      <QuizFooter />
+      <QuizFooter mode={mode as string} />
       {blocker.state === 'blocked' && (
         <ExitModal
           handleClose={() => blocker.reset()}

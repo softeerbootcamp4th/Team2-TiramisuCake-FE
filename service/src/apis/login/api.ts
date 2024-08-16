@@ -1,4 +1,8 @@
-import { HEADERS } from '@/constants/lib/constants';
+import {
+  AUTHORIZATION_HEADER,
+  BASEURL,
+  HEADERS,
+} from '@/constants/lib/constants';
 import {
   SendCodeRequestBody,
   ConfirmVerificationRequestBody,
@@ -12,8 +16,6 @@ import {
   ReIssueResponse,
 } from '@/types/Authorization/response';
 
-const baseURL = `${import.meta.env.VITE_SITE_URL}`;
-
 export const sendAuthCode = async (
   phoneNumber: string
 ): Promise<CodeResponse> => {
@@ -21,7 +23,7 @@ export const sendAuthCode = async (
     phoneNumber,
   };
 
-  const response = await fetch(`${baseURL}/verification/send`, {
+  const response = await fetch(`${BASEURL}/verification/send`, {
     method: 'POST',
     headers: HEADERS,
     body: JSON.stringify(requestBody),
@@ -35,7 +37,7 @@ export const sendAuthCode = async (
 export const confirmVerification = async (
   body: ConfirmVerificationRequestBody
 ): Promise<ConfirmResponse> => {
-  const response = await fetch(`${baseURL}/verification/confirm`, {
+  const response = await fetch(`${BASEURL}/verification/confirm`, {
     method: 'POST',
     headers: HEADERS,
     body: JSON.stringify(body),
@@ -46,7 +48,7 @@ export const confirmVerification = async (
 };
 
 export const login = async (body: LoginRequestBody): Promise<LoginResponse> => {
-  const response = await fetch(`${baseURL}/login`, {
+  const response = await fetch(`${BASEURL}/login`, {
     method: 'POST',
     headers: HEADERS,
     body: JSON.stringify(body),
@@ -57,14 +59,12 @@ export const login = async (body: LoginRequestBody): Promise<LoginResponse> => {
 };
 
 export const reissueToken = async (
-  accessToken: string,
   refreshToken: string
 ): Promise<ReIssueResponse> => {
-  const response = await fetch(`${baseURL}/reissue`, {
+  const response = await fetch(`${BASEURL}/reissue`, {
     method: 'GET',
     headers: {
-      ...HEADERS,
-      Authorization: `Bearer ${accessToken}`,
+      ...AUTHORIZATION_HEADER,
       'Authorization-Refresh': refreshToken,
     },
   });
