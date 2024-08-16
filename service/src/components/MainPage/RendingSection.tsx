@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Bouncing from '../common/Bouncing/Bouncing';
 import { motion } from 'framer-motion';
 
-const backgroundImage = 'images/rending-bg.webp';
+const backgroundImage =
+  'https://d1wv99asbppzjv.cloudfront.net/main-page/rending-bg.webp';
 const gifFile = '/gifs.gif';
 const downarrow = '/svg/BigArrow.svg';
 
@@ -30,6 +31,7 @@ const RendingSection = ({ onArrowClick }: RendingSectionProps) => {
           initial={{ scale: 1.6, y: '50%' }}
           animate={{ scale: 1, y: 0 }}
           transition={{ duration: 1.5, ease: 'easeInOut' }}
+          viewport={{ once: true }}
           className='flex flex-col items-center gap-2'
         >
           <div>
@@ -49,6 +51,7 @@ const RendingSection = ({ onArrowClick }: RendingSectionProps) => {
                   duration: 1.5,
                   delay: i / 2.5,
                 }}
+                viewport={{ once: true }}
                 key={i}
               >
                 {el}{' '}
@@ -61,6 +64,7 @@ const RendingSection = ({ onArrowClick }: RendingSectionProps) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 1 }}
+            viewport={{ once: true }}
           >
             편안한 일상을 누리다
           </motion.p>
@@ -69,6 +73,7 @@ const RendingSection = ({ onArrowClick }: RendingSectionProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2.5, duration: 1 }}
+          viewport={{ once: true }}
           className='flex flex-col items-center'
         >
           <div className='flex mb-5'>
