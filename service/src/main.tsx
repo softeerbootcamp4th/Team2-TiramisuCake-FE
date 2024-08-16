@@ -7,6 +7,7 @@ import { LoginProvider } from '@/store/provider/LoginProvider.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { EventDateProvider } from './store/provider/EventDateProvider.tsx';
+import { UrlProvider } from './store/provider/UrlProvider.tsx';
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -14,8 +15,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <LoginProvider>
         <EventDateProvider>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <RouterProvider router={router} />
+          <UrlProvider>
+            <ReactQueryDevtools initialIsOpen={false} />
+            <RouterProvider router={router} />
+          </UrlProvider>
         </EventDateProvider>
       </LoginProvider>
     </QueryClientProvider>
