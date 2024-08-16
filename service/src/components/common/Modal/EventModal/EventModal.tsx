@@ -26,7 +26,7 @@ const EventModal = ({
     <Modal handleClose={handleClose}>
       <div className='flex flex-col p-9 items-center gap-10 w-[616px]'>
         <div className='flex items-center gap-2 flex-col'>
-          <div className=' text-green-400 text-center text-h-m font-semibold leading-loose'>
+          <div className='text-transparent bg-clip-text bg-gradient-text-to-right text-center text-h-m font-semibold leading-loose'>
             {title}
           </div>
           <div className=' text-gray-900 text-center font-semibold font-pretendard text-b-xl'>
@@ -35,17 +35,17 @@ const EventModal = ({
         </div>
         {image && (
           <div className='flex items-center'>
-            <img src={image}></img>
+            <img src={image} />
           </div>
         )}
         {isQrModal && (
-          <div>
-            <div className='px-4 py-1 bg-green-100 text-b-m font-bold flex justify-between mt-2 w-[131px]'>
+          <div className='flex flex-col items-center mt-[-30px]'>
+            <div className='px-4 py-1 bg-green-100 text-b-m font-bold flex items-center justify-between mt-2 w-[131px]'>
               <span className='text-gray-900'>코드</span>
               <span className='text-green-500'>{code}</span>
             </div>
             <div className='mt-4 text-b-s text-gray-800 font-medium'>
-              사용기한 : {date}
+              {date}
             </div>
           </div>
         )}

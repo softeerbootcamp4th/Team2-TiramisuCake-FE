@@ -51,6 +51,7 @@ const QuizContainer = ({
         mutation.mutate(answerString, {
           onSuccess: (data) => {
             setModalData(data.result);
+            console.log(data.result);
             setTimeout(() => setOpenModal(true), 1500);
           },
         });
@@ -181,11 +182,12 @@ const QuizContainer = ({
         ) : (
           <ResultModal
             handleModal={handleModal}
-            result={modalData!.isFcfsWinner}
+            result={modalData!.fcfsWinner}
             title={modalData!.fcfsResult.title}
             subTitle={modalData!.fcfsResult.subTitle}
             code={modalData!.fcfsResult.fcfsCode}
             image={modalData!.fcfsResult.qrCode}
+            expirationDate={modalData!.fcfsResult.expirationDate}
             description={modalData!.fcfsResult.caution}
           />
         ))}

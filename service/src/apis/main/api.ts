@@ -1,4 +1,4 @@
-import { BASEURL, HEADERS } from '@/constants/lib/constants';
+import { BASEURL } from '@/constants/lib/constants';
 import { EventInfoResponse } from '@/types/main/eventInfoType';
 
 export const getCarDetailInfo = async () => {
@@ -7,12 +7,7 @@ export const getCarDetailInfo = async () => {
 };
 
 export const getEventInfo = async (): Promise<EventInfoResponse> => {
-  const response = await fetch(`${BASEURL}/event`, {
-    method: 'GET',
-    headers: HEADERS,
-  });
-
+  const response = await fetch(`${BASEURL}/main/event`);
   const data: EventInfoResponse = await response.json();
-
   return data;
 };

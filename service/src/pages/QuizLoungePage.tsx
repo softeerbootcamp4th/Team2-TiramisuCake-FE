@@ -22,8 +22,6 @@ function QuizLoungePage() {
       ? useQueryGetTutorialFCFSEvent()
       : useQueryGetFCFSEvent();
 
-  console.log(data);
-
   useEffect(() => {
     window.scroll(0, 0);
     setActiveTab('quiz');
@@ -40,8 +38,6 @@ function QuizLoungePage() {
     data?.result.answerSentence.slice(0, data?.result.startIndex),
     data?.result.answerSentence.slice(data?.result.endIndex + 1),
   ];
-
-  console.log(slicedQuizTitle);
 
   if (isLoading) return <>Loading...</>;
 

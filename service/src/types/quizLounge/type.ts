@@ -6,7 +6,7 @@ export interface QuizContainerProps {
 }
 
 export interface ModalData {
-  isFcfsWinner: boolean;
+  fcfsWinner: boolean;
   fcfsResult: {
     title: string;
     subTitle: string;

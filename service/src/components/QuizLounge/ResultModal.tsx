@@ -7,7 +7,7 @@ interface ResultModalProps {
   image?: string;
   description: string;
   code?: string;
-  date?: string;
+  expirationDate?: string;
   handleModal: () => void;
 }
 
@@ -18,7 +18,7 @@ const ResultModal = ({
   image,
   description,
   code,
-  date,
+  expirationDate,
   handleModal,
 }: ResultModalProps) => {
   if (result) {
@@ -29,7 +29,7 @@ const ResultModal = ({
         image={image}
         description={description}
         code={code}
-        date={date}
+        date={expirationDate}
         isQrModal={true}
         handleClose={handleModal}
       />
