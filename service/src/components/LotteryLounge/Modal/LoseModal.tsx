@@ -1,5 +1,6 @@
 import Badge from '@/components/common/Badge/Badge';
 import Modal from '@/components/common/Modal/Modal';
+import { useUrl } from '@/store/context/useUrl';
 
 interface LoseModalProps {
   onClose: () => void;
@@ -38,6 +39,7 @@ const copyMyUrl = () => {
 };
 
 const LoseModal = ({ onClose }: LoseModalProps) => {
+  const { url } = useUrl();
   return (
     <Modal handleClose={onClose}>
       <div className='w-full p-9 flex-col flex items-center text-center bg-white'>
@@ -49,7 +51,7 @@ const LoseModal = ({ onClose }: LoseModalProps) => {
         <div className='border border-primary flex h-10 p-2 items-center justify-center text-center gap-4'>
           <span className='text-primary text-b-s'>초대링크</span>
           <span id='shareURL' className='text-gray-500 text-b-m'>
-            hyundaiEventShareCode_23213421
+            {url}
           </span>
           <img
             src={copyURL}

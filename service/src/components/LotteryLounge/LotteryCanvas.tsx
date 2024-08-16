@@ -1,16 +1,31 @@
 import { useRef, useEffect, useState } from 'react';
 import LoseModal from './Modal/LoseModal';
 import { craftFireworks } from '@/utils/confettiCrafter';
+import { useMutationDrawData } from '@/apis/draw/query';
+import { getCookie } from '@/utils/cookie';
+import { useUrl } from '@/store/context/useUrl';
+import EventModal from '@/components/common/Modal/EventModal/EventModal';
 
-const LotteryCanvas = () => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+interface Result {
+  title: string;
+  subtitle: string;
+  img: string;
+  description: string;
+}
 
+const LotteryCanvas = ({ onScratch }: any) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isScratched, setIsScratched] = useState(false); // 최초 긁기 여부 확인
+  const [isWin, setIsWin] = useState(false);
+  const [result, setResult] = useState<Result | null>(null);
+  const { setUrl } = useUrl();
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
   const textVisible = true;
-
+  const token = getCookie('accessToken');
+  const mutation = useMutationDrawData(token);
   const gradientStyle = {
     background:
       'linear-gradient(91deg, rgba(140, 200, 212, 0.70) 2.57%, rgba(58, 139, 160, 0.70) 101.5%)',
@@ -44,6 +59,24 @@ const LotteryCanvas = () => {
   const startDrawing = (
     e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
   ) => {
+    if (!isScratched) {
+      // 최초 긁기 시에만 API 요청
+      mutation.mutate(token, {
+        onSuccess: (response) => {
+          console.log('결과 성공:', response);
+          onScratch(response.result); // 결과 부모 컴포넌트로 전달
+          setUrl(response.result.shareUrl);
+          if (response.result.drawWin) {
+            setIsWin(true);
+            setResult(response.result.winModal);
+          }
+        },
+        onError: (error: Error) => {
+          console.error('인증번호 전송 실패:', error);
+        },
+      });
+      setIsScratched(true);
+    }
     drawing.current = true;
     draw(e);
   };
@@ -104,7 +137,7 @@ const LotteryCanvas = () => {
 
     const erasePercentage = (erasedPixels / (width * height)) * 100;
 
-    if (erasePercentage >= 60) {
+    if (erasePercentage >= 50) {
       fadeOutCanvas();
     }
   };
@@ -116,7 +149,7 @@ const LotteryCanvas = () => {
       craftFireworks(1);
       setTimeout(() => {
         setIsModalOpen(true);
-      }, 2000);
+      }, 1500);
     }
   };
   return (
@@ -147,7 +180,17 @@ const LotteryCanvas = () => {
             className='absolute inset-0 bg-black opacity-50'
             onClick={closeModal}
           ></div>
-          <LoseModal onClose={closeModal} />
+          {isWin && result ? (
+            <EventModal
+              title={result.title}
+              subtitle={result.subtitle}
+              image={result.img}
+              description={result.description}
+              handleClose={closeModal}
+            />
+          ) : (
+            <LoseModal onClose={closeModal} />
+          )}
         </div>
       )}
     </>
