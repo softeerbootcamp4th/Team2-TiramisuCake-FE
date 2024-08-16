@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Bouncing from '../common/Bouncing/Bouncing';
 import { motion } from 'framer-motion';
 
-const backgroundImage = '/gohwazil.webp';
+const backgroundImage = 'images/rending-bg.webp';
 const gifFile = '/gifs.gif';
 const downarrow = '/svg/BigArrow.svg';
 
