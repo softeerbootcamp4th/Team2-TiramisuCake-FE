@@ -1,17 +1,22 @@
+import './LoginModal.css';
 import Button from '@/components/common/Button/Button';
 import Input from '@/components/common/Input/Input';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useLoginContext } from '@/store/context/useLoginContext';
 import Modal from '@/components/common/Modal/Modal';
-import { sendAuthCode, confirmVerification, login } from '@/apis/authorization';
-import './LoginModal.css';
+import {
+  useMutationCode,
+  useMutationCodeVerification,
+  useMutationLogin,
+} from '@/apis/login/query';
 import {
   ConfirmVerificationRequestBody,
   LoginRequestBody,
 } from '@/types/Authorization/request';
 import { useCookies } from 'react-cookie';
-import { parseISO, differenceInSeconds } from 'date-fns';
+//import { parseISO, differenceInSeconds } from 'date-fns';
 import { validatePhoneNumber } from '@/utils/checkPhoneNumber';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface CloseProps {
   onClose: () => void;
@@ -21,6 +26,9 @@ const checkbox = 'svg/check-off.svg';
 const checked = 'svg/check-on.svg';
 
 const LoginModal = ({ onClose }: CloseProps) => {
+  const codeMutation = useMutationCode();
+  const codeVerificationMutation = useMutationCodeVerification();
+  const loginMutation = useMutationLogin();
   const [timer, setTimer] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
@@ -28,12 +36,12 @@ const LoginModal = ({ onClose }: CloseProps) => {
   const [name, setName] = useState('');
   const [validPhoneNumber, setValidPhoneNumber] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [codeVerified, setCodeVerified] = useState(false);
+  const [codeVerified, setCodeVerified] = useState(true);
   const [code, setCode] = useState('');
   const [privacyConsent, setPrivacyConsent] = useState(false);
   const [marketingConsent, setMarketingConsent] = useState(false);
   const [allValid, setAllValid] = useState(false);
-
+  const queryClient = useQueryClient();
   const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value.replace(/\D/g, ''); // 숫자만 추출
     setPhoneNumber(rawValue);
@@ -48,7 +56,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
     setMarketingConsent(!marketingConsent);
   };
 
-  const [cookies, setCookie] = useCookies(['accessToken', 'refreshToken']);
+  const [cookies, setCookies] = useCookies(['accessToken', 'refreshToken']);
 
   const { setIsLogined } = useLoginContext();
 
@@ -60,73 +68,80 @@ const LoginModal = ({ onClose }: CloseProps) => {
   };
 
   const handleSendAuthCode = async (phoneNumber: string) => {
-    try {
-      console.log(phoneNumber);
-      const response = await sendAuthCode(phoneNumber);
-      console.log('인증번호 전송 성공:', response);
-      if (response.isSuccess && response.result) {
-        setTimer(response.result.timeLimit);
+    codeMutation.mutate(phoneNumber, {
+      onSuccess: (response) => {
+        console.log('인증번호 전송 성공:', response);
+        if (response.isSuccess && response.result) {
+          setTimer(response.result.timeLimit);
 
-        const interval = setInterval(() => {
-          setTimer((prevTimer) => {
-            if (prevTimer <= 1) {
-              clearInterval(interval);
-              return 0;
-            }
-            return prevTimer - 1;
-          });
-        }, 1000);
-      }
-    } catch (error) {
-      console.error('인증번호 전송 실패:', error);
-    }
+          const interval = setInterval(() => {
+            setTimer((prevTimer) => {
+              if (prevTimer <= 1) {
+                clearInterval(interval);
+                return 0;
+              }
+              return prevTimer - 1;
+            });
+          }, 1000);
+        }
+      },
+      onError: (error: Error) => {
+        console.error('인증번호 전송 실패:', error);
+      },
+    });
   };
+
   const handleVerification = async (body: ConfirmVerificationRequestBody) => {
-    try {
-      const response = await confirmVerification(body);
-      if (response.isSuccess) {
-        setCodeVerified(true);
-        setTimer(0);
-      } else {
-        console.error('잘못된 인증번호입니다. 다시 입력해주세요');
-      }
-    } catch (error) {
-      console.error('인증 코드 전송 실패', error);
-    }
+    codeVerificationMutation.mutate(body, {
+      onSuccess: (response) => {
+        if (response.isSuccess) {
+          setCodeVerified(true);
+          setTimer(0);
+        } else {
+          console.error('잘못된 인증번호입니다. 다시 입력해주세요');
+        }
+      },
+      onError: (error) => {
+        console.error('인증 코드 전송 실패', error);
+      },
+    });
   };
 
-  const handleLogin = async (body: LoginRequestBody) => {
-    try {
-      const response = await login(body);
-      if (!response) {
-        throw new Error('Empty response from server');
-      }
-      if (response.isSuccess && response.result) {
-        const expiresAt = parseISO(response.result.expiredTime);
-        const maxAge = differenceInSeconds(expiresAt, new Date());
+  const handleLogin = (body: LoginRequestBody) => {
+    loginMutation.mutate(body, {
+      onSuccess: (response) => {
+        console.log(response);
 
-        setCookie('accessToken', response.result.accessToken, {
-          path: '/',
-          maxAge: maxAge,
-          secure: true, // HTTPS에서만 사용
-          sameSite: 'strict',
-        });
+        if (response.isSuccess && response.result) {
+          //const expiresAt = parseISO(response.result.expiredTime);
+          //const maxAge = differenceInSeconds(expiresAt, new Date());
+          setCookies('accessToken', response.result.accessToken, {
+            path: '/',
+            maxAge: 104800,
+            secure: true,
+            sameSite: 'strict',
+          });
 
-        setCookie('refreshToken', response.result.refreshToken, {
-          path: '/',
-          maxAge: 604800, // 7일 동안 유효
-          secure: true,
-          sameSite: 'strict',
-        });
+          setCookies('refreshToken', response.result.refreshToken, {
+            path: '/',
+            maxAge: 604800,
+            secure: true,
+            sameSite: 'strict',
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['sharedUrl', response.result.accessToken],
+          });
 
-        setIsLogined(true);
-        onClose();
-      } else {
-        console.error('로그인 실패 : ', response.message || 'Unknown error');
-      }
-    } catch (error) {
-      console.error('로그인 실패 : ', error);
-    }
+          setIsLogined(true);
+          onClose();
+        } else {
+          console.error('로그인 실패 : ', response.message || 'Unknown error');
+        }
+      },
+      onError: (error) => {
+        console.error('로그인 실패 : ', error);
+      },
+    });
   };
 
   useEffect(() => {

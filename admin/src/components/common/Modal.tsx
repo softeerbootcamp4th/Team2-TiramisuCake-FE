@@ -12,7 +12,7 @@ import { Button } from '../ui/button';
 interface ModalProps {
   isButton?: boolean;
   handleCloseClick: () => void;
-  handleButtonClick: () => void;
+  handleButtonClick?: () => void;
 }
 
 const Modal = ({

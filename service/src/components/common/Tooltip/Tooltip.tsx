@@ -1,8 +1,10 @@
+import { useUrl } from '@/store/context/useUrl';
 import { useState } from 'react';
 
 const Tooltip = () => {
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const { url } = useUrl();
 
   const handleHover = (hoverState: boolean) => {
     if (!isClicked) setIsHovered(hoverState);
@@ -11,9 +13,8 @@ const Tooltip = () => {
   const handleClick = () => {
     setIsClicked(!isClicked);
     setIsHovered(false);
-    const copyUrl = window.location.href;
-    navigator.clipboard.writeText(copyUrl);
-
+    navigator.clipboard.writeText(url);
+    console.log(url);
     setTimeout(() => {
       setIsClicked(false);
     }, 2000);

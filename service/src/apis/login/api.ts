@@ -69,6 +69,6 @@ export const reissueToken = async (
     },
   });
 
-  const data: ReIssueResponse = await response.json();
-  return data;
+  //const data: ReIssueResponse = await response.json();
+  return response.json();
 };

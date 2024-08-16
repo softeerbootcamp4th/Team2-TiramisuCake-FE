@@ -1,16 +1,18 @@
 import { useState, ReactNode, useEffect } from 'react';
 import { LoginContext } from '../context/useLoginContext';
+import { useCookies } from 'react-cookie';
 
 export const LoginProvider = ({ children }: { children: ReactNode }) => {
   const [isLogined, setIsLogined] = useState(false);
+  const [cookies] = useCookies(['accessToken']);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('Token');
+    const accessToken = cookies.accessToken;
 
-    if (storedToken) {
-      setIsLogined(true); // - 이후 api 설계시 리팩토링
+    if (accessToken) {
+      setIsLogined(true);
     }
-  }, []);
+  }, [cookies.accessToken]);
 
   return (
     <LoginContext.Provider value={{ isLogined, setIsLogined }}>
