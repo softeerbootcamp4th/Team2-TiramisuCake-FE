@@ -1,15 +1,11 @@
-interface WinModal {
+interface FullAttendModal {
   title: string;
   subtitle: string;
   img: string;
   description: string;
 }
 
-interface LoseModal {
-  shareUrl: string;
-}
-
-export interface DrawResponse {
+export interface DrawAttendanceResponse {
   isSuccess: boolean;
   code: string;
   message: string;
@@ -17,9 +13,24 @@ export interface DrawResponse {
     invitedNum: number;
     remainDrawCount: number;
     drawParticipationCount: number;
-    isDrawWin: boolean;
+    fullAttendModal?: FullAttendModal;
+  };
+}
+
+interface WinModal {
+  title: string;
+  subtitle: string;
+  image: string;
+  description: string;
+}
+
+export interface DrawResultResponse {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: {
     images: string[];
     winModal?: WinModal;
-    loseModal?: LoseModal;
+    isDrawWin: boolean;
   };
 }
