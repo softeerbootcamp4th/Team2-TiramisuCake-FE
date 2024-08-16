@@ -1,7 +1,7 @@
 import EventModal from '../common/Modal/EventModal/EventModal';
 
 interface ResultModalProps {
-  result: string;
+  result: boolean;
   title: string;
   subTitle: string;
   image?: string;
@@ -21,7 +21,7 @@ const ResultModal = ({
   date,
   handleModal,
 }: ResultModalProps) => {
-  if (result === '성공') {
+  if (result) {
     return (
       <EventModal
         title={title}

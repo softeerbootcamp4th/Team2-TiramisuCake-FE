@@ -61,7 +61,7 @@ const QuizContainer = ({
     if (allCorrect) {
       setIsGamedEnded(true);
       craftSideCannons(1.5);
-      const answerString: string = encodeURIComponent(answer.join(''));
+      const answerString: string = answer.join('');
       if (mode === 'tutorial') {
         setTimeout(() => setOpenModal(true), 1500);
       } else {
