@@ -26,7 +26,7 @@ export const useQueryGetTutorialFCFSEvent = () => {
 export const useMutationPostAnswer = () => {
   const mutation = useMutation({
     mutationKey: ['postAnswer'],
-    mutationFn: (answer: string) => postAnswer(answer),
+    mutationFn: (answerString: string) => postAnswer(answerString),
   });
   return mutation;
 };

@@ -2,8 +2,7 @@ import { HEADERS } from '@/constants/lib/constants';
 
 const baseURL = `${import.meta.env.VITE_SITE_URL}`;
 const accessToken =
-  'eyJhbGciOiJIUzUxMiJ9.eyJpZCI6MTUsInJvbGVUeXBlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzIzNzE3NzYwLCJleHAiOjE3MjM5NzY5NjB9.vLSjKJfUdB1XDdPNoJtRADRNlsIbTFZ0Leh-_r0oDBs5j7IokWaOyW0mO_KO7wYCfsLb5hD6ydKskomP135olw';
-//`eyJhbGciOiJIUzUxMiJ9.eyJpZCI6MTUsInJvbGVUeXBlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzIzNzE2OTE5LCJleHAiOjE3MjM5NzYxMTl9.A1-YhGffoeE3J2rzD-_o2WRLJTlVpACwDlsgTUqCqwUlm3KI-B78ImC6OuUT6MCHAVylgqJ_FB1mvShyMEqcSg`;
+  'eyJhbGciOiJIUzUxMiJ9.eyJpZCI6MTMsInJvbGVUeXBlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzIzNzcwNzE5LCJleHAiOjE3MjQwMjk5MTl9.8IoWWs9D5UuCV1VMzNikwo2EkQL3tQeOUVap4irXvXqICqtY1CyIUYQPkTrL94Lz6fycU6wa_ET3V1r13HTYLw';
 export const getFCFSEvent = async () => {
   const res = await fetch(`${baseURL}/fcfs`, {
     method: 'GET',
@@ -26,8 +25,8 @@ export const getTutorialFCFSEvent = async () => {
   return res.json();
 };
 
-export const postAnswer = async (answer: string) => {
-  const res = await fetch(`${baseURL}/event/answer=${answer}`, {
+export const postAnswer = async (answerString: string) => {
+  const res = await fetch(`${baseURL}/fcfs?answer='${answerString}'`, {
     method: 'POST',
     headers: {
       ...HEADERS,

@@ -9,13 +9,6 @@ import QuizTitle from '@/components/QuizLounge/QuizTitle';
 import { useEffect, useMemo, useState } from 'react';
 import { useBlocker, useSearchParams } from 'react-router-dom';
 
-const mockData = {
-  title:
-    '디지털 센터 미러 전용 카메라를 통해 \n 보다 선명하게 후방을 확인할 수 있다',
-  startIndex: 0,
-  endIndex: 9,
-};
-
 function QuizLoungePage() {
   const [isGameEnded, setIsGameEnded] = useState(false);
   const [searchParams] = useSearchParams();
@@ -37,13 +30,14 @@ function QuizLoungePage() {
       !isGameEnded && currentLocation.pathname !== nextLocation.pathname
   );
 
-  const answer = useMemo(
-    () =>
-      mockData.title.slice(mockData.startIndex, mockData.endIndex).split(''),
-    [mockData]
-  );
+  const answer = useMemo(() => data?.result.answerWord.split(''), [data]);
 
-  const slicedQuizTitle = mockData.title.slice(mockData.endIndex);
+  const slicedQuizTitle: string[] = [
+    data?.result.answerSentence.slice(0, data?.result.startIndex),
+    data?.result.answerSentence.slice(data?.result.endIndex + 1),
+  ];
+
+  console.log(slicedQuizTitle);
 
   if (isLoading) return <>Loading...</>;
 
@@ -54,6 +48,7 @@ function QuizLoungePage() {
     >
       <QuizTitle quizTitle={slicedQuizTitle} answer={answer} />
       <QuizContainer
+        mode={mode as string}
         answer={answer}
         isGameEnded={isGameEnded}
         setIsGamedEnded={setIsGameEnded}

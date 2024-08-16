@@ -7,15 +7,32 @@ import ResultModal from './ResultModal';
 import { craftSideCannons } from '@/utils/confettiCrafter';
 import { useNavigate } from 'react-router-dom';
 import { ROUTER_PATH } from '@/constants/lib/constants';
+import { useMutationPostAnswer } from '@/apis/quizLounge/query';
+import TutorialResultModal from './TutorialResultModal';
 
 interface QuizContainerProps {
   answer: string[];
+  mode: string;
   isGameEnded: boolean;
   setIsGamedEnded: (isEnded: boolean) => void;
 }
 
+interface ModalData {
+  isFcfsWinner: boolean;
+  fcfsResult: {
+    title: string;
+    subTitle: string;
+    qrCode?: string;
+    codeWord?: string;
+    fcfsCode?: string;
+    expirationDate?: string;
+    caution: string;
+  };
+}
+
 const QuizContainer = ({
   answer,
+  mode,
   isGameEnded,
   setIsGamedEnded,
 }: QuizContainerProps) => {
@@ -30,6 +47,8 @@ const QuizContainer = ({
   );
   const { resetTransform, setResetTransform } = useResetTransform();
   const navigate = useNavigate();
+  const mutation = useMutationPostAnswer();
+  const [modalData, setModalData] = useState<ModalData>();
 
   useEffect(() => {
     const allCorrect = correctPositions.every((pos) => pos);
@@ -42,7 +61,17 @@ const QuizContainer = ({
     if (allCorrect) {
       setIsGamedEnded(true);
       craftSideCannons(1.5);
-      setTimeout(() => setOpenModal(true), 1500);
+      const answerString: string = encodeURIComponent(answer.join(''));
+      if (mode === 'tutorial') {
+        setTimeout(() => setOpenModal(true), 1500);
+      } else {
+        mutation.mutate(answerString, {
+          onSuccess: (data) => {
+            setModalData(data.result);
+            setTimeout(() => setOpenModal(true), 1500);
+          },
+        });
+      }
     }
   }, [allCorrect]);
 
@@ -62,6 +91,12 @@ const QuizContainer = ({
     if (droppedIndex >= 0 && droppedIndex < answer.length) {
       const isCorrectPosition =
         filteredAnswer[droppedIndex] === shuffleAnswer[index];
+
+      console.log(
+        droppedIndex,
+        filteredAnswer[droppedIndex],
+        shuffleAnswer[index]
+      );
 
       if (isCorrectPosition) {
         // 정답 위치라면 correctPositions 배열을 업데이트합니다.
@@ -157,20 +192,20 @@ const QuizContainer = ({
           })}
         </div>
       </div>
-
-      {openModal && (
-        <ResultModal
-          handleModal={handleModal}
-          result='성공'
-          title='선착순 25명 안에 들었어요'
-          subTitle='[dmdkdkdkdkdkddkd]'
-          code='RESDFG'
-          image='/svg/closeIcon.svg'
-          description='본 이벤트는 (주)쏘카와 함께하며, 쏘카 회원가입 및 로그인 후 이용 가능합니다. 
-이벤트 참여를 위해 쏘카 어플리케이션에서 추가적인 절차가 요구될 수 있습니다.
-이벤트 경품 수령을 위해 등록된 전화번호로 영업일 기준 3~5일 내 안내가 진행될 예정입니다.'
-        />
-      )}
+      {openModal &&
+        (mode === 'tutorial' ? (
+          <TutorialResultModal handleClose={handleModal} />
+        ) : (
+          <ResultModal
+            handleModal={handleModal}
+            result={modalData!.isFcfsWinner}
+            title={modalData!.fcfsResult.title}
+            subTitle={modalData!.fcfsResult.subTitle}
+            code={modalData!.fcfsResult.fcfsCode}
+            image={modalData!.fcfsResult.qrCode}
+            description={modalData!.fcfsResult.caution}
+          />
+        ))}
     </>
   );
 };
