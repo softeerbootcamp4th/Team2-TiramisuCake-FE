@@ -17,10 +17,10 @@ export interface DrawAttendanceResponse {
   };
 }
 
-interface WinModal {
+export interface WinModal {
   title: string;
   subtitle: string;
-  image: string;
+  img: string;
   description: string;
 }
 
@@ -32,5 +32,6 @@ export interface DrawResultResponse {
     images: string[];
     winModal?: WinModal;
     isDrawWin: boolean;
+    shareUrl?: string;
   };
 }

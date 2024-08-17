@@ -1,8 +1,4 @@
-import {
-  useMutationDrawData,
-  useQueryGetDrawAttendance,
-  useQueryGetDrawHistory,
-} from '@/apis/draw/query';
+import { useQueryGetDrawAttendance } from '@/apis/draw/query';
 import Button from '@/components/common/Button/Button';
 import ExitModal from '@/components/common/Modal/ExitModal/ExitModal';
 import Attendance from '@/components/LotteryLounge/Attendance';
@@ -10,21 +6,16 @@ import LotteryCanvas from '@/components/LotteryLounge/LotteryCanvas';
 import { getCookie } from '@/utils/cookie';
 import { useEffect, useState } from 'react';
 import { useBlocker } from 'react-router-dom';
-
+import { DrawResultResponse } from '@/types/Lottery/response';
 const backgroundImage = '/images/draw_bg.webp';
 const sample = () => {
-  console.log('아직 api 연결 x');
+  console.log('연결 완료');
 };
-
-interface DrawResult {
-  images: string[];
-  // 다른 필요한 속성들 추가
-}
 
 const LotteryLoungePage = () => {
   const token = getCookie('accessToken');
   const { data, isLoading } = useQueryGetDrawAttendance(token);
-  const [drawResult, setDrawResult] = useState<DrawResult | null>(null);
+  const [drawResult, setDrawResult] = useState<DrawResultResponse | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,9 +25,12 @@ const LotteryLoungePage = () => {
     ({ currentLocation, nextLocation }) =>
       currentLocation.pathname !== nextLocation.pathname
   );
-  const handleScratchResult = (result: any) => {
+  const handleScratchResult = (result: DrawResultResponse) => {
     setDrawResult(result);
   };
+  if (isLoading) {
+    return <div className='w-full h-full'>잠시만 기다려주세요..</div>;
+  }
   return (
     <div>
       <div
@@ -63,7 +57,7 @@ const LotteryLoungePage = () => {
           <div className='relative w-[784px] h-[400px]'>
             <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0 flex justify-center items-center gap-8'>
               {drawResult ? (
-                drawResult.images.map((img, index) => (
+                drawResult.result.images.map((img, index) => (
                   <img
                     className='img-no-drag pointer-events-none w-32 h-32'
                     key={index}
