@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import LoseModal from './Modal/LoseModal';
 import { craftFireworks } from '@/utils/confettiCrafter';
+import useScrollLock from '@/hooks/common/useScrollLock';
 
 const LotteryCanvas = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -8,6 +9,8 @@ const LotteryCanvas = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  useScrollLock(isModalOpen);
 
   const textVisible = true;
 

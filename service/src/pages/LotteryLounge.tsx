@@ -2,7 +2,8 @@ import Button from '@/components/common/Button/Button';
 import ExitModal from '@/components/common/Modal/ExitModal/ExitModal';
 import Attendance from '@/components/LotteryLounge/Attendance';
 import LotteryCanvas from '@/components/LotteryLounge/LotteryCanvas';
-import { useEffect } from 'react';
+import useScrollLock from '@/hooks/common/useScrollLock';
+import { useEffect, useState } from 'react';
 import { useBlocker } from 'react-router-dom';
 
 const backgroundImage =
@@ -15,6 +16,8 @@ const linkcount = 2;
 const todayleft = 3;
 
 const LotteryLoungePage = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -23,6 +26,13 @@ const LotteryLoungePage = () => {
     ({ currentLocation, nextLocation }) =>
       currentLocation.pathname !== nextLocation.pathname
   );
+
+  useEffect(() => {
+    if (blocker.state === 'blocked') setIsOpen(true);
+    else setIsOpen(false);
+  }, [blocker]);
+
+  useScrollLock(isOpen);
 
   return (
     <div>

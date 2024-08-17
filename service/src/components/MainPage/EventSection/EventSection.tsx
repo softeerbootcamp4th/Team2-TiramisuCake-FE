@@ -10,6 +10,7 @@ import { SCROLL_MOTION } from '@/constants/animation';
 import { useEventDateContext } from '@/store/context/useEventDateContext';
 import { useEventInfo } from '@/apis/main/query';
 import { ROUTER_PATH } from '@/constants/lib/constants';
+import useScrollLock from '@/hooks/common/useScrollLock';
 
 interface EventSectionProps {
   onArrowClick: () => void;
@@ -26,6 +27,8 @@ const EventSection = ({ onArrowClick }: EventSectionProps) => {
   const { startDate, endDate, setStartDate, setEndDate } =
     useEventDateContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useScrollLock(isModalOpen);
   const navigator = useNavigate();
 
   const handleOpenModal = () => {

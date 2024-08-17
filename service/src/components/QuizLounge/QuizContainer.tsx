@@ -10,6 +10,7 @@ import { ROUTER_PATH } from '@/constants/lib/constants';
 import { useMutationPostAnswer } from '@/apis/quizLounge/query';
 import TutorialResultModal from './TutorialResultModal';
 import { ModalData, QuizContainerProps } from '@/types/quizLounge/type';
+import useScrollLock from '@/hooks/common/useScrollLock';
 
 const QuizContainer = ({
   answer,
@@ -19,7 +20,7 @@ const QuizContainer = ({
 }: QuizContainerProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [allCorrect, setAllCorrect] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
+  const [isModalOpen, setisModalOpen] = useState(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
 
   const { filteredAnswer, shuffleAnswer, positions, setPositions } =
@@ -28,6 +29,8 @@ const QuizContainer = ({
     Array(filteredAnswer.length).fill(false)
   );
   const { resetTransform, setResetTransform } = useResetTransform();
+
+  useScrollLock(isModalOpen);
 
   const navigate = useNavigate();
   const mutation = useMutationPostAnswer();
@@ -46,13 +49,13 @@ const QuizContainer = ({
       craftSideCannons(1.5);
       const answerString: string = answer.join('');
       if (mode === 'tutorial') {
-        setTimeout(() => setOpenModal(true), 1500);
+        setTimeout(() => setisModalOpen(true), 1500);
       } else {
         mutation.mutate(answerString, {
           onSuccess: (data) => {
             setModalData(data.result);
             console.log(data.result);
-            setTimeout(() => setOpenModal(true), 1500);
+            setTimeout(() => setisModalOpen(true), 1500);
           },
         });
       }
@@ -115,7 +118,7 @@ const QuizContainer = ({
   };
 
   const handleModal = () => {
-    setOpenModal(false);
+    setisModalOpen(false);
     navigate(ROUTER_PATH.MAIN);
   };
 
@@ -176,7 +179,7 @@ const QuizContainer = ({
           })}
         </div>
       </div>
-      {openModal &&
+      {isModalOpen &&
         (mode === 'tutorial' ? (
           <TutorialResultModal handleClose={handleModal} />
         ) : (
