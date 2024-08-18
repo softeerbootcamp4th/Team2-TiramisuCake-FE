@@ -1,5 +1,5 @@
 interface QuizTitleProps {
-  quizTitle: string;
+  quizTitle: string[];
   answer: string[];
 }
 
@@ -9,11 +9,12 @@ const QuizTitle = ({ quizTitle, answer }: QuizTitleProps) => {
       <div className='px-3 py-2 bg-black text-white rounded-[0.625rem] text-b-xxl font-bold'>
         Q
       </div>
-      <div className='mt-1 text-h-l font-bold text-gray-800 tracking-[-0.36px] whitespace-pre-wrap text-center'>
+      <div className=' mt-1 text-h-l font-bold text-gray-800 tracking-[-0.36px] whitespace-pre-wrap text-center'>
+        {quizTitle.length === 2 && quizTitle[0]}
         <span className='text-primary'>
           '{answer.map((char, _index) => (char === ' ' ? ' ' : 0))}'
         </span>
-        {quizTitle}
+        {quizTitle.length === 1 ? quizTitle[0] : quizTitle[1]}
       </div>
       <div className='text-b-xl text-gray-600'>
         선착순 25명에게 The new IONIQ 5 24시간 무료 렌트권 증정

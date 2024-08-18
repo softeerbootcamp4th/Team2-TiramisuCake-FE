@@ -6,8 +6,10 @@ import LotteryCanvas from '@/components/LotteryLounge/LotteryCanvas';
 import { getCookie } from '@/utils/cookie';
 import { useEffect, useState } from 'react';
 import { useBlocker } from 'react-router-dom';
+
+const backgroundImage =
+  'https://d1wv99asbppzjv.cloudfront.net/main-page/draw_bg.webp';
 import { DrawResultResponse } from '@/types/Lottery/response';
-const backgroundImage = '/images/draw_bg.webp';
 const sample = () => {
   console.log('연결 완료');
 };

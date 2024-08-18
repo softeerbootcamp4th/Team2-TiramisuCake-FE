@@ -1,22 +1,30 @@
+import {
+  useQueryGetFCFSEvent,
+  useQueryGetTutorialFCFSEvent,
+} from '@/apis/quizLounge/query';
 import ExitModal from '@/components/common/Modal/ExitModal/ExitModal';
 import QuizContainer from '@/components/QuizLounge/QuizContainer';
 import QuizFooter from '@/components/QuizLounge/QuizFooter';
 import QuizTitle from '@/components/QuizLounge/QuizTitle';
+import { useTabContext } from '@/store/context/useTabContext';
 import { useEffect, useMemo, useState } from 'react';
-import { useBlocker } from 'react-router-dom';
-
-const data = {
-  title:
-    '디지털 센터 미러 전용 카메라를 통해 \n 보다 선명하게 후방을 확인할 수 있다',
-  startIndex: 0,
-  endIndex: 9,
-};
+import { useBlocker, useSearchParams } from 'react-router-dom';
 
 function QuizLoungePage() {
   const [isGameEnded, setIsGameEnded] = useState(false);
+  const [searchParams] = useSearchParams();
+  const { setActiveTab } = useTabContext();
+
+  const mode = searchParams.get('mode');
+
+  const { data, isLoading } =
+    mode === 'tutorial'
+      ? useQueryGetTutorialFCFSEvent()
+      : useQueryGetFCFSEvent();
 
   useEffect(() => {
     window.scroll(0, 0);
+    setActiveTab('quiz');
   }, []);
 
   const blocker = useBlocker(
@@ -24,25 +32,30 @@ function QuizLoungePage() {
       !isGameEnded && currentLocation.pathname !== nextLocation.pathname
   );
 
-  const answer = useMemo(
-    () => data.title.slice(data.startIndex, data.endIndex).split(''),
-    [data]
-  );
+  const answer = useMemo(() => data?.result.answerWord.split(''), [data]);
 
-  const slicedQuizTitle = data.title.slice(data.endIndex);
+  const slicedQuizTitle: string[] = [
+    data?.result.answerSentence.slice(0, data?.result.startIndex),
+    data?.result.answerSentence.slice(data?.result.endIndex + 1),
+  ];
+
+  if (isLoading) return <>Loading...</>;
 
   return (
     <div
       className='min-w-screen min-h-screen bg-center bg-no-repeat bg-cover flex flex-col items-center'
-      style={{ backgroundImage: `url('/images/fcfs_bg.webp')` }}
+      style={{
+        backgroundImage: `url('https://d1wv99asbppzjv.cloudfront.net/main-page/fcfs_bg.webp')`,
+      }}
     >
       <QuizTitle quizTitle={slicedQuizTitle} answer={answer} />
       <QuizContainer
+        mode={mode as string}
         answer={answer}
         isGameEnded={isGameEnded}
         setIsGamedEnded={setIsGameEnded}
       />
-      <QuizFooter />
+      <QuizFooter mode={mode as string} />
       {blocker.state === 'blocked' && (
         <ExitModal
           handleClose={() => blocker.reset()}
