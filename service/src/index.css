@@ -53,3 +53,8 @@
     rgba(0, 0, 0, 1)
   );
 }
+
+.img-no-drag {
+  user-select: none;
+  -webkit-user-drag: none;
+}

@@ -1,13 +1,13 @@
 import EventModal from '../common/Modal/EventModal/EventModal';
 
 interface ResultModalProps {
-  result: string;
+  result: boolean;
   title: string;
   subTitle: string;
   image?: string;
   description: string;
   code?: string;
-  date?: string;
+  expirationDate?: string;
   handleModal: () => void;
 }
 
@@ -18,10 +18,10 @@ const ResultModal = ({
   image,
   description,
   code,
-  date,
+  expirationDate,
   handleModal,
 }: ResultModalProps) => {
-  if (result === '성공') {
+  if (result) {
     return (
       <EventModal
         title={title}
@@ -29,7 +29,7 @@ const ResultModal = ({
         image={image}
         description={description}
         code={code}
-        date={date}
+        date={expirationDate}
         isQrModal={true}
         handleClose={handleModal}
       />

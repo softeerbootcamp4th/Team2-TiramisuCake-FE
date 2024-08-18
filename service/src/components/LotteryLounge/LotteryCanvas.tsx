@@ -1,15 +1,30 @@
 import { useRef, useEffect, useState } from 'react';
 import LoseModal from './Modal/LoseModal';
 import { craftFireworks } from '@/utils/confettiCrafter';
+import { useMutationDrawData, useQueryGetDrawHistory } from '@/apis/draw/query';
+import { getCookie } from '@/utils/cookie';
+import { useUrl } from '@/store/context/useUrl';
+import EventModal from '@/components/common/Modal/EventModal/EventModal';
+import { WinModal } from '@/types/Lottery/response';
 
-const LotteryCanvas = () => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+const LotteryCanvas = ({ onScratch }: any) => {
+  //복권 긁은 후 결과 보기
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  //당첨 결과 버튼 활성화
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [isScratched, setIsScratched] = useState(false); // 최초 긁기 여부 확인
+  const [isWin, setIsWin] = useState(false);
+  const [result, setResult] = useState<WinModal | null>(null);
+  const { setUrl } = useUrl();
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
   const textVisible = true;
+  const token = getCookie('accessToken');
+  const mutation = useMutationDrawData(token);
+  const history = useQueryGetDrawHistory(token);
 
   const gradientStyle = {
     background:
@@ -22,7 +37,14 @@ const LotteryCanvas = () => {
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const drawing = useRef(false);
-
+  const handleHistoryButtonClick = () => {
+    setIsModalOpen(true);
+    //console.log(history?.data.result);
+    if (history.data?.result.drawWin) {
+      setIsWin(true);
+      setResult(history.data?.result.winModal);
+    }
+  };
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
@@ -44,6 +66,24 @@ const LotteryCanvas = () => {
   const startDrawing = (
     e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
   ) => {
+    if (!isScratched) {
+      // 최초 긁기 시에만 API 요청
+      mutation.mutate(token, {
+        onSuccess: (response) => {
+          console.log('결과 성공:', response);
+          onScratch(response.result); // 결과 부모 컴포넌트로 전달
+          setUrl(response.result.shareUrl);
+          if (response.result.drawWin) {
+            setIsWin(true);
+            setResult(response.result.winModal);
+          }
+        },
+        onError: (error: Error) => {
+          console.error('에러가 발생했습니다:', error);
+        },
+      });
+      setIsScratched(true);
+    }
     drawing.current = true;
     draw(e);
   };
@@ -104,7 +144,7 @@ const LotteryCanvas = () => {
 
     const erasePercentage = (erasedPixels / (width * height)) * 100;
 
-    if (erasePercentage >= 60) {
+    if (erasePercentage >= 50) {
       fadeOutCanvas();
     }
   };
@@ -116,38 +156,61 @@ const LotteryCanvas = () => {
       craftFireworks(1);
       setTimeout(() => {
         setIsModalOpen(true);
-      }, 2000);
+        //&& result.
+        if (canvasRef.current) {
+          canvasRef.current.style.pointerEvents = 'none'; // 캔버스 영역 클릭할 수 없도록 설정
+          setIsHistoryOpen(true);
+        }
+      }, 1500);
     }
   };
   return (
     <>
-      <canvas
-        ref={canvasRef}
-        width={784}
-        height={400}
-        className='relative top-0 left-0 cursor-pointer'
-        onMouseDown={startDrawing}
-        onMouseMove={draw}
-        onMouseUp={endDrawing}
-        onMouseLeave={endDrawing}
-        onTouchStart={startDrawing}
-        onTouchMove={draw}
-        onTouchEnd={endDrawing}
-      >
-        <span
-          style={gradientStyle}
-          className='absolute text-[27px] text-center font-semibold'
+      <div className='relative'>
+        <canvas
+          ref={canvasRef}
+          width={784}
+          height={400}
+          className='relative top-0 left-0 cursor-pointer'
+          onMouseDown={startDrawing}
+          onMouseMove={draw}
+          onMouseUp={endDrawing}
+          onMouseLeave={endDrawing}
+          onTouchStart={startDrawing}
+          onTouchMove={draw}
+          onTouchEnd={endDrawing}
         >
-          마우스로 드래그해 복권을 긁어보세요
-        </span>
-      </canvas>
+          <span
+            style={gradientStyle}
+            className='absolute text-[27px] text-center font-semibold'
+          >
+            마우스로 드래그해 복권을 긁어보세요
+          </span>
+        </canvas>
+        {isHistoryOpen && (
+          <button
+            className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white bg-gray-400 rounded-xl p-2'
+            onClick={handleHistoryButtonClick}
+          >
+            결과 확인하기
+          </button>
+        )}
+      </div>
+
       {isModalOpen && (
         <div className='fixed inset-0 flex items-center justify-center z-50'>
-          <div
-            className='absolute inset-0 bg-black opacity-50'
-            onClick={closeModal}
-          ></div>
-          <LoseModal onClose={closeModal} />
+          <div onClick={closeModal}></div>
+          {isWin && result ? (
+            <EventModal
+              title={result!.title}
+              subtitle={result!.subtitle}
+              image={result!.img}
+              description={result!.description}
+              handleClose={closeModal}
+            />
+          ) : (
+            <LoseModal onClose={closeModal} />
+          )}
         </div>
       )}
     </>

@@ -13,11 +13,11 @@ import {
   ConfirmVerificationRequestBody,
   LoginRequestBody,
 } from '@/types/Authorization/request';
-import { useCookies } from 'react-cookie';
 //import { parseISO, differenceInSeconds } from 'date-fns';
 import { validatePhoneNumber } from '@/utils/checkPhoneNumber';
 import { useQueryClient } from '@tanstack/react-query';
 
+import { setCookie } from '@/utils/cookie';
 interface CloseProps {
   onClose: () => void;
 }
@@ -55,8 +55,6 @@ const LoginModal = ({ onClose }: CloseProps) => {
   const handleMarketingConsentChange = () => {
     setMarketingConsent(!marketingConsent);
   };
-
-  const [cookies, setCookies] = useCookies(['accessToken', 'refreshToken']);
 
   const { setIsLogined } = useLoginContext();
 
@@ -115,14 +113,15 @@ const LoginModal = ({ onClose }: CloseProps) => {
         if (response.isSuccess && response.result) {
           //const expiresAt = parseISO(response.result.expiredTime);
           //const maxAge = differenceInSeconds(expiresAt, new Date());
-          setCookies('accessToken', response.result.accessToken, {
+
+          setCookie('accessToken', response.result.accessToken, {
             path: '/',
             maxAge: 104800,
             secure: true,
             sameSite: 'strict',
           });
 
-          setCookies('refreshToken', response.result.refreshToken, {
+          setCookie('refreshToken', response.result.refreshToken, {
             path: '/',
             maxAge: 604800,
             secure: true,
@@ -174,7 +173,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
               buttonText=''
               required
               value={name}
-              onChange={(e) => handleNameInputChange(e)}
+              onChange={handleNameInputChange}
             />
           </div>
           <div className={`mt-6 commonClass`}>
@@ -187,7 +186,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
               showButton
               isActivated={validPhoneNumber}
               value={phoneNumber}
-              onChange={(e) => handlePhoneNumberChange(e)}
+              onChange={handlePhoneNumberChange}
               handleButtonClick={() => handleSendAuthCode(phoneNumber)}
             />
           </div>
@@ -209,7 +208,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
               showButton
               required
               value={code}
-              onChange={(e) => handleCodeInputChange(e)}
+              onChange={handleCodeInputChange}
               handleButtonClick={() =>
                 handleVerification({
                   phoneNumber: phoneNumber,
