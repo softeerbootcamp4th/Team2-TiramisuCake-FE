@@ -5,9 +5,13 @@ import { useMutationDrawData, useQueryGetDrawHistory } from '@/apis/draw/query';
 import { getCookie } from '@/utils/cookie';
 import { useUrl } from '@/store/context/useUrl';
 import EventModal from '@/components/common/Modal/EventModal/EventModal';
-import { WinModal } from '@/types/Lottery/response';
+import { DrawResultResponse, WinModal } from '@/types/Lottery/response';
 
-const LotteryCanvas = ({ onScratch }: any) => {
+interface LotteryCanvasProps {
+  onScratch: (result: DrawResultResponse) => void;
+}
+
+const LotteryCanvas = ({ onScratch }: LotteryCanvasProps) => {
   //복권 긁은 후 결과 보기
   const [isModalOpen, setIsModalOpen] = useState(false);
   //당첨 결과 버튼 활성화
@@ -71,11 +75,11 @@ const LotteryCanvas = ({ onScratch }: any) => {
       mutation.mutate(token, {
         onSuccess: (response) => {
           console.log('결과 성공:', response);
-          onScratch(response.result); // 결과 부모 컴포넌트로 전달
-          setUrl(response.result.shareUrl);
-          if (response.result.drawWin) {
+          onScratch(response); // 결과 부모 컴포넌트로 전달
+          setUrl(response.result.shareUrl ?? '');
+          if (response.result.isDrawWin) {
             setIsWin(true);
-            setResult(response.result.winModal);
+            setResult(response.result.winModal ?? null);
           }
         },
         onError: (error: Error) => {

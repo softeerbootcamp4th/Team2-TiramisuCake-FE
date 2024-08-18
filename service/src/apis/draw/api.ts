@@ -1,12 +1,14 @@
-const baseURL = `${import.meta.env.VITE_SITE_URL}/event/draw`;
+import { HEADERS, BASEURL } from '@/constants/lib/constants';
 
-import { HEADERS } from '@/constants/lib/constants';
+const baseURL = `${BASEURL}/event/draw`;
 import {
   DrawAttendanceResponse,
   DrawResultResponse,
 } from '@/types/Lottery/response';
 
-export const getDrawAttendance = async (token: string) => {
+export const getDrawAttendance = async (
+  token: string
+): Promise<DrawAttendanceResponse> => {
   const response = await fetch(`${baseURL}`, {
     method: 'GET',
     headers: {
@@ -18,7 +20,9 @@ export const getDrawAttendance = async (token: string) => {
   return response.json();
 };
 
-export const getDrawResult = async (token: string) => {
+export const getDrawResult = async (
+  token: string
+): Promise<DrawResultResponse> => {
   const response = await fetch(`${baseURL}`, {
     method: 'POST',
     headers: {
