@@ -1,18 +1,8 @@
-import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
-import { getComments, getCommentsForScroll, postComment } from './api';
+import { useInfiniteQuery, useMutation } from '@tanstack/react-query';
+import { getCommentsForScroll, postComment } from './api';
 import { useCookies } from 'react-cookie';
 import { CommentsResponseType } from '@/types/comment/type';
 
-// export const useQueryGetComments = (cursor?: number) => {
-//   const [cookies] = useCookies(['accessToken', 'refreshToken']);
-//   const accessToken = cookies.accessToken;
-
-//   const { isLoading, data } = useQuery({
-//     queryKey: ['getComments', cursor],
-//     queryFn: () => getComments(cursor),
-//   });
-//   return { isLoading, data };
-// };
 export const useInfiniteQueryGetComments = () => {
   const [cookies] = useCookies(['accessToken', 'refreshToken']);
   const accessToken = cookies.accessToken;
