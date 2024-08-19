@@ -5,7 +5,7 @@ import { useMutationDrawData, useQueryGetDrawHistory } from '@/apis/draw/query';
 import { getCookie } from '@/utils/cookie';
 import { useUrl } from '@/store/context/useUrl';
 import EventModal from '@/components/common/Modal/EventModal/EventModal';
-import { DrawResultResponse, WinModal } from '@/types/lottery/response';
+import { DrawResultResponse, WinModal } from '@/types/Lottery/response';
 import { useModalContext } from '@/store/context/useModalContext';
 
 interface LotteryCanvasProps {
