@@ -4,10 +4,11 @@ import Bouncing from '@/components/common/Bouncing/Bouncing';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
 import { useEventDateContext } from '@/store/context/useEventDateContext';
-import { useEventInfo } from '@/apis/main/query';
+import { useStaticEventInfo, useDynamicEventInfo } from '@/apis/main/query';
 import { useModalContext } from '@/store/context/useModalContext';
 import LoadingPage from '@/components/Loading/Loading';
 import EventInfoCarContainer from './EventInfoCarContainer';
+import { EventResult } from '@/types/main/eventInfoType';
 
 interface EventSectionProps {
   onArrowClick: () => void;
@@ -18,7 +19,26 @@ const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/event_section_bg.webp';
 
 const EventSection = ({ onArrowClick }: EventSectionProps) => {
-  const { data, isLoading } = useEventInfo();
+  const { staticData, isStaticLoading } = useStaticEventInfo();
+  const { dynamicData, isDynamicLoading } = useDynamicEventInfo();
+  const isLoading = isStaticLoading || isDynamicLoading;
+
+  const mergedResult: EventResult | undefined =
+    staticData?.result && dynamicData?.result
+      ? {
+          startDate: dynamicData.result.startDate,
+          endDate: dynamicData.result.endDate,
+          eventTitle: staticData.result.eventTitle,
+          eventDescription: staticData.result.eventDescription,
+          fcfsInfo: dynamicData.result.fcfsInfo,
+          totalDrawWinner: dynamicData.result.totalDrawWinner,
+          remainDrawCount: dynamicData.result.remainDrawCount,
+          fcfsHint: dynamicData.result.fcfsHint,
+          fcfsStartTime: dynamicData.result.fcfsStartTime,
+          eventInfoList: staticData.result.eventInfoList,
+        }
+      : undefined;
+
   const { startDate, endDate, setStartDate, setEndDate } =
     useEventDateContext();
   const { isOpen, setIsOpen } = useModalContext();
@@ -28,11 +48,11 @@ const EventSection = ({ onArrowClick }: EventSectionProps) => {
   };
 
   useEffect(() => {
-    if (!isLoading && data) {
-      setStartDate(data.result.startDate);
-      setEndDate(data.result.endDate);
+    if (!isDynamicLoading && dynamicData) {
+      setStartDate(dynamicData.result.startDate);
+      setEndDate(dynamicData.result.endDate);
     }
-  }, [isLoading, data]);
+  }, [isDynamicLoading, staticData]);
 
   if (isLoading) {
     return <LoadingPage />;
@@ -57,16 +77,16 @@ const EventSection = ({ onArrowClick }: EventSectionProps) => {
             {...SCROLL_MOTION}
             className='font-bold text-h-l self-stretch text-center text-gray-900 line-height-[3.375rem]'
           >
-            {data?.result.eventTitle}
+            {staticData?.result.eventTitle}
           </motion.div>
         </div>
         <motion.div
           {...SCROLL_MOTION}
           className='font-Pretendard text-b-xl font-normal text-gray-800 text-center whitespace-pre-wrap'
         >
-          {data?.result.eventDescription!}
+          {staticData?.result.eventDescription!}
         </motion.div>
-        <EventInfoCarContainer result={data!.result} />
+        <EventInfoCarContainer result={mergedResult!} />
         <div className='mt-auto'>
           <Bouncing>
             <img
