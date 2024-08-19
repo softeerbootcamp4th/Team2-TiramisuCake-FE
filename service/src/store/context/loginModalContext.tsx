@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, ReactNode, useReducer } from 'react';
+import { createContext, Dispatch, ReactNode, useReducer } from 'react';
 import { LoginAction, LoginModalState } from '../types/loginModalTypes';
 import { loginModalReducer } from '../reducer/loginModalReducer';
 

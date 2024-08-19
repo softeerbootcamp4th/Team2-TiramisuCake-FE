@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@/components/common/Button/Button';
 import EventInfoCard from './EventInfoCard/EventInfoCard';
@@ -10,6 +10,7 @@ import { SCROLL_MOTION } from '@/constants/animation';
 import { useEventDateContext } from '@/store/context/useEventDateContext';
 import { useEventInfo } from '@/apis/main/query';
 import { ROUTER_PATH } from '@/constants/lib/constants';
+import { useModalContext } from '@/store/context/useModalContext';
 import LoadingPage from '@/components/Loading/Loading';
 
 interface EventSectionProps {
@@ -26,15 +27,16 @@ const EventSection = ({ onArrowClick }: EventSectionProps) => {
 
   const { startDate, endDate, setStartDate, setEndDate } =
     useEventDateContext();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isOpen, setIsOpen } = useModalContext();
+
   const navigator = useNavigate();
 
   const handleOpenModal = () => {
-    setIsModalOpen(true);
+    setIsOpen(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    setIsOpen(false);
   };
   const goQuizLounge = () => {
     navigator(`${ROUTER_PATH.QUIZ_LOUNGE}?mode=live`);
@@ -62,7 +64,7 @@ const EventSection = ({ onArrowClick }: EventSectionProps) => {
       className='bg-cover bg-center bg-no-repeat min-h-screen min-w-screen flex items-center justify-center'
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      {isModalOpen && (
+      {isOpen && (
         <div className='fixed inset-0 flex items-center justify-center z-[99] backdrop-blur-sm'>
           <LoginModal onClose={handleCloseModal} />
         </div>
