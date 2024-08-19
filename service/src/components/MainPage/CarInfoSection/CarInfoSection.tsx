@@ -3,7 +3,6 @@ import Carousel from './Carousel';
 import { useQueryGetCarDetailInfo } from '@/apis/main/query';
 const CarInfoSection = () => {
   const { data, isLoading } = useQueryGetCarDetailInfo();
-  if (data) console.log(data.result);
   if (isLoading) return <div>Loading...</div>;
   return (
     <CarInfoProvider>

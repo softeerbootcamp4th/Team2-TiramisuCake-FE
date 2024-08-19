@@ -9,7 +9,9 @@ import { useBlocker } from 'react-router-dom';
 
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/draw_bg.webp';
+
 import { DrawResultResponse } from '@/types/Lottery/response';
+
 const sample = () => {
   console.log('연결 완료');
 };
@@ -40,7 +42,7 @@ const LotteryLoungePage = () => {
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
         <div className='flex w-[49rem] flex-col items-center gap-8'>
-          <div className='self-stretch items-center justify-center flex-col flex gap-4'>
+          <div className='self-stretch items-center justify-center flex-col flex gap-4 pointer-events-none'>
             <Button
               type='square'
               text={`내가 초대한 친구 ${data?.result?.invitedNum}회 | 오늘의 복권 기회 ${data?.result?.remainDrawCount}회`}
