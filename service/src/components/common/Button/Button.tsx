@@ -1,13 +1,5 @@
 import { useEffect, useState } from 'react';
-/**
- * Button Component
- * @param type : 사용할 버튼 타입
- * @param text : 버튼 내부 텍스트
- * @param isArrow : Arrow 표시 여부
- * @param isActive : 버튼 활성화 여부
- * @param handleClick : 버튼 클릭 핸들러
- * @returns
- */
+
 interface ButtonProp {
   type: State;
   text: string;
@@ -39,7 +31,7 @@ const Button = ({
     if (isReactionClicked) {
       timer = setTimeout(() => {
         setIsReactionClicked(false);
-      }, 3000);
+      }, 1000);
     }
     return () => clearTimeout(timer);
   }, [isReactionClicked]);
@@ -49,7 +41,9 @@ const Button = ({
     squareWithBorder: `px-2 py-[7px] border border-primary`,
     round: `p-2.5 rounded-[10px] ${isActive ? 'bg-primary' : 'bg-gray-400'}`,
     roundDone: `p-2.5 rounded-[10px] bg-white`,
-    reaction: `px-2.5 py-2 bg-white rounded-[5px] shadow-20`,
+    reaction: `px-2.5 py-2 bg-white rounded-[5px] shadow-20 ${
+      isActive ? '' : 'opacity-50 cursor-not-allowed'
+    }`,
     mediumRound:
       'rounded-[10px] min-w-[120px] p-2.5 bg-primary hover:bg-green-500',
     bigRound: `rounded-sm w-[356px] p-2.5 ${isActive ? 'bg-primary' : 'bg-gray-400'}`,
@@ -76,12 +70,11 @@ const Button = ({
     <button
       className={`flex items-center justify-center ${buttonStyle[type]}`}
       onClick={handleBtnClick}
+      disabled={!isActive} // 활성화 상태에 따라 버튼 비활성화
     >
       <span className={`text-center ${textStyle[type]}`}>{text}</span>
-      {isArrow ? (
+      {isArrow && (
         <img className='ml-2' src='/svg/arrow-white-small.svg' alt='arrow' />
-      ) : (
-        ''
       )}
     </button>
   );

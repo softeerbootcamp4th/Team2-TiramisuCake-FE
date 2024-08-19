@@ -173,7 +173,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
               buttonText=''
               required
               value={name}
-              onChange={(e) => handleNameInputChange(e)}
+              onChange={handleNameInputChange}
             />
           </div>
           <div className={`mt-6 commonClass`}>
@@ -186,7 +186,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
               showButton
               isActivated={validPhoneNumber}
               value={phoneNumber}
-              onChange={(e) => handlePhoneNumberChange(e)}
+              onChange={handlePhoneNumberChange}
               handleButtonClick={() => handleSendAuthCode(phoneNumber)}
             />
           </div>
@@ -208,7 +208,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
               showButton
               required
               value={code}
-              onChange={(e) => handleCodeInputChange(e)}
+              onChange={handleCodeInputChange}
               handleButtonClick={() =>
                 handleVerification({
                   phoneNumber: phoneNumber,

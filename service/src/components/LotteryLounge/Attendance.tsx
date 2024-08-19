@@ -1,7 +1,11 @@
 const texts = ['I', 'O', 'N', 'I', 'Q', '5'];
 
-const Attendance = () => {
-  const counts = 3;
+interface AttendanceProps {
+  counts: number;
+}
+
+const Attendance = ({ counts }: AttendanceProps) => {
+  //const counts = 3;
 
   const defaultStyle = {
     background: 'rgba(255, 255, 255, 0.6)', // 흰색의 투명도 조절

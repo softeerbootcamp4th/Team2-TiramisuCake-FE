@@ -1,19 +1,25 @@
-import { BASE_URL, AuthorizationHeader } from '@/constants/api';
+import { BASE_URL, HEADERS } from '@/constants/api';
 import { DrawRequest, FcFsRequest } from '@/type/eventManagement/eventType';
 
-export const postFcFsData = async (body: FcFsRequest) => {
+export const postFcFsData = async (body: FcFsRequest, token: string) => {
   const response = await fetch(`${BASE_URL}/event/fcfs`, {
     method: 'POST',
-    headers: AuthorizationHeader,
+    headers: {
+      ...HEADERS,
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify(body),
   });
   return response.json();
 };
 
-export const postDrawData = async (body: DrawRequest) => {
+export const postDrawData = async (body: DrawRequest, token: string) => {
   const response = await fetch(`${BASE_URL}/event/draw`, {
     method: 'POST',
-    headers: AuthorizationHeader,
+    headers: {
+      ...HEADERS,
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify(body),
   });
 
