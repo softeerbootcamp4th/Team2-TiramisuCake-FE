@@ -1,4 +1,3 @@
-import Comment from '@/components/common/Comment/Comment';
 import { useTabContext } from '@/store/context/useTabContext';
 import { useEffect } from 'react';
 import CommentButtonContainer from '@/components/CommentsLounge/CommentButtonContainer';

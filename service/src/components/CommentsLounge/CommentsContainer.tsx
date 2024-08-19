@@ -3,6 +3,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Comment from '@/components/common/Comment/Comment';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getCommentsForScroll } from '@/apis/commentsLounge/api';
+import { useCookies } from 'react-cookie';
 
 interface ResponseType {
   isSuccess: boolean;
@@ -16,10 +17,13 @@ interface ResponseType {
 }
 
 const CommentsContainer = () => {
+  const [cookies] = useCookies(['accessToken', 'refreshToken']);
+  const accessToken = cookies.accessToken;
+
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery<ResponseType>({
     queryKey: ['comments'],
     queryFn: ({ pageParam }) =>
-      getCommentsForScroll(pageParam as undefined | number),
+      getCommentsForScroll(pageParam as undefined | number, accessToken),
     initialPageParam: undefined,
     getNextPageParam: (lastPage) => {
       return lastPage.result.nextCursor !== -1
@@ -34,10 +38,10 @@ const CommentsContainer = () => {
       }
       next={fetchNextPage}
       hasMore={!!hasNextPage}
-      loader={<div>Loading...</div>}
+      loader={<div className=' opacity-0'>Loading...</div>}
       scrollableTarget='scrollableDiv'
       inverse={true}
-      className='w-[24rem] h-[560px]'
+      className='w-[24rem] h-[560px] flex flex-col-reverse'
     >
       <div
         id='scrollableDiv'
