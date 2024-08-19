@@ -7,7 +7,9 @@ import { getCookie } from '@/utils/cookie';
 import { useEffect, useState } from 'react';
 import { useBlocker } from 'react-router-dom';
 import { DrawResultResponse } from '@/types/lottery/response';
+import { useTabContext } from '@/store/context/useTabContext';
 import { useModalContext } from '@/store/context/useModalContext';
+import LoadingPage from '@/components/Loading/Loading';
 
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/draw_bg.webp';
@@ -20,10 +22,12 @@ const LotteryLoungePage = () => {
   const token = getCookie('accessToken');
   const { data, isLoading } = useQueryGetDrawAttendance(token);
   const [drawResult, setDrawResult] = useState<DrawResultResponse | null>(null);
+  const { setActiveTab } = useTabContext();
   const { setIsOpen } = useModalContext();
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setActiveTab('quiz');
   }, []);
 
   const blocker = useBlocker(
@@ -40,8 +44,9 @@ const LotteryLoungePage = () => {
     setDrawResult(result);
   };
   if (isLoading) {
-    return <div className='w-full h-full'>잠시만 기다려주세요..</div>;
+    return <LoadingPage />;
   }
+
   return (
     <div>
       <div

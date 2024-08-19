@@ -11,6 +11,7 @@ import { useEventDateContext } from '@/store/context/useEventDateContext';
 import { useEventInfo } from '@/apis/main/query';
 import { ROUTER_PATH } from '@/constants/lib/constants';
 import { useModalContext } from '@/store/context/useModalContext';
+import LoadingPage from '@/components/Loading/Loading';
 
 interface EventSectionProps {
   onArrowClick: () => void;
@@ -55,11 +56,7 @@ const EventSection = ({ onArrowClick }: EventSectionProps) => {
   }, [isLoading, data]);
 
   if (isLoading) {
-    return (
-      <h1 className='text-h-m text-center justify-center'>
-        ...잠시만 기다려주세요.
-      </h1>
-    );
+    return <LoadingPage />;
   }
 
   return (

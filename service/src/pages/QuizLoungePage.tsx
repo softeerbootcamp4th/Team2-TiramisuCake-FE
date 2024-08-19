@@ -3,6 +3,7 @@ import {
   useQueryGetTutorialFCFSEvent,
 } from '@/apis/quizLounge/query';
 import ExitModal from '@/components/common/Modal/ExitModal/ExitModal';
+import LoadingPage from '@/components/Loading/Loading';
 import QuizContainer from '@/components/QuizLounge/QuizContainer';
 import QuizFooter from '@/components/QuizLounge/QuizFooter';
 import QuizTitle from '@/components/QuizLounge/QuizTitle';
@@ -46,7 +47,7 @@ function QuizLoungePage() {
     data?.result.answerSentence.slice(data?.result.endIndex + 1),
   ];
 
-  if (isLoading) return <>Loading...</>;
+  if (isLoading) return <LoadingPage />;
 
   return (
     <div

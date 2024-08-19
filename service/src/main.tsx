@@ -7,7 +7,6 @@ import { LoginProvider } from '@/store/provider/LoginProvider.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { EventDateProvider } from './store/provider/EventDateProvider.tsx';
-import { UrlProvider } from './store/provider/UrlProvider.tsx';
 import { ModalProvider } from './store/provider/ModalProvider.tsx';
 const queryClient = new QueryClient();
 
@@ -17,10 +16,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <ModalProvider>
         <LoginProvider>
           <EventDateProvider>
-            <UrlProvider>
-              <ReactQueryDevtools initialIsOpen={false} />
-              <RouterProvider router={router} />
-            </UrlProvider>
+            <ReactQueryDevtools initialIsOpen={false} />
+            <RouterProvider router={router} />
           </EventDateProvider>
         </LoginProvider>
       </ModalProvider>
