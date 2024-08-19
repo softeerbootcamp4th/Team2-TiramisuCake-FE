@@ -1,6 +1,4 @@
-import { HEADERS } from '@/constants/lib/constants';
-
-const baseURL = `${import.meta.env.VITE_SITE_URL}`;
+import { BASEURL, HEADERS } from '@/constants/lib/constants';
 
 export const getSharedUrl = async (token?: string) => {
   const headers = {
@@ -8,7 +6,7 @@ export const getSharedUrl = async (token?: string) => {
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 
-  const response = await fetch(`${baseURL}/share-shorten-url`, {
+  const response = await fetch(`${BASEURL}/share-shorten-url`, {
     method: 'GET',
     headers,
   });
