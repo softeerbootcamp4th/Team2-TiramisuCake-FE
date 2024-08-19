@@ -30,7 +30,7 @@ const InputField = ({
       if (error) setError('');
     } else {
       setValue('');
-      setError('1~10의 숫자만 입력 가능');
+      setError(`${min}~${max}의 숫자만 입력 가능`);
     }
   };
 
@@ -38,7 +38,7 @@ const InputField = ({
     if (error) {
       const timer = setTimeout(() => {
         setError('');
-      }, 300);
+      }, 500);
       return () => clearTimeout(timer);
     }
   }, [error, setError]);
