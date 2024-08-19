@@ -20,5 +20,7 @@ export interface EventResult {
   fcfsInfo: string;
   totalDrawWinner: string;
   remainDrawCount: string;
+  fcfsHint: string;
+  fcfsStartTime: string;
   eventInfoList: EventInfo[];
 }
