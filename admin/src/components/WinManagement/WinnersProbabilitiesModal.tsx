@@ -13,6 +13,7 @@ interface Props {
 const WinnersProbabilitiesModal = ({ handleClose, drawEventList }: Props) => {
   const [counts, setCounts] = useState({ first: '', second: '', third: '' });
   const [errors, setErrors] = useState({ first: '', second: '', third: '' });
+  const [totalError, setTotalError] = useState('');
   const mutation = useMutationPostRaffleWinner();
   const queryClient = useQueryClient();
 
@@ -43,6 +44,10 @@ const WinnersProbabilitiesModal = ({ handleClose, drawEventList }: Props) => {
   };
 
   const handleButtonClick = () => {
+    if (!counts.first || !counts.second || !counts.third) {
+      setTotalError('입력하지 않은 값이 있습니다.');
+      return;
+    }
     mutation.mutate(
       {
         firstWinnerNum: Number(counts.first),
@@ -64,10 +69,21 @@ const WinnersProbabilitiesModal = ({ handleClose, drawEventList }: Props) => {
     );
   };
 
+  useEffect(() => {
+    if (totalError) {
+      const timer = setTimeout(() => {
+        setTotalError('');
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [totalError, setTotalError]);
+
   return (
     <Modal handleButtonClick={handleButtonClick} handleCloseClick={handleClose}>
-      <div className='flex flex-col w-[241px] h-[260px] items-end'>
-        <div className='underline decoration-1 pr-2 text-xs'>당첨확률</div>
+      <div className='flex flex-col w-[241px] h-[260px] items-center'>
+        <div className='underline decoration-1 pr-2 text-xs flex w-[241px] text-end mx-auto'>
+          당첨확률
+        </div>
         <div className='flex flex-col gap-[1.2rem] items-center w-full'>
           <InputField
             label='1등'
@@ -103,6 +119,7 @@ const WinnersProbabilitiesModal = ({ handleClose, drawEventList }: Props) => {
             probability={drawEventList[2].probability}
           />
         </div>
+        <div className='text-xs text-red'>{totalError}</div>
       </div>
     </Modal>
   );
