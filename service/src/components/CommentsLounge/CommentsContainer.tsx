@@ -1,46 +1,13 @@
-import { CommentsType } from '@/types/comment/commentType';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Comment from '@/components/common/Comment/Comment';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { getCommentsForScroll } from '@/apis/commentsLounge/api';
-import { useCookies } from 'react-cookie';
-import { useEffect } from 'react';
-
-interface ResponseType {
-  isSuccess: boolean;
-  code: string;
-  message: string;
-  result: {
-    nextCursor: number;
-    totalComments: number;
-    comments: CommentsType[];
-  };
-}
+import { useInfiniteQueryGetComments } from '@/apis/commentsLounge/query';
+import useIntervalRefetch from '@/hooks/QuizLounge/useIntervalRefetch';
 
 const CommentsContainer = () => {
-  const [cookies] = useCookies(['accessToken', 'refreshToken']);
-  const accessToken = cookies.accessToken;
-
   const { data, fetchNextPage, hasNextPage, refetch } =
-    useInfiniteQuery<ResponseType>({
-      queryKey: ['comments'],
-      queryFn: ({ pageParam }) =>
-        getCommentsForScroll(pageParam as undefined | number, accessToken),
-      initialPageParam: undefined,
-      getNextPageParam: (lastPage) => {
-        return lastPage.result.nextCursor !== -1
-          ? lastPage.result.nextCursor
-          : undefined;
-      },
-    });
+    useInfiniteQueryGetComments();
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refetch();
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, [refetch]);
+  useIntervalRefetch({ refetch });
 
   return (
     <InfiniteScroll
