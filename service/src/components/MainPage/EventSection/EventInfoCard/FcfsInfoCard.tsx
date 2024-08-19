@@ -2,7 +2,7 @@ import Button from '@/components/common/Button/Button';
 import EventInfoCard from './EventInfoCard';
 import { ROUTER_PATH } from '@/constants/lib/constants';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useLoginContext } from '@/store/context/useLoginContext';
 import { EventInfo } from '@/types/main/eventInfoType';
 
@@ -56,13 +56,14 @@ const FcfsInfoCard = ({
     }
   }, [fcfsStartTime]);
 
-  const goQuizLounge = () => {
+  const goQuizLounge = useCallback(() => {
     navigator(`${ROUTER_PATH.QUIZ_LOUNGE}?mode=live`);
-  };
+  }, [navigator]);
 
-  const goTutorialQuizLounge = () => {
+  const goTutorialQuizLounge = useCallback(() => {
     navigator(`${ROUTER_PATH.QUIZ_LOUNGE}?mode=tutorial`);
-  };
+  }, [navigator]);
+
   return (
     <div className='flex flex-col items-center'>
       <EventInfoCard fcfsInfo={fcfsInfo} eventInfo={eventInfo} />

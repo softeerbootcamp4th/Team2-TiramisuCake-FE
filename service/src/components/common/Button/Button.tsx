@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 interface ButtonProp {
   type: State;
@@ -80,4 +80,4 @@ const Button = ({
   );
 };
 
-export default Button;
+export default memo(Button);
