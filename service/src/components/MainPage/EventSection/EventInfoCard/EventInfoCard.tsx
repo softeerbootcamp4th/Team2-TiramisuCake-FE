@@ -2,6 +2,7 @@ import Badge from '@/components/common/Badge/Badge';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
 import { EventInfo } from '@/types/main/eventInfoType';
+import { memo } from 'react';
 
 export interface EventProps {
   fcfsInfo?: string;
@@ -61,4 +62,4 @@ const EventInfoCard = ({
   );
 };
 
-export default EventInfoCard;
+export default memo(EventInfoCard);

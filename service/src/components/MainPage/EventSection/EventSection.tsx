@@ -1,17 +1,13 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Button from '@/components/common/Button/Button';
-import EventInfoCard from './EventInfoCard/EventInfoCard';
 import LoginModal from './LoginModal/LoginModal';
-import { useLoginContext } from '@/store/context/useLoginContext';
 import Bouncing from '@/components/common/Bouncing/Bouncing';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
 import { useEventDateContext } from '@/store/context/useEventDateContext';
 import { useEventInfo } from '@/apis/main/query';
-import { ROUTER_PATH } from '@/constants/lib/constants';
 import { useModalContext } from '@/store/context/useModalContext';
 import LoadingPage from '@/components/Loading/Loading';
+import EventInfoCarContainer from './EventInfoCarContainer';
 
 interface EventSectionProps {
   onArrowClick: () => void;
@@ -22,32 +18,15 @@ const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/event_section_bg.webp';
 
 const EventSection = ({ onArrowClick }: EventSectionProps) => {
-  const { isLogined } = useLoginContext();
   const { data, isLoading } = useEventInfo();
-
   const { startDate, endDate, setStartDate, setEndDate } =
     useEventDateContext();
   const { isOpen, setIsOpen } = useModalContext();
 
-  const navigator = useNavigate();
-
-  const handleOpenModal = () => {
-    setIsOpen(true);
-  };
-
   const handleCloseModal = () => {
     setIsOpen(false);
   };
-  const goQuizLounge = () => {
-    navigator(`${ROUTER_PATH.QUIZ_LOUNGE}?mode=live`);
-  };
 
-  const goTutorialQuizLounge = () => {
-    navigator(`${ROUTER_PATH.QUIZ_LOUNGE}?mode=tutorial`);
-  };
-  const goLotteryLounge = () => {
-    navigator(ROUTER_PATH.LOTTERY_LOUNGE);
-  };
   useEffect(() => {
     if (!isLoading && data) {
       setStartDate(data.result.startDate);
@@ -87,73 +66,7 @@ const EventSection = ({ onArrowClick }: EventSectionProps) => {
         >
           {data?.result.eventDescription!}
         </motion.div>
-        {isLogined ? (
-          <div className='my-8'>
-            <div className='flex items-center flex-row text-center'>
-              {data?.result.eventInfoList?.[0] && (
-                <EventInfoCard
-                  fcfsInfo={data?.result.fcfsInfo}
-                  eventInfo={data.result.eventInfoList[0]}
-                />
-              )}
-              {data?.result.eventInfoList?.[1] && (
-                <EventInfoCard
-                  totalDrawWinner={data?.result.totalDrawWinner}
-                  remainDrawCount={data?.result.remainDrawCount}
-                  eventInfo={data.result.eventInfoList[1]}
-                />
-              )}
-            </div>
-            <div className='mt-6 flex flex-row mx-6'>
-              <div className='ml-[180px] mr-6'>
-                <Button
-                  type='squareWithBorder'
-                  text='튜토리얼'
-                  handleClick={goTutorialQuizLounge}
-                />
-              </div>
-              <div className='mr-[435px]'>
-                <Button
-                  type='square'
-                  text='바로가기'
-                  handleClick={goQuizLounge}
-                />
-              </div>
-              <div>
-                <Button
-                  type='square'
-                  text='복권 긁으러 가기'
-                  handleClick={goLotteryLounge}
-                />
-              </div>
-            </div>
-          </div>
-        ) : (
-          <>
-            <motion.div {...SCROLL_MOTION} className='flex my-6 py-2 px-3'>
-              <Button
-                type='square'
-                text='번호 인증하고 이벤트 참여하기'
-                handleClick={handleOpenModal}
-              ></Button>
-            </motion.div>
-            <div className='flex items-center flex-row text-center'>
-              {data?.result.eventInfoList?.[0] && (
-                <EventInfoCard
-                  fcfsInfo={data?.result.fcfsInfo}
-                  eventInfo={data.result.eventInfoList[0]}
-                />
-              )}
-              {data?.result.eventInfoList?.[1] && (
-                <EventInfoCard
-                  totalDrawWinner={data?.result.totalDrawWinner}
-                  remainDrawCount={data?.result.remainDrawCount}
-                  eventInfo={data.result.eventInfoList[1]}
-                />
-              )}
-            </div>
-          </>
-        )}
+        <EventInfoCarContainer result={data!.result} />
         <div className='mt-auto'>
           <Bouncing>
             <img
