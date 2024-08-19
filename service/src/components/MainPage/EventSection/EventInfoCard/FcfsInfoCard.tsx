@@ -34,7 +34,11 @@ const FcfsInfoCard = ({
 
         if (timeDiff <= 10 * 60 * 1000 && timeDiff > 0) {
           setIsActive(false);
-          setButtonText('시작 10분 전');
+          const minutes = Math.floor((timeDiff / 1000 / 60) % 60);
+          const seconds = Math.floor((timeDiff / 1000) % 60);
+          setButtonText(
+            `${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`
+          );
         } else if (timeDiff <= 0) {
           setIsActive(true);
           setButtonText('바로가기');
