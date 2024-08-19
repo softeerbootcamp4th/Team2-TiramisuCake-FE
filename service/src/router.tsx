@@ -7,7 +7,7 @@ import QuizLoungePage from './pages/QuizLoungePage';
 import CommentsLoungePage from './pages/CommentsLoungePage';
 import ErrorBoundaryPage from './components/ErrorPage/ErrorBoundaryPage';
 import NotFoundPage from './components/ErrorPage/NotFoundPage';
-import LoadingPage from './components/Loading/Loading';
+import ProtectedRoute from '@/components/common/ProtectedRoute/ProtectedRoute';
 
 export const router = createBrowserRouter([
   {
@@ -20,12 +20,17 @@ export const router = createBrowserRouter([
         index: true, //기본 경로
       },
       {
-        element: <LotteryLoungePage />,
-        path: ROUTER_PATH.LOTTERY_LOUNGE,
-      },
-      {
-        element: <QuizLoungePage />,
-        path: ROUTER_PATH.QUIZ_LOUNGE,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            element: <LotteryLoungePage />,
+            path: ROUTER_PATH.LOTTERY_LOUNGE,
+          },
+          {
+            element: <QuizLoungePage />,
+            path: ROUTER_PATH.QUIZ_LOUNGE,
+          },
+        ],
       },
       {
         element: <CommentsLoungePage />,
