@@ -1,11 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { getEventsData, getWinnerData } from './api';
 import { useQueries } from '@tanstack/react-query';
+import { useCookies } from 'react-cookie';
 
 export const useEventsData = () => {
+  const [cookies] = useCookies(['accessToken', 'refreshToken']);
+  const accessToken = cookies.accessToken;
   const { data, isLoading } = useQuery({
     queryKey: ['getEventsData'],
-    queryFn: () => getEventsData(),
+    queryFn: () => getEventsData(accessToken),
   });
 
   return {
@@ -15,9 +18,11 @@ export const useEventsData = () => {
 };
 
 export const useWinnerData = () => {
+  const [cookies] = useCookies(['accessToken', 'refreshToken']);
+  const accessToken = cookies.accessToken;
   const { data, isLoading } = useQuery({
     queryKey: ['getWinnerData'],
-    queryFn: () => getWinnerData(),
+    queryFn: () => getWinnerData(accessToken),
   });
 
   return {
@@ -27,15 +32,17 @@ export const useWinnerData = () => {
 };
 
 export const useCombinedData = () => {
+  const [cookies] = useCookies(['accessToken', 'refreshToken']);
+  const accessToken = cookies.accessToken;
   const queryResults = useQueries({
     queries: [
       {
         queryKey: ['getEventsData'],
-        queryFn: () => getEventsData(),
+        queryFn: () => getEventsData(accessToken),
       },
       {
         queryKey: ['getWinnerData'],
-        queryFn: () => getWinnerData(),
+        queryFn: () => getWinnerData(accessToken),
       },
     ],
   });
