@@ -5,11 +5,15 @@ import LotteryLoungePage from './pages/LotteryLounge';
 import { ROUTER_PATH } from './constants/lib/constants';
 import QuizLoungePage from './pages/QuizLoungePage';
 import CommentsLoungePage from './pages/CommentsLoungePage';
+import ErrorBoundaryPage from './components/ErrorPage/ErrorBoundaryPage';
+import NotFoundPage from './components/ErrorPage/NotFoundPage';
+import LoadingPage from './components/Loading/Loading';
 
 export const router = createBrowserRouter([
   {
     element: <App />,
     path: ROUTER_PATH.MAIN,
+    errorElement: <ErrorBoundaryPage />,
     children: [
       {
         element: <MainPage />,
@@ -26,6 +30,10 @@ export const router = createBrowserRouter([
       {
         element: <CommentsLoungePage />,
         path: ROUTER_PATH.COMMENTS_LOUNGE,
+      },
+      {
+        element: <NotFoundPage />,
+        path: '*',
       },
     ],
   },

@@ -4,6 +4,7 @@ import EventInfoFooter from './components/common/Footer/EventInfoFooter';
 import Footer from './components/common/Footer/Footer';
 import Tooltip from './components/common/Tooltip/Tooltip';
 import { TabProvider } from './store/provider/TabProvider';
+import { UrlProvider } from './store/provider/UrlProvider';
 
 const App = () => {
   return (
@@ -16,7 +17,9 @@ const App = () => {
           </main>
           <EventInfoFooter />
           <Footer />
-          <Tooltip />
+          <UrlProvider>
+            <Tooltip />
+          </UrlProvider>
         </div>
       </TabProvider>
     </>
