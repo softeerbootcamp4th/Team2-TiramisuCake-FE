@@ -2,7 +2,7 @@ import Button from '../common/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import Bouncing from '../common/Bouncing/Bouncing';
 import { motion } from 'framer-motion';
-
+import { ROUTER_PATH } from '@/constants/lib/constants';
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/rending-bg.webp';
 const gifFile = '/gifs.gif';
@@ -16,7 +16,7 @@ const RendingSection = ({ onArrowClick }: RendingSectionProps) => {
   const navigate = useNavigate();
 
   const showComments = () => {
-    navigate('/comments-lounge');
+    navigate(ROUTER_PATH.COMMENTS_LOUNGE);
   };
 
   const text = 'The New IONIQ 5'.split(' ');
