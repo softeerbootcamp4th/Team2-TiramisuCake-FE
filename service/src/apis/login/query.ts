@@ -34,15 +34,12 @@ export const useMutationLogin = () => {
   return mutation;
 };
 
-export const useQueryReIssueToken = (
-  accessToken: string,
-  refreshToken: string
-) => {
-  const queryKey = ['reissueToken', accessToken, refreshToken];
+export const useQueryReIssueToken = (refreshToken: string) => {
+  const queryKey = ['reissueToken', refreshToken];
 
   const { data, isLoading } = useQuery({
     queryKey,
-    queryFn: () => reissueToken(accessToken, refreshToken),
+    queryFn: () => reissueToken(refreshToken),
   });
 
   return {

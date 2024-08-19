@@ -56,3 +56,8 @@
   width: 24rem;
   height: 560px;
 }
+
+.img-no-drag {
+  user-select: none;
+  -webkit-user-drag: none;
+}

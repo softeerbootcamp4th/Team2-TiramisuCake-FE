@@ -69,7 +69,7 @@ const Carousel = ({ carInfoList }: CarouselProps) => {
           return (
             <div
               key={item.id}
-              className={`carousel-item ${isActive ? 'active bg-transparent' : `transform ${getTransformClass(state.currentIndex + 1)} adjacent bg-gradient-light-gray backdrop-blur-blur-40`} ${isDiffTwo ? 'shorter' : ''}`}
+              className={`carousel-item ${isActive ? 'active bg-transparent ' : `transform ${getTransformClass(state.currentIndex + 1)} adjacent bg-gradient-light-gray backdrop-blur-blur-40`} ${isDiffTwo ? 'shorter' : ''}`}
               onClick={() => handleSlideClick(item.id - 1)}
             >
               <div className='carousel-item-content'>
@@ -82,7 +82,7 @@ const Carousel = ({ carInfoList }: CarouselProps) => {
                       <div
                         className='w-[784px] h-[422px] relative transform duration-200'
                         style={{
-                          transform: `translateX(${-(item.id - 3) * 53.5}px)`,
+                          transform: `translateX(${-(item.id - 3) * 50}px)`,
                         }}
                       >
                         <img
