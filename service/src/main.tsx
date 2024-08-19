@@ -8,19 +8,22 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { EventDateProvider } from './store/provider/EventDateProvider.tsx';
 import { UrlProvider } from './store/provider/UrlProvider.tsx';
+import { ModalProvider } from './store/provider/ModalProvider.tsx';
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <LoginProvider>
-        <EventDateProvider>
-          <UrlProvider>
-            <ReactQueryDevtools initialIsOpen={false} />
-            <RouterProvider router={router} />
-          </UrlProvider>
-        </EventDateProvider>
-      </LoginProvider>
+      <ModalProvider>
+        <LoginProvider>
+          <EventDateProvider>
+            <UrlProvider>
+              <ReactQueryDevtools initialIsOpen={false} />
+              <RouterProvider router={router} />
+            </UrlProvider>
+          </EventDateProvider>
+        </LoginProvider>
+      </ModalProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );

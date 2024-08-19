@@ -1,3 +1,5 @@
+import useScrollLock from '@/hooks/common/useScrollLock';
+import { useModalContext } from '@/store/context/useModalContext';
 import { PropsWithChildren } from 'react';
 
 interface ModalProps {
@@ -5,6 +7,9 @@ interface ModalProps {
 }
 
 const Modal = ({ handleClose, children }: PropsWithChildren<ModalProps>) => {
+  const { isOpen } = useModalContext();
+
+  useScrollLock(isOpen);
   return (
     <div className='fixed inset-0 w-screen flex items-center justify-center z-[99] backdrop-blur-blur-20 bg-modal-bg'>
       <div className='bg-white flex flex-col items-center gap-10 relative'>

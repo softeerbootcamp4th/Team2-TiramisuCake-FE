@@ -4,14 +4,13 @@ import ExitModal from '@/components/common/Modal/ExitModal/ExitModal';
 import Attendance from '@/components/LotteryLounge/Attendance';
 import LotteryCanvas from '@/components/LotteryLounge/LotteryCanvas';
 import { getCookie } from '@/utils/cookie';
-import useScrollLock from '@/hooks/common/useScrollLock';
-import { useEffect, useState, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useBlocker } from 'react-router-dom';
+import { DrawResultResponse } from '@/types/lottery/response';
+import { useModalContext } from '@/store/context/useModalContext';
 
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/draw_bg.webp';
-
-import { DrawResultResponse } from '@/types/Lottery/response';
 
 const sample = () => {
   console.log('연결 완료');
@@ -21,8 +20,7 @@ const LotteryLoungePage = () => {
   const token = getCookie('accessToken');
   const { data, isLoading } = useQueryGetDrawAttendance(token);
   const [drawResult, setDrawResult] = useState<DrawResultResponse | null>(null);
-
-  const [isOpen, setIsOpen] = useState(false);
+  const { setIsOpen } = useModalContext();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -38,7 +36,6 @@ const LotteryLoungePage = () => {
     else setIsOpen(false);
   }, [blocker]);
 
-  useScrollLock(isOpen);
   const handleScratchResult = (result: DrawResultResponse) => {
     setDrawResult(result);
   };

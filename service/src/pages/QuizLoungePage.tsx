@@ -6,14 +6,14 @@ import ExitModal from '@/components/common/Modal/ExitModal/ExitModal';
 import QuizContainer from '@/components/QuizLounge/QuizContainer';
 import QuizFooter from '@/components/QuizLounge/QuizFooter';
 import QuizTitle from '@/components/QuizLounge/QuizTitle';
-import useScrollLock from '@/hooks/common/useScrollLock';
+import { useModalContext } from '@/store/context/useModalContext';
 import { useTabContext } from '@/store/context/useTabContext';
 import { useEffect, useMemo, useState } from 'react';
 import { useBlocker, useSearchParams } from 'react-router-dom';
 
 function QuizLoungePage() {
   const [isGameEnded, setIsGameEnded] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const { setIsOpen } = useModalContext();
   const [searchParams] = useSearchParams();
   const { setActiveTab } = useTabContext();
 
@@ -38,8 +38,6 @@ function QuizLoungePage() {
     if (blocker.state === 'blocked') setIsOpen(true);
     else setIsOpen(false);
   }, [blocker]);
-
-  useScrollLock(isOpen);
 
   const answer = useMemo(() => data?.result.answerWord.split(''), [data]);
 

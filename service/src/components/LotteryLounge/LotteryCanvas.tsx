@@ -1,12 +1,12 @@
 import { useRef, useEffect, useState } from 'react';
 import LoseModal from './Modal/LoseModal';
 import { craftFireworks } from '@/utils/confettiCrafter';
-import useScrollLock from '@/hooks/common/useScrollLock';
 import { useMutationDrawData, useQueryGetDrawHistory } from '@/apis/draw/query';
 import { getCookie } from '@/utils/cookie';
 import { useUrl } from '@/store/context/useUrl';
 import EventModal from '@/components/common/Modal/EventModal/EventModal';
-import { DrawResultResponse, WinModal } from '@/types/Lottery/response';
+import { DrawResultResponse, WinModal } from '@/types/lottery/response';
+import { useModalContext } from '@/store/context/useModalContext';
 
 interface LotteryCanvasProps {
   onScratch: (result: DrawResultResponse) => void;
@@ -14,7 +14,9 @@ interface LotteryCanvasProps {
 
 const LotteryCanvas = ({ onScratch }: LotteryCanvasProps) => {
   //복권 긁은 후 결과 보기
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isOpen, setIsOpen } = useModalContext();
+
   //당첨 결과 버튼 활성화
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isScratched, setIsScratched] = useState(false); // 최초 긁기 여부 확인
@@ -23,10 +25,8 @@ const LotteryCanvas = ({ onScratch }: LotteryCanvasProps) => {
   const { setUrl } = useUrl();
 
   const closeModal = () => {
-    setIsModalOpen(false);
+    setIsOpen(false);
   };
-
-  useScrollLock(isModalOpen);
 
   const textVisible = true;
   const token = getCookie('accessToken');
@@ -45,7 +45,7 @@ const LotteryCanvas = ({ onScratch }: LotteryCanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const drawing = useRef(false);
   const handleHistoryButtonClick = () => {
-    setIsModalOpen(true);
+    setIsOpen(true);
     //console.log(history?.data.result);
     if (history.data?.result.drawWin) {
       setIsWin(true);
@@ -162,7 +162,7 @@ const LotteryCanvas = ({ onScratch }: LotteryCanvasProps) => {
       canvasRef.current.style.opacity = '0';
       craftFireworks(1);
       setTimeout(() => {
-        setIsModalOpen(true);
+        setIsOpen(true);
         //&& result.
         if (canvasRef.current) {
           canvasRef.current.style.pointerEvents = 'none'; // 캔버스 영역 클릭할 수 없도록 설정
@@ -204,7 +204,7 @@ const LotteryCanvas = ({ onScratch }: LotteryCanvasProps) => {
         )}
       </div>
 
-      {isModalOpen && (
+      {isOpen && (
         <div className='fixed inset-0 flex items-center justify-center z-50'>
           <div onClick={closeModal}></div>
           {isWin && result ? (

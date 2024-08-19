@@ -10,8 +10,7 @@ import { ROUTER_PATH } from '@/constants/lib/constants';
 import { useMutationPostAnswer } from '@/apis/quizLounge/query';
 import TutorialResultModal from './TutorialResultModal';
 import { ModalData, QuizContainerProps } from '@/types/quizLounge/type';
-import useScrollLock from '@/hooks/common/useScrollLock';
-
+import { useModalContext } from '@/store/context/useModalContext';
 const QuizContainer = ({
   answer,
   mode,
@@ -20,8 +19,10 @@ const QuizContainer = ({
 }: QuizContainerProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [allCorrect, setAllCorrect] = useState(false);
-  const [isModalOpen, setisModalOpen] = useState(false);
+  const { isOpen, setIsOpen } = useModalContext();
   const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [modalData, setModalData] = useState<ModalData>();
+  const navigate = useNavigate();
 
   const { filteredAnswer, shuffleAnswer, positions, setPositions } =
     useInitialArrays(answer, isGameEnded);
@@ -29,12 +30,7 @@ const QuizContainer = ({
     Array(filteredAnswer.length).fill(false)
   );
   const { resetTransform, setResetTransform } = useResetTransform();
-
-  useScrollLock(isModalOpen);
-
-  const navigate = useNavigate();
   const mutation = useMutationPostAnswer();
-  const [modalData, setModalData] = useState<ModalData>();
 
   useEffect(() => {
     const allCorrect = correctPositions.every((pos) => pos);
@@ -49,13 +45,13 @@ const QuizContainer = ({
       craftSideCannons(1.5);
       const answerString: string = answer.join('');
       if (mode === 'tutorial') {
-        setTimeout(() => setisModalOpen(true), 1500);
+        setTimeout(() => setIsOpen(true), 1500);
       } else {
         mutation.mutate(answerString, {
           onSuccess: (data) => {
             setModalData(data.result);
             console.log(data.result);
-            setTimeout(() => setisModalOpen(true), 1500);
+            setTimeout(() => setIsOpen(true), 1500);
           },
         });
       }
@@ -118,7 +114,7 @@ const QuizContainer = ({
   };
 
   const handleModal = () => {
-    setisModalOpen(false);
+    setIsOpen(false);
     navigate(ROUTER_PATH.MAIN);
   };
 
@@ -179,7 +175,7 @@ const QuizContainer = ({
           })}
         </div>
       </div>
-      {isModalOpen &&
+      {isOpen &&
         (mode === 'tutorial' ? (
           <TutorialResultModal handleClose={handleModal} />
         ) : (
