@@ -42,7 +42,7 @@ const EventIntroduction = ({ onArrowClick }: EventSectionProps) => {
 
   if (isLoading) return <LoadingPage />;
   return (
-    <div
+    <section
       className='snap-start bg-cover bg-center bg-no-repeat h-screen min-w-screen flex flex-col gap-6 items-center'
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
@@ -153,7 +153,7 @@ const EventIntroduction = ({ onArrowClick }: EventSectionProps) => {
           <img src={downArrow} alt='arrow' className='mt-1.5' />
         </div>
       </Bouncing>
-    </div>
+    </section>
   );
 };
 
