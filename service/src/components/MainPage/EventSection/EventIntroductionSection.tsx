@@ -18,7 +18,7 @@ interface EventSectionProps {
   handleArrowClick: () => void;
 }
 
-const EventIntroduction = ({ handleArrowClick }: EventSectionProps) => {
+const EventIntroductionSection = ({ handleArrowClick }: EventSectionProps) => {
   const { staticData, isStaticLoading } = useStaticEventInfo();
   const { dynamicData, isDynamicLoading } = useDynamicEventInfo();
   const isLoading = isStaticLoading || isDynamicLoading;
@@ -156,4 +156,4 @@ const EventIntroduction = ({ handleArrowClick }: EventSectionProps) => {
   );
 };
 
-export default EventIntroduction;
+export default EventIntroductionSection;

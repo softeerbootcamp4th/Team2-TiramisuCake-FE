@@ -7,8 +7,8 @@ import FcfsSection from '@/components/MainPage/FcfsSection/FcfsSection';
 import LoadingPage from '@/components/Loading/Loading';
 import { EventInfo } from '@/types/main/eventInfoType';
 import { useDynamicEventInfo, useStaticEventInfo } from '@/apis/main/query';
-import EventIntroduction from '@/components/MainPage/EventSection/EventIntroduction';
 import DrawSection from '@/components/MainPage/DrawSection/DrawSection';
+import EventIntroductionSection from '@/components/MainPage/EventSection/EventIntroductionSection';
 
 const MainPage = () => {
   const { activeTab, setActiveTab } = useTabContext();
@@ -37,7 +37,9 @@ const MainPage = () => {
         <RendingSection onArrowClick={() => setActiveTab('event')} />
       </div>
       <div ref={eventSectionRef}>
-        <EventIntroduction handleArrowClick={() => setActiveTab('fcfs')} />
+        <EventIntroductionSection
+          handleArrowClick={() => setActiveTab('fcfs')}
+        />
       </div>
       <div ref={fcfsSectionRef}>
         <FcfsSection

@@ -67,7 +67,7 @@ const FcfsSection = ({ fcfsInfo, eventInfo, fcfsStartTime }: EventProps) => {
   }, [navigator]);
 
   return (
-    <div
+    <section
       className='snap-start bg-cover bg-center bg-no-repeat w-screen h-screen flex py-16 justify-center'
       style={{ backgroundImage: `url(${backgroundImage})` }}
       ref={fcfsSectionRef}
@@ -126,7 +126,7 @@ const FcfsSection = ({ fcfsInfo, eventInfo, fcfsStartTime }: EventProps) => {
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 
