@@ -5,12 +5,13 @@ import RendingSection from '@/components/MainPage/RendingSection';
 import CarInfoSection from '@/components/MainPage/CarInfoSection/CarInfoSection';
 import useScrollControl from '@/hooks/MainPage/useScrollControl';
 import FcfsSection from '@/components/MainPage/FcfsSection/FcfsSection';
-import { useEventInfo } from '@/apis/main/query';
 import LoadingPage from '@/components/Loading/Loading';
 import { EventInfo } from '@/types/main/eventInfoType';
+import { useDynamicEventInfo, useStaticEventInfo } from '@/apis/main/query';
 const MainPage = () => {
   const { activeTab, setActiveTab } = useTabContext();
-  const { data, isLoading } = useEventInfo();
+  const { dynamicData, isDynamicLoading } = useDynamicEventInfo();
+  const { staticData, isStaticLoading } = useStaticEventInfo();
 
   const rendingSectionRef = useRef<HTMLDivElement>(null);
   const eventSectionRef = useRef<HTMLDivElement>(null);
@@ -24,7 +25,7 @@ const MainPage = () => {
     setActiveTab,
   });
 
-  if (isLoading) return <LoadingPage />;
+  if (isDynamicLoading || isStaticLoading) return <LoadingPage />;
 
   return (
     <>
@@ -35,8 +36,8 @@ const MainPage = () => {
         <EventSection onArrowClick={() => setActiveTab('ioniq5')} />
       </div>
       <FcfsSection
-        fcfsInfo={data?.result.fcfsInfo as string}
-        eventInfo={data?.result.eventInfoList[1] as EventInfo}
+        fcfsInfo={dynamicData?.result.fcfsInfo as string}
+        eventInfo={staticData?.result.eventInfoList[1] as EventInfo}
       />
       <div ref={carInfoSectionRef}>
         <CarInfoSection />
