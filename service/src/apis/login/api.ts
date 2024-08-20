@@ -56,7 +56,15 @@ export const confirmVerification = async (
     headers: HEADERS,
     body: JSON.stringify(body),
   });
-
+  // if (!response.ok) {
+  //   if (response.status === 401) {
+  //     throw new Error('Unauthorized'); // 401 에러일 경우 에러 메시지와 함께 에러를 던짐
+  //   } else if (response.status === 500) {
+  //     throw new Error('Internal Server Error'); // 500 에러일 경우
+  //   } else {
+  //     throw new Error(`Error: ${response.status} ${response.statusText}`);
+  //   }
+  // }
   //const data: confirmResponse = await response.json();
   return response.json();
 };
@@ -68,7 +76,7 @@ export const login = async (
   const headers = { ...HEADERS } as { [key: string]: string };
 
   if (shareCode) {
-    headers['shareCode'] = shareCode;
+    headers['X-Share-Code'] = shareCode;
   }
 
   const response = await fetch(`${BASEURL}/login`, {
