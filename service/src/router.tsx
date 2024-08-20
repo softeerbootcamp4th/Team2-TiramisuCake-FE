@@ -8,6 +8,7 @@ import CommentsLoungePage from './pages/CommentsLoungePage';
 import ErrorBoundaryPage from './components/ErrorPage/ErrorBoundaryPage';
 import NotFoundPage from './components/ErrorPage/NotFoundPage';
 import ProtectedRoute from '@/components/common/ProtectedRoute/ProtectedRoute';
+import ShareHandler from './pages/ShareHandler';
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
       {
         element: <CommentsLoungePage />,
         path: ROUTER_PATH.COMMENTS_LOUNGE,
+      },
+      {
+        element: <ShareHandler />,
+        path: ROUTER_PATH.SHARE,
       },
       {
         element: <NotFoundPage />,
