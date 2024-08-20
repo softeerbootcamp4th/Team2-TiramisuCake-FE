@@ -6,6 +6,7 @@ export const ROUTER_PATH = {
   LOTTERY_LOUNGE: 'lottery-lounge',
   QUIZ_LOUNGE: 'quiz-lounge',
   COMMENTS_LOUNGE: 'comments-lounge',
+  SHARE: 'share/:code',
 } as const;
 
 export const HEADERS = {
