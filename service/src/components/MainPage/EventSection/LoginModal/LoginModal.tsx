@@ -51,10 +51,11 @@ const LoginModal = ({ onClose }: CloseProps) => {
 
   const [codeErrorMsg, setCodeErrorMsg] = useState<string>('');
   const [validateErrorMsg, setValidateErrorMsg] = useState<string>('');
+
   const queryClient = useQueryClient();
 
   const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const rawValue = e.target.value.replace(/\D/g, ''); // 숫자만 추출
+    const rawValue = e.target.value.replace(/\D/g, '').slice(0, 11); // 숫자만 추출
     setPhoneNumber(rawValue);
     setValidPhoneNumber(validatePhoneNumber(rawValue));
   };
@@ -74,9 +75,9 @@ const LoginModal = ({ onClose }: CloseProps) => {
     setName(e.target.value);
   };
   const handleCodeInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    //const filteredValue = e.target.value.replace(/[^0-9a-zA-Z]/g, '');
-    setValidCode(checkAuthCode(e.target.value));
-    setCode(e.target.value);
+    const filteredValue = e.target.value.slice(0, 6); // 6자리까지 제한
+    setValidCode(checkAuthCode(filteredValue));
+    setCode(filteredValue);
   };
 
   const handleSendAuthCode = async (phoneNumber: string) => {
@@ -115,15 +116,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
           setTimer(0);
         } else {
           console.log(response);
-          // if (response.code === 'A400') {
-          //   setCodeErrorMsg('인증 시간 초과');
-          // } else if (response.code === 'A401') {
-          //   setValidateErrorMsg('인증 코드가 일치하지 않습니다.');
-          // } else if (response.code === 'A402') {
-          //   setValidateErrorMsg('인증 번호를 재전송해주세요. ');
-          // } else if (response.code === 'V400') {
-          //   setValidateErrorMsg('인증 코드 형식은 영 대,소문자 6자리입니다.');
-          // }
+
           if (response.code in ERROR_MESSAGES) {
             const errorMessage = ERROR_MESSAGES[response.code as ErrorCode];
 
