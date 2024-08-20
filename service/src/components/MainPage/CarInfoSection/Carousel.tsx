@@ -59,7 +59,7 @@ const Carousel = ({ carInfoList }: CarouselProps) => {
     }
   };
   return (
-    <div className='carousel-container'>
+    <div className='snap-center carousel-container'>
       <CarouselBg currentIdx={state.currentIndex} />
       <div className='flex gap-4 z-10 items-center'>
         {visibleItems.map((item) => {
