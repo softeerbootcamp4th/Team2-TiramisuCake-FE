@@ -1,8 +1,4 @@
-import {
-  AUTHORIZATION_HEADER,
-  BASEURL,
-  HEADERS,
-} from '@/constants/lib/constants';
+import { BASEURL, HEADERS } from '@/constants/lib/constants';
 import {
   SendCodeRequestBody,
   ConfirmVerificationRequestBody,
@@ -92,7 +88,7 @@ export const reissueToken = async (
   const response = await fetch(`${BASEURL}/reissue`, {
     method: 'GET',
     headers: {
-      ...AUTHORIZATION_HEADER,
+      ...HEADERS,
       Authorization: accessToken,
       'Authorization-Refresh': refreshToken,
     },
