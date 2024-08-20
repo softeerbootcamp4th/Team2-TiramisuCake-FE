@@ -34,6 +34,24 @@ export const sendAuthCode = async (
   return response.json();
 };
 
+export const testAuthCode = async (
+  phoneNumber: string
+): Promise<CodeResponse> => {
+  const requestBody: SendCodeRequestBody = {
+    phoneNumber,
+  };
+
+  const response = await fetch(`${BASEURL}/verification/send/test`, {
+    method: 'POST',
+    headers: HEADERS,
+    body: JSON.stringify(requestBody),
+  });
+
+  //const data: codeResponse = await response.json();
+
+  return response.json();
+};
+
 export const confirmVerification = async (
   body: ConfirmVerificationRequestBody
 ): Promise<ConfirmResponse> => {
@@ -47,10 +65,19 @@ export const confirmVerification = async (
   return response.json();
 };
 
-export const login = async (body: LoginRequestBody): Promise<LoginResponse> => {
+export const login = async (
+  body: LoginRequestBody,
+  shareCode?: string
+): Promise<LoginResponse> => {
+  const headers = { ...HEADERS } as { [key: string]: string };
+
+  if (shareCode) {
+    headers['shareCode'] = shareCode;
+  }
+
   const response = await fetch(`${BASEURL}/login`, {
     method: 'POST',
-    headers: HEADERS,
+    headers: headers,
     body: JSON.stringify(body),
   });
 
@@ -59,12 +86,14 @@ export const login = async (body: LoginRequestBody): Promise<LoginResponse> => {
 };
 
 export const reissueToken = async (
+  accessToken: string,
   refreshToken: string
 ): Promise<ReIssueResponse> => {
   const response = await fetch(`${BASEURL}/reissue`, {
     method: 'GET',
     headers: {
       ...AUTHORIZATION_HEADER,
+      Authorization: accessToken,
       'Authorization-Refresh': refreshToken,
     },
   });
