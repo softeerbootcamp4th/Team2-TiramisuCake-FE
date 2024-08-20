@@ -4,12 +4,29 @@ import {
   LoginRequestBody,
 } from '@/types/Authorization/request';
 
-import { sendAuthCode, confirmVerification, login, reissueToken } from './api';
+import {
+  sendAuthCode,
+  confirmVerification,
+  login,
+  reissueToken,
+  testAuthCode,
+} from './api';
 
 export const useMutationCode = () => {
   const mutation = useMutation({
     mutationKey: ['sendCode'],
     mutationFn: (phoneNumber: string) => sendAuthCode(phoneNumber),
+    retry: false,
+  });
+
+  return mutation;
+};
+
+export const useMutationTestCode = () => {
+  const mutation = useMutation({
+    mutationKey: ['testCode'],
+    mutationFn: (phoneNumber: string) => testAuthCode(phoneNumber),
+    retry: false,
   });
 
   return mutation;
@@ -20,6 +37,7 @@ export const useMutationCodeVerification = () => {
     mutationKey: ['codeVerification'],
     mutationFn: (body: ConfirmVerificationRequestBody) =>
       confirmVerification(body),
+    retry: 2,
   });
 
   return mutation;
@@ -28,18 +46,29 @@ export const useMutationCodeVerification = () => {
 export const useMutationLogin = () => {
   const mutation = useMutation({
     mutationKey: ['login'],
-    mutationFn: (body: LoginRequestBody) => login(body),
+    mutationFn: (body: LoginRequestBody) => {
+      const shareCode = localStorage.getItem('shareCode');
+      if (shareCode) {
+        //조건문 - promise 반환
+        return login(body, shareCode);
+      } else {
+        return login(body);
+      }
+    },
   });
 
   return mutation;
 };
 
-export const useQueryReIssueToken = (refreshToken: string) => {
-  const queryKey = ['reissueToken', refreshToken];
+export const useQueryReIssueToken = (
+  accessToken: string,
+  refreshToken: string
+) => {
+  const queryKey = ['reissueToken', accessToken, refreshToken];
 
   const { data, isLoading } = useQuery({
     queryKey,
-    queryFn: () => reissueToken(refreshToken),
+    queryFn: () => reissueToken(accessToken, refreshToken),
   });
 
   return {
