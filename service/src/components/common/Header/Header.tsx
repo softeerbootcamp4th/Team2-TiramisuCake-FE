@@ -1,16 +1,26 @@
 import { Link } from 'react-router-dom';
 import { useTabContext } from '@/store/context/useTabContext';
+import { useEffect, useState } from 'react';
 
 const Header = () => {
   const { activeTab, setActiveTab } = useTabContext();
+  const [visible, setVisible] = useState<boolean>(false);
+
+  console.log(activeTab);
 
   const handleTabClick = (tabName: string) => {
     setActiveTab(tabName);
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setVisible(true);
+    }, 3000);
+  }, []);
+
   return (
     <header
-      className={`bg-white ${activeTab === 'rending' ? 'opacity-0' : 'opacity-100'} w-full h-14 flex fixed items-center justify-between px-6 shadow-md z-50`}
+      className={`bg-white ${visible ? 'opacity-50' : 'opacity-0'} transform duration-300 ease-in-out w-full h-14 flex fixed items-center justify-between px-6 shadow-md z-50`}
     >
       <div className='flex items-center'>
         <Link to='/'>
@@ -27,7 +37,7 @@ const Header = () => {
         <Link
           to='/'
           onClick={() => handleTabClick('event')}
-          className={`${activeTab === 'event' ? 'text-green-400' : 'text-black'}`}
+          className={`${activeTab === ('event' || 'fcfs') ? 'text-green-400' : 'text-black'}`}
         >
           Event
         </Link>
