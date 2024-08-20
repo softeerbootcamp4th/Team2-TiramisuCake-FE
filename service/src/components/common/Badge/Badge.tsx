@@ -18,9 +18,9 @@ const Badge = ({ type, text }: BadgeProp) => {
   };
 
   const textStyle: Record<string, string> = {
-    blue: `rounded-full py-1 px-2 inline-flex text-white text-b-s`,
-    lightblue: `rounded-full py-1 px-2 inline-flex text-primary text-b-s`,
-    white: `rounded-full py-1 px-2 inline-flex text-primary text-b-s`,
+    blue: `rounded-full py-2 px-4 inline-flex text-white text-b-l`,
+    lightblue: `rounded-full py-2 px-4 inline-flex text-primary text-b-l`,
+    white: `rounded-full py-2 px-4 inline-flex text-primary text-b-l`,
   };
 
   return (
