@@ -77,7 +77,7 @@ const Carousel = ({ carInfoList }: CarouselProps) => {
                   <>
                     <Header title={item.title} subTitle={item.subTitle} />
                     {item.id === 1 ? (
-                      <VideoPlayer />
+                      <VideoPlayer videoUrl={item.imgUrl} />
                     ) : (
                       <div
                         className='w-[784px] h-[422px] relative transform duration-200'
