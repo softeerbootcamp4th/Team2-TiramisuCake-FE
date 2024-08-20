@@ -18,12 +18,14 @@ const MainPage = () => {
   const rendingSectionRef = useRef<HTMLDivElement>(null);
   const eventSectionRef = useRef<HTMLDivElement>(null);
   const carInfoSectionRef = useRef<HTMLDivElement>(null);
+  const fcfsSectionRef = useRef<HTMLDivElement>(null);
 
   useScrollControl({
     rendingSectionRef,
     eventSectionRef,
     carInfoSectionRef,
     activeTab,
+    fcfsSectionRef,
     setActiveTab,
   });
 
@@ -35,13 +37,15 @@ const MainPage = () => {
         <RendingSection onArrowClick={() => setActiveTab('event')} />
       </div>
       <div ref={eventSectionRef}>
-        <EventIntroduction onArrowClick={() => setActiveTab('event')} />
+        <EventIntroduction handleArrowClick={() => setActiveTab('fcfs')} />
       </div>
-      <FcfsSection
-        fcfsInfo={dynamicData?.result.fcfsInfo as string}
-        fcfsStartTime={dynamicData?.result.fcfsStartTime as string}
-        eventInfo={staticData?.result.eventInfoList[0] as EventInfo}
-      />
+      <div ref={fcfsSectionRef}>
+        <FcfsSection
+          fcfsInfo={dynamicData?.result.fcfsInfo as string}
+          fcfsStartTime={dynamicData?.result.fcfsStartTime as string}
+          eventInfo={staticData?.result.eventInfoList[0] as EventInfo}
+        />
+      </div>
       <DrawSection
         totalDrawWinner={dynamicData?.result.totalDrawWinner as string}
         remainDrawCount={dynamicData?.result.remainDrawCount as string}

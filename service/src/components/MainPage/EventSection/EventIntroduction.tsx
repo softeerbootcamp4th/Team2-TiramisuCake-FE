@@ -15,10 +15,10 @@ const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/event_bg_1.webp';
 
 interface EventSectionProps {
-  onArrowClick: () => void;
+  handleArrowClick: () => void;
 }
 
-const EventIntroduction = ({ onArrowClick }: EventSectionProps) => {
+const EventIntroduction = ({ handleArrowClick }: EventSectionProps) => {
   const { staticData, isStaticLoading } = useStaticEventInfo();
   const { dynamicData, isDynamicLoading } = useDynamicEventInfo();
   const isLoading = isStaticLoading || isDynamicLoading;
@@ -32,7 +32,6 @@ const EventIntroduction = ({ onArrowClick }: EventSectionProps) => {
 
   const { startDate, endDate, setStartDate, setEndDate } =
     useEventDateContext();
-
   useEffect(() => {
     if (!isDynamicLoading && dynamicData) {
       setStartDate(dynamicData.result.startDate);
@@ -146,10 +145,10 @@ const EventIntroduction = ({ onArrowClick }: EventSectionProps) => {
       </div>
       <Bouncing>
         <div
-          onClick={onArrowClick}
+          onClick={handleArrowClick}
           className={`hover:cursor-pointer ${isLogined ? 'mt-6' : ''}`}
         >
-          <p className='text-white'>자세히 보기</p>
+          <p className='text-white text-b-m font-semibold'>자세히 보기</p>
           <img src={downArrow} alt='arrow' className='mt-1.5' />
         </div>
       </Bouncing>

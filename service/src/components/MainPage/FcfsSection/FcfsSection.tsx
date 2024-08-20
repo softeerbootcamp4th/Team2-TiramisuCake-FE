@@ -1,49 +1,130 @@
 import Badge from '@/components/common/Badge/Badge';
+import Button from '@/components/common/Button/Button';
+import { ROUTER_PATH } from '@/constants/lib/constants';
+import { useLoginContext } from '@/store/context/useLoginContext';
 import { EventInfo } from '@/types/main/eventInfoType';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { SCROLL_MOTION } from '@/constants/animation';
 
 const backgroundImage =
-  'https://d1wv99asbppzjv.cloudfront.net/main-page/event_section_bg.webp';
+  'https://d1wv99asbppzjv.cloudfront.net/main-page/event_bg_2.webp';
 export interface EventProps {
   fcfsInfo: string;
+
   eventInfo: EventInfo;
+  fcfsStartTime: string;
 }
-const FcfsSection = ({ fcfsInfo, eventInfo }: EventProps) => {
+const FcfsSection = ({ fcfsInfo, eventInfo, fcfsStartTime }: EventProps) => {
+  const { isLogined } = useLoginContext();
+  const fcfsSectionRef = useRef<HTMLDivElement>(null);
+
+  const navigator = useNavigate();
+  const [buttonText, setButtonText] = useState('');
+  const [isActive, setIsActive] = useState(false);
+  const [_timeRemaining, setTimeRemaining] = useState<number>(0);
+
+  useEffect(() => {
+    if (fcfsStartTime) {
+      const startTime = new Date(fcfsStartTime);
+      const updateCounter = () => {
+        const now = new Date();
+        const timeDiff = startTime.getTime() - now.getTime();
+
+        setTimeRemaining(timeDiff);
+
+        if (timeDiff <= 10 * 60 * 1000 && timeDiff > 0) {
+          setIsActive(false);
+          const minutes = Math.floor((timeDiff / 1000 / 60) % 60);
+          const seconds = Math.floor((timeDiff / 1000) % 60);
+          setButtonText(
+            `${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`
+          );
+        } else if (timeDiff <= 0) {
+          setIsActive(true);
+          setButtonText('바로가기');
+        } else {
+          setIsActive(false);
+          setButtonText('바로가기');
+        }
+      };
+
+      updateCounter();
+
+      // 1초마다 updateCounter 실행
+      const intervalId = setInterval(updateCounter, 1000);
+      return () => clearInterval(intervalId);
+    }
+  }, [fcfsStartTime]);
+
+  const goQuizLounge = useCallback(() => {
+    navigator(`${ROUTER_PATH.QUIZ_LOUNGE}?mode=live`);
+  }, [navigator]);
+
+  const goTutorialQuizLounge = useCallback(() => {
+    navigator(`${ROUTER_PATH.QUIZ_LOUNGE}?mode=tutorial`);
+  }, [navigator]);
+
   return (
     <div
-      className='bg-cover bg-center bg-no-repeat w-full h-full min-h-screen min-w-screen flex items-center justify-center'
+      className='snap-start bg-cover bg-center bg-no-repeat w-screen h-screen flex py-16 justify-center'
       style={{ backgroundImage: `url(${backgroundImage})` }}
+      ref={fcfsSectionRef}
     >
-      <div className='w-[1100px] h-full my-auto flex flex-col items-center gap-4 px-6 py-12 border border-custom-white bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom'>
-        <div className='text-center inline-flex flex-row justify-center gap-3'>
+      <div className='w-[1100px] h-full my-auto flex flex-col items-center gap-4 px-6 pt-12 border border-custom-white bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom'>
+        <motion.div
+          {...SCROLL_MOTION}
+          className='text-center inline-flex flex-row justify-center gap-3'
+        >
           <Badge type='lightblue' text={fcfsInfo} />
           <Badge type='white' text={`힌트: 인테리어`} />
-        </div>
-        <h2 className=' text-h-l font-bold mt-2 mb-4 text-center text-gray-800'>
-          {eventInfo.title}
-        </h2>
-        <p className='text-b-xl font-Pretendard self-stretch text-gray-600 text-center whitespace-pre-wrap'>
+        </motion.div>
+        <motion.h2
+          {...SCROLL_MOTION}
+          className=' text-h-l font-bold mt-2 mb-4 text-center text-gray-800'
+        >
+          Event 1. {eventInfo.title}
+        </motion.h2>
+        <motion.p
+          {...SCROLL_MOTION}
+          className='text-b-xl font-Pretendard self-stretch text-gray-600 text-center whitespace-pre-wrap'
+        >
           {eventInfo.content}
-        </p>
-        <div className='flex mt-6 gap-12 items-center justify-evenly w-full'>
-          <div className='flex flex-col items-center'>
-            <img src='/ipad.svg' />
-            <p className='font-semibold text-b-xl'>1등 최신형 아이패드</p>
-          </div>
-          <div className='flex flex-col gap-4'>
-            <div className='flex flex-col items-center'>
-              <img src='/10.png' />
-              <p className='font-semibold text-b-xl'>
-                2등 신세계 10만원 상품권
-              </p>
-            </div>
-            <div className='flex flex-col items-center'>
-              <img src='/5.png' />
-              <p className='font-semibold text-b-xl'>
-                2등 신세계 10만원 상품권
-              </p>
-            </div>
-          </div>
+        </motion.p>
+        <div className='flex mt-20 gap-12 items-center justify-evenly w-full'>
+          <motion.div
+            {...SCROLL_MOTION}
+            className='flex flex-col items-center gap-2'
+          >
+            <img src='/rent.png' />
+            <p className='font-semibold text-b-xl text-white'>
+              The new IONIQ 5 24시간 무료 승차 쿠폰
+            </p>
+          </motion.div>
+          <motion.div
+            {...SCROLL_MOTION}
+            className='flex flex-col items-center gap-2'
+          >
+            <img src='/coupon.png' className='w-[400px] h-[214px]' />
+            <p className='font-semibold text-b-xl text-white'>신차 할인 쿠폰</p>
+          </motion.div>
         </div>
+        {isLogined && (
+          <div className='flex gap-6 mt-20 '>
+            <Button
+              type='squareWithBorder'
+              text='튜토리얼'
+              handleClick={goTutorialQuizLounge}
+            />
+            <Button
+              type='square'
+              text={buttonText}
+              handleClick={goQuizLounge}
+              isActive={isActive}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
