@@ -57,7 +57,7 @@ const DrawSection = ({
             {...SCROLL_MOTION}
             className='flex flex-col items-center gap-1'
           >
-            <img src='/ipad.svg' />
+            <img src='/ipad.svg' alt='경품1' />
             <p className='font-semibold text-b-xl text-white'>
               1등 최신형 아이패드
             </p>

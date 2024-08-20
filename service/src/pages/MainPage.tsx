@@ -8,7 +8,7 @@ import LoadingPage from '@/components/Loading/Loading';
 import { EventInfo } from '@/types/main/eventInfoType';
 import { useDynamicEventInfo, useStaticEventInfo } from '@/apis/main/query';
 import DrawSection from '@/components/MainPage/DrawSection/DrawSection';
-import EventIntroductionSection from '@/components/MainPage/EventSection/EventIntroductionSection';
+import EventIntroductionSection from '@/components/MainPage/EventIntroductionSection';
 
 const MainPage = () => {
   const { activeTab, setActiveTab } = useTabContext();
