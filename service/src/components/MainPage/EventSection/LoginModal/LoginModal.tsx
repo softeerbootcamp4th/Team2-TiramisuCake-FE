@@ -8,13 +8,16 @@ import {
   useMutationCode,
   useMutationCodeVerification,
   useMutationLogin,
+  useMutationTestCode,
 } from '@/apis/login/query';
 import {
   ConfirmVerificationRequestBody,
   LoginRequestBody,
 } from '@/types/Authorization/request';
-//import { parseISO, differenceInSeconds } from 'date-fns';
+import { ErrorCode, ERROR_CODES, ERROR_MESSAGES } from '@/constants/error';
+import { parseISO, differenceInSeconds } from 'date-fns';
 import { validatePhoneNumber } from '@/utils/checkPhoneNumber';
+import { checkAuthCode } from '@/utils/checkAuthCode';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { setCookie } from '@/utils/cookie';
@@ -26,7 +29,8 @@ const checkbox = 'svg/check-off.svg';
 const checked = 'svg/check-on.svg';
 
 const LoginModal = ({ onClose }: CloseProps) => {
-  const codeMutation = useMutationCode();
+  //  const codeMutation = useMutationCode();
+  const codeMutation = useMutationTestCode();
   const codeVerificationMutation = useMutationCodeVerification();
   const loginMutation = useMutationLogin();
   const [timer, setTimer] = useState(0);
@@ -34,14 +38,21 @@ const LoginModal = ({ onClose }: CloseProps) => {
   const [seconds, setSeconds] = useState(0);
 
   const [name, setName] = useState('');
-  const [validPhoneNumber, setValidPhoneNumber] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [codeVerified, setCodeVerified] = useState(true);
   const [code, setCode] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [validPhoneNumber, setValidPhoneNumber] = useState(false);
+  const [validCode, setValidCode] = useState(false);
+  const [canSendCode, setCanSendCode] = useState(true);
+  const [codeVerified, setCodeVerified] = useState(false);
   const [privacyConsent, setPrivacyConsent] = useState(false);
   const [marketingConsent, setMarketingConsent] = useState(false);
+
   const [allValid, setAllValid] = useState(false);
+
+  const [codeErrorMsg, setCodeErrorMsg] = useState<string>('');
+  const [validateErrorMsg, setValidateErrorMsg] = useState<string>('');
   const queryClient = useQueryClient();
+
   const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value.replace(/\D/g, ''); // 숫자만 추출
     setPhoneNumber(rawValue);
@@ -59,9 +70,12 @@ const LoginModal = ({ onClose }: CloseProps) => {
   const { setIsLogined } = useLoginContext();
 
   const handleNameInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     setName(e.target.value);
   };
   const handleCodeInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    //const filteredValue = e.target.value.replace(/[^0-9a-zA-Z]/g, '');
+    setValidCode(checkAuthCode(e.target.value));
     setCode(e.target.value);
   };
 
@@ -71,7 +85,6 @@ const LoginModal = ({ onClose }: CloseProps) => {
         console.log('인증번호 전송 성공:', response);
         if (response.isSuccess && response.result) {
           setTimer(response.result.timeLimit);
-
           const interval = setInterval(() => {
             setTimer((prevTimer) => {
               if (prevTimer <= 1) {
@@ -81,10 +94,13 @@ const LoginModal = ({ onClose }: CloseProps) => {
               return prevTimer - 1;
             });
           }, 1000);
+        } else if (!response.isSuccess && response.code in ERROR_MESSAGES) {
+          //todo : abort controller로 api 요청 완전 차단
+          setCodeErrorMsg('');
+          setTimer(0);
+          setCanSendCode(false);
+          alert(ERROR_MESSAGES[response.code as ErrorCode]);
         }
-      },
-      onError: (error: Error) => {
-        console.error('인증번호 전송 실패:', error);
       },
     });
   };
@@ -93,14 +109,31 @@ const LoginModal = ({ onClose }: CloseProps) => {
     codeVerificationMutation.mutate(body, {
       onSuccess: (response) => {
         if (response.isSuccess) {
+          setCodeErrorMsg('');
+          setValidateErrorMsg('');
           setCodeVerified(true);
           setTimer(0);
         } else {
-          console.error('잘못된 인증번호입니다. 다시 입력해주세요');
+          console.log(response);
+          // if (response.code === 'A400') {
+          //   setCodeErrorMsg('인증 시간 초과');
+          // } else if (response.code === 'A401') {
+          //   setValidateErrorMsg('인증 코드가 일치하지 않습니다.');
+          // } else if (response.code === 'A402') {
+          //   setValidateErrorMsg('인증 번호를 재전송해주세요. ');
+          // } else if (response.code === 'V400') {
+          //   setValidateErrorMsg('인증 코드 형식은 영 대,소문자 6자리입니다.');
+          // }
+          if (response.code in ERROR_MESSAGES) {
+            const errorMessage = ERROR_MESSAGES[response.code as ErrorCode];
+
+            if (response.code === ERROR_CODES.TIMEOUT) {
+              setCodeErrorMsg(errorMessage);
+            } else {
+              setValidateErrorMsg(errorMessage);
+            }
+          }
         }
-      },
-      onError: (error) => {
-        console.error('인증 코드 전송 실패', error);
       },
     });
   };
@@ -111,12 +144,14 @@ const LoginModal = ({ onClose }: CloseProps) => {
         console.log(response);
 
         if (response.isSuccess && response.result) {
-          //const expiresAt = parseISO(response.result.expiredTime);
-          //const maxAge = differenceInSeconds(expiresAt, new Date());
+          setCodeErrorMsg('');
+          setValidateErrorMsg('');
+          const expiresAt = parseISO(response.result.expiredTime);
+          const maxAge = differenceInSeconds(expiresAt, new Date());
 
           setCookie('accessToken', response.result.accessToken, {
             path: '/',
-            maxAge: 104800,
+            maxAge: maxAge,
             secure: true,
             sameSite: 'strict',
           });
@@ -133,12 +168,9 @@ const LoginModal = ({ onClose }: CloseProps) => {
 
           setIsLogined(true);
           onClose();
-        } else {
-          console.error('로그인 실패 : ', response.message || 'Unknown error');
+        } else if (!response.isSuccess && response.code in ERROR_MESSAGES) {
+          alert(ERROR_MESSAGES[response.code as ErrorCode]);
         }
-      },
-      onError: (error) => {
-        console.error('로그인 실패 : ', error);
       },
     });
   };
@@ -184,7 +216,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
               buttonText='인증번호 전송'
               required
               showButton
-              isActivated={validPhoneNumber}
+              isActivated={validPhoneNumber && canSendCode}
               value={phoneNumber}
               onChange={handlePhoneNumberChange}
               handleButtonClick={() => handleSendAuthCode(phoneNumber)}
@@ -194,10 +226,14 @@ const LoginModal = ({ onClose }: CloseProps) => {
             <div className='flex flex-row items-center w-full'>
               <div className='textCommonClass'>인증번호 입력</div>
               <div className='ml-auto text-red text-b-s'>
-                {timer > 0 && (
-                  <p>
-                    {minutes}:{seconds < 10 ? `0${seconds}` : seconds}초 남음
-                  </p>
+                {timer === 0 && !codeVerified ? (
+                  <p>{codeErrorMsg}</p>
+                ) : (
+                  timer > 0 && (
+                    <p>
+                      {minutes}:{seconds < 10 ? `0${seconds}` : seconds}초 남음
+                    </p>
+                  )
                 )}
               </div>
             </div>
@@ -209,6 +245,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
               required
               value={code}
               onChange={handleCodeInputChange}
+              isActivated={validCode}
               handleButtonClick={() =>
                 handleVerification({
                   phoneNumber: phoneNumber,
@@ -217,7 +254,12 @@ const LoginModal = ({ onClose }: CloseProps) => {
               }
             />
           </div>
-          <div className='mt-4 my-2 flex flex-row items-start'>
+          {validateErrorMsg && (
+            <div className='text-left text-red text-b-s mt-2'>
+              {validateErrorMsg}
+            </div>
+          )}
+          <div className='mt-6 my-2 flex flex-row items-start'>
             <img
               className='cursor-pointer'
               src={privacyConsent ? checked : checkbox}
@@ -234,7 +276,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
               onClick={handleMarketingConsentChange}
             />
             <div className='px-2 py-1 text-gray-800 text-b-s items-center'>
-              마케팅 활용 및 광고 수신 동의
+              마케팅 활용 및 광고 수신 동의 (선택)
             </div>
           </div>
           <div className='mt-4'>
@@ -250,7 +292,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
                   marketingConsent: marketingConsent,
                 })
               }
-              isActive={allValid}
+              isActive={allValid && name.trim() !== ''}
             />
           </div>
         </div>
