@@ -59,7 +59,7 @@ const Carousel = ({ carInfoList }: CarouselProps) => {
     }
   };
   return (
-    <div className='carousel-container'>
+    <div className='snap-center carousel-container'>
       <CarouselBg currentIdx={state.currentIndex} />
       <div className='flex gap-4 z-10 items-center'>
         {visibleItems.map((item) => {
@@ -77,7 +77,7 @@ const Carousel = ({ carInfoList }: CarouselProps) => {
                   <>
                     <Header title={item.title} subTitle={item.subTitle} />
                     {item.id === 1 ? (
-                      <VideoPlayer />
+                      <VideoPlayer videoUrl={item.imgUrl} />
                     ) : (
                       <div
                         className='w-[784px] h-[422px] relative transform duration-200'

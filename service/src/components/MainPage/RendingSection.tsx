@@ -23,7 +23,7 @@ const RendingSection = ({ onArrowClick }: RendingSectionProps) => {
 
   return (
     <div
-      className='bg-cover bg-center bg-no-repeat min-h-screen min-w-screen flex items-center justify-center'
+      className='snap-start bg-cover bg-center bg-no-repeat min-h-screen min-w-screen flex items-center justify-center'
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <div className='flex flex-col justify-center items-center gap-9 z-5'>

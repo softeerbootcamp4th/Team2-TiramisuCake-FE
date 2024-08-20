@@ -61,3 +61,10 @@
   user-select: none;
   -webkit-user-drag: none;
 }
+*::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  scrollbar-width: none;
+}
