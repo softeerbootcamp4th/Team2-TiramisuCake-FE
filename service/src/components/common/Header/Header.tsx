@@ -1,12 +1,16 @@
 import { Link } from 'react-router-dom';
 import { useTabContext } from '@/store/context/useTabContext';
 import { useEffect, useState } from 'react';
+import { getCookie } from '@/utils/cookie';
 
 const Header = () => {
   const { activeTab, setActiveTab } = useTabContext();
   const [visible, setVisible] = useState<boolean>(false);
+  const accessToken = getCookie('accessToken');
 
-  console.log(activeTab);
+  useEffect(() => {
+    console.log(activeTab);
+  }, [activeTab]);
 
   const handleTabClick = (tabName: string) => {
     setActiveTab(tabName);
@@ -48,6 +52,15 @@ const Header = () => {
         >
           The new IONIQ 5
         </Link>
+        {accessToken && (
+          <Link
+            to='/winnig-result'
+            onClick={() => handleTabClick('result')}
+            className={`${activeTab === 'result' ? 'text-green-400' : 'text-black'}`}
+          >
+            당첨 내역
+          </Link>
+        )}
       </nav>
     </header>
   );
