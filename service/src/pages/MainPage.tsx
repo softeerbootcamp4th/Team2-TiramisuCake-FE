@@ -8,6 +8,8 @@ import DrawSection from '@/components/MainPage/DrawSection/DrawSection';
 import EventIntroductionSection from '@/components/MainPage/EventIntroductionSection/EventIntroductionSection';
 import { useTabContext } from '@/store/context/useTabContext';
 import useSectionObserver from '@/hooks/MainPage/useSectionObserver';
+import EventInfoFooter from '@/components/common/Footer/EventInfoFooter';
+import Footer from '@/components/common/Footer/Footer';
 
 const MainPage = () => {
   const { setActiveTab } = useTabContext();
@@ -45,6 +47,10 @@ const MainPage = () => {
       </div>
       <div ref={(el) => setRef(el, 4)} id='ioniq5'>
         <CarInfoSection />
+      </div>
+      <div className='snap-end'>
+        <EventInfoFooter />
+        <Footer />
       </div>
     </div>
   );
