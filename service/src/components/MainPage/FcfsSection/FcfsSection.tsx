@@ -38,11 +38,11 @@ const FcfsSection = ({
 
   return (
     <section
-      className='snap-start bg-cover bg-center bg-no-repeat w-screen h-screen flex py-16 justify-center'
+      className='snap-start bg-cover bg-center bg-no-repeat w-screen h-screen flex py-16 items-center justify-center'
       style={{ backgroundImage: `url(${backgroundImage})` }}
       ref={fcfsSectionRef}
     >
-      <div className='w-[1100px] h-full my-auto flex flex-col items-center gap-4 px-6 pt-12 border border-custom-white bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom'>
+      <div className='w-[1100px] h-full my-auto flex flex-col items-center gap-4 px-6 py-8 border border-custom-white bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom'>
         <motion.div
           {...SCROLL_MOTION}
           className='text-center inline-flex flex-row justify-center gap-3'
@@ -81,7 +81,7 @@ const FcfsSection = ({
           </motion.div>
         </div>
         {isLogined && (
-          <div className='flex gap-6 mt-20 '>
+          <div className='flex gap-6 mt-10 '>
             <Button
               type='squareWithBorder'
               text='튜토리얼'

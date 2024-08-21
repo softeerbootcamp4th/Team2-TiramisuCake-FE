@@ -32,7 +32,7 @@ const DrawSection = ({
       className='snap-center bg-cover bg-center bg-no-repeat h-screen w-screen flex py-16 items-center justify-center'
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <div className='w-[1100px] h-full my-auto flex flex-col items-center gap-4 px-6 py-12 border border-custom-white bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom'>
+      <div className='w-[1100px] h-full my-auto flex flex-col items-center gap-4 px-6 py-8 border border-custom-white bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom'>
         <motion.div
           {...SCROLL_MOTION}
           className='text-center inline-flex flex-row justify-center gap-3'
@@ -67,7 +67,7 @@ const DrawSection = ({
               {...SCROLL_MOTION}
               className='flex flex-col items-center gap-1'
             >
-              <img src='/10.png' className='w-[380px] h-[170px]' />
+              <img src='/10.png' className='w-[350px] h-[150px]' />
               <p className='font-semibold text-b-xl text-white'>
                 2등 현대백화점 10만원권
               </p>
@@ -76,7 +76,7 @@ const DrawSection = ({
               {...SCROLL_MOTION}
               className='flex flex-col items-center gap-1'
             >
-              <img src='/5.png' className='w-[380px] h-[170px]' />
+              <img src='/5.png' className='w-[350px] h-[150px]' />
               <p className='font-semibold text-b-xl text-white'>
                 3등 현대백화점 5만원권
               </p>

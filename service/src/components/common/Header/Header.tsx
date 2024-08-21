@@ -1,15 +1,17 @@
 import { Link } from 'react-router-dom';
 import { useTabContext } from '@/store/context/useTabContext';
 import { useEffect, useState } from 'react';
+import { getCookie } from '@/utils/cookie';
+import scrollToElementId from '@/utils/scrollToElementId';
 
 const Header = () => {
   const { activeTab, setActiveTab } = useTabContext();
   const [visible, setVisible] = useState<boolean>(false);
-
-  console.log(activeTab);
+  const accessToken = getCookie('accessToken');
 
   const handleTabClick = (tabName: string) => {
     setActiveTab(tabName);
+    scrollToElementId({ sectionId: tabName, behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -37,7 +39,7 @@ const Header = () => {
         <Link
           to='/'
           onClick={() => handleTabClick('event')}
-          className={`${activeTab === ('event' || 'fcfs') ? 'text-green-400' : 'text-black'}`}
+          className={`${activeTab === 'event' || activeTab === 'fcfs' || activeTab === 'draw' ? 'text-green-400' : 'text-black'}`}
         >
           Event
         </Link>
@@ -48,6 +50,15 @@ const Header = () => {
         >
           The new IONIQ 5
         </Link>
+        {accessToken && (
+          <Link
+            to='/winnig-result'
+            onClick={() => handleTabClick('result')}
+            className={`${activeTab === 'result' ? 'text-green-400' : 'text-black'}`}
+          >
+            당첨 내역
+          </Link>
+        )}
       </nav>
     </header>
   );
