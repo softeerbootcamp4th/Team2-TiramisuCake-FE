@@ -5,20 +5,21 @@ interface Props {
   nextFcfsStartTime: string;
 }
 
+const TWO_HOUR = 2 * 60 * 60 * 1000;
+
 const useCountdownTimer = ({ isFcfsAvailable, nextFcfsStartTime }: Props) => {
   const [buttonText, setButtonText] = useState('');
   const [isActive, setIsActive] = useState(false);
   const [_timeRemaining, setTimeRemaining] = useState<number>(0);
 
   useEffect(() => {
-    if (isFcfsAvailable) {
-      setButtonText('바로가기');
-      setIsActive(true);
-    } else {
+    if (nextFcfsStartTime) {
       const startTime = new Date(nextFcfsStartTime);
+
       const updateCounter = () => {
         const now = new Date();
         const timeDiff = startTime.getTime() - now.getTime();
+        const timeSinceStart = now.getTime() - startTime.getTime();
 
         setTimeRemaining(timeDiff);
 
@@ -29,8 +30,11 @@ const useCountdownTimer = ({ isFcfsAvailable, nextFcfsStartTime }: Props) => {
           setButtonText(
             `${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`
           );
-        } else if (timeDiff <= 0) {
+        } else if (timeDiff <= 0 && timeSinceStart <= TWO_HOUR) {
           setIsActive(true);
+          setButtonText('바로가기');
+        } else if (timeSinceStart > TWO_HOUR) {
+          setIsActive(false);
           setButtonText('바로가기');
         }
       };
