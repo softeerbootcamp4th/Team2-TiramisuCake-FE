@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import RendingSection from '@/components/MainPage/RendingSection';
 import CarInfoSection from '@/components/MainPage/CarInfoSection/CarInfoSection';
 import FcfsSection from '@/components/MainPage/FcfsSection/FcfsSection';
@@ -10,66 +10,87 @@ import EventIntroductionSection from '@/components/MainPage/EventIntroductionSec
 import { useTabContext } from '@/store/context/useTabContext';
 
 const MainPage = () => {
-  const { setActiveTab } = useTabContext(); // Tab context 사용
+  const { setActiveTab } = useTabContext();
   const { dynamicData, isDynamicLoading } = useDynamicEventInfo();
   const { staticData, isStaticLoading } = useStaticEventInfo();
 
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  const setRef = useCallback(
+    (el: HTMLDivElement | null, index: number) => {
+      if (el) {
+        sectionRefs.current[index] = el;
+
+        if (observerRef.current) {
+          observerRef.current.disconnect();
+        }
+
+        const observerOptions = {
+          root: null,
+          rootMargin: '0px',
+          threshold: 0.5,
+        };
+
+        const observerCallback = (entries: IntersectionObserverEntry[]) => {
+          console.log('Observer triggered');
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveTab(entry.target.id);
+            }
+          });
+        };
+
+        observerRef.current = new IntersectionObserver(
+          observerCallback,
+          observerOptions
+        );
+
+        sectionRefs.current.forEach((section) => {
+          if (section) observerRef.current!.observe(section);
+        });
+      }
+    },
+    [setActiveTab]
+  );
 
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.5, // 50% 이상 보일 때 activeTab 변경
-    };
-
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveTab(entry.target.id);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(
-      observerCallback,
-      observerOptions
-    );
-
-    sectionRefs.current.forEach((section) => {
-      if (section) observer.observe(section);
-    });
-
     return () => {
-      observer.disconnect();
+      // 컴포넌트 언마운트 시 옵저버 제거
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
     };
-  }, [setActiveTab]);
+  }, []);
 
   if (isDynamicLoading || isStaticLoading) return <LoadingPage />;
 
   return (
-    <div className='snap-y snap-mandatory overflow-auto h-screen'>
-      <div ref={(el) => (sectionRefs.current[0] = el)} id='rending'>
+    <div
+      className='snap-y snap-mandatory overflow-auto h-screen'
+      id='container'
+    >
+      <div ref={(el) => setRef(el, 0)} id='rending'>
         <RendingSection />
       </div>
-      <div ref={(el) => (sectionRefs.current[1] = el)} id='event'>
+      <div ref={(el) => setRef(el, 1)} id='event'>
         <EventIntroductionSection />
       </div>
-      <div ref={(el) => (sectionRefs.current[2] = el)} id='fcfs'>
+      <div ref={(el) => setRef(el, 2)} id='fcfs'>
         <FcfsSection
           fcfsInfo={dynamicData?.result.fcfsInfo as string}
           fcfsStartTime={dynamicData?.result.fcfsStartTime as string}
           eventInfo={staticData?.result.eventInfoList[0] as EventInfo}
         />
       </div>
-      <div ref={(el) => (sectionRefs.current[3] = el)} id='draw'>
+      <div ref={(el) => setRef(el, 3)} id='draw'>
         <DrawSection
           totalDrawWinner={dynamicData?.result.totalDrawWinner as string}
           remainDrawCount={dynamicData?.result.remainDrawCount as string}
           eventInfo={staticData?.result.eventInfoList[1] as EventInfo}
         />
       </div>
-      <div ref={(el) => (sectionRefs.current[4] = el)} id='ioniq5'>
+      <div ref={(el) => setRef(el, 4)} id='ioniq5'>
         <CarInfoSection />
       </div>
     </div>
