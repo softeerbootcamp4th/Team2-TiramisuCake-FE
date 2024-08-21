@@ -50,7 +50,6 @@ const QuizContainer = ({
         mutation.mutate(answerString, {
           onSuccess: (data) => {
             setModalData(data.result);
-            console.log(data.result);
             setTimeout(() => setIsOpen(true), 1500);
           },
         });
@@ -66,7 +65,6 @@ const QuizContainer = ({
     if (!containerRef.current) return;
     setIsDragging(false);
 
-    console.log(containerRef.current, info);
     const containerRect = containerRef.current.getBoundingClientRect();
     const droppedX = info.point.x - containerRect.left;
     const droppedIndex = Math.round(droppedX / 117);
@@ -75,12 +73,6 @@ const QuizContainer = ({
     if (droppedIndex >= 0 && droppedIndex < answer.length) {
       const isCorrectPosition =
         filteredAnswer[droppedIndex] === shuffleAnswer[index];
-
-      console.log(
-        droppedIndex,
-        filteredAnswer[droppedIndex],
-        shuffleAnswer[index]
-      );
 
       if (isCorrectPosition) {
         setCorrectPositions((prev) =>
