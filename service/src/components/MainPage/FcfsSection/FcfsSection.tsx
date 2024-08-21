@@ -15,18 +15,23 @@ export interface EventProps {
   fcfsInfo: string;
   fcfsHint: string;
   eventInfo: EventInfo;
-  fcfsStartTime: string;
+  isFcfsAvailable: boolean;
+  nextFcfsStartTime: string;
 }
 const FcfsSection = ({
   fcfsInfo,
   fcfsHint,
   eventInfo,
-  fcfsStartTime,
+  isFcfsAvailable,
+  nextFcfsStartTime,
 }: EventProps) => {
   const { isLogined } = useLoginContext();
   const fcfsSectionRef = useRef<HTMLDivElement>(null);
   const navigator = useNavigate();
-  const { buttonText, isActive } = useCountdownTimer(fcfsStartTime);
+  const { buttonText, isActive } = useCountdownTimer({
+    isFcfsAvailable,
+    nextFcfsStartTime,
+  });
 
   const goQuizLounge = useCallback(() => {
     navigator(`${ROUTER_PATH.QUIZ_LOUNGE}?mode=live`);

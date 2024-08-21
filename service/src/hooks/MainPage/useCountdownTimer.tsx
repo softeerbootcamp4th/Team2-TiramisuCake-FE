@@ -1,13 +1,21 @@
 import { useEffect, useState } from 'react';
 
-const useCountdownTimer = (fcfsStartTime: string) => {
+interface Props {
+  isFcfsAvailable: boolean;
+  nextFcfsStartTime: string;
+}
+
+const useCountdownTimer = ({ isFcfsAvailable, nextFcfsStartTime }: Props) => {
   const [buttonText, setButtonText] = useState('');
   const [isActive, setIsActive] = useState(false);
   const [_timeRemaining, setTimeRemaining] = useState<number>(0);
 
   useEffect(() => {
-    if (fcfsStartTime) {
-      const startTime = new Date(fcfsStartTime);
+    if (isFcfsAvailable) {
+      setButtonText('바로가기');
+      setIsActive(true);
+    } else {
+      const startTime = new Date(nextFcfsStartTime);
       const updateCounter = () => {
         const now = new Date();
         const timeDiff = startTime.getTime() - now.getTime();
@@ -24,9 +32,6 @@ const useCountdownTimer = (fcfsStartTime: string) => {
         } else if (timeDiff <= 0) {
           setIsActive(true);
           setButtonText('바로가기');
-        } else {
-          setIsActive(false);
-          setButtonText('바로가기');
         }
       };
 
@@ -36,7 +41,7 @@ const useCountdownTimer = (fcfsStartTime: string) => {
       const intervalId = setInterval(updateCounter, 1000);
       return () => clearInterval(intervalId);
     }
-  }, [fcfsStartTime]);
+  }, [isFcfsAvailable, nextFcfsStartTime]);
 
   return { buttonText, isActive };
 };
