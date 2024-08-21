@@ -22,7 +22,6 @@ const useSectionObserver = (setActiveTab: (tabId: string) => void) => {
         };
 
         const observerCallback = (entries: IntersectionObserverEntry[]) => {
-          console.log('Observer triggered');
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               setActiveTab(entry.target.id);
