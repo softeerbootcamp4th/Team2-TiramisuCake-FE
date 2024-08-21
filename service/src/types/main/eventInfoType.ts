@@ -9,6 +9,7 @@ export interface EventInfo {
   content: string;
   rewardImage1: string;
   rewardImage2: string;
+  rewardImage3: string | null;
 }
 
 interface StaticEventResult {

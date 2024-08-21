@@ -57,7 +57,7 @@ const DrawSection = ({
             {...SCROLL_MOTION}
             className='flex flex-col items-center gap-1'
           >
-            <img src='/ipad.svg' alt='경품1' />
+            <img src={eventInfo.rewardImage1} alt='경품1' />
             <p className='font-semibold text-b-xl text-white'>
               1등 최신형 아이패드
             </p>
@@ -67,7 +67,10 @@ const DrawSection = ({
               {...SCROLL_MOTION}
               className='flex flex-col items-center gap-1'
             >
-              <img src='/10.png' className='w-[350px] h-[150px]' />
+              <img
+                src={eventInfo.rewardImage2}
+                className='w-[350px] h-[150px] object-fit'
+              />
               <p className='font-semibold text-b-xl text-white'>
                 2등 현대백화점 10만원권
               </p>
@@ -76,7 +79,10 @@ const DrawSection = ({
               {...SCROLL_MOTION}
               className='flex flex-col items-center gap-1'
             >
-              <img src='/5.png' className='w-[350px] h-[150px]' />
+              <img
+                src={eventInfo.rewardImage3 as string}
+                className='w-[350px] h-[150px]'
+              />
               <p className='font-semibold text-b-xl text-white'>
                 3등 현대백화점 5만원권
               </p>

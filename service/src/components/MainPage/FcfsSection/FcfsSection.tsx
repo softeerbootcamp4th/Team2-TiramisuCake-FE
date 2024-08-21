@@ -67,7 +67,7 @@ const FcfsSection = ({
             {...SCROLL_MOTION}
             className='flex flex-col items-center gap-2'
           >
-            <img src='/rent.png' />
+            <img src={eventInfo.rewardImage1} />
             <p className='font-semibold text-b-xl text-white'>
               The new IONIQ 5 24시간 무료 승차 쿠폰
             </p>
@@ -77,7 +77,7 @@ const FcfsSection = ({
             className='flex flex-col items-center gap-2'
           >
             <img
-              src='/coupon.png'
+              src={eventInfo.rewardImage2}
               className='w-[402px] h-[216px] object-cover'
             />
             <p className='font-semibold text-b-xl text-white'>신차 할인 쿠폰</p>
