@@ -5,7 +5,7 @@ import LoadingPage from '@/components/Loading/Loading';
 import { EventInfo } from '@/types/main/eventInfoType';
 import { useDynamicEventInfo, useStaticEventInfo } from '@/apis/main/query';
 import DrawSection from '@/components/MainPage/DrawSection/DrawSection';
-import EventIntroductionSection from '@/components/MainPage/EventIntroductionSection';
+import EventIntroductionSection from '@/components/MainPage/EventIntroductionSection/EventIntroductionSection';
 import { useTabContext } from '@/store/context/useTabContext';
 import useSectionObserver from '@/hooks/MainPage/useSectionObserver';
 
