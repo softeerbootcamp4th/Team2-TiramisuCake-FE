@@ -3,9 +3,14 @@ import SetFCFSWinnerContainer from '../common/Container/SetFCFSWinnerContainer';
 import SetRaffleWinnerContainer from '../common/Container/SetRaffleWinnerContainer';
 import WinnersListContainer from '../common/Container/WinnersListContainer';
 import { useEffect, useState } from 'react';
+import LoadingPage from '@/pages/LoadingPage';
 
-const WinnerManagement = () => {
-  const { data } = useWinnerData();
+interface ErrorProps {
+  onError: () => void;
+}
+
+const WinnerManagement = ({ onError }: ErrorProps) => {
+  const { data, isLoading } = useWinnerData();
   console.log(data);
   const [FCFSList, setFCFSList] = useState([]);
   const [drawList, setDrawList] = useState([]);
@@ -14,10 +19,12 @@ const WinnerManagement = () => {
     if (data) {
       setFCFSList(data.result.fcfsEventList);
       setDrawList(data.result.drawEventList);
+    } else {
+      return onError();
     }
-  }, [data]);
+  }, [data, onError]);
 
-  if (!data) return <>Loading...</>;
+  if (isLoading) return <LoadingPage />;
 
   return (
     <>

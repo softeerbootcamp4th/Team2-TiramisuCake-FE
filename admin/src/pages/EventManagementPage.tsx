@@ -12,6 +12,7 @@ import { getWeekDay } from '@/utils/getWeekDay';
 import { useMutationDraw, useMutationFcFs } from '@/apis/event/query';
 import { DrawRequest, FcFsRequest } from '@/type/eventManagement/eventType';
 import { useQueryClient } from '@tanstack/react-query';
+
 const EventManagementPage = () => {
   const mutationFcFs = useMutationFcFs();
   const mutationDraw = useMutationDraw();
@@ -64,7 +65,6 @@ const EventManagementPage = () => {
         console.error('Error:', error);
       },
     });
-    //setIsWinModalOpen(false);
   };
 
   const navigator = useNavigate();
