@@ -59,7 +59,7 @@ const DrawSection = ({
           >
             <img src={eventInfo.rewardImage1} alt='경품1' />
             <p className='font-semibold text-b-xl text-white'>
-              1등 최신형 아이패드
+              {eventInfo.rewardName1}
             </p>
           </motion.div>
           <div className='flex flex-col gap-4'>
@@ -72,7 +72,7 @@ const DrawSection = ({
                 className='w-[350px] h-[150px] object-fit'
               />
               <p className='font-semibold text-b-xl text-white'>
-                2등 현대백화점 10만원권
+                {eventInfo.rewardName2}
               </p>
             </motion.div>
             <motion.div
@@ -84,7 +84,7 @@ const DrawSection = ({
                 className='w-[350px] h-[150px]'
               />
               <p className='font-semibold text-b-xl text-white'>
-                3등 현대백화점 5만원권
+                {eventInfo.rewardName3}
               </p>
             </motion.div>
           </div>

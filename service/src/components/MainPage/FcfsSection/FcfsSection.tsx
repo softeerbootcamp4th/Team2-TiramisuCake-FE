@@ -2,7 +2,7 @@ import Badge from '@/components/common/Badge/Badge';
 import Button from '@/components/common/Button/Button';
 import { ROUTER_PATH } from '@/constants/lib/constants';
 import { useLoginContext } from '@/store/context/useLoginContext';
-import { useCallback, useRef } from 'react';
+import { memo, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
@@ -69,7 +69,7 @@ const FcfsSection = ({
           >
             <img src={eventInfo.rewardImage1} />
             <p className='font-semibold text-b-xl text-white'>
-              The new IONIQ 5 24시간 무료 승차 쿠폰
+              {eventInfo.rewardName1}
             </p>
           </motion.div>
           <motion.div
@@ -80,7 +80,10 @@ const FcfsSection = ({
               src={eventInfo.rewardImage2}
               className='w-[402px] h-[216px] object-cover'
             />
-            <p className='font-semibold text-b-xl text-white'>신차 할인 쿠폰</p>
+            <p className='font-semibold text-b-xl text-white'>
+              {' '}
+              {eventInfo.rewardName2}
+            </p>
           </motion.div>
         </div>
         {isLogined && (
@@ -103,4 +106,4 @@ const FcfsSection = ({
   );
 };
 
-export default FcfsSection;
+export default memo(FcfsSection);
