@@ -12,7 +12,7 @@ import {
 interface Props {
   total: number;
   visitors: number;
-  rate: number;
+  rate: string;
   title: string;
   footer: string;
 }
