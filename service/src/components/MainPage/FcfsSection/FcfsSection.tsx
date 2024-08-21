@@ -76,7 +76,10 @@ const FcfsSection = ({
             {...SCROLL_MOTION}
             className='flex flex-col items-center gap-2'
           >
-            <img src='/coupon.png' className='w-[400px] h-[214px]' />
+            <img
+              src='/coupon.png'
+              className='w-[402px] h-[216px] object-cover'
+            />
             <p className='font-semibold text-b-xl text-white'>신차 할인 쿠폰</p>
           </motion.div>
         </div>

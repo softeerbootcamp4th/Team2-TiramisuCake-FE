@@ -52,7 +52,7 @@ const Header = () => {
         </Link>
         {accessToken && (
           <Link
-            to='/winnig-result'
+            to='/winning-result'
             onClick={() => handleTabClick('result')}
             className={`${activeTab === 'result' ? 'text-green-400' : 'text-black'}`}
           >
