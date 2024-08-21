@@ -9,6 +9,8 @@ import WinnersListContainer from '@/components/common/Container/WinnersListConta
 import { useWinnerData } from '@/apis/main/query';
 import { DrawEventList, FCFSEventList } from '@/type/main/type';
 import WinnersProbabilitiesModal from '@/components/WinManagement/WinnersProbabilitiesModal';
+import LoadingPage from './LoadingPage';
+import ErrorPage from './ErrorPage';
 
 type WinnerListModal = {
   state: 'raffle' | 'FCFS';
@@ -25,7 +27,7 @@ const WinManagementPage = () => {
   const [FCFSList, setFCFSList] = useState<FCFSEventList[]>([]);
   const [drawList, setDrawList] = useState<DrawEventList[]>([]);
 
-  const { data } = useWinnerData();
+  const { data, isLoading } = useWinnerData();
 
   useEffect(() => {
     if (data) {
@@ -34,7 +36,8 @@ const WinManagementPage = () => {
     }
   }, [data]);
 
-  if (!data) return <>Loading...</>;
+  if (!data) return <ErrorPage />;
+  if (isLoading) return <LoadingPage />;
 
   return (
     <div className='min-w-screen h-full m-10 flex-1 bg-[#F3F5F7] flex  flex-col items-center gap-10'>
