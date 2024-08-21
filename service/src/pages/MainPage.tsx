@@ -1,4 +1,3 @@
-import { useEffect, useRef, useCallback } from 'react';
 import RendingSection from '@/components/MainPage/RendingSection';
 import CarInfoSection from '@/components/MainPage/CarInfoSection/CarInfoSection';
 import FcfsSection from '@/components/MainPage/FcfsSection/FcfsSection';
@@ -8,60 +7,13 @@ import { useDynamicEventInfo, useStaticEventInfo } from '@/apis/main/query';
 import DrawSection from '@/components/MainPage/DrawSection/DrawSection';
 import EventIntroductionSection from '@/components/MainPage/EventIntroductionSection';
 import { useTabContext } from '@/store/context/useTabContext';
+import useSectionObserver from '@/hooks/MainPage/useSectionObserver';
 
 const MainPage = () => {
   const { setActiveTab } = useTabContext();
   const { dynamicData, isDynamicLoading } = useDynamicEventInfo();
   const { staticData, isStaticLoading } = useStaticEventInfo();
-
-  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const observerRef = useRef<IntersectionObserver | null>(null);
-
-  const setRef = useCallback(
-    (el: HTMLDivElement | null, index: number) => {
-      if (el) {
-        sectionRefs.current[index] = el;
-
-        if (observerRef.current) {
-          observerRef.current.disconnect();
-        }
-
-        const observerOptions = {
-          root: null,
-          rootMargin: '0px',
-          threshold: 0.5,
-        };
-
-        const observerCallback = (entries: IntersectionObserverEntry[]) => {
-          console.log('Observer triggered');
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setActiveTab(entry.target.id);
-            }
-          });
-        };
-
-        observerRef.current = new IntersectionObserver(
-          observerCallback,
-          observerOptions
-        );
-
-        sectionRefs.current.forEach((section) => {
-          if (section) observerRef.current!.observe(section);
-        });
-      }
-    },
-    [setActiveTab]
-  );
-
-  useEffect(() => {
-    return () => {
-      // 컴포넌트 언마운트 시 옵저버 제거
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
-  }, []);
+  const setRef = useSectionObserver(setActiveTab);
 
   if (isDynamicLoading || isStaticLoading) return <LoadingPage />;
 
