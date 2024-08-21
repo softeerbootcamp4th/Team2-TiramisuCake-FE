@@ -32,7 +32,6 @@ const LotteryCanvas = ({ onScratch }: LotteryCanvasProps) => {
   const textVisible = true;
   const token = getCookie('accessToken');
   const mutation = useMutationDrawData(token);
-  const history = useQueryGetDrawHistory(token);
 
   const gradientStyle = {
     background:
@@ -48,6 +47,8 @@ const LotteryCanvas = ({ onScratch }: LotteryCanvasProps) => {
   const handleHistoryButtonClick = () => {
     setIsOpen(true);
     setIsResultModalOpen(true);
+    const history = useQueryGetDrawHistory(token);
+
     //console.log(history?.data.result);
     if (history.data?.result.drawWin) {
       setIsWin(true);
