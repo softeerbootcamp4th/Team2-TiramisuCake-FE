@@ -14,7 +14,7 @@ interface LotteryCanvasProps {
 
 const LotteryCanvas = ({ onScratch }: LotteryCanvasProps) => {
   //복권 긁은 후 결과 보기
-  // const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isResultModalOpen, setIsResultModalOpen] = useState(false);
   const { isOpen, setIsOpen } = useModalContext();
 
   //당첨 결과 버튼 활성화
@@ -26,12 +26,12 @@ const LotteryCanvas = ({ onScratch }: LotteryCanvasProps) => {
 
   const closeModal = () => {
     setIsOpen(false);
+    setIsResultModalOpen(false);
   };
 
   const textVisible = true;
   const token = getCookie('accessToken');
   const mutation = useMutationDrawData(token);
-  const history = useQueryGetDrawHistory(token);
 
   const gradientStyle = {
     background:
@@ -46,6 +46,9 @@ const LotteryCanvas = ({ onScratch }: LotteryCanvasProps) => {
   const drawing = useRef(false);
   const handleHistoryButtonClick = () => {
     setIsOpen(true);
+    setIsResultModalOpen(true);
+    const history = useQueryGetDrawHistory(token);
+
     //console.log(history?.data.result);
     if (history.data?.result.drawWin) {
       setIsWin(true);
@@ -167,6 +170,7 @@ const LotteryCanvas = ({ onScratch }: LotteryCanvasProps) => {
         if (canvasRef.current) {
           canvasRef.current.style.pointerEvents = 'none'; // 캔버스 영역 클릭할 수 없도록 설정
           setIsHistoryOpen(true);
+          setIsResultModalOpen(true);
         }
       }, 1500);
     }
@@ -204,7 +208,7 @@ const LotteryCanvas = ({ onScratch }: LotteryCanvasProps) => {
         )}
       </div>
 
-      {isOpen && (
+      {isOpen && isResultModalOpen && (
         <div className='fixed inset-0 flex items-center justify-center z-50'>
           <div onClick={closeModal}></div>
           {isWin && result ? (

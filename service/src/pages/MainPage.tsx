@@ -14,7 +14,6 @@ const MainPage = () => {
   const { activeTab, setActiveTab } = useTabContext();
   const { dynamicData, isDynamicLoading } = useDynamicEventInfo();
   const { staticData, isStaticLoading } = useStaticEventInfo();
-
   const rendingSectionRef = useRef<HTMLDivElement>(null);
   const eventSectionRef = useRef<HTMLDivElement>(null);
   const carInfoSectionRef = useRef<HTMLDivElement>(null);
@@ -32,7 +31,7 @@ const MainPage = () => {
   if (isDynamicLoading || isStaticLoading) return <LoadingPage />;
 
   return (
-    <div className='snap-y snap-mandatory overflow-auto h-screen'>
+    <div className='snap-y snap-mandatory overflow-auto flex flex-col h-screen'>
       <div ref={rendingSectionRef}>
         <RendingSection onArrowClick={() => setActiveTab('event')} />
       </div>
@@ -44,6 +43,7 @@ const MainPage = () => {
       <div ref={fcfsSectionRef}>
         <FcfsSection
           fcfsInfo={dynamicData?.result.fcfsInfo as string}
+          fcfsHint={dynamicData?.result.fcfsHint as string}
           fcfsStartTime={dynamicData?.result.fcfsStartTime as string}
           eventInfo={staticData?.result.eventInfoList[0] as EventInfo}
         />
@@ -53,7 +53,6 @@ const MainPage = () => {
         remainDrawCount={dynamicData?.result.remainDrawCount as string}
         eventInfo={staticData?.result.eventInfoList[1] as EventInfo}
       />
-
       <div ref={carInfoSectionRef}>
         <CarInfoSection />
       </div>

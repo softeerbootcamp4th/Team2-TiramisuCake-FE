@@ -1,5 +1,8 @@
 import { useDynamicEventInfo, useStaticEventInfo } from '@/apis/main/query';
-import { useEventDateContext } from '@/store/context/useEventDateContext';
+import {
+  useEventDateContext,
+  useEventDateSetterContext,
+} from '@/store/context/useEventDateContext';
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
@@ -30,14 +33,15 @@ const EventIntroductionSection = ({ handleArrowClick }: EventSectionProps) => {
     setIsOpen(!isOpen);
   };
 
-  const { startDate, endDate, setStartDate, setEndDate } =
-    useEventDateContext();
+  const { startDate, endDate } = useEventDateContext();
+  const { setStartDate, setEndDate } = useEventDateSetterContext();
+
   useEffect(() => {
     if (!isDynamicLoading && dynamicData) {
       setStartDate(dynamicData.result.startDate);
       setEndDate(dynamicData.result.endDate);
     }
-  }, [isDynamicLoading, staticData]);
+  }, []);
 
   if (isLoading) return <LoadingPage />;
   return (

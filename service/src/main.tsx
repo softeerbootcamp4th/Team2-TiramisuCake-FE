@@ -13,6 +13,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { EventDateProvider } from './store/provider/EventDateProvider.tsx';
 import { ModalProvider } from './store/provider/ModalProvider.tsx';
 import { useApiError } from './hooks/useApiError.tsx';
+import { UrlProvider } from './store/provider/UrlProvider.tsx';
 
 const Main = () => {
   const { handleError } = useApiError();
@@ -32,10 +33,12 @@ const Main = () => {
     <QueryClientProvider client={queryClient}>
       <ModalProvider>
         <LoginProvider>
-          <EventDateProvider>
-            <ReactQueryDevtools initialIsOpen={false} />
-            <RouterProvider router={router} />
-          </EventDateProvider>
+          <UrlProvider>
+            <EventDateProvider>
+              <ReactQueryDevtools initialIsOpen={false} />
+              <RouterProvider router={router} />
+            </EventDateProvider>
+          </UrlProvider>
         </LoginProvider>
       </ModalProvider>
     </QueryClientProvider>

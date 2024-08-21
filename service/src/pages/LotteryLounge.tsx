@@ -98,7 +98,10 @@ const LotteryLoungePage = () => {
         <ExitModal
           handleClose={() => blocker.reset()}
           handleCancel={() => blocker.reset()}
-          handleConfirm={() => blocker.proceed()}
+          handleConfirm={() => {
+            blocker.proceed();
+            setIsOpen(false);
+          }}
         />
       )}
     </div>
