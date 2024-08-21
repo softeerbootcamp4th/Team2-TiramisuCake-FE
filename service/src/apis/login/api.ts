@@ -57,7 +57,6 @@ export const confirmVerification = async (
     body: JSON.stringify(body),
   });
 
-  //const data: confirmResponse = await response.json();
   return response.json();
 };
 
@@ -68,7 +67,7 @@ export const login = async (
   const headers = { ...HEADERS } as { [key: string]: string };
 
   if (shareCode) {
-    headers['shareCode'] = shareCode;
+    headers['X-Share-Code'] = shareCode;
   }
 
   const response = await fetch(`${BASEURL}/login`, {

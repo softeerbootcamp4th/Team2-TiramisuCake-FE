@@ -16,7 +16,6 @@ export const useMutationCode = () => {
   const mutation = useMutation({
     mutationKey: ['sendCode'],
     mutationFn: (phoneNumber: string) => sendAuthCode(phoneNumber),
-    retry: false,
   });
 
   return mutation;
@@ -37,7 +36,6 @@ export const useMutationCodeVerification = () => {
     mutationKey: ['codeVerification'],
     mutationFn: (body: ConfirmVerificationRequestBody) =>
       confirmVerification(body),
-    retry: 2,
   });
 
   return mutation;

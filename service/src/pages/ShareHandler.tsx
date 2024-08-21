@@ -8,7 +8,7 @@ const ShareHandler = () => {
 
   useEffect(() => {
     if (code) {
-      localStorage.setItem('code', code);
+      localStorage.setItem('shareCode', code);
       navigate('/');
     } else {
       navigate('/');

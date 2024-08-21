@@ -13,10 +13,16 @@ const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/event_bg_2.webp';
 export interface EventProps {
   fcfsInfo: string;
+  fcfsHint: string;
   eventInfo: EventInfo;
   fcfsStartTime: string;
 }
-const FcfsSection = ({ fcfsInfo, eventInfo, fcfsStartTime }: EventProps) => {
+const FcfsSection = ({
+  fcfsInfo,
+  fcfsHint,
+  eventInfo,
+  fcfsStartTime,
+}: EventProps) => {
   const { isLogined } = useLoginContext();
   const fcfsSectionRef = useRef<HTMLDivElement>(null);
   const navigator = useNavigate();
@@ -42,13 +48,13 @@ const FcfsSection = ({ fcfsInfo, eventInfo, fcfsStartTime }: EventProps) => {
           className='text-center inline-flex flex-row justify-center gap-3'
         >
           <Badge type='lightblue' text={fcfsInfo} />
-          <Badge type='white' text={`힌트: 인테리어`} />
+          <Badge type='white' text={`힌트: ${fcfsHint}`} />
         </motion.div>
         <motion.h2
           {...SCROLL_MOTION}
           className=' text-h-l font-bold mt-2 mb-4 text-center text-gray-800'
         >
-          Event 1. {eventInfo.title}
+          {eventInfo.title}
         </motion.h2>
         <motion.p
           {...SCROLL_MOTION}

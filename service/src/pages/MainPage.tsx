@@ -31,6 +31,7 @@ const MainPage = () => {
       <div ref={(el) => setRef(el, 2)} id='fcfs'>
         <FcfsSection
           fcfsInfo={dynamicData?.result.fcfsInfo as string}
+          fcfsHint={dynamicData?.result.fcfsHint as string}
           fcfsStartTime={dynamicData?.result.fcfsStartTime as string}
           eventInfo={staticData?.result.eventInfoList[0] as EventInfo}
         />

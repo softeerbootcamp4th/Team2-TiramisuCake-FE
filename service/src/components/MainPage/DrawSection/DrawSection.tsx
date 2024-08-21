@@ -44,7 +44,7 @@ const DrawSection = ({
           {...SCROLL_MOTION}
           className=' text-h-l font-bold mt-2 mb-4 text-center text-gray-800'
         >
-          Event 2. {eventInfo.title}
+          {eventInfo.title}
         </motion.h2>
         <motion.p
           {...SCROLL_MOTION}
