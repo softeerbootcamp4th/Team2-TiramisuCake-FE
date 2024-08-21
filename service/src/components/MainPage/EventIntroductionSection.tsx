@@ -9,16 +9,13 @@ import Button from '@/components/common/Button/Button';
 import LoadingPage from '@/components/Loading/Loading';
 import Bouncing from '@/components/common/Bouncing/Bouncing';
 import LoginModal from './EventSection/LoginModal/LoginModal';
+import scrollToElementId from '@/utils/scrollToElementId';
 
 const downArrow = '/svg/BigArrow.svg';
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/event_bg_1.webp';
 
-interface EventSectionProps {
-  handleArrowClick: () => void;
-}
-
-const EventIntroductionSection = ({ handleArrowClick }: EventSectionProps) => {
+const EventIntroductionSection = () => {
   const { staticData, isStaticLoading } = useStaticEventInfo();
   const { dynamicData, isDynamicLoading } = useDynamicEventInfo();
   const isLoading = isStaticLoading || isDynamicLoading;
@@ -145,7 +142,9 @@ const EventIntroductionSection = ({ handleArrowClick }: EventSectionProps) => {
       </div>
       <Bouncing>
         <div
-          onClick={handleArrowClick}
+          onClick={() =>
+            scrollToElementId({ sectionId: 'fcfs', behavior: 'smooth' })
+          }
           className={`hover:cursor-pointer ${isLogined ? 'mt-6' : ''}`}
         >
           <p className='text-white text-b-m font-semibold'>자세히 보기</p>
