@@ -1,46 +1,36 @@
-import { useRef } from 'react';
-import { useTabContext } from '@/store/context/useTabContext';
 import RendingSection from '@/components/MainPage/RendingSection';
 import CarInfoSection from '@/components/MainPage/CarInfoSection/CarInfoSection';
-import useScrollControl from '@/hooks/MainPage/useScrollControl';
 import FcfsSection from '@/components/MainPage/FcfsSection/FcfsSection';
 import LoadingPage from '@/components/Loading/Loading';
 import { EventInfo } from '@/types/main/eventInfoType';
 import { useDynamicEventInfo, useStaticEventInfo } from '@/apis/main/query';
 import DrawSection from '@/components/MainPage/DrawSection/DrawSection';
 import EventIntroductionSection from '@/components/MainPage/EventIntroductionSection';
+import { useTabContext } from '@/store/context/useTabContext';
+import useSectionObserver from '@/hooks/MainPage/useSectionObserver';
+import EventInfoFooter from '@/components/common/Footer/EventInfoFooter';
+import Footer from '@/components/common/Footer/Footer';
 
 const MainPage = () => {
-  const { activeTab, setActiveTab } = useTabContext();
+  const { setActiveTab } = useTabContext();
   const { dynamicData, isDynamicLoading } = useDynamicEventInfo();
   const { staticData, isStaticLoading } = useStaticEventInfo();
-  const rendingSectionRef = useRef<HTMLDivElement>(null);
-  const eventSectionRef = useRef<HTMLDivElement>(null);
-  const carInfoSectionRef = useRef<HTMLDivElement>(null);
-  const fcfsSectionRef = useRef<HTMLDivElement>(null);
-
-  useScrollControl({
-    rendingSectionRef,
-    eventSectionRef,
-    carInfoSectionRef,
-    activeTab,
-    fcfsSectionRef,
-    setActiveTab,
-  });
+  const setRef = useSectionObserver(setActiveTab);
 
   if (isDynamicLoading || isStaticLoading) return <LoadingPage />;
 
   return (
-    <div className='snap-y snap-mandatory overflow-auto flex flex-col h-screen'>
-      <div ref={rendingSectionRef}>
-        <RendingSection onArrowClick={() => setActiveTab('event')} />
+    <div
+      className='snap-y snap-mandatory overflow-auto h-screen'
+      id='container'
+    >
+      <div ref={(el) => setRef(el, 0)} id='rending'>
+        <RendingSection />
       </div>
-      <div ref={eventSectionRef}>
-        <EventIntroductionSection
-          handleArrowClick={() => setActiveTab('fcfs')}
-        />
+      <div ref={(el) => setRef(el, 1)} id='event'>
+        <EventIntroductionSection />
       </div>
-      <div ref={fcfsSectionRef}>
+      <div ref={(el) => setRef(el, 2)} id='fcfs'>
         <FcfsSection
           fcfsInfo={dynamicData?.result.fcfsInfo as string}
           fcfsHint={dynamicData?.result.fcfsHint as string}
@@ -48,13 +38,19 @@ const MainPage = () => {
           eventInfo={staticData?.result.eventInfoList[0] as EventInfo}
         />
       </div>
-      <DrawSection
-        totalDrawWinner={dynamicData?.result.totalDrawWinner as string}
-        remainDrawCount={dynamicData?.result.remainDrawCount as string}
-        eventInfo={staticData?.result.eventInfoList[1] as EventInfo}
-      />
-      <div ref={carInfoSectionRef}>
+      <div ref={(el) => setRef(el, 3)} id='draw'>
+        <DrawSection
+          totalDrawWinner={dynamicData?.result.totalDrawWinner as string}
+          remainDrawCount={dynamicData?.result.remainDrawCount as string}
+          eventInfo={staticData?.result.eventInfoList[1] as EventInfo}
+        />
+      </div>
+      <div ref={(el) => setRef(el, 4)} id='ioniq5'>
         <CarInfoSection />
+      </div>
+      <div className='snap-end'>
+        <EventInfoFooter />
+        <Footer />
       </div>
     </div>
   );

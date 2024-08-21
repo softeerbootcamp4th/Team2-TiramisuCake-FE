@@ -12,26 +12,21 @@ import Button from '@/components/common/Button/Button';
 import LoadingPage from '@/components/Loading/Loading';
 import Bouncing from '@/components/common/Bouncing/Bouncing';
 import LoginModal from './EventSection/LoginModal/LoginModal';
+import scrollToElementId from '@/utils/scrollToElementId';
+import { useTabContext } from '@/store/context/useTabContext';
 
 const downArrow = '/svg/BigArrow.svg';
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/event_bg_1.webp';
 
-interface EventSectionProps {
-  handleArrowClick: () => void;
-}
-
-const EventIntroductionSection = ({ handleArrowClick }: EventSectionProps) => {
+const EventIntroductionSection = () => {
   const { staticData, isStaticLoading } = useStaticEventInfo();
   const { dynamicData, isDynamicLoading } = useDynamicEventInfo();
   const isLoading = isStaticLoading || isDynamicLoading;
+  const { setActiveTab } = useTabContext();
 
   const { isLogined } = useLoginContext();
   const { isOpen, setIsOpen } = useModalContext();
-
-  const handleModal = () => {
-    setIsOpen(!isOpen);
-  };
 
   const { startDate, endDate } = useEventDateContext();
   const { setStartDate, setEndDate } = useEventDateSetterContext();
@@ -41,7 +36,16 @@ const EventIntroductionSection = ({ handleArrowClick }: EventSectionProps) => {
       setStartDate(dynamicData.result.startDate);
       setEndDate(dynamicData.result.endDate);
     }
-  }, []);
+  }, [isDynamicLoading, staticData]);
+
+  const handleModal = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleArrowClick = () => {
+    scrollToElementId({ sectionId: 'fcfs', behavior: 'smooth' });
+    setActiveTab('fcfs');
+  };
 
   if (isLoading) return <LoadingPage />;
   return (

@@ -7,6 +7,8 @@ import EventMetricsPage from './pages/EventMetricsPage';
 import { ROUTER_PATH } from './lib/constants';
 import MainPage from './pages/MainPage';
 import ProtectedRoute from './components/common/ProtectedRoute';
+import ErrorPage from './pages/ErrorPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +20,7 @@ export const router = createBrowserRouter([
       },
       {
         element: <ProtectedRoute />,
+        errorElement: <ErrorPage />,
         children: [
           {
             element: <MainPage />,
@@ -37,6 +40,7 @@ export const router = createBrowserRouter([
           },
         ],
       },
+      { element: <NotFoundPage />, path: '*' },
     ],
   },
 ]);
