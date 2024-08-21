@@ -13,6 +13,7 @@ const CarouselBg = ({ currentIdx }: { currentIdx: number }) => {
       />
       {bg.map((_, index) => (
         <div
+          key={index}
           className={`bg-cover bg-center bg-no-repeat h-full w-full flex items-center justify-center absolute top-0 transform duration-500 ease-in-out ${currentIdx === index ? 'opacity-100' : 'opacity-0'}`}
           style={{
             backgroundImage: `url(${bg[index]})`,
