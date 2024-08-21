@@ -11,9 +11,9 @@ const TutorialResultModal = ({ handleClose }: TutorialResultModalProps) => {
         <h2 className='text-h-m font-semibold text-transparent bg-clip-text bg-gradient-text-to-right'>
           튜토리얼 체험 완료!
         </h2>
-        <img className='w-[150px] h-[150px]' src='goal_2.gif' />
-        <div className='text-b-m font-semibold text-center justify-center items-center'>
-          축하합니다! <br /> 튜토리얼을 완벽히 마스터하셨습니다. <br />
+        <img className='w-[150px] h-[150px]' src='check.png' />
+        <div className='text-b-l font-semibold text-center justify-center items-center'>
+          <br /> 튜토리얼을 완벽히 마스터하셨습니다. <br />
           이제 선착순 퀴즈에 도전하여 실력을 시험해보세요
         </div>
       </div>
