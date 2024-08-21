@@ -16,3 +16,9 @@ export interface UseFetchOptions {
 }
 
 export type methodType = 'GET' | 'POST' | 'PUT' | 'DELETE';
+
+export interface ResponseType {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+}
