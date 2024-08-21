@@ -4,9 +4,14 @@ import { DonutChart } from '@/components/ui/donutChart';
 import { Chart } from '@/components/ui/Barchart';
 import { useQueryGetMetricsData } from '@/apis/eventMetrics/query';
 import LoadingPage from './LoadingPage';
+import ErrorPage from './ErrorPage';
 
 const EventMetricsPage = () => {
   const { data, isLoading } = useQueryGetMetricsData();
+
+  if (!data) {
+    return <ErrorPage />;
+  }
 
   if (isLoading) {
     return <LoadingPage />;
