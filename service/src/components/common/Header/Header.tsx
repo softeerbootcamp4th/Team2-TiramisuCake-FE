@@ -2,18 +2,16 @@ import { Link } from 'react-router-dom';
 import { useTabContext } from '@/store/context/useTabContext';
 import { useEffect, useState } from 'react';
 import { getCookie } from '@/utils/cookie';
+import scrollToElementId from '@/utils/scrollToElementId';
 
 const Header = () => {
   const { activeTab, setActiveTab } = useTabContext();
   const [visible, setVisible] = useState<boolean>(false);
   const accessToken = getCookie('accessToken');
 
-  useEffect(() => {
-    console.log(activeTab);
-  }, [activeTab]);
-
   const handleTabClick = (tabName: string) => {
     setActiveTab(tabName);
+    scrollToElementId({ sectionId: tabName, behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -41,7 +39,7 @@ const Header = () => {
         <Link
           to='/'
           onClick={() => handleTabClick('event')}
-          className={`${activeTab === ('event' || 'fcfs') ? 'text-green-400' : 'text-black'}`}
+          className={`${activeTab === 'event' || activeTab === 'fcfs' || activeTab === 'draw' ? 'text-green-400' : 'text-black'}`}
         >
           Event
         </Link>
