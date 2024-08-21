@@ -3,6 +3,7 @@ import { HEADERS, BASEURL } from '@/constants/lib/constants';
 const baseURL = `${BASEURL}/event/draw`;
 import {
   DrawAttendanceResponse,
+  DrawHistoryResponse,
   DrawResultResponse,
 } from '@/types/lottery/response';
 
@@ -34,7 +35,9 @@ export const getDrawResult = async (
   return response.json();
 };
 
-export const getDrawHistory = async (token: string) => {
+export const getDrawHistory = async (
+  token: string
+): Promise<DrawHistoryResponse> => {
   const response = await fetch(`${baseURL}/history`, {
     method: 'GET',
     headers: {

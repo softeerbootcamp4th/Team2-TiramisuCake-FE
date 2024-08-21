@@ -35,3 +35,19 @@ export interface DrawResultResponse {
     shareUrl?: string;
   };
 }
+
+export interface DrawHistoryResponse {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: {
+    isDrawWin: string;
+    drawHistoryList: DrawHistoryList[];
+  };
+}
+
+interface DrawHistoryList {
+  drawRank: number;
+  image: string;
+  winningDate: Date;
+}
