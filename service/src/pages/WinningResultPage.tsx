@@ -25,11 +25,12 @@ const WinningResultPage = () => {
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
+  if (isDrawHistoryLoading) return <LoadingPage />;
 
   if (isDrawHistoryLoading || isFCFSHistoryLoading) return <LoadingPage />;
 
   const hasDrawWin = drawHistoryData?.result.isDrawWin;
-  const hasFcfsWin = fcfsHistoryData?.result.isFcfsWin;
+  const hasFcfsWin = false;
 
   return (
     <div
@@ -42,6 +43,7 @@ const WinningResultPage = () => {
         {hasDrawWin || hasFcfsWin ? (
           <>
             {hasDrawWin &&
+              drawHistoryData &&
               drawHistoryData.result.drawHistoryList.map((item, index) => (
                 <div
                   key={index}
@@ -53,6 +55,7 @@ const WinningResultPage = () => {
                 </div>
               ))}
             {hasFcfsWin &&
+              fcfsHistoryData &&
               fcfsHistoryData.result.fcfsHistoryList.map((item, index) => (
                 <div
                   key={index}
