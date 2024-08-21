@@ -48,6 +48,15 @@ const Header = () => {
         >
           The new IONIQ 5
         </Link>
+        {accessToken && (
+          <Link
+            to='/winning-result'
+            onClick={() => handleTabClick('result')}
+            className={`${activeTab === 'result' ? 'text-green-400' : 'text-black'}`}
+          >
+            당첨 내역
+          </Link>
+        )}
       </nav>
     </header>
   );
