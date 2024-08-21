@@ -1,8 +1,4 @@
-export interface EventInfoResponse {
-  isSuccess: boolean;
-  code: string;
-  message: string;
-}
+import { ResponseType } from '../apiType';
 
 export interface EventInfo {
   title: string;
@@ -28,11 +24,11 @@ interface DynamicEventResult {
   fcfsStartTime: string;
 }
 
-export interface StaticEventInfoResponse extends EventInfoResponse {
+export interface StaticEventInfoResponse extends ResponseType {
   result: StaticEventResult;
 }
 
-export interface DynamicEventInfoResponse extends EventInfoResponse {
+export interface DynamicEventInfoResponse extends ResponseType {
   result: DynamicEventResult;
 }
 
