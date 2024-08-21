@@ -21,6 +21,9 @@ import { ResponseType } from '../apiType';
 export interface EventInfo {
   title: string;
   content: string;
+  rewardName1: string;
+  rewardName2: string;
+  rewardName3: string | null;
   rewardImage1: string;
   rewardImage2: string;
   rewardImage3: string | null;
