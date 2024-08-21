@@ -17,8 +17,6 @@ const MainPage = () => {
   const { staticData, isStaticLoading } = useStaticEventInfo();
   const setRef = useSectionObserver(setActiveTab);
 
-  if (isDynamicLoading || isStaticLoading) return <LoadingPage />;
-
   return (
     <div
       className='snap-y snap-mandatory overflow-auto h-screen'
@@ -30,21 +28,28 @@ const MainPage = () => {
       <div ref={(el) => setRef(el, 1)} id='event'>
         <EventIntroductionSection />
       </div>
-      <div ref={(el) => setRef(el, 2)} id='fcfs'>
-        <FcfsSection
-          fcfsInfo={dynamicData?.result.fcfsInfo as string}
-          fcfsHint={dynamicData?.result.fcfsHint as string}
-          fcfsStartTime={dynamicData?.result.fcfsStartTime as string}
-          eventInfo={staticData?.result.eventInfoList[0] as EventInfo}
-        />
-      </div>
-      <div ref={(el) => setRef(el, 3)} id='draw'>
-        <DrawSection
-          totalDrawWinner={dynamicData?.result.totalDrawWinner as string}
-          remainDrawCount={dynamicData?.result.remainDrawCount as string}
-          eventInfo={staticData?.result.eventInfoList[1] as EventInfo}
-        />
-      </div>
+      {isStaticLoading || isDynamicLoading ? (
+        <LoadingPage />
+      ) : (
+        <>
+          <div ref={(el) => setRef(el, 2)} id='fcfs'>
+            <FcfsSection
+              fcfsInfo={dynamicData?.result.fcfsInfo as string}
+              fcfsHint={dynamicData?.result.fcfsHint as string}
+              fcfsStartTime={dynamicData?.result.fcfsStartTime as string}
+              eventInfo={staticData?.result.eventInfoList[0] as EventInfo}
+            />
+          </div>
+          <div ref={(el) => setRef(el, 3)} id='draw'>
+            <DrawSection
+              totalDrawWinner={dynamicData?.result.totalDrawWinner as string}
+              remainDrawCount={dynamicData?.result.remainDrawCount as string}
+              eventInfo={staticData?.result.eventInfoList[1] as EventInfo}
+            />
+          </div>
+        </>
+      )}
+
       <div ref={(el) => setRef(el, 4)} id='ioniq5'>
         <CarInfoSection />
       </div>
