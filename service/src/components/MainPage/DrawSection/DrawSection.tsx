@@ -1,11 +1,11 @@
 import Badge from '@/components/common/Badge/Badge';
-import { EventInfo } from '@/types/main/eventInfoType';
 import { useNavigate } from 'react-router-dom';
 import { ROUTER_PATH } from '@/constants/lib/constants';
 import { useLoginContext } from '@/store/context/useLoginContext';
 import Button from '@/components/common/Button/Button';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
+import { EventInfo } from '@/types/main/type';
 
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/event_bg_3.webp';

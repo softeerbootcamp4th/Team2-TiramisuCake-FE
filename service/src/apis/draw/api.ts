@@ -5,7 +5,7 @@ import {
   DrawAttendanceResponse,
   DrawHistoryResponse,
   DrawResultResponse,
-} from '@/types/lottery/response';
+} from '@/types/lottery/type';
 
 export const getDrawAttendance = async (
   token: string

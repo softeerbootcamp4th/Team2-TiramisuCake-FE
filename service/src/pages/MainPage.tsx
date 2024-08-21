@@ -2,7 +2,6 @@ import RendingSection from '@/components/MainPage/RendingSection';
 import CarInfoSection from '@/components/MainPage/CarInfoSection/CarInfoSection';
 import FcfsSection from '@/components/MainPage/FcfsSection/FcfsSection';
 import LoadingPage from '@/components/Loading/Loading';
-import { EventInfo } from '@/types/main/eventInfoType';
 import { useDynamicEventInfo, useStaticEventInfo } from '@/apis/main/query';
 import DrawSection from '@/components/MainPage/DrawSection/DrawSection';
 import EventIntroductionSection from '@/components/MainPage/EventIntroductionSection/EventIntroductionSection';
@@ -10,6 +9,7 @@ import { useTabContext } from '@/store/context/useTabContext';
 import useSectionObserver from '@/hooks/MainPage/useSectionObserver';
 import EventInfoFooter from '@/components/common/Footer/EventInfoFooter';
 import Footer from '@/components/common/Footer/Footer';
+import { EventInfo } from '@/types/main/type';
 
 const MainPage = () => {
   const { setActiveTab } = useTabContext();

@@ -2,12 +2,12 @@ import Badge from '@/components/common/Badge/Badge';
 import Button from '@/components/common/Button/Button';
 import { ROUTER_PATH } from '@/constants/lib/constants';
 import { useLoginContext } from '@/store/context/useLoginContext';
-import { EventInfo } from '@/types/main/eventInfoType';
 import { useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
 import useCountdownTimer from '@/hooks/MainPage/useCountdownTimer';
+import { EventInfo } from '@/types/main/type';
 
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/event_bg_2.webp';
