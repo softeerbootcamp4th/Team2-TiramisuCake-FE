@@ -4,6 +4,8 @@ import Bouncing from '../common/Bouncing/Bouncing';
 import { motion } from 'framer-motion';
 import { ROUTER_PATH } from '@/constants/lib/constants';
 import scrollToElementId from '@/utils/scrollToElementId';
+import { useTabContext } from '@/store/context/useTabContext';
+
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/rending-bg.webp';
 const gifFile = '/gifs.gif';
@@ -11,8 +13,13 @@ const downarrow = '/svg/BigArrow.svg';
 
 const RendingSection = () => {
   const navigate = useNavigate();
+  const { setActiveTab } = useTabContext();
   const showComments = () => {
     navigate(ROUTER_PATH.COMMENTS_LOUNGE);
+  };
+  const handleArrowClick = () => {
+    scrollToElementId({ sectionId: 'event', behavior: 'smooth' });
+    setActiveTab('event');
   };
 
   const text = 'The New IONIQ 5'.split(' ');
@@ -91,12 +98,7 @@ const RendingSection = () => {
                 className='hover:cursor-pointer py-5'
                 src={downarrow}
                 alt='Arrow'
-                onClick={() =>
-                  scrollToElementId({
-                    sectionId: 'event',
-                    behavior: 'smooth',
-                  })
-                }
+                onClick={handleArrowClick}
               />
             </Bouncing>
           </div>

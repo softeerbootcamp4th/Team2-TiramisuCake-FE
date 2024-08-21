@@ -10,6 +10,7 @@ import LoadingPage from '@/components/Loading/Loading';
 import Bouncing from '@/components/common/Bouncing/Bouncing';
 import LoginModal from './EventSection/LoginModal/LoginModal';
 import scrollToElementId from '@/utils/scrollToElementId';
+import { useTabContext } from '@/store/context/useTabContext';
 
 const downArrow = '/svg/BigArrow.svg';
 const backgroundImage =
@@ -19,22 +20,28 @@ const EventIntroductionSection = () => {
   const { staticData, isStaticLoading } = useStaticEventInfo();
   const { dynamicData, isDynamicLoading } = useDynamicEventInfo();
   const isLoading = isStaticLoading || isDynamicLoading;
+  const { setActiveTab } = useTabContext();
 
   const { isLogined } = useLoginContext();
   const { isOpen, setIsOpen } = useModalContext();
-
-  const handleModal = () => {
-    setIsOpen(!isOpen);
-  };
-
   const { startDate, endDate, setStartDate, setEndDate } =
     useEventDateContext();
+
   useEffect(() => {
     if (!isDynamicLoading && dynamicData) {
       setStartDate(dynamicData.result.startDate);
       setEndDate(dynamicData.result.endDate);
     }
   }, [isDynamicLoading, staticData]);
+
+  const handleModal = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleArrowClick = () => {
+    scrollToElementId({ sectionId: 'fcfs', behavior: 'smooth' });
+    setActiveTab('fcfs');
+  };
 
   if (isLoading) return <LoadingPage />;
   return (
@@ -142,9 +149,7 @@ const EventIntroductionSection = () => {
       </div>
       <Bouncing>
         <div
-          onClick={() =>
-            scrollToElementId({ sectionId: 'fcfs', behavior: 'smooth' })
-          }
+          onClick={handleArrowClick}
           className={`hover:cursor-pointer ${isLogined ? 'mt-6' : ''}`}
         >
           <p className='text-white text-b-m font-semibold'>자세히 보기</p>
