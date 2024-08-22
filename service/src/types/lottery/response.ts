@@ -12,7 +12,7 @@ export interface DrawAttendanceResponse {
   result: {
     invitedNum: number;
     remainDrawCount: number;
-    drawParticipationCount: number;
+    drawAttendanceCount: number;
     fullAttendModal?: FullAttendModal;
   };
 }
