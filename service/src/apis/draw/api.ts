@@ -4,7 +4,7 @@ const baseURL = `${BASEURL}/event/draw`;
 import {
   DrawAttendanceResponse,
   DrawResultResponse,
-} from '@/types/lottery/response';
+} from '@/types/Lottery/response';
 
 export const getDrawAttendance = async (
   token: string
