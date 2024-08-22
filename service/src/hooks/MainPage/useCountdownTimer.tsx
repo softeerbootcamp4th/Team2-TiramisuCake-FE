@@ -1,20 +1,19 @@
 import { useEffect, useState } from 'react';
 
 interface Props {
-  isFcfsAvailable: boolean;
-  nextFcfsStartTime: string;
+  fcfsStartTime: string;
 }
 
 const TWO_HOUR = 2 * 60 * 60 * 1000;
 
-const useCountdownTimer = ({ isFcfsAvailable, nextFcfsStartTime }: Props) => {
+const useCountdownTimer = ({ fcfsStartTime }: Props) => {
   const [buttonText, setButtonText] = useState('');
   const [isActive, setIsActive] = useState(false);
   const [_timeRemaining, setTimeRemaining] = useState<number>(0);
 
   useEffect(() => {
-    if (nextFcfsStartTime) {
-      const startTime = new Date(nextFcfsStartTime);
+    if (fcfsStartTime) {
+      const startTime = new Date(fcfsStartTime);
 
       const updateCounter = () => {
         const now = new Date();
@@ -51,7 +50,7 @@ const useCountdownTimer = ({ isFcfsAvailable, nextFcfsStartTime }: Props) => {
       const intervalId = setInterval(updateCounter, 1000);
       return () => clearInterval(intervalId);
     }
-  }, [isFcfsAvailable, nextFcfsStartTime]);
+  }, [fcfsStartTime]);
 
   return { buttonText, isActive };
 };
