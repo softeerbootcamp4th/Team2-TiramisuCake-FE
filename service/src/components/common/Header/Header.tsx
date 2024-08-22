@@ -1,43 +1,33 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTabContext } from '@/store/context/useTabContext';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import scrollToElementId from '@/utils/scrollToElementId';
 import { useLoginContext } from '@/store/context/useLoginContext';
 import { useCookies } from 'react-cookie';
-import { ROUTER_PATH } from '@/constants/lib/constants';
-//import BlockerContext from '@/store/provider/BlockerProvider';
 
 const Header = () => {
   const { activeTab, setActiveTab } = useTabContext();
   const { isLogined, setIsLogined } = useLoginContext();
-  const navigate = useNavigate();
   const [visible, setVisible] = useState<boolean>(false);
 
   const [cookie, , removeCookie] = useCookies(['accessToken']);
   const accessToken = cookie.accessToken;
-  //const blocker = useContext(BlockerContext);
 
   const handleTabClick = (tabName: string) => {
     setActiveTab(tabName);
     scrollToElementId({ sectionId: tabName, behavior: 'smooth' });
   };
 
-  //todo : blocker context 적용
   const handleLogin = () => {
-    //if (blocker?.state === 'proceed') {
     if (accessToken) {
       removeCookie('accessToken', { path: '/' });
       setIsLogined(false);
-      // navigate(ROUTER_PATH.MAIN, { replace: true });
+      //강제 새로고침 - 메인으로 redirect
+      window.location.reload();
     } else {
-      // 로그인이 필요할 때의 처리
-      // navigate(ROUTER_PATH.MAIN, { replace: true });
+      // 로그인 탭으로 이동
       handleTabClick('event');
     }
-    // } else {
-    //   // Blocker가 활성화된 상태에서 로그아웃을 막기 위해 별도 처리가 필요하면 여기에 작성합니다.
-    //   console.warn('Blocker 상태로 인해 로그아웃이 차단되었습니다.');
-    // }
   };
 
   useEffect(() => {
@@ -85,13 +75,12 @@ const Header = () => {
             당첨 내역
           </Link>
         )}
-        <Link
-          to='/'
-          className=' bg-opacity-0  border-primary'
+        <div
+          className='cursor-pointer bg-opacity-0  border-primary'
           onClick={handleLogin}
         >
           {isLogined ? '로그아웃' : '로그인'}
-        </Link>
+        </div>
       </nav>
     </header>
   );
