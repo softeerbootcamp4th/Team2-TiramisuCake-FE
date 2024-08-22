@@ -1,18 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Button from '../common/Button/Button';
 import { useMutationPostComment } from '@/apis/commentsLounge/query';
 import { useQueryClient } from '@tanstack/react-query';
 
 const CommentButtonContainer = () => {
-  const [commentType, setCommentType] = useState(0);
   const [isDisabled, setIsDisabled] = useState(false);
 
   const queryClient = useQueryClient();
   const mutation = useMutationPostComment();
-
-  useEffect(() => {
-    if (commentType !== 0) sendCommentToServer(commentType);
-  }, [commentType]);
 
   const sendCommentToServer = (commentType: number) => {
     mutation.mutate(commentType, {
@@ -30,8 +25,9 @@ const CommentButtonContainer = () => {
   };
 
   const handleBtnClick = (index: number) => {
-    setCommentType(index);
+    if (isDisabled) return;
     setIsDisabled(true);
+    sendCommentToServer(index);
   };
 
   return (
