@@ -42,8 +42,7 @@ interface DynamicEventResult {
   totalDrawWinner: string;
   remainDrawCount: string;
   fcfsHint: string;
-  isFcfsAvailable: boolean;
-  nextFcfsStartTime: string;
+  fcfsStartTime: string;
 }
 
 export interface StaticEventInfoResponse extends ResponseType {
