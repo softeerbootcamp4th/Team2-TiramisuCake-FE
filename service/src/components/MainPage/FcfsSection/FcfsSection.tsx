@@ -25,7 +25,7 @@ const FcfsSection = ({
 
   return (
     <section
-      className='snap-start bg-cover bg-center bg-no-repeat w-screen h-screen flex py-20 items-center justify-center'
+      className='snap-start bg-cover bg-center bg-no-repeat w-screen h-screen flex py-16 items-center justify-center'
       style={{ backgroundImage: `url(${backgroundImage})` }}
       ref={fcfsSectionRef}
     >

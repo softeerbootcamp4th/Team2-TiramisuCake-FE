@@ -30,7 +30,7 @@ const DrawSection = ({
 
   return (
     <div
-      className='snap-center bg-cover bg-center bg-no-repeat h-screen w-screen flex py-20 items-center justify-center'
+      className='snap-center bg-cover bg-center bg-no-repeat h-screen w-screen flex py-16 items-center justify-center'
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <div className='w-[1100px] h-full flex border border-custom-white bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom'>
@@ -93,7 +93,7 @@ const DrawSection = ({
           </div>
 
           {isLogined && (
-            <div className='mt-10'>
+            <div className='mt-5'>
               <Button
                 type='square'
                 text='복권 긁으러 가기'
