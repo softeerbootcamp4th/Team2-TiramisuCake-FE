@@ -62,7 +62,7 @@ const EventIntroductionSection = () => {
           <LoginModal onClose={handleModal} />
         </div>
       )}
-      <div className='m-auto flex flex-col gap-3'>
+      <div className='w-full px-32 my-auto flex flex-col gap-3'>
         <div className='flex flex-col items-center gap-3 pt-5 mt-3'>
           <motion.span className='text-center font-Pretendard text-green-500 font-medium text-b-xl'>
             {startDate}-{endDate}
@@ -91,11 +91,11 @@ const EventIntroductionSection = () => {
           )}
         </div>
 
-        <div className='flex flex-col items-center gap-3 w-full px-32'>
+        <div className='flex flex-col items-center gap-3 w-full'>
           <motion.div {...SCROLL_MOTION} className='text-h-m font-bold '>
             참여 안내
           </motion.div>
-          <div className='flex w-full justify-evenly'>
+          <div className='flex w-full mx-auto justify-center'>
             <FcfsInfoContainer
               title={staticData?.result.eventInfoList[0].title as string}
               text={text as string}
