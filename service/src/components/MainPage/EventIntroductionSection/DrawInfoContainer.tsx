@@ -9,7 +9,7 @@ const DrawInfoContainer = ({ title }: DrawInfoContainerProps) => {
   return (
     <motion.div
       {...SCROLL_MOTION}
-      className='flex flex-col items-center gap-4 w-full bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom px-5 py-16'
+      className='flex flex-col items-center gap-4 w-full bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom px-7 py-16'
     >
       <div className='text-h-m font-bold text-hyundai'>{title}</div>
       <div className='flex w-full justify-evenly mt-10 items-center'>
