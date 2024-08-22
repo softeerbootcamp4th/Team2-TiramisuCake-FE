@@ -5,18 +5,23 @@ import ManageContainer from '../common/ManageContainer';
 import { ROUTER_PATH } from '@/lib/constants';
 import { useNavigate } from 'react-router-dom';
 import { useEventsData } from '@/apis/main/query';
-
 import { getWeekDay } from '@/utils/getWeekDay';
+import LoadingPage from '@/pages/LoadingPage';
 
-const EventManagement = () => {
-  const { data } = useEventsData();
+interface ErrorProps {
+  onError: () => void;
+}
+
+const EventManagement = ({ onError }: ErrorProps) => {
+  const { data, isLoading } = useEventsData();
   const fcfsData = data?.result.fcfsEventList;
   const drawData = data?.result.drawEvent;
   const navigator = useNavigate();
 
   if (!data) {
-    return <div>없는데용</div>;
+    onError();
   }
+  if (isLoading) return <LoadingPage />;
 
   const showEventManage = () => {
     navigator(ROUTER_PATH.EVENT_MANAGE);
