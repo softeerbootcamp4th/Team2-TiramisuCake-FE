@@ -28,7 +28,7 @@ export interface HistoryResponse extends ResponseType {
 }
 
 interface FcfsHistoryList {
-  barcodeImage: string;
+  barcode: string;
   fcfsCode: string;
   winningDate: string;
 }

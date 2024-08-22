@@ -35,7 +35,7 @@ export interface DrawResultResponse extends ResponseType {
 export interface DrawHistoryResponse extends ResponseType {
   result: {
     isDrawWin: string;
-    drawHistoryList: DrawHistoryList[];
+    historyList: DrawHistoryList[];
   };
 }
 
