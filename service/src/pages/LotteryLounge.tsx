@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 import { useBlocker } from 'react-router-dom';
 import { DrawResultResponse } from '@/types/Lottery/response';
 import { useTabContext } from '@/store/context/useTabContext';
-import { useModalContext } from '@/store/context/useModalContext';
 import LoadingPage from '@/components/Loading/Loading';
 
 const backgroundImage =
@@ -21,9 +20,8 @@ const LotteryLoungePage = () => {
   const { data, isLoading } = useQueryGetDrawAttendance(token);
   const [drawResult, setDrawResult] = useState<DrawResultResponse | null>(null);
   const { setActiveTab } = useTabContext();
-  const { setIsOpen } = useModalContext();
+  const [isExitModalOpen, setIsExitModalOpen] = useState(false);
 
-  //console.log(data);
   useEffect(() => {
     window.scrollTo(0, 0);
     setActiveTab('quiz');
@@ -35,8 +33,8 @@ const LotteryLoungePage = () => {
   );
 
   useEffect(() => {
-    if (blocker.state === 'blocked') setIsOpen(true);
-    else setIsOpen(false);
+    if (blocker.state === 'blocked') setIsExitModalOpen(true);
+    else setIsExitModalOpen(false);
   }, [blocker]);
 
   const handleScratchResult = (result: DrawResultResponse) => {
@@ -110,11 +108,12 @@ const LotteryLoungePage = () => {
       </div>
       {blocker.state === 'blocked' && (
         <ExitModal
+          isOpen={isExitModalOpen}
           handleClose={() => blocker.reset()}
           handleCancel={() => blocker.reset()}
           handleConfirm={() => {
             blocker.proceed();
-            setIsOpen(false);
+            setIsExitModalOpen(false);
           }}
         />
       )}
