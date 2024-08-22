@@ -2,7 +2,9 @@ import { useQueryGetDrawHistory } from '@/apis/draw/query';
 import { useQueryGetFCFSHistory } from '@/apis/quizLounge/query';
 import Button from '@/components/common/Button/Button';
 import LoadingPage from '@/components/Loading/Loading';
+import { FcfsHistoryList } from '@/types/quizLounge/type';
 import { getCookie } from '@/utils/cookie';
+import { formatDate } from '@/utils/formatDate';
 import { useNavigate } from 'react-router-dom';
 
 const bgImg =
@@ -19,17 +21,11 @@ const WinningResultPage = () => {
   const { data: fcfsHistoryData, isLoading: isFCFSHistoryLoading } =
     useQueryGetFCFSHistory();
 
-  const formatDate = (date: Date): string => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
-  if (isDrawHistoryLoading) return <LoadingPage />;
-
+  // 로딩 상태 확인
   if (isDrawHistoryLoading || isFCFSHistoryLoading) return <LoadingPage />;
 
   const hasDrawWin = drawHistoryData?.result.isDrawWin;
+  const hasFcfsWin = fcfsHistoryData?.result.isFcfsWin;
   const hasFcfsWin = fcfsHistoryData?.result.isFcfsWin;
 
   return (
@@ -41,42 +37,46 @@ const WinningResultPage = () => {
         <h2 className='font-bold text-h-l text-center mt-10'>당첨 내역</h2>
         {hasDrawWin || hasFcfsWin ? (
           <div className='w-full flex gap-12 justify-evenly'>
-            <div className='flex flex-col gap-4 items-center'>
-              <h4 className='text-h-s font-semibold mb-4'>
-                '24시간 내 차' 이벤트
-              </h4>
-              <div className='flex flex-col gap-4'>
-                {hasFcfsWin &&
-                  fcfsHistoryData?.result.fcfsHistoryList &&
-                  fcfsHistoryData.result.fcfsHistoryList.map((item, index) => (
-                    <div
-                      key={index}
-                      className=' flex justify-evenly gap-5 items-center text-b-l font-semibold'
-                    >
-                      <span>{formatDate(new Date(item.winningDate))}</span>
-                      <div className='flex flex-col gap-1 items-center justify-evenly'>
-                        <img
-                          src={item.barcode}
-                          alt='qrCode'
-                          className='w-[80px] h-[80px]'
-                        />
-                        <p className='text-b-m'>
-                          코드{' '}
-                          <span className='text-primary ml-1'>
-                            {item.fcfsCode}
-                          </span>
-                        </p>
+            {hasFcfsWin && (
+              <div className='flex flex-col gap-4 items-center'>
+                <h4 className='text-h-s font-semibold mb-4'>
+                  '24시간 내 차' 이벤트
+                </h4>
+                <div className='flex flex-col gap-4'>
+                  {fcfsHistoryData?.result?.fcfsHistoryList?.map(
+                    (item: FcfsHistoryList, index: number) => (
+                      <div
+                        key={index}
+                        className='flex justify-evenly gap-5 items-center text-b-l font-semibold'
+                      >
+                        <span>{formatDate(new Date(item.winningDate))}</span>
+                        <div className='flex flex-col gap-1 items-center justify-evenly'>
+                          <img
+                            src={item.barcode}
+                            alt='qrCode'
+                            className='w-[80px] h-[80px]'
+                          />
+                          <p className='text-b-m'>
+                            코드{' '}
+                            <span className='text-primary ml-1'>
+                              {item.fcfsCode}
+                            </span>
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  )}
+                </div>
               </div>
-            </div>
-            <div className='flex flex-col gap-4 items-center'>
-              <h4 className='text-h-s font-semibold mb-4'>복권 긁기 이벤트</h4>
-              <div className='flex flex-col gap-4'>
-                {hasDrawWin &&
-                  drawHistoryData.result.historyList &&
-                  drawHistoryData.result.historyList.map((item, index) => (
+            )}
+
+            {hasDrawWin && (
+              <div className='flex flex-col gap-4 items-center'>
+                <h4 className='text-h-s font-semibold mb-4'>
+                  복권 긁기 이벤트
+                </h4>
+                <div className='flex flex-col gap-4'>
+                  {drawHistoryData?.result?.historyList?.map((item, index) => (
                     <div
                       key={index}
                       className='flex justify-evenly gap-3 items-center text-b-l font-semibold'
@@ -86,8 +86,9 @@ const WinningResultPage = () => {
                       <img src={item.image} className='w-[180px] h-[90px]' />
                     </div>
                   ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         ) : (
           <div className='text-b-xxl font-semibold mt-20 flex flex-col items-center gap-10'>
@@ -96,7 +97,7 @@ const WinningResultPage = () => {
               className='w-[200px] h-[200px]'
               alt='빈 상자'
             />
-            <p> 당첨 내역이 없습니다.</p>
+            <p>당첨 내역이 없습니다.</p>
             <Button
               text='이벤트 도전하기'
               type='square'
