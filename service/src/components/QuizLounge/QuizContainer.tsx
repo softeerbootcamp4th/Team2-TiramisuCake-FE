@@ -11,6 +11,7 @@ import { useMutationPostAnswer } from '@/apis/quizLounge/query';
 import TutorialResultModal from './TutorialResultModal';
 import { ModalData, QuizContainerProps } from '@/types/quizLounge/type';
 import { useModalContext } from '@/store/context/useModalContext';
+//import { ERROR_MESSAGES, ErrorCode } from '@/constants/error';
 const QuizContainer = ({
   answer,
   mode,
@@ -48,9 +49,14 @@ const QuizContainer = ({
         setTimeout(() => setIsOpen(true), 1500);
       } else {
         mutation.mutate(answerString, {
-          onSuccess: (data) => {
-            setModalData(data.result);
-            setTimeout(() => setIsOpen(true), 1500);
+          onSuccess: (response) => {
+            if (response.isSuccess && response.result) {
+              setModalData(response.result);
+              setTimeout(() => setIsOpen(true), 1500);
+            } else if (!response.isSuccess) {
+              alert(response.message);
+              //alert(ERROR_MESSAGES[response.code as ErrorCode]);
+            }
           },
         });
       }
