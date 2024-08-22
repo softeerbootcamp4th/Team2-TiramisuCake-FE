@@ -7,7 +7,7 @@ interface Props {
 const TWO_HOUR = 2 * 60 * 60 * 1000;
 
 const useCountdownTimer = ({ fcfsStartTime }: Props) => {
-  const [buttonText, setButtonText] = useState('');
+  const [buttonText, setButtonText] = useState('바로 가기');
   const [isActive, setIsActive] = useState(false);
   const [_timeRemaining, setTimeRemaining] = useState<number>(0);
 
