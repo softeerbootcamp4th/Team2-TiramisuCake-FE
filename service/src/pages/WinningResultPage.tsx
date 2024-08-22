@@ -2,7 +2,9 @@ import { useQueryGetDrawHistory } from '@/apis/draw/query';
 import { useQueryGetFCFSHistory } from '@/apis/quizLounge/query';
 import Button from '@/components/common/Button/Button';
 import LoadingPage from '@/components/Loading/Loading';
+import { FcfsHistoryList } from '@/types/quizLounge/type';
 import { getCookie } from '@/utils/cookie';
+import { formatDate } from '@/utils/formatDate';
 import { useNavigate } from 'react-router-dom';
 
 const bgImg =
@@ -18,13 +20,6 @@ const WinningResultPage = () => {
     useQueryGetDrawHistory(accessToken);
   const { data: fcfsHistoryData, isLoading: isFCFSHistoryLoading } =
     useQueryGetFCFSHistory();
-
-  const formatDate = (date: Date): string => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
 
   // 로딩 상태 확인
   if (isDrawHistoryLoading || isFCFSHistoryLoading) return <LoadingPage />;
@@ -48,7 +43,7 @@ const WinningResultPage = () => {
                 </h4>
                 <div className='flex flex-col gap-4'>
                   {fcfsHistoryData?.result?.fcfsHistoryList?.map(
-                    (item, index) => (
+                    (item: FcfsHistoryList, index: number) => (
                       <div
                         key={index}
                         className='flex justify-evenly gap-5 items-center text-b-l font-semibold'
