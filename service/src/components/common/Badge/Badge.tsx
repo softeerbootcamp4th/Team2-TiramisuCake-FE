@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 /**
  * Badge Component
  * @param type : 사용할 뱃지 색깔
@@ -30,4 +32,4 @@ const Badge = ({ type, text }: BadgeProp) => {
   );
 };
 
-export default Badge;
+export default memo(Badge);

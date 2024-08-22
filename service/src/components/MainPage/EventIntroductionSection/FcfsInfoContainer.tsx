@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
+import { memo } from 'react';
 
 interface FcfsInfoContainerProps {
   title: string;
@@ -33,4 +34,4 @@ const FcfsInfoContainer = ({ title, text }: FcfsInfoContainerProps) => {
   );
 };
 
-export default FcfsInfoContainer;
+export default memo(FcfsInfoContainer);

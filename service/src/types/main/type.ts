@@ -1,3 +1,5 @@
+import { ResponseType } from '../apiType';
+
 export interface CarDetailInfoList {
   id: number;
   title: string;
@@ -15,8 +17,6 @@ export interface CarInfoList {
   imgUrl: string;
   carDetailInfoList: CarDetailInfoList[];
 }
-
-import { ResponseType } from '../apiType';
 
 export interface EventInfo {
   title: string;
