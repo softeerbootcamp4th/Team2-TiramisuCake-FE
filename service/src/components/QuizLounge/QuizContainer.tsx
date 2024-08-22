@@ -53,9 +53,6 @@ const QuizContainer = ({
             if (response.isSuccess && response.result) {
               setModalData(response.result);
               setTimeout(() => setIsOpen(true), 1500);
-            } else if (!response.isSuccess) {
-              alert(response.message);
-              //alert(ERROR_MESSAGES[response.code as ErrorCode]);
             }
           },
         });
