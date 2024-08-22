@@ -7,6 +7,7 @@
   src: url('/fonts/Pretendard-Regular.ttf');
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -14,6 +15,7 @@
   src: url('/fonts/Montserrat-VariableFont_wght.ttf');
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
 }
 
 @keyframes rotateCircle {
@@ -34,11 +36,7 @@
 }
 
 .comment-mask {
-  position: absolute;
   inset: 0;
-  pointer-events: none;
-  z-index: 10;
-  overflow-y: auto;
   padding: 1rem;
   mask-image: linear-gradient(
     to bottom,
@@ -52,4 +50,23 @@
     rgba(0, 0, 0, 1) 40%,
     rgba(0, 0, 0, 1)
   );
+  /* -ms-overflow-style: none;  IE and Edge 
+  scrollbar-width: none; Firefox */
+}
+
+.infinite-scroll-component__outerdiv {
+  width: 24rem;
+  height: 560px;
+}
+
+.img-no-drag {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  scrollbar-width: none;
 }

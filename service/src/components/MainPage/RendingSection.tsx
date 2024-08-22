@@ -2,28 +2,43 @@ import Button from '../common/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import Bouncing from '../common/Bouncing/Bouncing';
 import { motion } from 'framer-motion';
+import { ROUTER_PATH } from '@/constants/lib/constants';
+import scrollToElementId from '@/utils/scrollToElementId';
+import { useTabContext } from '@/store/context/useTabContext';
+import { memo } from 'react';
+import Lottie from 'react-lottie';
+import useFetchAnimationData from '@/hooks/MainPage/useFetchAnimationData';
 
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/rending-bg.webp';
-const gifFile = '/gifs.gif';
 const downarrow = '/svg/BigArrow.svg';
 
-interface RendingSectionProps {
-  onArrowClick: () => void;
-}
-
-const RendingSection = ({ onArrowClick }: RendingSectionProps) => {
+const RendingSection = () => {
   const navigate = useNavigate();
-
+  const { setActiveTab } = useTabContext();
   const showComments = () => {
-    navigate('/comments-lounge');
+    navigate(ROUTER_PATH.COMMENTS_LOUNGE);
+  };
+  const handleArrowClick = () => {
+    scrollToElementId({ sectionId: 'event', behavior: 'smooth' });
+    setActiveTab('event');
   };
 
   const text = 'The New IONIQ 5'.split(' ');
+  const { animationData } = useFetchAnimationData('/comments.json');
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice',
+    },
+  };
 
   return (
     <div
-      className='bg-cover bg-center bg-no-repeat min-h-screen min-w-screen flex items-center justify-center'
+      className='snap-start bg-cover bg-center bg-no-repeat min-h-screen min-w-screen flex items-center justify-center'
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <div className='flex flex-col justify-center items-center gap-9 z-5'>
@@ -77,11 +92,7 @@ const RendingSection = ({ onArrowClick }: RendingSectionProps) => {
           className='flex flex-col items-center'
         >
           <div className='flex mb-5'>
-            <img
-              src={gifFile}
-              alt='Description of the GIF'
-              className='w-[12.5rem] h-[11.25rem] flex-shrink-0'
-            />
+            <Lottie options={defaultOptions} width={200} height={180} />
           </div>
           <Button
             type='square'
@@ -92,10 +103,10 @@ const RendingSection = ({ onArrowClick }: RendingSectionProps) => {
           <div className='mt-40'>
             <Bouncing>
               <img
-                className='hover:cursor-pointer'
+                className='hover:cursor-pointer py-5'
                 src={downarrow}
                 alt='Arrow'
-                onClick={onArrowClick}
+                onClick={handleArrowClick}
               />
             </Bouncing>
           </div>
@@ -105,4 +116,4 @@ const RendingSection = ({ onArrowClick }: RendingSectionProps) => {
   );
 };
 
-export default RendingSection;
+export default memo(RendingSection);

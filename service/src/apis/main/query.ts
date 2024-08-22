@@ -1,8 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import { getCarDetailInfo } from './api';
-import { getEventInfo } from '@/apis/eventInfo';
-import { EventInfoResponse } from '@/types/main/eventInfoType';
-
+import {
+  getCarDetailInfo,
+  getStaticEventInfo,
+  getDynamicEventInfo,
+} from './api';
+import {
+  DynamicEventInfoResponse,
+  StaticEventInfoResponse,
+} from '@/types/main/type';
 export const useQueryGetCarDetailInfo = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['getCarDetailInfo'],
@@ -14,11 +19,22 @@ export const useQueryGetCarDetailInfo = () => {
   };
 };
 
-export const useEventInfo = () => {
-  const { data, isLoading } = useQuery<EventInfoResponse>({
-    queryKey: ['eventInfo'],
-    queryFn: getEventInfo,
-  });
+export const useStaticEventInfo = () => {
+  const { data: staticData, isLoading: isStaticLoading } =
+    useQuery<StaticEventInfoResponse>({
+      queryKey: ['staticEventInfo'],
+      queryFn: getStaticEventInfo,
+    });
 
-  return { data, isLoading };
+  return { staticData, isStaticLoading };
+};
+
+export const useDynamicEventInfo = () => {
+  const { data: dynamicData, isLoading: isDynamicLoading } =
+    useQuery<DynamicEventInfoResponse>({
+      queryKey: ['dynamicEventInfo'],
+      queryFn: getDynamicEventInfo,
+    });
+
+  return { dynamicData, isDynamicLoading };
 };

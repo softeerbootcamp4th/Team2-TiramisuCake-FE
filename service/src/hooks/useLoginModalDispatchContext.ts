@@ -1,9 +1,9 @@
 import { Dispatch, useContext } from 'react';
 
 import { LoginModalDispatchContext } from '@/store/context/loginModalContext';
-import { loginAction } from '@/store/types/loginModalTypes';
+import { LoginAction } from '@/store/types/loginModalTypes';
 
-export default function useLoginModalDispatchContext(): Dispatch<loginAction> {
+export default function useLoginModalDispatchContext(): Dispatch<LoginAction> {
   const context = useContext(LoginModalDispatchContext);
   if (context === null) {
     throw new Error(

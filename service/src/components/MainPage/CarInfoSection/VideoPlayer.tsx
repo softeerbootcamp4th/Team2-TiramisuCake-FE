@@ -1,7 +1,11 @@
 import { useCarInfoContext } from '@/store/context/useCarInfoContext';
 import React, { useEffect, useRef, useState } from 'react';
 
-const VideoPlayer = () => {
+interface VideoPlayerProps {
+  videoUrl: string;
+}
+
+const VideoPlayer = ({ videoUrl }: VideoPlayerProps) => {
   const { state, enterFullScreen, exitFullScreen } = useCarInfoContext();
 
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -61,7 +65,7 @@ const VideoPlayer = () => {
         >
           <video
             ref={videoRef}
-            src='/newIONIQ.mp4'
+            src={videoUrl}
             typeof='video/mp4'
             className='w-full h-full object-fill'
             autoPlay

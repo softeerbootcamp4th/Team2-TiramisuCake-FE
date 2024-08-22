@@ -1,16 +1,44 @@
 import { Link } from 'react-router-dom';
 import { useTabContext } from '@/store/context/useTabContext';
+import { useEffect, useState } from 'react';
+import scrollToElementId from '@/utils/scrollToElementId';
+import { useLoginContext } from '@/store/context/useLoginContext';
+import { useCookies } from 'react-cookie';
 
 const Header = () => {
   const { activeTab, setActiveTab } = useTabContext();
+  const { isLogined, setIsLogined } = useLoginContext();
+  const [visible, setVisible] = useState<boolean>(false);
+
+  const [cookie, , removeCookie] = useCookies(['accessToken']);
+  const accessToken = cookie.accessToken;
 
   const handleTabClick = (tabName: string) => {
     setActiveTab(tabName);
+    scrollToElementId({ sectionId: tabName, behavior: 'smooth' });
   };
+
+  const handleLogin = () => {
+    if (accessToken) {
+      removeCookie('accessToken', { path: '/' });
+      setIsLogined(false);
+      //강제 새로고침 - 메인으로 redirect
+      window.location.reload();
+    } else {
+      // 로그인 탭으로 이동
+      handleTabClick('event');
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setVisible(true);
+    }, 1000);
+  }, []);
 
   return (
     <header
-      className={`bg-white ${activeTab === 'rending' ? 'opacity-0' : 'opacity-100'} w-full h-14 flex fixed items-center justify-between px-6 shadow-md z-50`}
+      className={`bg-white ${visible ? 'opacity-50' : 'opacity-0'} transform duration-300 ease-in-out w-full h-14 flex fixed items-center justify-between px-6 shadow-md z-50`}
     >
       <div className='flex items-center'>
         <Link to='/'>
@@ -27,7 +55,7 @@ const Header = () => {
         <Link
           to='/'
           onClick={() => handleTabClick('event')}
-          className={`${activeTab === 'event' ? 'text-green-400' : 'text-black'}`}
+          className={`${activeTab === 'event' || activeTab === 'fcfs' || activeTab === 'draw' ? 'text-green-400' : 'text-black'}`}
         >
           Event
         </Link>
@@ -38,6 +66,21 @@ const Header = () => {
         >
           The new IONIQ 5
         </Link>
+        {accessToken && (
+          <Link
+            to='/winning-result'
+            onClick={() => handleTabClick('result')}
+            className={`${activeTab === 'result' ? 'text-green-400' : 'text-black'}`}
+          >
+            당첨 내역
+          </Link>
+        )}
+        <div
+          className='cursor-pointer bg-opacity-0  border-primary'
+          onClick={handleLogin}
+        >
+          {isLogined ? '로그아웃' : '로그인'}
+        </div>
       </nav>
     </header>
   );

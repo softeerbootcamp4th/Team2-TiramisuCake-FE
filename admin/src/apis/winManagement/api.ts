@@ -1,44 +1,65 @@
-import { AuthorizationHeader, BASE_URL } from '@/constants/api';
+import { BASE_URL, HEADERS } from '@/constants/api';
 import {
   PostFCFSWinnerRequest,
   PostRaffleWinnerRequest,
 } from '@/type/winManagement/type';
 
-export const getRaffleWinners = async (rank: number) => {
+export const getRaffleWinners = async (rank: number, token: string) => {
   const res = await fetch(`${BASE_URL}/winner/draw/${rank}`, {
-    headers: AuthorizationHeader,
+    headers: {
+      ...HEADERS,
+      Authorization: `Bearer ${token}`,
+    },
   });
   return res.json();
 };
 
-export const getFCFSWinners = async (round: number) => {
+export const getFCFSWinners = async (round: number, token: string) => {
   const res = await fetch(`${BASE_URL}/winner/fcfs/${round}`, {
-    headers: AuthorizationHeader,
+    headers: {
+      ...HEADERS,
+      Authorization: `Bearer ${token}`,
+    },
   });
   return res.json();
 };
 
-export const postFCFSWinner = async (body: PostFCFSWinnerRequest) => {
+export const postFCFSWinner = async (
+  body: PostFCFSWinnerRequest,
+  token: string
+) => {
   const res = await fetch(`${BASE_URL}/winner/fcfs`, {
     method: 'POST',
-    headers: AuthorizationHeader,
+    headers: {
+      ...HEADERS,
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify(body),
   });
   return res.json();
 };
 
-export const postRaffleWinner = async (body: PostRaffleWinnerRequest) => {
+export const postRaffleWinner = async (
+  body: PostRaffleWinnerRequest,
+  token: string
+) => {
   const res = await fetch(`${BASE_URL}/winner/draw`, {
     method: 'POST', // HTTP 메서드 추가
-    headers: AuthorizationHeader,
+    headers: {
+      ...HEADERS,
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify(body),
   });
   return res.json();
 };
 
-export const getEvents = async () => {
+export const getEvents = async (token: string) => {
   const res = await fetch(`${BASE_URL}/admin/event`, {
-    headers: AuthorizationHeader,
+    headers: {
+      ...HEADERS,
+      Authorization: `Bearer ${token}`,
+    },
   });
   return res.json();
 };

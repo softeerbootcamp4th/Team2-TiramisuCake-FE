@@ -39,6 +39,10 @@ const NumberOfWinnersModal = ({ handleClose, winnerNum }: Props) => {
   }, [error]);
 
   const handleButtonClick = () => {
+    if (!value) {
+      setError('값을 입력해주세요.');
+      return;
+    }
     mutation.mutate(
       {
         fcfsWinnerNum: Number(value),

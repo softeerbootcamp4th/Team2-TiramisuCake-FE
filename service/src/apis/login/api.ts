@@ -1,18 +1,13 @@
-import { HEADERS } from '@/constants/lib/constants';
+import { BASEURL, HEADERS } from '@/constants/lib/constants';
 import {
   SendCodeRequestBody,
   ConfirmVerificationRequestBody,
   LoginRequestBody,
-} from '@/types/Authorization/request';
-
-import {
   CodeResponse,
-  ConfirmResponse,
   LoginResponse,
   ReIssueResponse,
-} from '@/types/Authorization/response';
-
-const baseURL = `${import.meta.env.VITE_SITE_URL}`;
+  ConfirmResponse,
+} from '@/types/Authorization/type';
 
 export const sendAuthCode = async (
   phoneNumber: string
@@ -21,7 +16,25 @@ export const sendAuthCode = async (
     phoneNumber,
   };
 
-  const response = await fetch(`${baseURL}/verification/send`, {
+  const response = await fetch(`${BASEURL}/verification/send`, {
+    method: 'POST',
+    headers: HEADERS,
+    body: JSON.stringify(requestBody),
+  });
+
+  //const data: codeResponse = await response.json();
+
+  return response.json();
+};
+
+export const testAuthCode = async (
+  phoneNumber: string
+): Promise<CodeResponse> => {
+  const requestBody: SendCodeRequestBody = {
+    phoneNumber,
+  };
+
+  const response = await fetch(`${BASEURL}/verification/send/test`, {
     method: 'POST',
     headers: HEADERS,
     body: JSON.stringify(requestBody),
@@ -35,20 +48,28 @@ export const sendAuthCode = async (
 export const confirmVerification = async (
   body: ConfirmVerificationRequestBody
 ): Promise<ConfirmResponse> => {
-  const response = await fetch(`${baseURL}/verification/confirm`, {
+  const response = await fetch(`${BASEURL}/verification/confirm`, {
     method: 'POST',
     headers: HEADERS,
     body: JSON.stringify(body),
   });
 
-  //const data: confirmResponse = await response.json();
   return response.json();
 };
 
-export const login = async (body: LoginRequestBody): Promise<LoginResponse> => {
-  const response = await fetch(`${baseURL}/login`, {
+export const login = async (
+  body: LoginRequestBody,
+  shareCode?: string
+): Promise<LoginResponse> => {
+  const headers = { ...HEADERS } as { [key: string]: string };
+
+  if (shareCode) {
+    headers['X-Share-Code'] = shareCode;
+  }
+
+  const response = await fetch(`${BASEURL}/login`, {
     method: 'POST',
-    headers: HEADERS,
+    headers: headers,
     body: JSON.stringify(body),
   });
 
@@ -60,11 +81,11 @@ export const reissueToken = async (
   accessToken: string,
   refreshToken: string
 ): Promise<ReIssueResponse> => {
-  const response = await fetch(`${baseURL}/reissue`, {
+  const response = await fetch(`${BASEURL}/reissue`, {
     method: 'GET',
     headers: {
       ...HEADERS,
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: accessToken,
       'Authorization-Refresh': refreshToken,
     },
   });

@@ -70,10 +70,10 @@ export const theme = {
   },
   extend: {
     translate: {
-      'custom-4': '-54px',
-      'custom-5': '-108px',
-      'custom-2': '54px',
-      'custom-1': '108px',
+      'custom-4': '-50px',
+      'custom-5': '-100px',
+      'custom-2': '50px',
+      'custom-1': '100px',
     },
     fontFamily: {
       pretend: ['Pretendard'],
