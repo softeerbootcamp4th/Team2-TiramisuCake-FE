@@ -49,7 +49,7 @@ const EventIntroductionSection = () => {
     setActiveTab('fcfs');
   };
 
-  const text = dynamicData?.result.fcfsInfo.split('시')[0].trim();
+  const text = dynamicData?.result.fcfsInfo.split('선')[0].trim();
 
   if (isLoading) return <LoadingPage />;
   return (
