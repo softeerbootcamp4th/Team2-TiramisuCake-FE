@@ -24,16 +24,22 @@ const useCountdownTimer = ({ isFcfsAvailable, nextFcfsStartTime }: Props) => {
         setTimeRemaining(timeDiff);
 
         if (timeDiff <= 10 * 60 * 1000 && timeDiff > 0) {
+          // 이벤트 시간 10분 전
           setIsActive(false);
           const minutes = Math.floor((timeDiff / 1000 / 60) % 60);
           const seconds = Math.floor((timeDiff / 1000) % 60);
           setButtonText(
             `${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`
           );
-        } else if (timeDiff <= 0 && timeSinceStart <= TWO_HOUR) {
+        } else if (timeDiff <= 0 && timeSinceStart < TWO_HOUR) {
+          // 이벤트 시간 시작 ~ 이벤트 시간 종료 전
           setIsActive(true);
           setButtonText('바로가기');
-        } else if (timeSinceStart > TWO_HOUR) {
+        } else if (timeSinceStart >= TWO_HOUR) {
+          // 이벤트 시간 종료 이후
+          setIsActive(false);
+          setButtonText('바로가기');
+        } else {
           setIsActive(false);
           setButtonText('바로가기');
         }
