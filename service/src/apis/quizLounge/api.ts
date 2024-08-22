@@ -39,8 +39,7 @@ export const postAnswer = async (answerString: string, token: string) => {
 export const getFCFSHistory = async (
   token: string
 ): Promise<HistoryResponse> => {
-  //todo 경로 수정해야 함
-  const res = await fetch(`${BASEURL}/fcfs/fcfs/history`, {
+  const res = await fetch(`${BASEURL}/fcfs/history`, {
     method: 'GET',
     headers: {
       ...HEADERS,

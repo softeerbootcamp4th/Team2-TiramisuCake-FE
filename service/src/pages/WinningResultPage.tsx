@@ -21,7 +21,6 @@ const WinningResultPage = () => {
   const { data: fcfsHistoryData, isLoading: isFCFSHistoryLoading } =
     useQueryGetFCFSHistory();
 
-  // 로딩 상태 확인
   if (isDrawHistoryLoading || isFCFSHistoryLoading) return <LoadingPage />;
 
   const hasDrawWin = drawHistoryData?.result.isDrawWin;

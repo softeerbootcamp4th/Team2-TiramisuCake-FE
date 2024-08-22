@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { ROUTER_PATH } from '@/constants/lib/constants';
 import scrollToElementId from '@/utils/scrollToElementId';
 import { useTabContext } from '@/store/context/useTabContext';
+import { memo } from 'react';
 import Lottie from 'react-lottie';
 import useFetchAnimationData from '@/hooks/MainPage/useFetchAnimationData';
 
@@ -115,4 +116,4 @@ const RendingSection = () => {
   );
 };
 
-export default RendingSection;
+export default memo(RendingSection);

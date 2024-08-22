@@ -3,7 +3,7 @@ import {
   useEventDateContext,
   useEventDateSetterContext,
 } from '@/store/context/useEventDateContext';
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
 import { useLoginContext } from '@/store/context/useLoginContext';
@@ -117,4 +117,4 @@ const EventIntroductionSection = () => {
   );
 };
 
-export default EventIntroductionSection;
+export default memo(EventIntroductionSection);

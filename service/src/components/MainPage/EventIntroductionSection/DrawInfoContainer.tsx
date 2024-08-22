@@ -1,5 +1,6 @@
 import { SCROLL_MOTION } from '@/constants/animation';
 import { motion } from 'framer-motion';
+import { memo } from 'react';
 
 interface DrawInfoContainerProps {
   title: string;
@@ -36,4 +37,4 @@ const DrawInfoContainer = ({ title }: DrawInfoContainerProps) => {
   );
 };
 
-export default DrawInfoContainer;
+export default memo(DrawInfoContainer);
