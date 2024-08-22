@@ -81,29 +81,32 @@ const LoginModal = ({ onClose }: CloseProps) => {
   };
 
   const handleSendAuthCode = async (phoneNumber: string) => {
-    codeMutation.mutate(phoneNumber, {
-      onSuccess: (response) => {
-        console.log('인증번호 전송 성공:', response);
-        if (response.isSuccess && response.result) {
-          setTimer(response.result.timeLimit);
-          const interval = setInterval(() => {
-            setTimer((prevTimer) => {
-              if (prevTimer <= 1) {
-                clearInterval(interval);
-                return 0;
-              }
-              return prevTimer - 1;
-            });
-          }, 1000);
-        } else if (!response.isSuccess && response.code in ERROR_MESSAGES) {
-          //todo : abort controller로 api 요청 완전 차단
-          setCodeErrorMsg('');
-          setTimer(0);
-          setCanSendCode(false);
-          alert(ERROR_MESSAGES[response.code as ErrorCode]);
-        }
-      },
-    });
+    if (!codeVerified) {
+      codeMutation.mutate(phoneNumber, {
+        onSuccess: (response) => {
+          console.log('인증번호 전송 성공:', response);
+          if (response.isSuccess && response.result) {
+            setTimer(response.result.timeLimit);
+            setValidateErrorMsg('');
+            const interval = setInterval(() => {
+              setTimer((prevTimer) => {
+                if (prevTimer <= 1) {
+                  clearInterval(interval);
+                  return 0;
+                }
+                return prevTimer - 1;
+              });
+            }, 1000);
+          } else if (!response.isSuccess && response.code in ERROR_MESSAGES) {
+            //todo : abort controller로 api 요청 완전 차단
+            setCodeErrorMsg('');
+            setTimer(0);
+            setCanSendCode(false);
+            alert(ERROR_MESSAGES[response.code as ErrorCode]);
+          }
+        },
+      });
+    }
   };
 
   const handleVerification = async (body: ConfirmVerificationRequestBody) => {
@@ -122,8 +125,12 @@ const LoginModal = ({ onClose }: CloseProps) => {
 
             if (response.code === ERROR_CODES.TIMEOUT) {
               setCodeErrorMsg(errorMessage);
-            } else {
+            } else if (response.code !== ERROR_CODES.RESEND_REQUIRED) {
               setValidateErrorMsg(errorMessage);
+            } else if (response.code === ERROR_CODES.RESEND_REQUIRED) {
+              setValidateErrorMsg(errorMessage);
+              setTimer(0);
+              setCodeErrorMsg('');
             }
           }
         }
@@ -238,7 +245,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
               required
               value={code}
               onChange={handleCodeInputChange}
-              isActivated={validCode}
+              isActivated={validCode && !codeVerified}
               handleButtonClick={() =>
                 handleVerification({
                   phoneNumber: phoneNumber,
