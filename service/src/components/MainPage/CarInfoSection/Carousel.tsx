@@ -102,10 +102,10 @@ const Carousel = ({ carInfoList }: CarouselProps) => {
                           className='flex flex-col gap-4 absolute bottom-12 left-12 text-white'
                           {...SCROLL_MOTION}
                         >
-                          <h3 className='text-b-xxl font-semibold'>
+                          <h3 className='text-h-s font-semibold'>
                             {item.imgTitle}
                           </h3>
-                          <p className='text-b-m'>{item.imgContent}</p>
+                          <p className='text-b-l'>{item.imgContent}</p>
                         </motion.div>
                       </div>
                     )}
