@@ -11,13 +11,13 @@ const FcfsInfoContainer = ({ title, text }: FcfsInfoContainerProps) => {
   return (
     <motion.div
       {...SCROLL_MOTION}
-      className='flex flex-col items-center gap-4 w-full bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom px-7 py-16'
+      className='flex flex-col items-center gap-4 w-full bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom px-16 py-16'
     >
       <div className='text-h-m font-bold text-hyundai'>{title}</div>
       <div className='flex gap-5 w-full justify-evenly mt-10 items-center'>
         <div className='flex flex-col items-center gap-6'>
           <img className='w-[6.25rem] h-[6.25rem]' src='/word.png' />
-          <p className='text-b-xl font-semibold text-white'>
+          <p className='text-b-xl font-semibold text-white whitespace-nowrap'>
             {text} 선착순 퀴즈
           </p>
         </div>
@@ -25,7 +25,7 @@ const FcfsInfoContainer = ({ title, text }: FcfsInfoContainerProps) => {
 
         <div className='flex flex-col items-center gap-6'>
           <img className='w-[6.25rem] h-[6.25rem]' src='/surprise-box.png' />
-          <p className='text-b-xl font-semibold text-white '>
+          <p className='text-b-xl font-semibold text-white whitespace-nowrap '>
             단어 맞추고 선물 받기
           </p>
         </div>

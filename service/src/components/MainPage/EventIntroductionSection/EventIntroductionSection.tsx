@@ -62,7 +62,7 @@ const EventIntroductionSection = () => {
           <LoginModal onClose={handleModal} />
         </div>
       )}
-      <div className='m-auto flex flex-col gap-5'>
+      <div className='m-auto flex flex-col gap-3'>
         <div className='flex flex-col items-center gap-3 pt-5 mt-3'>
           <motion.span className='text-center font-Pretendard text-green-500 font-medium text-b-xl'>
             {startDate}-{endDate}
