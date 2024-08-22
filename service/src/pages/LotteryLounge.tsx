@@ -6,7 +6,7 @@ import LotteryCanvas from '@/components/LotteryLounge/LotteryCanvas';
 import { getCookie } from '@/utils/cookie';
 import { useEffect, useState } from 'react';
 import { useBlocker } from 'react-router-dom';
-import { DrawResultResponse } from '@/types/Lottery/response';
+import { DrawResultResponse } from '@/types/lottery/type';
 import { useTabContext } from '@/store/context/useTabContext';
 import LoadingPage from '@/components/Loading/Loading';
 
