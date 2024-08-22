@@ -48,7 +48,7 @@ const LoseModal = ({ onClose }: LoseModalProps) => {
           잠깐! 친구 초대하고 복권을 더 긁어봐요
         </div>
         <div className='text-b-l text-gray-700 mb-4'>
-          친구가 공유한 링크로 게임을 참여하면 기회가 늘어나요
+          친구가 공유한 링크로 로그인하면 기회가 늘어나요
         </div>
         <div className='border border-primary flex h-10 p-2 items-center justify-center text-center gap-4'>
           <span className='text-primary text-b-s'>초대링크</span>

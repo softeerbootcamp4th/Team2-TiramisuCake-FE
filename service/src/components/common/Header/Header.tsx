@@ -1,23 +1,39 @@
 import { Link } from 'react-router-dom';
 import { useTabContext } from '@/store/context/useTabContext';
 import { useEffect, useState } from 'react';
-import { getCookie } from '@/utils/cookie';
 import scrollToElementId from '@/utils/scrollToElementId';
+import { useLoginContext } from '@/store/context/useLoginContext';
+import { useCookies } from 'react-cookie';
 
 const Header = () => {
   const { activeTab, setActiveTab } = useTabContext();
+  const { isLogined, setIsLogined } = useLoginContext();
   const [visible, setVisible] = useState<boolean>(false);
-  const accessToken = getCookie('accessToken');
+
+  const [cookie, , removeCookie] = useCookies(['accessToken']);
+  const accessToken = cookie.accessToken;
 
   const handleTabClick = (tabName: string) => {
     setActiveTab(tabName);
     scrollToElementId({ sectionId: tabName, behavior: 'smooth' });
   };
 
+  const handleLogin = () => {
+    if (accessToken) {
+      removeCookie('accessToken', { path: '/' });
+      setIsLogined(false);
+      //강제 새로고침 - 메인으로 redirect
+      window.location.reload();
+    } else {
+      // 로그인 탭으로 이동
+      handleTabClick('event');
+    }
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setVisible(true);
-    }, 3000);
+    }, 1000);
   }, []);
 
   return (
@@ -52,13 +68,19 @@ const Header = () => {
         </Link>
         {accessToken && (
           <Link
-            to='/winnig-result'
+            to='/winning-result'
             onClick={() => handleTabClick('result')}
             className={`${activeTab === 'result' ? 'text-green-400' : 'text-black'}`}
           >
             당첨 내역
           </Link>
         )}
+        <div
+          className='cursor-pointer bg-opacity-0  border-primary'
+          onClick={handleLogin}
+        >
+          {isLogined ? '로그아웃' : '로그인'}
+        </div>
       </nav>
     </header>
   );

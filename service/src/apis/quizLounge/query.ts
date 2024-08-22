@@ -1,5 +1,10 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { getFCFSEvent, getTutorialFCFSEvent, postAnswer } from './api';
+import {
+  getFCFSEvent,
+  getFCFSHistory,
+  getTutorialFCFSEvent,
+  postAnswer,
+} from './api';
 import { useCookies } from 'react-cookie';
 
 export const useQueryGetFCFSEvent = () => {
@@ -39,4 +44,18 @@ export const useMutationPostAnswer = () => {
     mutationFn: (answerString: string) => postAnswer(answerString, accessToken),
   });
   return mutation;
+};
+
+export const useQueryGetFCFSHistory = () => {
+  const [cookies] = useCookies(['accessToken', 'refreshToken']);
+  const accessToken = cookies.accessToken;
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['getFCFSHistory'],
+    queryFn: () => getFCFSHistory(accessToken),
+  });
+  return {
+    data,
+    isLoading,
+  };
 };

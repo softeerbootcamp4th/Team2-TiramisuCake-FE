@@ -1,60 +1,41 @@
 import { useRef, useEffect, useState } from 'react';
 import LoseModal from './Modal/LoseModal';
 import { craftFireworks } from '@/utils/confettiCrafter';
-import { useMutationDrawData, useQueryGetDrawHistory } from '@/apis/draw/query';
+import { useMutationDrawData } from '@/apis/draw/query';
 import { getCookie } from '@/utils/cookie';
 import { useUrl } from '@/store/context/useUrl';
 import EventModal from '@/components/common/Modal/EventModal/EventModal';
-import { DrawResultResponse, WinModal } from '@/types/Lottery/response';
+import { DrawResultResponse, WinModal } from '@/types/lottery/type';
 import { useModalContext } from '@/store/context/useModalContext';
+import { QueryClient } from '@tanstack/react-query';
 
 interface LotteryCanvasProps {
   onScratch: (result: DrawResultResponse) => void;
+  remainDrawCount: number;
 }
 
-const LotteryCanvas = ({ onScratch }: LotteryCanvasProps) => {
-  //복권 긁은 후 결과 보기
-  const [isResultModalOpen, setIsResultModalOpen] = useState(false);
+const LotteryCanvas = ({ onScratch, remainDrawCount }: LotteryCanvasProps) => {
   const { isOpen, setIsOpen } = useModalContext();
 
-  //당첨 결과 버튼 활성화
-  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [isResultOpen, setIsResultOpen] = useState(false);
   const [isScratched, setIsScratched] = useState(false); // 최초 긁기 여부 확인
   const [isWin, setIsWin] = useState(false);
   const [result, setResult] = useState<WinModal | null>(null);
+  const queryClient = new QueryClient();
+
   const { setUrl } = useUrl();
 
   const closeModal = () => {
     setIsOpen(false);
-    setIsResultModalOpen(false);
+    setIsResultOpen(false);
   };
 
-  const textVisible = true;
   const token = getCookie('accessToken');
   const mutation = useMutationDrawData(token);
 
-  const gradientStyle = {
-    background:
-      'linear-gradient(91deg, rgba(140, 200, 212, 0.70) 2.57%, rgba(58, 139, 160, 0.70) 101.5%)',
-    backgroundClip: 'text',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    opacity: textVisible ? 1 : 0,
-  };
-
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const drawing = useRef(false);
-  const handleHistoryButtonClick = () => {
-    setIsOpen(true);
-    setIsResultModalOpen(true);
-    const history = useQueryGetDrawHistory(token);
 
-    //console.log(history?.data.result);
-    if (history.data?.result.drawWin) {
-      setIsWin(true);
-      setResult(history.data?.result.winModal);
-    }
-  };
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
@@ -76,11 +57,21 @@ const LotteryCanvas = ({ onScratch }: LotteryCanvasProps) => {
   const startDrawing = (
     e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
   ) => {
+    if (remainDrawCount === 0) {
+      alert(
+        '기회가 모두 소진되었습니다. \n공유를 하여 기회를 얻거나 내일 다시 시도해주세요.'
+      );
+      return;
+    }
+
     if (!isScratched) {
       // 최초 긁기 시에만 API 요청
       mutation.mutate(token, {
         onSuccess: (response) => {
           console.log('결과 성공:', response);
+          queryClient.invalidateQueries({
+            queryKey: ['drawAttendance'],
+          });
           onScratch(response); // 결과 부모 컴포넌트로 전달
           setUrl(response.result.shareUrl ?? '');
           if (response.result.isDrawWin) {
@@ -166,11 +157,10 @@ const LotteryCanvas = ({ onScratch }: LotteryCanvasProps) => {
       craftFireworks(1);
       setTimeout(() => {
         setIsOpen(true);
-        //&& result.
+        setIsResultOpen(true);
         if (canvasRef.current) {
-          canvasRef.current.style.pointerEvents = 'none'; // 캔버스 영역 클릭할 수 없도록 설정
-          setIsHistoryOpen(true);
-          setIsResultModalOpen(true);
+          // 캔버스 영역 클릭할 수 없도록 설정
+          canvasRef.current.style.pointerEvents = 'none';
         }
       }, 1500);
     }
@@ -190,25 +180,10 @@ const LotteryCanvas = ({ onScratch }: LotteryCanvasProps) => {
           onTouchStart={startDrawing}
           onTouchMove={draw}
           onTouchEnd={endDrawing}
-        >
-          <span
-            style={gradientStyle}
-            className='absolute text-[27px] text-center font-semibold'
-          >
-            마우스로 드래그해 복권을 긁어보세요
-          </span>
-        </canvas>
-        {isHistoryOpen && (
-          <button
-            className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white bg-gray-400 rounded-xl p-2'
-            onClick={handleHistoryButtonClick}
-          >
-            결과 확인하기
-          </button>
-        )}
+        ></canvas>
       </div>
 
-      {isOpen && isResultModalOpen && (
+      {isOpen && isResultOpen && (
         <div className='fixed inset-0 flex items-center justify-center z-50'>
           <div onClick={closeModal}></div>
           {isWin && result ? (

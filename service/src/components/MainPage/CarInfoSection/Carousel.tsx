@@ -8,7 +8,7 @@ import { useCarInfoContext } from '@/store/context/useCarInfoContext';
 import CarouselBg from './CarouselBg';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
-import { CarInfoList } from '@/types/main/carInfoType';
+import { CarInfoList } from '@/types/main/type';
 
 interface CarouselProps {
   carInfoList: CarInfoList[];

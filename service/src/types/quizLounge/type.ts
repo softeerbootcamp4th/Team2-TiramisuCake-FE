@@ -1,3 +1,5 @@
+import { ResponseType } from '../apiType';
+
 export interface QuizContainerProps {
   answer: string[];
   mode: string;
@@ -16,4 +18,17 @@ export interface ModalData {
     expirationDate?: string;
     caution: string;
   };
+}
+
+export interface HistoryResponse extends ResponseType {
+  result: {
+    isFcfsWin: boolean;
+    fcfsHistoryList: FcfsHistoryList[];
+  };
+}
+
+export interface FcfsHistoryList {
+  barcode: string;
+  fcfsCode: string;
+  winningDate: string;
 }

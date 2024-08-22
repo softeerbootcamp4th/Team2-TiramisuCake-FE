@@ -1,3 +1,5 @@
+import { ResponseType } from '../apiType';
+
 interface FullAttendModal {
   title: string;
   subtitle: string;
@@ -5,14 +7,11 @@ interface FullAttendModal {
   description: string;
 }
 
-export interface DrawAttendanceResponse {
-  isSuccess: boolean;
-  code: string;
-  message: string;
+export interface DrawAttendanceResponse extends ResponseType {
   result: {
     invitedNum: number;
     remainDrawCount: number;
-    drawParticipationCount: number;
+    drawAttendanceCount: number;
     fullAttendModal?: FullAttendModal;
   };
 }
@@ -24,14 +23,24 @@ export interface WinModal {
   description: string;
 }
 
-export interface DrawResultResponse {
-  isSuccess: boolean;
-  code: string;
-  message: string;
+export interface DrawResultResponse extends ResponseType {
   result: {
     images: string[];
     winModal?: WinModal;
     isDrawWin: boolean;
     shareUrl?: string;
   };
+}
+
+export interface DrawHistoryResponse extends ResponseType {
+  result: {
+    isDrawWin: string;
+    historyList: DrawHistoryList[];
+  };
+}
+
+interface DrawHistoryList {
+  drawRank: number;
+  image: string;
+  winningDate: Date;
 }

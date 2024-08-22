@@ -5,10 +5,9 @@ import {
   getDynamicEventInfo,
 } from './api';
 import {
-  StaticEventInfoResponse,
   DynamicEventInfoResponse,
-} from '@/types/main/eventInfoType';
-
+  StaticEventInfoResponse,
+} from '@/types/main/type';
 export const useQueryGetCarDetailInfo = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['getCarDetailInfo'],

@@ -9,7 +9,7 @@ import ErrorBoundaryPage from './components/ErrorPage/ErrorBoundaryPage';
 import NotFoundPage from './components/ErrorPage/NotFoundPage';
 import ProtectedRoute from '@/components/common/ProtectedRoute/ProtectedRoute';
 import ShareHandler from './pages/ShareHandler';
-import WinngResultPage from './pages/WinngResultPage';
+import WinningResultPage from './pages/WinningResultPage';
 
 export const router = createBrowserRouter([
   {
@@ -33,8 +33,8 @@ export const router = createBrowserRouter([
             path: ROUTER_PATH.QUIZ_LOUNGE,
           },
           {
-            element: <WinngResultPage />,
-            path: ROUTER_PATH.WINNIG_RESULT,
+            element: <WinningResultPage />,
+            path: ROUTER_PATH.WINNING_RESULT,
           },
         ],
       },

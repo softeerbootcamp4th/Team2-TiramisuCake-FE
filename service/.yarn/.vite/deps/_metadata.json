@@ -1,79 +1,97 @@
 {
-  "hash": "a6ac5552",
+  "hash": "23f44f07",
   "configHash": "5c5187bf",
-  "lockfileHash": "e7c52775",
-  "browserHash": "7bd7cc84",
+  "lockfileHash": "14524432",
+  "browserHash": "8417a510",
   "optimized": {
     "react": {
       "src": "../../../../../../.yarn/berry/cache/react-npm-18.3.1-af38f3c1ae-10c0.zip/node_modules/react/index.js",
       "file": "react.js",
-      "fileHash": "11930aa4",
+      "fileHash": "21e666e1",
       "needsInterop": true
     },
     "react/jsx-dev-runtime": {
       "src": "../../../../../../.yarn/berry/cache/react-npm-18.3.1-af38f3c1ae-10c0.zip/node_modules/react/jsx-dev-runtime.js",
       "file": "react_jsx-dev-runtime.js",
-      "fileHash": "06dd4f8a",
+      "fileHash": "39c2075b",
       "needsInterop": true
     },
     "react/jsx-runtime": {
       "src": "../../../../../../.yarn/berry/cache/react-npm-18.3.1-af38f3c1ae-10c0.zip/node_modules/react/jsx-runtime.js",
       "file": "react_jsx-runtime.js",
-      "fileHash": "038c14c3",
+      "fileHash": "d04b7ef1",
       "needsInterop": true
     },
     "@tanstack/react-query": {
       "src": "../../__virtual__/@tanstack-react-query-virtual-781f840bd0/4/.yarn/berry/cache/@tanstack-react-query-npm-5.51.23-45e5787442-10c0.zip/node_modules/@tanstack/react-query/build/modern/index.js",
       "file": "@tanstack_react-query.js",
-      "fileHash": "88b8db77",
+      "fileHash": "b64092c9",
       "needsInterop": false
     },
     "@tanstack/react-query-devtools": {
       "src": "../../__virtual__/@tanstack-react-query-devtools-virtual-e77bb6400d/4/.yarn/berry/cache/@tanstack-react-query-devtools-npm-5.51.23-a17c95761e-10c0.zip/node_modules/@tanstack/react-query-devtools/build/modern/index.js",
       "file": "@tanstack_react-query-devtools.js",
-      "fileHash": "9e6e37a9",
+      "fileHash": "759b97de",
       "needsInterop": false
     },
     "canvas-confetti": {
       "src": "../../../../../../.yarn/berry/cache/canvas-confetti-npm-1.9.3-b7b2362f3e-10c0.zip/node_modules/canvas-confetti/dist/confetti.module.mjs",
       "file": "canvas-confetti.js",
-      "fileHash": "3dcdae98",
+      "fileHash": "117e2d53",
+      "needsInterop": false
+    },
+    "date-fns": {
+      "src": "../../../../../../.yarn/berry/cache/date-fns-npm-3.6.0-e59d980978-10c0.zip/node_modules/date-fns/index.mjs",
+      "file": "date-fns.js",
+      "fileHash": "37a5b601",
       "needsInterop": false
     },
     "framer-motion": {
       "src": "../../__virtual__/framer-motion-virtual-fd64d24f24/4/.yarn/berry/cache/framer-motion-npm-11.3.19-553b2c2eb5-10c0.zip/node_modules/framer-motion/dist/es/index.mjs",
       "file": "framer-motion.js",
-      "fileHash": "06ad9944",
+      "fileHash": "07b62746",
       "needsInterop": false
     },
     "lodash": {
       "src": "../../../../../../.yarn/berry/cache/lodash-npm-4.17.21-6382451519-10c0.zip/node_modules/lodash/lodash.js",
       "file": "lodash.js",
-      "fileHash": "155ed151",
+      "fileHash": "6d809e1d",
       "needsInterop": true
     },
     "react-cookie": {
       "src": "../../__virtual__/react-cookie-virtual-0e87a7489c/4/.yarn/berry/cache/react-cookie-npm-7.2.0-ca92e0b084-10c0.zip/node_modules/react-cookie/esm/index.mjs",
       "file": "react-cookie.js",
-      "fileHash": "55cd66ca",
+      "fileHash": "4d33f54b",
       "needsInterop": false
+    },
+    "react-dom": {
+      "src": "../../__virtual__/react-dom-virtual-870fc62e31/4/.yarn/berry/cache/react-dom-npm-18.3.1-a805663f38-10c0.zip/node_modules/react-dom/index.js",
+      "file": "react-dom.js",
+      "fileHash": "bcba375b",
+      "needsInterop": true
     },
     "react-dom/client": {
       "src": "../../__virtual__/react-dom-virtual-870fc62e31/4/.yarn/berry/cache/react-dom-npm-18.3.1-a805663f38-10c0.zip/node_modules/react-dom/client.js",
       "file": "react-dom_client.js",
-      "fileHash": "7ae9fc99",
+      "fileHash": "f10a022f",
       "needsInterop": true
+    },
+    "react-infinite-scroll-component": {
+      "src": "../../__virtual__/react-infinite-scroll-component-virtual-93f339ce70/4/.yarn/berry/cache/react-infinite-scroll-component-npm-6.1.0-fc628f1f18-10c0.zip/node_modules/react-infinite-scroll-component/dist/index.es.js",
+      "file": "react-infinite-scroll-component.js",
+      "fileHash": "6d723900",
+      "needsInterop": false
     },
     "react-router-dom": {
       "src": "../../__virtual__/react-router-dom-virtual-b2265dcc59/4/.yarn/berry/cache/react-router-dom-npm-6.25.1-34c67f5632-10c0.zip/node_modules/react-router-dom/dist/index.js",
       "file": "react-router-dom.js",
-      "fileHash": "6a22d239",
+      "fileHash": "342e2f51",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-6ZZMDBZN": {
-      "file": "chunk-6ZZMDBZN.js"
+    "chunk-GY6B4F4Q": {
+      "file": "chunk-GY6B4F4Q.js"
     },
     "E6UWR6XD-IS7QMV75": {
       "file": "E6UWR6XD-IS7QMV75.js"

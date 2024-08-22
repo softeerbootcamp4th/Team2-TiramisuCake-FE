@@ -1,5 +1,5 @@
 import CarDetail from '@/components/common/CarDetail/CarDetail';
-import { CarDetailInfoList } from '@/types/main/carInfoType';
+import { CarDetailInfoList } from '@/types/main/type';
 
 interface CarDetailInfoProps {
   carDetailInfoList: CarDetailInfoList[];

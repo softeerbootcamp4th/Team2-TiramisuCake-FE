@@ -17,6 +17,7 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { useQueryGetMetricsData } from '@/apis/eventMetrics/query';
+import LoadingPage from '@/pages/LoadingPage';
 
 export function Chart() {
   const { data, isLoading } = useQueryGetMetricsData();
@@ -26,13 +27,13 @@ export function Chart() {
   console.log(data);
   const chartConfig = {
     visitorNum: {
-      label: 'visitorNum',
+      label: '방문자 수',
       color: '#55A7BA',
     },
   } satisfies ChartConfig;
 
   if (isLoading) {
-    return <div className='w-full h-full'>로딩중입니다 ... </div>;
+    return <LoadingPage />;
   }
   return (
     <Card>

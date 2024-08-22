@@ -3,7 +3,7 @@ import {
   useEventDateContext,
   useEventDateSetterContext,
 } from '@/store/context/useEventDateContext';
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
 import { useLoginContext } from '@/store/context/useLoginContext';
@@ -11,9 +11,11 @@ import { useModalContext } from '@/store/context/useModalContext';
 import Button from '@/components/common/Button/Button';
 import LoadingPage from '@/components/Loading/Loading';
 import Bouncing from '@/components/common/Bouncing/Bouncing';
-import LoginModal from './EventSection/LoginModal/LoginModal';
+import LoginModal from '../EventSection/LoginModal/LoginModal';
 import scrollToElementId from '@/utils/scrollToElementId';
 import { useTabContext } from '@/store/context/useTabContext';
+import FcfsInfoContainer from './FcfsInfoContainer';
+import DrawInfoContainer from './DrawInfoContainer';
 
 const downArrow = '/svg/BigArrow.svg';
 const backgroundImage =
@@ -46,6 +48,8 @@ const EventIntroductionSection = () => {
     scrollToElementId({ sectionId: 'fcfs', behavior: 'smooth' });
     setActiveTab('fcfs');
   };
+
+  const text = dynamicData?.result.fcfsInfo.split('시')[0].trim();
 
   if (isLoading) return <LoadingPage />;
   return (
@@ -91,64 +95,13 @@ const EventIntroductionSection = () => {
           참여 안내
         </motion.div>
         <div className='flex w-full justify-evenly'>
-          <motion.div
-            {...SCROLL_MOTION}
-            className='flex flex-col items-center gap-4 w-full bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom px-5 py-16'
-          >
-            <div className='text-h-m font-bold text-hyundai'>
-              '24시 내 차' 이벤트
-            </div>
-            <div className='flex gap-5 w-full justify-evenly mt-10 items-center'>
-              <div className='flex flex-col items-center gap-6'>
-                <img className='w-[6.25rem] h-[6.25rem]' src='/word.png' />
-                <p className='text-b-xl font-semibold text-white'>
-                  매주 ?요일 ??시 선착순 퀴즈
-                </p>
-              </div>
-              <img src='/svg/right_arrow.svg' className=' w-[70px] h-[70px]' />
-
-              <div className='flex flex-col items-center gap-6'>
-                <img
-                  className='w-[6.25rem] h-[6.25rem]'
-                  src='/surprise-box.png'
-                />
-                <p className='text-b-xl font-semibold text-white '>
-                  단어 맞추고 선물 받기
-                </p>
-              </div>
-            </div>
-          </motion.div>
-          <motion.div
-            {...SCROLL_MOTION}
-            className='flex flex-col items-center gap-4 w-full bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom px-5 py-16'
-          >
-            <div className='text-h-m font-bold text-hyundai'>
-              매일 복권 긁고 경품 받기
-            </div>
-            <div className='flex w-full justify-evenly mt-10 items-center'>
-              <div className='flex flex-col items-center gap-6'>
-                <img className='w-[6.25rem] h-[6.25rem]' src='/draw.png' />
-                <p className='text-b-xl font-semibold text-white'>
-                  매일 한 번씩 복권 긁기
-                </p>
-              </div>
-              <img src='/svg/right_arrow.svg' className=' w-[70px] h-[70px]' />
-              <div className='flex flex-col items-center gap-6'>
-                <img className='w-[5rem] h-[5rem] mt-2' src='/link.png' />
-                <p className='text-b-xl font-semibold mt-5 text-white'>
-                  나만의 Url 공유
-                </p>
-              </div>
-              <img src='/svg/right_arrow.svg' className=' w-[70px] h-[70px]' />
-
-              <div className='flex flex-col items-center gap-6'>
-                <img className='w-[6.25rem] h-[6.25rem]' src='/ticket.png' />
-                <p className='text-b-xl font-semibold text-white'>
-                  복권 기회 추가
-                </p>
-              </div>
-            </div>
-          </motion.div>
+          <FcfsInfoContainer
+            title={staticData?.result.eventInfoList[0].title as string}
+            text={text as string}
+          />
+          <DrawInfoContainer
+            title={staticData?.result.eventInfoList[1].title as string}
+          />
         </div>
       </div>
       <Bouncing>
@@ -164,4 +117,4 @@ const EventIntroductionSection = () => {
   );
 };
 
-export default EventIntroductionSection;
+export default memo(EventIntroductionSection);

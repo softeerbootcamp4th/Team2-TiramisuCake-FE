@@ -7,7 +7,7 @@ export const ROUTER_PATH = {
   QUIZ_LOUNGE: 'quiz-lounge',
   COMMENTS_LOUNGE: 'comments-lounge',
   SHARE: 'share/:code',
-  WINNIG_RESULT: 'winnig-result',
+  WINNING_RESULT: 'winning-result',
 } as const;
 
 export const HEADERS = {

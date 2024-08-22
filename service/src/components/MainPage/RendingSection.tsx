@@ -5,10 +5,12 @@ import { motion } from 'framer-motion';
 import { ROUTER_PATH } from '@/constants/lib/constants';
 import scrollToElementId from '@/utils/scrollToElementId';
 import { useTabContext } from '@/store/context/useTabContext';
+import { memo } from 'react';
+import Lottie from 'react-lottie';
+import useFetchAnimationData from '@/hooks/MainPage/useFetchAnimationData';
 
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/rending-bg.webp';
-const gifFile = '/gifs.gif';
 const downarrow = '/svg/BigArrow.svg';
 
 const RendingSection = () => {
@@ -23,6 +25,16 @@ const RendingSection = () => {
   };
 
   const text = 'The New IONIQ 5'.split(' ');
+  const { animationData } = useFetchAnimationData('/comments.json');
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice',
+    },
+  };
 
   return (
     <div
@@ -80,11 +92,7 @@ const RendingSection = () => {
           className='flex flex-col items-center'
         >
           <div className='flex mb-5'>
-            <img
-              src={gifFile}
-              alt='Description of the GIF'
-              className='w-[12.5rem] h-[11.25rem] flex-shrink-0'
-            />
+            <Lottie options={defaultOptions} width={200} height={180} />
           </div>
           <Button
             type='square'
@@ -108,4 +116,4 @@ const RendingSection = () => {
   );
 };
 
-export default RendingSection;
+export default memo(RendingSection);
