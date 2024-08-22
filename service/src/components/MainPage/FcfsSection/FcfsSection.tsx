@@ -1,13 +1,10 @@
 import Badge from '@/components/common/Badge/Badge';
-import Button from '@/components/common/Button/Button';
-import { ROUTER_PATH } from '@/constants/lib/constants';
 import { useLoginContext } from '@/store/context/useLoginContext';
-import { memo, useCallback, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { memo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
-import useCountdownTimer from '@/hooks/MainPage/useCountdownTimer';
 import { EventInfo } from '@/types/main/type';
+import ButtonContainer from './ButtonContainer';
 
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/event_bg_2.webp';
@@ -15,31 +12,16 @@ export interface EventProps {
   fcfsInfo: string;
   fcfsHint: string;
   eventInfo: EventInfo;
-  isFcfsAvailable: boolean;
-  nextFcfsStartTime: string;
+  fcfsStartTime: string;
 }
 const FcfsSection = ({
   fcfsInfo,
   fcfsHint,
   eventInfo,
-  isFcfsAvailable,
-  nextFcfsStartTime,
+  fcfsStartTime,
 }: EventProps) => {
   const { isLogined } = useLoginContext();
   const fcfsSectionRef = useRef<HTMLDivElement>(null);
-  const navigator = useNavigate();
-  const { buttonText, isActive } = useCountdownTimer({
-    isFcfsAvailable,
-    nextFcfsStartTime,
-  });
-
-  const goQuizLounge = useCallback(() => {
-    navigator(`${ROUTER_PATH.QUIZ_LOUNGE}?mode=live`);
-  }, [navigator]);
-
-  const goTutorialQuizLounge = useCallback(() => {
-    navigator(`${ROUTER_PATH.QUIZ_LOUNGE}?mode=tutorial`);
-  }, [navigator]);
 
   return (
     <section
@@ -91,21 +73,7 @@ const FcfsSection = ({
             </p>
           </motion.div>
         </div>
-        {isLogined && (
-          <div className='flex gap-6 mt-10 '>
-            <Button
-              type='squareWithBorder'
-              text='튜토리얼'
-              handleClick={goTutorialQuizLounge}
-            />
-            <Button
-              type='square'
-              text={buttonText}
-              handleClick={goQuizLounge}
-              isActive={isActive}
-            />
-          </div>
-        )}
+        {isLogined && <ButtonContainer fcfsStartTime={fcfsStartTime} />}
       </div>
     </section>
   );
