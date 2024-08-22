@@ -7,6 +7,7 @@
   src: url('/fonts/Pretendard-Regular.ttf');
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -14,6 +15,7 @@
   src: url('/fonts/Montserrat-VariableFont_wght.ttf');
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
 }
 
 @keyframes rotateCircle {

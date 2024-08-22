@@ -54,7 +54,7 @@ const FcfsSection = ({
             {...SCROLL_MOTION}
             className='flex flex-col items-center gap-2'
           >
-            <img src={eventInfo.rewardImage1} />
+            <img src={eventInfo.rewardImage1} width={402} height={216} />
             <p className='font-semibold text-b-xl text-white'>
               {eventInfo.rewardName1}
             </p>
@@ -65,7 +65,9 @@ const FcfsSection = ({
           >
             <img
               src={eventInfo.rewardImage2}
-              className='w-[402px] h-[216px] object-cover'
+              width={402}
+              height={216}
+              className='object-cover'
             />
             <p className='font-semibold text-b-xl text-white'>
               {' '}
