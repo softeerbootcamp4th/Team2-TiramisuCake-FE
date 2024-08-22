@@ -11,7 +11,7 @@ const FcfsInfoContainer = ({ title, text }: FcfsInfoContainerProps) => {
   return (
     <motion.div
       {...SCROLL_MOTION}
-      className='flex-1 flex flex-col w-full max-w-[650px] items-center gap-4 bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom px-10 py-16'
+      className='flex-1 flex flex-col w-full max-w-[650px] items-center gap-4 bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom  px-16 py-12'
     >
       <div className='text-h-m font-bold text-hyundai'>{title}</div>
       <div className='flex gap-5 w-full justify-evenly mt-10 items-center'>
