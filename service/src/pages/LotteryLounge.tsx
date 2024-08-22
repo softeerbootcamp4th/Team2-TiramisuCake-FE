@@ -14,9 +14,7 @@ import LoadingPage from '@/components/Loading/Loading';
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/draw_bg.webp';
 
-const sample = () => {
-  console.log('연결 완료');
-};
+const sample = () => {};
 
 const LotteryLoungePage = () => {
   const token = getCookie('accessToken');
@@ -25,6 +23,7 @@ const LotteryLoungePage = () => {
   const { setActiveTab } = useTabContext();
   const { setIsOpen } = useModalContext();
 
+  //console.log(data);
   useEffect(() => {
     window.scrollTo(0, 0);
     setActiveTab('quiz');
@@ -57,7 +56,7 @@ const LotteryLoungePage = () => {
           <div className='self-stretch items-center justify-center flex-col flex gap-4 pointer-events-none'>
             <Button
               type='square'
-              text={`내가 초대한 친구 ${data?.result?.invitedNum}회 | 오늘의 복권 기회 ${data?.result?.remainDrawCount}회`}
+              text={`내가 초대한 친구 ${data?.result?.invitedNum ?? 0}회 | 오늘의 복권 기회 ${data?.result?.remainDrawCount ?? 0}회`}
               handleClick={sample}
             />
             <div className='text-center'>
@@ -83,15 +82,30 @@ const LotteryLoungePage = () => {
                 ))
               ) : (
                 <>
-                  <img src='/svg/복권진함/다이아.svg' alt='SVG 1' />
-                  <img src='/svg/복권진함/다이아.svg' alt='SVG 2' />
-                  <img src='/svg/복권진함/다이아.svg' alt='SVG 3' />
+                  <img
+                    className='w-32 h-32'
+                    src='/svg/복권진함/다이아.svg'
+                    alt='SVG 1'
+                  />
+                  <img
+                    className='w-32 h-32'
+                    src='/svg/복권진함/다이아.svg'
+                    alt='SVG 2'
+                  />
+                  <img
+                    className='w-32 h-32'
+                    src='/svg/복권진함/다이아.svg'
+                    alt='SVG 3'
+                  />
                 </>
               )}
             </div>
-            <LotteryCanvas onScratch={handleScratchResult} />
+            <LotteryCanvas
+              onScratch={handleScratchResult}
+              remainDrawCount={data?.result?.remainDrawCount ?? 0}
+            />
           </div>
-          <Attendance counts={data?.result?.drawParticipationCount ?? 0} />
+          <Attendance counts={data?.result?.drawAttendanceCount ?? 0} />
         </div>
       </div>
       {blocker.state === 'blocked' && (
