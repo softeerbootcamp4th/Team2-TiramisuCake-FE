@@ -6,6 +6,7 @@ import Button from '@/components/common/Button/Button';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
 import { EventInfo } from '@/types/main/type';
+import { memo } from 'react';
 
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/event_bg_3.webp';
@@ -104,4 +105,4 @@ const DrawSection = ({
   );
 };
 
-export default DrawSection;
+export default memo(DrawSection);

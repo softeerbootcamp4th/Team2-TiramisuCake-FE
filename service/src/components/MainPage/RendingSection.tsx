@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { ROUTER_PATH } from '@/constants/lib/constants';
 import scrollToElementId from '@/utils/scrollToElementId';
 import { useTabContext } from '@/store/context/useTabContext';
+import { memo } from 'react';
 
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/rending-bg.webp';
@@ -108,4 +109,4 @@ const RendingSection = () => {
   );
 };
 
-export default RendingSection;
+export default memo(RendingSection);
