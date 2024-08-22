@@ -11,7 +11,7 @@ export interface DrawAttendanceResponse extends ResponseType {
   result: {
     invitedNum: number;
     remainDrawCount: number;
-    drawParticipationCount: number;
+    drawAttendanceCount: number;
     fullAttendModal?: FullAttendModal;
   };
 }
