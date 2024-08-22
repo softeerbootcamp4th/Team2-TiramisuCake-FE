@@ -2,12 +2,12 @@ import Badge from '@/components/common/Badge/Badge';
 import Button from '@/components/common/Button/Button';
 import { ROUTER_PATH } from '@/constants/lib/constants';
 import { useLoginContext } from '@/store/context/useLoginContext';
-import { EventInfo } from '@/types/main/eventInfoType';
-import { useCallback, useRef } from 'react';
+import { memo, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
 import useCountdownTimer from '@/hooks/MainPage/useCountdownTimer';
+import { EventInfo } from '@/types/main/type';
 
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/event_bg_2.webp';
@@ -67,17 +67,23 @@ const FcfsSection = ({
             {...SCROLL_MOTION}
             className='flex flex-col items-center gap-2'
           >
-            <img src='/rent.png' />
+            <img src={eventInfo.rewardImage1} />
             <p className='font-semibold text-b-xl text-white'>
-              The new IONIQ 5 24시간 무료 승차 쿠폰
+              {eventInfo.rewardName1}
             </p>
           </motion.div>
           <motion.div
             {...SCROLL_MOTION}
             className='flex flex-col items-center gap-2'
           >
-            <img src='/coupon.png' className='w-[400px] h-[214px]' />
-            <p className='font-semibold text-b-xl text-white'>신차 할인 쿠폰</p>
+            <img
+              src={eventInfo.rewardImage2}
+              className='w-[402px] h-[216px] object-cover'
+            />
+            <p className='font-semibold text-b-xl text-white'>
+              {' '}
+              {eventInfo.rewardName2}
+            </p>
           </motion.div>
         </div>
         {isLogined && (
@@ -100,4 +106,4 @@ const FcfsSection = ({
   );
 };
 
-export default FcfsSection;
+export default memo(FcfsSection);

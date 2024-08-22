@@ -13,7 +13,7 @@ import {
 import {
   ConfirmVerificationRequestBody,
   LoginRequestBody,
-} from '@/types/Authorization/request';
+} from '@/types/Authorization/type';
 import { ErrorCode, ERROR_CODES, ERROR_MESSAGES } from '@/constants/error';
 import { parseISO, differenceInSeconds } from 'date-fns';
 import { validatePhoneNumber } from '@/utils/checkPhoneNumber';

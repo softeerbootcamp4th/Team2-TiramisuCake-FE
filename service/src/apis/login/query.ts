@@ -2,7 +2,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   ConfirmVerificationRequestBody,
   LoginRequestBody,
-} from '@/types/Authorization/request';
+} from '@/types/Authorization/type';
 
 import {
   sendAuthCode,

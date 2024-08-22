@@ -1,11 +1,11 @@
 import Badge from '@/components/common/Badge/Badge';
-import { EventInfo } from '@/types/main/eventInfoType';
 import { useNavigate } from 'react-router-dom';
 import { ROUTER_PATH } from '@/constants/lib/constants';
 import { useLoginContext } from '@/store/context/useLoginContext';
 import Button from '@/components/common/Button/Button';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
+import { EventInfo } from '@/types/main/type';
 
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/event_bg_3.webp';
@@ -57,9 +57,9 @@ const DrawSection = ({
             {...SCROLL_MOTION}
             className='flex flex-col items-center gap-1'
           >
-            <img src='/ipad.svg' alt='경품1' />
+            <img src={eventInfo.rewardImage1} alt='경품1' />
             <p className='font-semibold text-b-xl text-white'>
-              1등 최신형 아이패드
+              {eventInfo.rewardName1}
             </p>
           </motion.div>
           <div className='flex flex-col gap-4'>
@@ -67,18 +67,24 @@ const DrawSection = ({
               {...SCROLL_MOTION}
               className='flex flex-col items-center gap-1'
             >
-              <img src='/10.png' className='w-[350px] h-[150px]' />
+              <img
+                src={eventInfo.rewardImage2}
+                className='w-[350px] h-[150px] object-fit'
+              />
               <p className='font-semibold text-b-xl text-white'>
-                2등 현대백화점 10만원권
+                {eventInfo.rewardName2}
               </p>
             </motion.div>
             <motion.div
               {...SCROLL_MOTION}
               className='flex flex-col items-center gap-1'
             >
-              <img src='/5.png' className='w-[350px] h-[150px]' />
+              <img
+                src={eventInfo.rewardImage3 as string}
+                className='w-[350px] h-[150px]'
+              />
               <p className='font-semibold text-b-xl text-white'>
-                3등 현대백화점 5만원권
+                {eventInfo.rewardName3}
               </p>
             </motion.div>
           </div>

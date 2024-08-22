@@ -3,14 +3,11 @@ import {
   SendCodeRequestBody,
   ConfirmVerificationRequestBody,
   LoginRequestBody,
-} from '@/types/Authorization/request';
-
-import {
   CodeResponse,
-  ConfirmResponse,
   LoginResponse,
   ReIssueResponse,
-} from '@/types/Authorization/response';
+  ConfirmResponse,
+} from '@/types/Authorization/type';
 
 export const sendAuthCode = async (
   phoneNumber: string
