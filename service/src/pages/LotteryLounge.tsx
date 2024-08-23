@@ -22,6 +22,7 @@ const LotteryLoungePage = () => {
   const { startDate, endDate } = useEventDateContext();
   const { data, isLoading } = useQueryGetDrawAttendance(token);
   const [drawResult, setDrawResult] = useState<DrawResultResponse | null>(null);
+  const [isScratched, setIsScratched] = useState(false);
   const { setActiveTab } = useTabContext();
   const [isExitModalOpen, setIsExitModalOpen] = useState(false);
 
@@ -32,7 +33,7 @@ const LotteryLoungePage = () => {
 
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) =>
-      currentLocation.pathname !== nextLocation.pathname
+      !isScratched && currentLocation.pathname !== nextLocation.pathname
   );
 
   useEffect(() => {
@@ -42,6 +43,7 @@ const LotteryLoungePage = () => {
 
   const handleScratchResult = (result: DrawResultResponse) => {
     setDrawResult(result);
+    setIsScratched(true);
   };
 
   const startPeriod = new Date(startDate);
