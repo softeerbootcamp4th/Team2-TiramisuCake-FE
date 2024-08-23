@@ -76,7 +76,7 @@ const DrawSection = ({
   return (
     <div
       style={{ backgroundImage: `url(${backgroundImage})` }}
-      className={`snap-center bg-cover bg-center bg-no-repeat h-screen w-screen flex ${isLogined ? 'py-20' : 'py-32'} items-center justify-center`}
+      className={`snap-center bg-cover bg-center bg-no-repeat h-screen w-screen flex ${isLogined ? 'py-[4rem]' : 'py-[6.5rem]'} items-center justify-center`}
     >
       <div className='w-[1100px] h-full flex border border-custom-white bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom'>
         <div className='flex flex-col items-center m-auto gap-3'>
@@ -117,7 +117,7 @@ const DrawSection = ({
               >
                 <img
                   src={eventInfo.rewardImage2}
-                  className='w-[350px] h-[150px] object-fit'
+                  className='w-[21.875rem] h-[9.375rem] object-fit'
                 />
                 <p className='font-semibold text-b-xl text-white'>
                   {eventInfo.rewardName2}
@@ -129,7 +129,7 @@ const DrawSection = ({
               >
                 <img
                   src={eventInfo.rewardImage3 as string}
-                  className='w-[350px] h-[150px]'
+                  className='w-[21.875rem] h-[9.375rem]'
                 />
                 <p className='font-semibold text-b-xl text-white'>
                   {eventInfo.rewardName3}
