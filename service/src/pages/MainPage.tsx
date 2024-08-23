@@ -36,7 +36,7 @@ const MainPage = () => {
             <FcfsSection
               fcfsInfo={dynamicData?.result.fcfsInfo as string}
               fcfsHint={dynamicData?.result.fcfsHint as string}
-              fcfsStartTime={dynamicData?.result.fcfsStartTime as string}
+              fcfsStartTime={dynamicData?.result.fcfsStartTime as string | null}
               eventInfo={staticData?.result.eventInfoList[0] as EventInfo}
             />
           </div>

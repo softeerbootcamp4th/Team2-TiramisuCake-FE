@@ -12,7 +12,7 @@ export interface EventProps {
   fcfsInfo: string;
   fcfsHint: string;
   eventInfo: EventInfo;
-  fcfsStartTime: string;
+  fcfsStartTime: string | null;
 }
 const FcfsSection = ({
   fcfsInfo,
@@ -25,7 +25,7 @@ const FcfsSection = ({
 
   return (
     <section
-      className='snap-start bg-cover bg-center bg-no-repeat w-screen h-screen flex py-16 items-center justify-center'
+      className={`snap-center bg-cover bg-center bg-no-repeat h-screen w-screen flex ${isLogined ? 'py-20' : 'py-32'} items-center justify-center`}
       style={{ backgroundImage: `url(${backgroundImage})` }}
       ref={fcfsSectionRef}
     >

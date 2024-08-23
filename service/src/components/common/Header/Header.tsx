@@ -58,7 +58,7 @@ const Header = () => {
         <Link to='/'>
           <img
             onClick={() => handleTabClick('rending')}
-            src='image 113.svg'
+            src='/svg/hyundai_logo.svg'
             alt='Hyundai logo'
             className='flex-shrink-0 px-2 ml-10 '
             style={{ width: '8.3125rem', height: '1.0625rem' }}

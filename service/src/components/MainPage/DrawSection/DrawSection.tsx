@@ -75,8 +75,8 @@ const DrawSection = ({
 
   return (
     <div
-      className='snap-center bg-cover bg-center bg-no-repeat h-screen w-screen flex py-16 items-center justify-center'
       style={{ backgroundImage: `url(${backgroundImage})` }}
+      className={`snap-center bg-cover bg-center bg-no-repeat h-screen w-screen flex ${isLogined ? 'py-20' : 'py-32'} items-center justify-center`}
     >
       <div className='w-[1100px] h-full flex border border-custom-white bg-gradient-to-b from-white/20 to-white/10 shadow-custom backdrop-blur-custom'>
         <div className='flex flex-col items-center m-auto gap-3'>
