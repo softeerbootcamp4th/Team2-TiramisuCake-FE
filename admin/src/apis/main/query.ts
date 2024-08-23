@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 export const useEventsData = () => {
   const [cookies] = useCookies(['accessToken', 'refreshToken']);
   const accessToken = cookies.accessToken;
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ['getEventsData'],
     queryFn: () => getEventsData(accessToken),
   });
@@ -14,13 +14,14 @@ export const useEventsData = () => {
   return {
     data,
     isLoading,
+    isError,
   };
 };
 
 export const useWinnerData = () => {
   const [cookies] = useCookies(['accessToken', 'refreshToken']);
   const accessToken = cookies.accessToken;
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ['getWinnerData'],
     queryFn: () => getWinnerData(accessToken),
   });
@@ -28,6 +29,7 @@ export const useWinnerData = () => {
   return {
     data,
     isLoading,
+    isError,
   };
 };
 

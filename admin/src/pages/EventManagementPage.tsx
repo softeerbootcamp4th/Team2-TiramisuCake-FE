@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import EditButton from '@/components/common/Button/EditButton';
 import List from '@/components/common/List/List';
 import ListContainer from '@/components/common/List/ListContainer';
@@ -7,7 +7,7 @@ import { ROUTER_PATH } from '@/lib/constants';
 import { useNavigate } from 'react-router-dom';
 import FCFSModal from '@/components/EventManagement/FCFSModal';
 import RaffleModal from '@/components/EventManagement/RaffleModal';
-import { useCombinedData } from '@/apis/main/query';
+import { useEventsData } from '@/apis/main/query';
 import { getWeekDay } from '@/utils/getWeekDay';
 import { useMutationDraw, useMutationFcFs } from '@/apis/event/query';
 import { DrawRequest, FcFsRequest } from '@/type/eventManagement/eventType';
@@ -17,11 +17,12 @@ const EventManagementPage = () => {
   const mutationFcFs = useMutationFcFs();
   const mutationDraw = useMutationDraw();
   const queryClient = useQueryClient();
-  const { eventsData } = useCombinedData();
-  const fcfsData = eventsData?.result.fcfsEventList;
-  const drawData = eventsData?.result.drawEvent;
+  const { data } = useEventsData();
+  const fcfsData = data?.result.fcfsEventList;
+  const drawData = data?.result.drawEvent;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isWinModalOpen, setIsWinModalOpen] = useState(false);
+
   const text = `${drawData.startDate}${getWeekDay(drawData.startDate)} ${
     drawData.startTime
   } ~ ${drawData.endDate}${getWeekDay(drawData.endDate)} ${drawData.endTime}`;

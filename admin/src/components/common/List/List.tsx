@@ -1,19 +1,14 @@
 import { FCFSEventList } from '@/type/main/type';
 import { getWeekDay } from '@/utils/getWeekDay';
-
-type Event = {
-  round: string;
-  startTime: string;
-  endTime: string;
-};
+import { FcFsEvent } from '@/types/eventDataType';
 
 interface ListProps {
   onClick: () => void;
-  events: Event[] | FCFSEventList[];
+  events: FcFsEvent[] | FCFSEventList[];
 }
 
-const isEvent = (event: Event | FCFSEventList): event is Event => {
-  return (event as Event).startTime !== undefined;
+const isEvent = (event: FcFsEvent | FCFSEventList): event is FcFsEvent => {
+  return (event as FcFsEvent).startTime !== undefined;
 };
 
 const List = ({ events = [] }: ListProps) => {
