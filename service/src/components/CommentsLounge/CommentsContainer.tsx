@@ -29,9 +29,9 @@ const CommentsContainer = () => {
           data?.pages.map((page, pageIndex) => (
             <div
               key={pageIndex}
-              className=' flex flex-col gap-2.5 items-center '
+              className=' flex flex-col-reverse gap-2.5 items-center '
             >
-              {page.result.comments.reverse().map((comment, index) => (
+              {page.result.comments.map((comment, index) => (
                 <Comment
                   key={index}
                   userName={comment.nickName}
