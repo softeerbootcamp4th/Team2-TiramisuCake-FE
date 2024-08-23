@@ -15,3 +15,15 @@ export interface PostRaffleWinnerRequest {
   secondWinnerNum: number;
   thirdWinnerNum: number;
 }
+
+export interface WinDrawEventList {
+  rank: number;
+  winnerNum: number;
+  probability: number;
+}
+
+export interface WinFcfsEventList {
+  round: number;
+  eventDate: string;
+  winnerNum: number;
+}

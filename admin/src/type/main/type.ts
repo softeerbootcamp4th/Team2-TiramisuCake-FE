@@ -1,26 +1,19 @@
-export interface FCFSEventList {
-  round: number;
-  eventDate: string;
-  winnerNum: number;
-}
-export interface DrawEvent {
-  startDate: string;
-  endDate: string;
-  startTime: string;
-  endTime: string;
-}
-export interface EventsData {
-  isSuccess: boolean;
-  code: string;
-  message: string;
+import {
+  EventDrawEventData,
+  EventFcFsEventData,
+} from '../eventManagement/type';
+import { WinDrawEventList, WinFcfsEventList } from '../winManagement/type';
+
+export interface EventResponse extends Response {
   result: {
-    fcfsEventList: FCFSEventList[];
-    drawEvent: DrawEvent;
+    fcfsEventList: EventFcFsEventData[];
+    drawEvent: EventDrawEventData;
   };
 }
 
-export interface DrawEventList {
-  rank: number;
-  winnerNum: number;
-  probability: number;
+export interface WinResponse extends Response {
+  result: {
+    fcfsEventList: WinFcfsEventList[];
+    drawEventList: WinDrawEventList[];
+  };
 }
