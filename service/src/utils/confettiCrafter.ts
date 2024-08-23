@@ -45,7 +45,7 @@ export const craftFireworks = (duration: number) => {
       return clearInterval(interval);
     }
 
-    const particleCount = 50 * (timeLeft / duration);
+    const particleCount = 500 * (timeLeft / duration);
     confetti({
       ...defaults,
       particleCount,
