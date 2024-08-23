@@ -39,10 +39,13 @@ interface DynamicEventResult {
   startDate: string;
   endDate: string;
   fcfsInfo: string;
+  drawInfo: string;
   totalDrawWinner: string;
   remainDrawCount: string;
   fcfsHint: string;
   fcfsStartTime: string | null;
+  drawStartTime: string;
+  drawEndTime: string;
 }
 
 export interface StaticEventInfoResponse extends ResponseType {
