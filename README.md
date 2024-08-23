@@ -1,5 +1,16 @@
 # Team2-TiramisuCake-FE
 
+**배포 URL**
+
+🔗 service : https://softeer.site/
+
+🔗 admin : https://d3qmq1ffhp5il9.cloudfront.net/
+
+**커밋 컨벤션**
+- label : subject
+label은 issue label을 참고,
+subject은 해당 커밋에 대한 내용을 잘 이해할 수 있게 요약 할 것
+
 **브랜치 전략 - [아래 참고]/issue number**
 
 - feat - 새로운 기능 구현
@@ -148,3 +159,5 @@ Process
 # 회고
 
 https://www.notion.so/bside/3f4a3606067143fbb54bd5e584afe762
+
+
