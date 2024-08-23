@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { FcFsRequest, DrawRequest } from '@/type/eventManagement/eventType';
+import { FcFsRequest, DrawRequest } from '@/type/eventManagement/type';
 import { postDrawData, postFcFsData } from './api';
 import { useCookies } from 'react-cookie';
 

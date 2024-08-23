@@ -2,10 +2,10 @@ import ListContainer from '../List/ListContainer';
 import WinnerList from '../List/WinnerList';
 import { ROUTER_PATH } from '@/lib/constants';
 import { useNavigate } from 'react-router-dom';
-import { DrawEventList } from '@/type/main/type';
+import { WinDrawEventList } from '@/type/winManagement/type';
 
 interface Props {
-  drawList: DrawEventList[];
+  drawList: WinDrawEventList[];
   pageType?: 'main' | 'manage';
   handleModalOpen?: () => void;
 }

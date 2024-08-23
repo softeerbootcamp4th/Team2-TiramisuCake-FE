@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { format, setHours, setMinutes } from 'date-fns';
-import { DrawRequest } from '@/type/eventManagement/eventType';
+import { DrawRequest } from '@/type/eventManagement/type';
 
 const initialRaffleTimes = {
   startRaffleTime: undefined as Date | undefined,
