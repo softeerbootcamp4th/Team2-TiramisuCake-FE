@@ -59,7 +59,7 @@ const LoseModal = ({ onClose }: LoseModalProps) => {
         <div className='w-full p-9 flex-col flex items-center text-center bg-white'>
           <Badge type='blue' text='초대한 친구 수만큼 +1'></Badge>
           <div className='py-2 font-semibold text-h-m text-transparent bg-clip-text bg-gradient-text-to-right'>
-            잠깐! 친구 초대하고 복권을 더 긁어봐요
+            아쉽지만 당첨되지 않았어요
           </div>
           <div className='text-b-l text-gray-700 mb-4'>
             친구가 공유한 링크로 로그인하면 기회가 늘어나요
