@@ -2,6 +2,7 @@ import { useQueryGetDrawHistory } from '@/apis/draw/query';
 import { useQueryGetFCFSHistory } from '@/apis/quizLounge/query';
 import Button from '@/components/common/Button/Button';
 import LoadingPage from '@/components/Loading/Loading';
+import { DrawHistoryList } from '@/types/lottery/type';
 import { FcfsHistoryList } from '@/types/quizLounge/type';
 import { getCookie } from '@/utils/cookie';
 import { formatDate } from '@/utils/formatDate';
@@ -74,16 +75,18 @@ const WinningResultPage = () => {
                   복권 긁기 이벤트
                 </h4>
                 <div className='flex flex-col gap-4'>
-                  {drawHistoryData?.result?.historyList?.map((item, index) => (
-                    <div
-                      key={index}
-                      className='flex justify-evenly gap-3 items-center text-b-l font-semibold'
-                    >
-                      <span>{formatDate(new Date(item.winningDate))}</span>
-                      <span>{item.drawRank} 등</span>
-                      <img src={item.image} className='w-[180px] h-[90px]' />
-                    </div>
-                  ))}
+                  {drawHistoryData?.result?.historyList?.map(
+                    (item: DrawHistoryList, index: number) => (
+                      <div
+                        key={index}
+                        className='flex justify-evenly gap-3 items-center text-b-l font-semibold'
+                      >
+                        <span>{formatDate(new Date(item.winningDate))}</span>
+                        <span>{item.drawRank} 등</span>
+                        <img src={item.image} className='w-[180px] h-[90px]' />
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
             )}

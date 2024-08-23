@@ -1,55 +1,30 @@
-import { useDynamicEventInfo, useStaticEventInfo } from '@/apis/main/query';
-import {
-  useEventDateContext,
-  useEventDateSetterContext,
-} from '@/store/context/useEventDateContext';
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
-import { useLoginContext } from '@/store/context/useLoginContext';
-import { useModalContext } from '@/store/context/useModalContext';
 import Button from '@/components/common/Button/Button';
 import LoadingPage from '@/components/Loading/Loading';
 import Bouncing from '@/components/common/Bouncing/Bouncing';
 import LoginModal from '../EventSection/LoginModal/LoginModal';
-import scrollToElementId from '@/utils/scrollToElementId';
-import { useTabContext } from '@/store/context/useTabContext';
 import FcfsInfoContainer from './FcfsInfoContainer';
 import DrawInfoContainer from './DrawInfoContainer';
+import { useEventIntroduction } from '@/hooks/MainPage/useEventIntroduction';
 
 const downArrow = '/svg/BigArrow.svg';
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/event_bg_1.webp';
 
 const EventIntroductionSection = () => {
-  const { staticData, isStaticLoading } = useStaticEventInfo();
-  const { dynamicData, isDynamicLoading } = useDynamicEventInfo();
-  const isLoading = isStaticLoading || isDynamicLoading;
-  const { setActiveTab } = useTabContext();
-
-  const { isLogined } = useLoginContext();
-  const { isOpen, setIsOpen } = useModalContext();
-
-  const { startDate, endDate } = useEventDateContext();
-  const { setStartDate, setEndDate } = useEventDateSetterContext();
-
-  useEffect(() => {
-    if (!isDynamicLoading && dynamicData) {
-      setStartDate(dynamicData.result.startDate);
-      setEndDate(dynamicData.result.endDate);
-    }
-  }, [isDynamicLoading, staticData]);
-
-  const handleModal = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleArrowClick = () => {
-    scrollToElementId({ sectionId: 'fcfs', behavior: 'smooth' });
-    setActiveTab('fcfs');
-  };
-
-  const text = dynamicData?.result.fcfsInfo.split('선')[0].trim();
+  const {
+    isLoading,
+    isOpen,
+    isLogined,
+    startDate,
+    endDate,
+    staticData,
+    text,
+    handleModal,
+    handleArrowClick,
+  } = useEventIntroduction();
 
   if (isLoading) return <LoadingPage />;
   return (

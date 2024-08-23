@@ -39,7 +39,7 @@ export interface DrawHistoryResponse extends ResponseType {
   };
 }
 
-interface DrawHistoryList {
+export interface DrawHistoryList {
   drawRank: number;
   image: string;
   winningDate: Date;

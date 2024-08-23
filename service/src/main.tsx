@@ -12,7 +12,7 @@ import {
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { EventDateProvider } from './store/provider/EventDateProvider.tsx';
 import { ModalProvider } from './store/provider/ModalProvider.tsx';
-import { useApiError } from './hooks/useApiError.tsx';
+import { useApiError } from './hooks/common/useApiError.tsx';
 import { UrlProvider } from './store/provider/UrlProvider.tsx';
 
 const Main = () => {
