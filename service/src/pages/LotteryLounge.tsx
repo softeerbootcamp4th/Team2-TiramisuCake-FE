@@ -9,6 +9,8 @@ import { useBlocker } from 'react-router-dom';
 import { DrawResultResponse } from '@/types/lottery/type';
 import { useTabContext } from '@/store/context/useTabContext';
 import LoadingPage from '@/components/Loading/Loading';
+import { useEventDateContext } from '@/store/context/useEventDateContext';
+import NotEventPeriodPage from '@/components/ErrorPage/NotEventPeriodPage';
 
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/draw_bg.webp';
@@ -17,8 +19,10 @@ const sample = () => {};
 
 const LotteryLoungePage = () => {
   const token = getCookie('accessToken');
+  const { startDate, endDate } = useEventDateContext();
   const { data, isLoading } = useQueryGetDrawAttendance(token);
   const [drawResult, setDrawResult] = useState<DrawResultResponse | null>(null);
+  const [isScratched, setIsScratched] = useState(false);
   const { setActiveTab } = useTabContext();
   const [isExitModalOpen, setIsExitModalOpen] = useState(false);
 
@@ -29,7 +33,7 @@ const LotteryLoungePage = () => {
 
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) =>
-      currentLocation.pathname !== nextLocation.pathname
+      !isScratched && currentLocation.pathname !== nextLocation.pathname
   );
 
   useEffect(() => {
@@ -39,9 +43,19 @@ const LotteryLoungePage = () => {
 
   const handleScratchResult = (result: DrawResultResponse) => {
     setDrawResult(result);
+    setIsScratched(true);
   };
+
+  const startPeriod = new Date(startDate);
+  const endPeriod = new Date(endDate);
+  const today = new Date();
+
   if (isLoading) {
     return <LoadingPage />;
+  }
+
+  if (today < startPeriod || today > endPeriod) {
+    return <NotEventPeriodPage />;
   }
 
   return (

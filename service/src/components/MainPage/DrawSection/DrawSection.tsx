@@ -6,7 +6,9 @@ import Button from '@/components/common/Button/Button';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
 import { EventInfo } from '@/types/main/type';
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
+import { useEventDateContext } from '@/store/context/useEventDateContext';
+import NotEventPeriodPage from '@/components/ErrorPage/NotEventPeriodPage';
 
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/event_bg_3.webp';
@@ -21,12 +23,20 @@ const DrawSection = ({
   remainDrawCount,
   eventInfo,
 }: EventProps) => {
+  const { startDate, endDate } = useEventDateContext();
+  const today = new Date();
   const navigator = useNavigate();
   const { isLogined } = useLoginContext();
 
-  const goLotteryLounge = () => {
-    navigator(ROUTER_PATH.LOTTERY_LOUNGE);
-  };
+  const goLotteryLounge = useCallback(() => {
+    const startPeriod = new Date(startDate);
+    const endPeriod = new Date(endDate);
+    if (today >= startPeriod && today <= endPeriod) {
+      navigator(ROUTER_PATH.LOTTERY_LOUNGE);
+    } else {
+      return <NotEventPeriodPage />;
+    }
+  }, [navigator]);
 
   return (
     <div

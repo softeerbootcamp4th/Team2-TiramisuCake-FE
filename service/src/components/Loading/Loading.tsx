@@ -40,7 +40,7 @@ const LoadingPage = () => {
             alt='Car'
             className='h-12 absolute bottom-0'
             style={{
-              left: `calc(${progress}% - 50px)`, // 차량 이미지의 중앙이 프로그레스 바의 진행 상태에 맞도록 조정
+              left: `calc(${progress}% - 50px)`, // 차량 이미지의 중앙 - 프로그레스 바의 진행 상태에 맞도록 조정
               transition: 'left 0.3s ease-out',
             }}
           />

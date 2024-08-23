@@ -7,20 +7,35 @@ import { useNavigate } from 'react-router-dom';
 import { useEventsData } from '@/apis/main/query';
 import { getWeekDay } from '@/utils/getWeekDay';
 import LoadingPage from '@/pages/LoadingPage';
+import { useEffect, useState } from 'react';
+import { DrawEvent } from '@/type/main/type';
+import { FcFsEvent } from '@/types/eventDataType';
 
 interface ErrorProps {
   onError: () => void;
 }
 
 const EventManagement = ({ onError }: ErrorProps) => {
-  const { data, isLoading } = useEventsData();
-  const fcfsData = data?.result.fcfsEventList;
-  const drawData = data?.result.drawEvent;
+  const { data, isLoading, isError } = useEventsData();
+
+  const [fcfsData, setFcFsData] = useState<FcFsEvent[]>([]);
+  const [drawData, setDrawData] = useState<DrawEvent | undefined>(undefined);
+
   const navigator = useNavigate();
 
-  if (!data) {
-    onError();
-  }
+  useEffect(() => {
+    if (data) {
+      setFcFsData(data.result.fcfsEventList);
+      setDrawData(data.result.drawEvent);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (isError) {
+      onError();
+    }
+  }, [isError, onError]);
+
   if (isLoading) return <LoadingPage />;
 
   const showEventManage = () => {
@@ -51,17 +66,17 @@ const EventManagement = ({ onError }: ErrorProps) => {
         <div className='text-center py-1'>
           <span className='font-semibold'>복권 긁기 이벤트 </span>
           <span className='text-sm'>
-            {drawData.startDate +
-              getWeekDay(drawData.startDate) +
+            {drawData?.startDate +
+              getWeekDay(drawData?.startDate as string) +
               ' ' +
-              drawData.startTime +
+              drawData?.startTime +
               ' ' +
               '~' +
               ' ' +
-              drawData.endDate +
-              getWeekDay(drawData.endDate) +
+              drawData?.endDate +
+              getWeekDay(drawData?.endDate as string) +
               ' ' +
-              drawData.endTime}
+              drawData?.endTime}
           </span>
         </div>
         <div className='h-[4.1rem] relative flex w-full items-end pb-4'>
