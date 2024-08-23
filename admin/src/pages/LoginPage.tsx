@@ -13,6 +13,8 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
+  const [isLook, setIsLook] = useState(false);
+
   const navigate = useNavigate();
 
   const mutation = useMutationPostLogin();
@@ -24,6 +26,10 @@ const LoginPage = () => {
       navigate(ROUTER_PATH.MAIN, { replace: true });
     }
   }, [navigate]);
+
+  const handleLookIconClick = () => {
+    setIsLook(!isLook);
+  };
 
   const handleIdInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newId = e.target.value;
@@ -113,12 +119,19 @@ const LoginPage = () => {
           <div className='flex flex-col gap-1'>
             <span>비밀번호</span>
             <div className='relative'>
-              <Input onChange={handlePWInputChange} value={password} />
-              <img
-                src='/svg/close.svg'
-                onClick={handlePWClearClick}
-                className='absolute top-[35%] right-2 cursor-pointer'
+              <Input
+                onChange={handlePWInputChange}
+                value={password}
+                type={`${isLook ? 'text' : 'password'}`}
               />
+              <div className='flex gap-2 absolute top-3 right-2 cursor-pointer items-center'>
+                <img
+                  src={`${isLook ? '/svg/unlook.svg' : '/svg/look.svg'}`}
+                  onClick={handleLookIconClick}
+                  className='w-5 h-5'
+                />
+                <img src='/svg/close.svg' onClick={handlePWClearClick} />
+              </div>
             </div>
             <div className='text-red mt-1 text-sm'>{passwordError}</div>
           </div>

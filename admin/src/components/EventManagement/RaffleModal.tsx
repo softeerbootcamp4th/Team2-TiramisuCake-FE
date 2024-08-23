@@ -2,7 +2,7 @@
 import { TimePicker } from '@/components/ui/datetime-picker';
 import Modal from '@/components/common/Modal';
 import { useRaffleRequest } from '@/hooks/useRaffleRequest';
-import { DrawRequest } from '@/type/eventManagement/eventType';
+import { DrawRequest } from '@/type/eventManagement/type';
 
 interface RaffleModalProps {
   isOpen: boolean;

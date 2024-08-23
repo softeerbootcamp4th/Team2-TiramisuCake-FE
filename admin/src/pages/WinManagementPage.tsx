@@ -7,10 +7,9 @@ import SetFCFSWinnerContainer from '@/components/common/Container/SetFCFSWinnerC
 import SetRaffleWinnerContainer from '@/components/common/Container/SetRaffleWinnerContainer';
 import WinnersListContainer from '@/components/common/Container/WinnersListContainer';
 import { useWinnerData } from '@/apis/main/query';
-import { DrawEventList, FCFSEventList } from '@/type/main/type';
 import WinnersProbabilitiesModal from '@/components/WinManagement/WinnersProbabilitiesModal';
 import LoadingPage from './LoadingPage';
-import ErrorPage from './ErrorPage';
+import { WinDrawEventList, WinFcfsEventList } from '@/type/winManagement/type';
 
 type WinnerListModal = {
   state: 'raffle' | 'FCFS';
@@ -24,8 +23,8 @@ const WinManagementPage = () => {
   });
   const [winnerListModalOpen, setWinnerListModalOpen] = useState(false);
 
-  const [FCFSList, setFCFSList] = useState<FCFSEventList[]>([]);
-  const [drawList, setDrawList] = useState<DrawEventList[]>([]);
+  const [FCFSList, setFCFSList] = useState<WinFcfsEventList[]>([]);
+  const [drawList, setDrawList] = useState<WinDrawEventList[]>([]);
 
   const { data, isLoading } = useWinnerData();
 
@@ -36,7 +35,6 @@ const WinManagementPage = () => {
     }
   }, [data]);
 
-  if (!data) return <ErrorPage />;
   if (isLoading) return <LoadingPage />;
 
   return (

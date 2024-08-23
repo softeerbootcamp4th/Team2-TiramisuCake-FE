@@ -8,8 +8,10 @@ import { useEventsData } from '@/apis/main/query';
 import { getWeekDay } from '@/utils/getWeekDay';
 import LoadingPage from '@/pages/LoadingPage';
 import { useEffect, useState } from 'react';
-import { DrawEvent } from '@/type/main/type';
-import { FcFsEvent } from '@/types/eventDataType';
+import {
+  EventDrawEventData,
+  EventFcFsEventData,
+} from '@/type/eventManagement/type';
 
 interface ErrorProps {
   onError: () => void;
@@ -18,8 +20,10 @@ interface ErrorProps {
 const EventManagement = ({ onError }: ErrorProps) => {
   const { data, isLoading, isError } = useEventsData();
 
-  const [fcfsData, setFcFsData] = useState<FcFsEvent[]>([]);
-  const [drawData, setDrawData] = useState<DrawEvent | undefined>(undefined);
+  const [fcfsData, setFcFsData] = useState<EventFcFsEventData[]>([]);
+  const [drawData, setDrawData] = useState<EventDrawEventData | undefined>(
+    undefined
+  );
 
   const navigator = useNavigate();
 

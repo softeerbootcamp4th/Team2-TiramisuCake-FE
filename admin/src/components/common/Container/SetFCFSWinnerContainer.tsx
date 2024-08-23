@@ -3,10 +3,10 @@ import EditButton from '../Button/EditButton';
 import { useNavigate } from 'react-router-dom';
 import { ROUTER_PATH } from '@/lib/constants';
 import List from '../List/List';
-import { FCFSEventList } from '@/type/main/type';
+import { WinFcfsEventList } from '@/type/winManagement/type';
 
 interface Props {
-  FCFSList: FCFSEventList[];
+  FCFSList: WinFcfsEventList[];
   pageType?: 'main' | 'manage';
   handleModalOpen?: () => void;
 }

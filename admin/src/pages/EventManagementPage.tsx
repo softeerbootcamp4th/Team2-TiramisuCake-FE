@@ -10,22 +10,46 @@ import RaffleModal from '@/components/EventManagement/RaffleModal';
 import { useEventsData } from '@/apis/main/query';
 import { getWeekDay } from '@/utils/getWeekDay';
 import { useMutationDraw, useMutationFcFs } from '@/apis/event/query';
-import { DrawRequest, FcFsRequest } from '@/type/eventManagement/eventType';
+import {
+  DrawRequest,
+  EventDrawEventData,
+  EventFcFsEventData,
+  FcFsRequest,
+} from '@/type/eventManagement/type';
 import { useQueryClient } from '@tanstack/react-query';
+import LoadingPage from './LoadingPage';
 
 const EventManagementPage = () => {
   const mutationFcFs = useMutationFcFs();
   const mutationDraw = useMutationDraw();
   const queryClient = useQueryClient();
-  const { data } = useEventsData();
-  const fcfsData = data?.result.fcfsEventList;
-  const drawData = data?.result.drawEvent;
+  const { data, isLoading } = useEventsData();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isWinModalOpen, setIsWinModalOpen] = useState(false);
+  const [fcfsData, setFcFsData] = useState<EventFcFsEventData[]>([]);
+  const [drawData, setDrawData] = useState<EventDrawEventData | undefined>(
+    undefined
+  );
+  const [text, setText] = useState<string>();
 
-  const text = `${drawData.startDate}${getWeekDay(drawData.startDate)} ${
-    drawData.startTime
-  } ~ ${drawData.endDate}${getWeekDay(drawData.endDate)} ${drawData.endTime}`;
+  useEffect(() => {
+    if (data) {
+      setFcFsData(data.result.fcfsEventList);
+      setDrawData(data.result.drawEvent);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (drawData) {
+      const newText = `${drawData.startDate}${getWeekDay(drawData.startDate)} ${
+        drawData.startTime
+      } ~ ${drawData.endDate}${getWeekDay(drawData.endDate)} ${
+        drawData.endTime
+      }`;
+
+      setText(newText);
+    }
+  }, [drawData]);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -45,7 +69,6 @@ const EventManagementPage = () => {
         console.error('Error:', error);
       },
     });
-    //setIsModalOpen(false);
   };
 
   const handleWinOpenModal = () => {
@@ -73,6 +96,8 @@ const EventManagementPage = () => {
   const showEventMetrics = () => {
     navigator(ROUTER_PATH.EVENT_METRICS);
   };
+
+  if (isLoading) return <LoadingPage />;
 
   return (
     <div className='min-w-screen h-full m-10 flex-1 bg-[#F3F5F7] '>
