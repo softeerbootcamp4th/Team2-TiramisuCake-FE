@@ -17,12 +17,13 @@ import {
   FcFsRequest,
 } from '@/type/eventManagement/type';
 import { useQueryClient } from '@tanstack/react-query';
+import LoadingPage from './LoadingPage';
 
 const EventManagementPage = () => {
   const mutationFcFs = useMutationFcFs();
   const mutationDraw = useMutationDraw();
   const queryClient = useQueryClient();
-  const { data } = useEventsData();
+  const { data, isLoading } = useEventsData();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isWinModalOpen, setIsWinModalOpen] = useState(false);
   const [fcfsData, setFcFsData] = useState<EventFcFsEventData[]>([]);
@@ -95,6 +96,8 @@ const EventManagementPage = () => {
   const showEventMetrics = () => {
     navigator(ROUTER_PATH.EVENT_METRICS);
   };
+
+  if (isLoading) return <LoadingPage />;
 
   return (
     <div className='min-w-screen h-full m-10 flex-1 bg-[#F3F5F7] '>

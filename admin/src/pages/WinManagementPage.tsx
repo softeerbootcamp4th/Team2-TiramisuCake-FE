@@ -9,7 +9,6 @@ import WinnersListContainer from '@/components/common/Container/WinnersListConta
 import { useWinnerData } from '@/apis/main/query';
 import WinnersProbabilitiesModal from '@/components/WinManagement/WinnersProbabilitiesModal';
 import LoadingPage from './LoadingPage';
-import ErrorPage from './ErrorPage';
 import { WinDrawEventList, WinFcfsEventList } from '@/type/winManagement/type';
 
 type WinnerListModal = {
@@ -36,7 +35,6 @@ const WinManagementPage = () => {
     }
   }, [data]);
 
-  if (!data) return <ErrorPage />;
   if (isLoading) return <LoadingPage />;
 
   return (
