@@ -25,11 +25,18 @@ const LotteryLoungePage = () => {
   const [isScratched, setIsScratched] = useState(false);
   const { setActiveTab } = useTabContext();
   const [isExitModalOpen, setIsExitModalOpen] = useState(false);
+  const [remainDrawCount, setRemainDrawCount] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     setActiveTab('quiz');
   }, []);
+
+  useEffect(() => {
+    if (data?.isSuccess) {
+      setRemainDrawCount(data.result.remainDrawCount);
+    }
+  }, [data]);
 
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) =>
@@ -68,7 +75,7 @@ const LotteryLoungePage = () => {
           <div className='self-stretch items-center justify-center flex-col flex gap-4 pointer-events-none'>
             <Button
               type='square'
-              text={`내가 초대한 친구 ${data?.result?.invitedNum ?? 0}회 | 오늘의 복권 기회 ${data?.result?.remainDrawCount ?? 0}회`}
+              text={`내가 초대한 친구 ${data?.result?.invitedNum ?? 0}회 | 오늘의 복권 기회 ${remainDrawCount}회`}
               handleClick={sample}
             />
             <div className='text-center'>
@@ -76,7 +83,7 @@ const LotteryLoungePage = () => {
                 복권을 통해 <span className='text-primary'>나의 경품</span>을
                 확인하세요!
               </div>
-              <div className='text-gray-600 text-b-m'>
+              <div className='text-gray-600 text-b-l'>
                 같은 모양이 연달아 3개 나올 시 랜덤으로 경품에 당첨돼요
               </div>
             </div>
@@ -114,7 +121,10 @@ const LotteryLoungePage = () => {
             </div>
             <LotteryCanvas
               onScratch={handleScratchResult}
-              remainDrawCount={data?.result?.remainDrawCount ?? 0}
+              remainDrawCount={remainDrawCount}
+              handleRemainDrawCount={() =>
+                setRemainDrawCount(remainDrawCount - 1)
+              }
             />
           </div>
           <Attendance counts={data?.result?.drawAttendanceCount ?? 0} />

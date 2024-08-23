@@ -38,7 +38,7 @@ const Button = ({
 
   const buttonStyle: Record<string, string> = {
     square: `px-7 py-2.5 ${isActive ? 'bg-primary' : 'bg-gray-400'}`,
-    squareWithBorder: `px-7 py-[9px] border border-primary`,
+    squareWithBorder: `px-7 py-[9px] border border-primary bg-white`,
     round: `p-2.5 rounded-[10px] ${isActive ? 'bg-primary' : 'bg-gray-400'}`,
     roundDone: `p-2.5 rounded-[10px] bg-white`,
     reaction: `px-2.5 py-2 bg-white rounded-[5px] shadow-20 ${
