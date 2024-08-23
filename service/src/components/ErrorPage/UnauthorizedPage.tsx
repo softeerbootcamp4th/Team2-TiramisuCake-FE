@@ -21,9 +21,7 @@ const UnAuthorizedPage = () => {
 
   return (
     <div className='flex flex-col font-semibold justify-center items-center text-center min-w-screen min-h-screen text-hyundai gap-10'>
-      <p className='text-h-s whitespace-pre-wrap'>
-        문제가 발생했습니다. 로그인 후 이용해주세요.
-      </p>
+      <p className='text-h-s whitespace-pre-wrap'>로그인 후 이용해주세요.</p>
       <p className='text-h-s whitespace-pre-wrap'>
         {second}초 뒤에 메인 페이지로 돌아갑니다.
       </p>
