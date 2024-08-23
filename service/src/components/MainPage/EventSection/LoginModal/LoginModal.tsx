@@ -1,9 +1,10 @@
 import './LoginModal.css';
 import Button from '@/components/common/Button/Button';
 import Input from '@/components/common/Input/Input';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState, memo, useCallback } from 'react';
 import { useLoginContext } from '@/store/context/useLoginContext';
 import Modal from '@/components/common/Modal/Modal';
+
 import {
   useMutationCode,
   useMutationCodeVerification,
@@ -20,6 +21,7 @@ import { validatePhoneNumber } from '@/utils/checkPhoneNumber';
 import { checkAuthCode } from '@/utils/checkAuthCode';
 import { useQueryClient } from '@tanstack/react-query';
 import { setCookie } from '@/utils/cookie';
+
 interface CloseProps {
   onClose: () => void;
 }
@@ -28,14 +30,12 @@ const checkbox = 'svg/check-off.svg';
 const checked = 'svg/check-on.svg';
 
 const LoginModal = ({ onClose }: CloseProps) => {
-  // const codeMutation = useMutationCode();
+  //const codeMutation = useMutationCode();
   const codeMutation = useMutationTestCode();
   const codeVerificationMutation = useMutationCodeVerification();
   const loginMutation = useMutationLogin();
-  const [timer, setTimer] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
 
+  const [time, setTime] = useState({ timer: 0, minutes: 0, seconds: 0 });
   const [name, setName] = useState('');
   const [code, setCode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -64,13 +64,12 @@ const LoginModal = ({ onClose }: CloseProps) => {
     setPhoneNumber(rawValue);
     setValidPhoneNumber(validatePhoneNumber(rawValue));
   };
-
   const handlePrivacyConsentChange = () => {
-    setPrivacyConsent(!privacyConsent);
+    setPrivacyConsent((prevConsent) => !prevConsent);
   };
 
   const handleMarketingConsentChange = () => {
-    setMarketingConsent(!marketingConsent);
+    setMarketingConsent((prevConsent) => !prevConsent);
   };
 
   const { setIsLogined } = useLoginContext();
@@ -81,105 +80,135 @@ const LoginModal = ({ onClose }: CloseProps) => {
     setCode(filteredValue);
   };
 
-  const handleSendAuthCode = async (phoneNumber: string) => {
-    if (!codeVerified) {
-      codeMutation.mutate(phoneNumber, {
-        onSuccess: (response) => {
-          console.log('인증번호 전송 성공:', response);
-          if (response.isSuccess && response.result) {
-            setTimer(response.result.timeLimit);
-            setValidateErrorMsg('');
-            const interval = setInterval(() => {
-              setTimer((prevTimer) => {
-                if (prevTimer <= 1) {
-                  clearInterval(interval);
-                  return 0;
-                }
-                return prevTimer - 1;
+  const handleSendAuthCode = useCallback(
+    async (phoneNumber: string) => {
+      if (!codeVerified) {
+        codeMutation.mutate(phoneNumber, {
+          onSuccess: (response) => {
+            console.log('인증번호 전송 성공:', response);
+            if (response.isSuccess && response.result) {
+              setTime({
+                timer: response.result.timeLimit,
+                minutes: Math.floor(response.result.timeLimit / 60),
+                seconds: response.result.timeLimit % 60,
               });
-            }, 1000);
-          } else if (!response.isSuccess && response.code in ERROR_MESSAGES) {
-            //todo : abort controller로 api 요청 완전 차단
+              setValidateErrorMsg('');
+              const interval = setInterval(() => {
+                setTime((prevTime) => {
+                  const newTimer = prevTime.timer - 1;
+                  if (newTimer <= 0) {
+                    clearInterval(interval);
+                    return { ...prevTime, timer: 0, minutes: 0, seconds: 0 };
+                  }
+                  return {
+                    ...prevTime,
+                    timer: newTimer,
+                    minutes: Math.floor(newTimer / 60),
+                    seconds: newTimer % 60,
+                  };
+                });
+              }, 1000);
+            } else if (!response.isSuccess && response.code in ERROR_MESSAGES) {
+              setCodeErrorMsg('');
+              setTime({ timer: 0, minutes: 0, seconds: 0 });
+              setCanSendCode(true);
+              alert(ERROR_MESSAGES[response.code as ErrorCode]);
+            }
+          },
+          onError: () => {
+            setCanSendCode(true);
+          },
+        });
+      }
+    },
+    [codeVerified, codeMutation]
+  );
+
+  const handleVerification = useCallback(
+    async (body: ConfirmVerificationRequestBody) => {
+      codeVerificationMutation.mutate(body, {
+        onSuccess: (response) => {
+          if (response.isSuccess) {
             setCodeErrorMsg('');
-            setTimer(0);
-            setCanSendCode(false);
-            alert(ERROR_MESSAGES[response.code as ErrorCode]);
+            setValidateErrorMsg('');
+            setCodeVerified(true);
+            setTime({ timer: 0, minutes: 0, seconds: 0 });
+          } else {
+            console.log(response);
+
+            if (response.code in ERROR_MESSAGES) {
+              const errorMessage = ERROR_MESSAGES[response.code as ErrorCode];
+
+              if (response.code === ERROR_CODES.TIMEOUT) {
+                setCodeErrorMsg(errorMessage);
+              } else if (response.code !== ERROR_CODES.RESEND_REQUIRED) {
+                setValidateErrorMsg(errorMessage);
+              } else if (response.code === ERROR_CODES.RESEND_REQUIRED) {
+                setValidateErrorMsg(errorMessage);
+                setTime({ timer: 0, minutes: 0, seconds: 0 });
+                setCodeErrorMsg('');
+              }
+            }
           }
         },
       });
-    }
-  };
+    },
+    [codeVerificationMutation]
+  );
 
-  const handleVerification = async (body: ConfirmVerificationRequestBody) => {
-    codeVerificationMutation.mutate(body, {
-      onSuccess: (response) => {
-        if (response.isSuccess) {
-          setCodeErrorMsg('');
-          setValidateErrorMsg('');
-          setCodeVerified(true);
-          setTimer(0);
-        } else {
+  const handleLogin = useCallback(
+    (body: LoginRequestBody) => {
+      loginMutation.mutate(body, {
+        onSuccess: (response) => {
           console.log(response);
 
-          if (response.code in ERROR_MESSAGES) {
-            const errorMessage = ERROR_MESSAGES[response.code as ErrorCode];
+          if (response.isSuccess && response.result) {
+            setCodeErrorMsg('');
+            setValidateErrorMsg('');
+            const expiresAt = parseISO(response.result.expiredTime);
+            const maxAge = differenceInSeconds(expiresAt, new Date());
 
-            if (response.code === ERROR_CODES.TIMEOUT) {
-              setCodeErrorMsg(errorMessage);
-            } else if (response.code !== ERROR_CODES.RESEND_REQUIRED) {
-              setValidateErrorMsg(errorMessage);
-            } else if (response.code === ERROR_CODES.RESEND_REQUIRED) {
-              setValidateErrorMsg(errorMessage);
-              setTimer(0);
-              setCodeErrorMsg('');
-            }
+            setCookie('accessToken', response.result.accessToken, {
+              path: '/',
+              maxAge: maxAge,
+              secure: true,
+              sameSite: 'strict',
+            });
+
+            setCookie('refreshToken', response.result.refreshToken, {
+              path: '/',
+              maxAge: 604800,
+              secure: true,
+              sameSite: 'strict',
+            });
+            queryClient.invalidateQueries({
+              queryKey: ['sharedUrl', response.result.accessToken],
+            });
+
+            setIsLogined(true);
+            window.location.reload();
+            onClose();
+          } else if (!response.isSuccess && response.code in ERROR_MESSAGES) {
+            alert(ERROR_MESSAGES[response.code as ErrorCode]);
+            resetForm();
           }
-        }
-      },
-    });
+        },
+      });
+    },
+    [loginMutation, queryClient, setIsLogined, onClose]
+  );
+
+  const resetForm = () => {
+    setName('');
+    setPhoneNumber('');
+    setCode('');
+    setValidCode(false);
+    setCodeVerified(false);
+    setAllValid(false);
+    setMarketingConsent(false);
+    setPrivacyConsent(false);
+    setCanSendCode(true);
   };
-
-  const handleLogin = (body: LoginRequestBody) => {
-    loginMutation.mutate(body, {
-      onSuccess: (response) => {
-        console.log(response);
-
-        if (response.isSuccess && response.result) {
-          setCodeErrorMsg('');
-          setValidateErrorMsg('');
-          const expiresAt = parseISO(response.result.expiredTime);
-          const maxAge = differenceInSeconds(expiresAt, new Date());
-
-          setCookie('accessToken', response.result.accessToken, {
-            path: '/',
-            maxAge: maxAge,
-            secure: true,
-            sameSite: 'strict',
-          });
-
-          setCookie('refreshToken', response.result.refreshToken, {
-            path: '/',
-            maxAge: 604800,
-            secure: true,
-            sameSite: 'strict',
-          });
-          queryClient.invalidateQueries({
-            queryKey: ['sharedUrl', response.result.accessToken],
-          });
-
-          setIsLogined(true);
-          onClose();
-        } else if (!response.isSuccess && response.code in ERROR_MESSAGES) {
-          alert(ERROR_MESSAGES[response.code as ErrorCode]);
-        }
-      },
-    });
-  };
-
-  useEffect(() => {
-    setMinutes(Math.floor(timer / 60));
-    setSeconds(timer % 60);
-  }, [timer]);
 
   useEffect(() => {
     if (privacyConsent && codeVerified) {
@@ -227,12 +256,14 @@ const LoginModal = ({ onClose }: CloseProps) => {
             <div className='flex flex-row items-center w-full'>
               <div className='textCommonClass'>인증번호 입력</div>
               <div className='ml-auto text-red text-b-s'>
-                {timer === 0 && !codeVerified ? (
+                {time.timer === 0 && !codeVerified ? (
                   <p>{codeErrorMsg}</p>
                 ) : (
-                  timer > 0 && (
+                  time.timer > 0 && (
                     <p>
-                      {minutes}:{seconds < 10 ? `0${seconds}` : seconds}초 남음
+                      {time.minutes}:
+                      {time.seconds < 10 ? `0${time.seconds}` : time.seconds}초
+                      남음
                     </p>
                   )
                 )}
@@ -241,7 +272,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
             <Input
               type={codeVerified ? 'disabled' : 'active'}
               inputText='인증번호를 입력해주세요'
-              buttonText={codeVerified ? '인증완료' : '전송'}
+              buttonText={codeVerified ? '인증완료' : '인증'}
               showButton
               required
               value={code}
@@ -301,4 +332,4 @@ const LoginModal = ({ onClose }: CloseProps) => {
     </Modal>
   );
 };
-export default LoginModal;
+export default memo(LoginModal);

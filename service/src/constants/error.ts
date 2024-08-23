@@ -9,7 +9,7 @@ export const ERROR_CODES = {
 } as const;
 
 export const ERROR_MESSAGES = {
-  [ERROR_CODES.INVALID_FORMAT]: '인증 코드 형식은 영 대,소문자 6자리입니다.',
+  [ERROR_CODES.INVALID_FORMAT]: '필드 형식이 잘못되었습니다.',
   [ERROR_CODES.TIMEOUT]: '인증 시간 초과',
   [ERROR_CODES.INVALID_CODE]: '인증 코드가 일치하지 않습니다.',
   [ERROR_CODES.RESEND_REQUIRED]: '인증 횟수 초과. 인증 코드를 재발급 받으세요.',

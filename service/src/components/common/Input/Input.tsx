@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, memo, useCallback, useEffect, useState } from 'react';
 import Button from '../Button/Button';
 import { debounce } from 'lodash';
 
@@ -53,15 +53,18 @@ const Input = ({
     if (type === 'disabled') setDisabled(true);
   }, []);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (onChange) {
-      onChange(e);
-    }
-  };
+  const handleInputChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      if (onChange) {
+        onChange(e);
+      }
+    },
+    [onChange]
+  );
 
-  const handleFocus = () => {
+  const handleFocus = useCallback(() => {
     setIsFocus((prev) => !prev);
-  };
+  }, []);
 
   const debouncedSetIsValue = useCallback(
     debounce((val) => {
@@ -112,4 +115,4 @@ const Input = ({
   );
 };
 
-export default Input;
+export default memo(Input);
