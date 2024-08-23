@@ -32,7 +32,9 @@ function QuizLoungePage() {
 
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) =>
-      !isGameEnded && currentLocation.pathname !== nextLocation.pathname
+      !isGameEnded &&
+      mode !== 'tutorial' &&
+      currentLocation.pathname !== nextLocation.pathname
   );
 
   useEffect(() => {
