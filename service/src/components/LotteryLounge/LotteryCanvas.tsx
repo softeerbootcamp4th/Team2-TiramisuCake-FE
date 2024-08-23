@@ -8,6 +8,7 @@ import EventModal from '@/components/common/Modal/EventModal/EventModal';
 import { DrawResultResponse, WinModal } from '@/types/lottery/type';
 import { useModalContext } from '@/store/context/useModalContext';
 import { QueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 interface LotteryCanvasProps {
   onScratch: (result: DrawResultResponse) => void;
@@ -16,7 +17,7 @@ interface LotteryCanvasProps {
 
 const LotteryCanvas = ({ onScratch, remainDrawCount }: LotteryCanvasProps) => {
   const { isOpen, setIsOpen } = useModalContext();
-
+  const navigate = useNavigate();
   const [isResultOpen, setIsResultOpen] = useState(false);
   const [isScratched, setIsScratched] = useState(false); // 최초 긁기 여부 확인
   const [isWin, setIsWin] = useState(false);
@@ -28,6 +29,7 @@ const LotteryCanvas = ({ onScratch, remainDrawCount }: LotteryCanvasProps) => {
   const closeModal = () => {
     setIsOpen(false);
     setIsResultOpen(false);
+    navigate('/');
   };
 
   const token = getCookie('accessToken');
@@ -73,6 +75,7 @@ const LotteryCanvas = ({ onScratch, remainDrawCount }: LotteryCanvasProps) => {
             queryKey: ['drawAttendance'],
           });
           onScratch(response); // 결과 부모 컴포넌트로 전달
+
           setUrl(response.result.shareUrl ?? '');
           if (response.result.isDrawWin) {
             setIsWin(true);
@@ -131,9 +134,11 @@ const LotteryCanvas = ({ onScratch, remainDrawCount }: LotteryCanvasProps) => {
     const ctx = canvas?.getContext('2d');
     if (!canvas || !ctx) return;
 
-    const width = canvas.width;
-    const height = canvas.height;
-    const imageData = ctx.getImageData(0, 0, width, height);
+    const startX = 100;
+    const startY = 100;
+    const width = canvas.width - startY * 2;
+    const height = canvas.height - startX * 2;
+    const imageData = ctx.getImageData(startX, startY, width, height);
     const data = imageData.data;
     let erasedPixels = 0;
 
@@ -145,7 +150,7 @@ const LotteryCanvas = ({ onScratch, remainDrawCount }: LotteryCanvasProps) => {
 
     const erasePercentage = (erasedPixels / (width * height)) * 100;
 
-    if (erasePercentage >= 50) {
+    if (erasePercentage >= 75) {
       fadeOutCanvas();
     }
   };
