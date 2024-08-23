@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import scrollToElementId from '@/utils/scrollToElementId';
 import { useLoginContext } from '@/store/context/useLoginContext';
 import { useCookies } from 'react-cookie';
+import { ROUTER_PATH } from '@/constants/lib/constants';
 
 const Header = () => {
   const { activeTab, setActiveTab } = useTabContext();
@@ -19,13 +20,26 @@ const Header = () => {
   };
 
   const handleLogin = () => {
-    if (accessToken) {
+    const currentPath = window.location.pathname.startsWith('/')
+      ? window.location.pathname.substring(1)
+      : window.location.pathname;
+    const commentsPath = `${ROUTER_PATH.COMMENTS_LOUNGE}`;
+
+    if (currentPath === commentsPath) {
+      if (accessToken) {
+        removeCookie('accessToken', { path: '/' });
+        setIsLogined(false);
+        window.location.href = '/';
+      } else {
+        window.location.href = '/';
+        handleTabClick('event');
+      }
+    } else if (accessToken) {
       removeCookie('accessToken', { path: '/' });
       setIsLogined(false);
-      //강제 새로고침 - 메인으로 redirect
+      // 강제 새로고침
       window.location.reload();
     } else {
-      // 로그인 탭으로 이동
       handleTabClick('event');
     }
   };
