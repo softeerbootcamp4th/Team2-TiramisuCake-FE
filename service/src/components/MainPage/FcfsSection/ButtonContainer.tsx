@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
-  fcfsStartTime: string;
+  fcfsStartTime: string | null;
 }
 
 const ButtonContainer = ({ fcfsStartTime }: Props) => {

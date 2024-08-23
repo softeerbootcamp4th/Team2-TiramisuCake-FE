@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 interface Props {
-  fcfsStartTime: string;
+  fcfsStartTime: string | null;
 }
 
 const TWO_HOUR = 2 * 60 * 60 * 1000;
@@ -49,6 +49,9 @@ const useCountdownTimer = ({ fcfsStartTime }: Props) => {
       // 1초마다 updateCounter 실행
       const intervalId = setInterval(updateCounter, 1000);
       return () => clearInterval(intervalId);
+    } else {
+      setIsActive(false);
+      setButtonText('이벤트 종료');
     }
   }, [fcfsStartTime]);
 

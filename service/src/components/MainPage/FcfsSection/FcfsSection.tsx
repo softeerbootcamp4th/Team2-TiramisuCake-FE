@@ -12,7 +12,7 @@ export interface EventProps {
   fcfsInfo: string;
   fcfsHint: string;
   eventInfo: EventInfo;
-  fcfsStartTime: string;
+  fcfsStartTime: string | null;
 }
 const FcfsSection = ({
   fcfsInfo,
