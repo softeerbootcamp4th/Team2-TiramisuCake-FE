@@ -8,28 +8,36 @@ import EventModal from '@/components/common/Modal/EventModal/EventModal';
 import { DrawResultResponse, WinModal } from '@/types/lottery/type';
 import { useModalContext } from '@/store/context/useModalContext';
 import { QueryClient } from '@tanstack/react-query';
+import Button from '../common/Button/Button';
 import { useNavigate } from 'react-router-dom';
+import { ROUTER_PATH } from '@/constants/lib/constants';
 
 interface LotteryCanvasProps {
   onScratch: (result: DrawResultResponse) => void;
   remainDrawCount: number;
+  handleRemainDrawCount: () => void;
 }
 
-const LotteryCanvas = ({ onScratch, remainDrawCount }: LotteryCanvasProps) => {
+const LotteryCanvas = ({
+  onScratch,
+  remainDrawCount,
+  handleRemainDrawCount,
+}: LotteryCanvasProps) => {
   const { isOpen, setIsOpen } = useModalContext();
-  const navigate = useNavigate();
-  const [isResultOpen, setIsResultOpen] = useState(false);
+  const [isGameEnded, setIsGameEnded] = useState(false);
   const [isScratched, setIsScratched] = useState(false); // 최초 긁기 여부 확인
   const [isWin, setIsWin] = useState(false);
   const [result, setResult] = useState<WinModal | null>(null);
   const queryClient = new QueryClient();
 
+  const isCompeletRef = useRef<boolean>(false);
+
+  const navigation = useNavigate();
   const { setUrl } = useUrl();
 
   const closeModal = () => {
     setIsOpen(false);
-    setIsResultOpen(false);
-    navigate('/');
+    setIsGameEnded(true);
   };
 
   const token = getCookie('accessToken');
@@ -75,6 +83,7 @@ const LotteryCanvas = ({ onScratch, remainDrawCount }: LotteryCanvasProps) => {
             queryKey: ['drawAttendance'],
           });
           onScratch(response); // 결과 부모 컴포넌트로 전달
+          handleRemainDrawCount();
 
           setUrl(response.result.shareUrl ?? '');
           if (response.result.isDrawWin) {
@@ -150,8 +159,13 @@ const LotteryCanvas = ({ onScratch, remainDrawCount }: LotteryCanvasProps) => {
 
     const erasePercentage = (erasedPixels / (width * height)) * 100;
 
-    if (erasePercentage >= 75) {
+    if (erasePercentage >= 75 && !isCompeletRef.current) {
       fadeOutCanvas();
+      craftFireworks(1);
+      isCompeletRef.current = true;
+      setTimeout(() => {
+        setIsOpen(true);
+      }, 1500);
     }
   };
 
@@ -159,16 +173,16 @@ const LotteryCanvas = ({ onScratch, remainDrawCount }: LotteryCanvasProps) => {
     if (canvasRef.current) {
       canvasRef.current.style.transition = 'opacity 1s';
       canvasRef.current.style.opacity = '0';
-      craftFireworks(1);
-      setTimeout(() => {
-        setIsOpen(true);
-        setIsResultOpen(true);
-        if (canvasRef.current) {
-          // 캔버스 영역 클릭할 수 없도록 설정
-          canvasRef.current.style.pointerEvents = 'none';
-        }
-      }, 1500);
+      canvasRef.current.style.pointerEvents = 'none';
     }
+  };
+
+  const handleRetryButton = () => {
+    window.location.reload();
+  };
+
+  const handleBackToMain = () => {
+    navigation(ROUTER_PATH.MAIN);
   };
   return (
     <>
@@ -188,7 +202,7 @@ const LotteryCanvas = ({ onScratch, remainDrawCount }: LotteryCanvasProps) => {
         ></canvas>
       </div>
 
-      {isOpen && isResultOpen && (
+      {isOpen && (
         <div className='fixed inset-0 flex items-center justify-center z-50'>
           <div onClick={closeModal}></div>
           {isWin && result ? (
@@ -201,6 +215,23 @@ const LotteryCanvas = ({ onScratch, remainDrawCount }: LotteryCanvasProps) => {
             />
           ) : (
             <LoseModal onClose={closeModal} />
+          )}
+        </div>
+      )}
+      {isGameEnded && (
+        <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50'>
+          {remainDrawCount > 0 ? (
+            <Button
+              type='squareWithBorder'
+              text='복권 다시 긁기'
+              handleClick={handleRetryButton}
+            />
+          ) : (
+            <Button
+              type='squareWithBorder'
+              text='메인 화면으로 돌아가기'
+              handleClick={handleBackToMain}
+            />
           )}
         </div>
       )}
