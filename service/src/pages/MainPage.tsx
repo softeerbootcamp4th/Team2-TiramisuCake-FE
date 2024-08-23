@@ -36,12 +36,15 @@ const MainPage = () => {
             <FcfsSection
               fcfsInfo={dynamicData?.result.fcfsInfo as string}
               fcfsHint={dynamicData?.result.fcfsHint as string}
-              fcfsStartTime={dynamicData?.result.fcfsStartTime as string}
+              fcfsStartTime={dynamicData?.result.fcfsStartTime as string | null}
               eventInfo={staticData?.result.eventInfoList[0] as EventInfo}
             />
           </div>
           <div ref={(el) => setRef(el, 3)} id='draw'>
             <DrawSection
+              drawInfo={dynamicData?.result.drawInfo as string}
+              drawStartTime={dynamicData?.result.drawStartTime as string}
+              drawEndTime={dynamicData?.result.drawEndTime as string}
               totalDrawWinner={dynamicData?.result.totalDrawWinner as string}
               remainDrawCount={dynamicData?.result.remainDrawCount as string}
               eventInfo={staticData?.result.eventInfoList[1] as EventInfo}

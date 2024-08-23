@@ -19,7 +19,6 @@ import { parseISO, differenceInSeconds } from 'date-fns';
 import { validatePhoneNumber } from '@/utils/checkPhoneNumber';
 import { checkAuthCode } from '@/utils/checkAuthCode';
 import { useQueryClient } from '@tanstack/react-query';
-
 import { setCookie } from '@/utils/cookie';
 interface CloseProps {
   onClose: () => void;
@@ -54,6 +53,12 @@ const LoginModal = ({ onClose }: CloseProps) => {
 
   const queryClient = useQueryClient();
 
+  const handleNameInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const newValue = e.target.value.replace(/\s+/g, ''); // 공백 제거
+    setName(newValue);
+  };
+
   const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value.replace(/\D/g, '').slice(0, 11); // 숫자만 추출
     setPhoneNumber(rawValue);
@@ -70,10 +75,6 @@ const LoginModal = ({ onClose }: CloseProps) => {
 
   const { setIsLogined } = useLoginContext();
 
-  const handleNameInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setName(e.target.value);
-  };
   const handleCodeInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const filteredValue = e.target.value.slice(0, 6); // 6자리까지 제한
     setValidCode(checkAuthCode(filteredValue));

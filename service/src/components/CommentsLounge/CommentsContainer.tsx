@@ -23,15 +23,15 @@ const CommentsContainer = () => {
     >
       <div
         id='scrollableDiv'
-        className='overflow-y-auto w-[24rem] h-[560px] flex flex-col-reverse items-center px-8 py-10 comment-mask relative bg-white bg-opacity-20 rounded-3xl'
+        className='overflow-y-auto w-[24rem] h-[560px] flex flex-col-reverse gap-2.5 items-center px-8 py-10 comment-mask relative bg-white bg-opacity-20 rounded-3xl'
       >
         {data ? (
           data?.pages.map((page, pageIndex) => (
             <div
               key={pageIndex}
-              className=' flex flex-col gap-2.5 items-center '
+              className=' flex flex-col-reverse gap-2.5 items-center '
             >
-              {page.result.comments.reverse().map((comment, index) => (
+              {page.result.comments.map((comment, index) => (
                 <Comment
                   key={index}
                   userName={comment.nickName}

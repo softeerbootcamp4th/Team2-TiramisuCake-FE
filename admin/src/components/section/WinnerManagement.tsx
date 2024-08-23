@@ -10,7 +10,7 @@ interface ErrorProps {
 }
 
 const WinnerManagement = ({ onError }: ErrorProps) => {
-  const { data, isLoading } = useWinnerData();
+  const { data, isLoading, isError } = useWinnerData();
   console.log(data);
   const [FCFSList, setFCFSList] = useState([]);
   const [drawList, setDrawList] = useState([]);
@@ -19,11 +19,12 @@ const WinnerManagement = ({ onError }: ErrorProps) => {
     if (data) {
       setFCFSList(data.result.fcfsEventList);
       setDrawList(data.result.drawEventList);
-    } else {
-      return onError();
     }
-  }, [data, onError]);
+  }, [data]);
 
+  useEffect(() => {
+    if (isError) onError();
+  }, [isError, onError]);
   if (isLoading) return <LoadingPage />;
 
   return (

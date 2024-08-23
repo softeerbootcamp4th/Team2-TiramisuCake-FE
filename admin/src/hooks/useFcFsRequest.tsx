@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { format, setHours, setMinutes } from 'date-fns';
-import { FcFsRequest } from '@/type/eventManagement/eventType';
+import { FcFsRequest } from '@/type/eventManagement/type';
 
 const useFcFsRequest = () => {
   const initRequest: FcFsRequest = {

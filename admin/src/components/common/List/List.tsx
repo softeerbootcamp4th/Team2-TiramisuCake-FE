@@ -1,19 +1,16 @@
-import { FCFSEventList } from '@/type/main/type';
 import { getWeekDay } from '@/utils/getWeekDay';
-
-type Event = {
-  round: string;
-  startTime: string;
-  endTime: string;
-};
+import { WinFcfsEventList } from '@/type/winManagement/type';
+import { EventFcFsEventData } from '@/type/eventManagement/type';
 
 interface ListProps {
   onClick: () => void;
-  events: Event[] | FCFSEventList[];
+  events: EventFcFsEventData[] | WinFcfsEventList[];
 }
 
-const isEvent = (event: Event | FCFSEventList): event is Event => {
-  return (event as Event).startTime !== undefined;
+const isEvent = (
+  event: EventFcFsEventData | WinFcfsEventList
+): event is EventFcFsEventData => {
+  return (event as EventFcFsEventData).startTime !== undefined;
 };
 
 const List = ({ events = [] }: ListProps) => {
@@ -38,10 +35,10 @@ const List = ({ events = [] }: ListProps) => {
               ) : (
                 <>
                   <p className='text-sm '>
-                    {(event as FCFSEventList).eventDate}
+                    {(event as WinFcfsEventList).eventDate}
                   </p>
                   <p className=' text-sm'>
-                    | {(event as FCFSEventList).winnerNum}명 |
+                    | {(event as WinFcfsEventList).winnerNum}명 |
                   </p>
                 </>
               )}

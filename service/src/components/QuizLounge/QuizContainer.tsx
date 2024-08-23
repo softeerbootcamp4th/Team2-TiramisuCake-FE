@@ -176,7 +176,7 @@ const QuizContainer = ({
         ) : (
           <ResultModal
             handleModal={handleModal}
-            result={modalData!.fcfsWinner}
+            result={modalData!.isFcfsWinner}
             title={modalData!.fcfsResult.title}
             subTitle={modalData!.fcfsResult.subTitle}
             code={modalData!.fcfsResult.fcfsCode}

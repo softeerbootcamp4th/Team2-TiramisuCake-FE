@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/popover';
 import { CalendarIcon } from 'lucide-react';
 import useFcFsRequest from '@/hooks/useFcFsRequest';
-import { FcFsRequest } from '@/type/eventManagement/eventType';
+import { FcFsRequest } from '@/type/eventManagement/type';
 import { format } from 'date-fns';
 
 interface FCFSModalProps {
