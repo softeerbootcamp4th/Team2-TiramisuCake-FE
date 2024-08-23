@@ -28,8 +28,8 @@ const checkbox = 'svg/check-off.svg';
 const checked = 'svg/check-on.svg';
 
 const LoginModal = ({ onClose }: CloseProps) => {
-  //  const codeMutation = useMutationCode();
-  const codeMutation = useMutationTestCode();
+  const codeMutation = useMutationCode();
+  //const codeMutation = useMutationTestCode();
   const codeVerificationMutation = useMutationCodeVerification();
   const loginMutation = useMutationLogin();
   const [timer, setTimer] = useState(0);
