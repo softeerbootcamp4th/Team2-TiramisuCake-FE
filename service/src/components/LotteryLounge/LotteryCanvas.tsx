@@ -1,16 +1,13 @@
-import { useRef, useEffect, useState } from 'react';
+import { useState } from 'react';
 import LoseModal from './Modal/LoseModal';
-import { craftFireworks } from '@/utils/confettiCrafter';
 import { useMutationDrawData } from '@/apis/draw/query';
 import { getCookie } from '@/utils/cookie';
 import { useUrl } from '@/store/context/useUrl';
 import EventModal from '@/components/common/Modal/EventModal/EventModal';
 import { DrawResultResponse, WinModal } from '@/types/lottery/type';
-import { useModalContext } from '@/store/context/useModalContext';
 import { QueryClient } from '@tanstack/react-query';
 import Button from '../common/Button/Button';
-import { useNavigate } from 'react-router-dom';
-import { ROUTER_PATH } from '@/constants/lib/constants';
+import { useCanvasDrawing } from '@/hooks/LotteryLounge/useCanvasDrawing';
 
 interface LotteryCanvasProps {
   onScratch: (result: DrawResultResponse) => void;
@@ -23,46 +20,25 @@ const LotteryCanvas = ({
   remainDrawCount,
   handleRemainDrawCount,
 }: LotteryCanvasProps) => {
-  const { isOpen, setIsOpen } = useModalContext();
-  const [isGameEnded, setIsGameEnded] = useState(false);
   const [isScratched, setIsScratched] = useState(false); // 최초 긁기 여부 확인
   const [isWin, setIsWin] = useState(false);
   const [result, setResult] = useState<WinModal | null>(null);
-  const queryClient = new QueryClient();
-
-  const isCompeletRef = useRef<boolean>(false);
-
-  const navigation = useNavigate();
   const { setUrl } = useUrl();
-
-  const closeModal = () => {
-    setIsOpen(false);
-    setIsGameEnded(true);
-  };
-
   const token = getCookie('accessToken');
   const mutation = useMutationDrawData(token);
+  const queryClient = new QueryClient();
 
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const drawing = useRef(false);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
-    if (!canvas || !ctx) return;
-
-    canvas.width = 784;
-    canvas.height = 400;
-
-    ctx.fillStyle = '#FFFFFF';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // 지우기 설정
-    ctx.globalCompositeOperation = 'destination-out';
-    ctx.lineWidth = 50;
-    ctx.lineJoin = 'round';
-    ctx.lineCap = 'round';
-  }, []);
+  const {
+    canvasRef,
+    draw,
+    endDrawing,
+    isOpen,
+    closeModal,
+    isGameEnded,
+    drawing,
+    handleRetryButton,
+    handleBackToMain,
+  } = useCanvasDrawing();
 
   const startDrawing = (
     e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
@@ -101,89 +77,6 @@ const LotteryCanvas = ({
     draw(e);
   };
 
-  const endDrawing = () => {
-    drawing.current = false;
-    if (canvasRef.current) {
-      canvasRef.current.getContext('2d')?.beginPath();
-    }
-  };
-
-  const draw = (
-    e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
-  ) => {
-    if (!drawing.current) return;
-
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
-    if (!canvas || !ctx) return;
-
-    const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-
-    let x, y;
-    if ('clientX' in e) {
-      x = (e.clientX - rect.left) * scaleX;
-      y = (e.clientY - rect.top) * scaleY;
-    } else {
-      x = (e.touches[0].clientX - rect.left) * scaleX;
-      y = (e.touches[0].clientY - rect.top) * scaleY;
-    }
-
-    ctx.lineTo(x, y);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-
-    checkErasePercentage();
-  };
-
-  const checkErasePercentage = () => {
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
-    if (!canvas || !ctx) return;
-
-    const startX = 100;
-    const startY = 100;
-    const width = canvas.width - startY * 2;
-    const height = canvas.height - startX * 2;
-    const imageData = ctx.getImageData(startX, startY, width, height);
-    const data = imageData.data;
-    let erasedPixels = 0;
-
-    for (let i = 3; i < data.length; i += 4) {
-      if (data[i] === 0) {
-        erasedPixels++;
-      }
-    }
-
-    const erasePercentage = (erasedPixels / (width * height)) * 100;
-
-    if (erasePercentage >= 75 && !isCompeletRef.current) {
-      fadeOutCanvas();
-      craftFireworks(1);
-      isCompeletRef.current = true;
-      setTimeout(() => {
-        setIsOpen(true);
-      }, 1500);
-    }
-  };
-
-  const fadeOutCanvas = () => {
-    if (canvasRef.current) {
-      canvasRef.current.style.transition = 'opacity 1s';
-      canvasRef.current.style.opacity = '0';
-      canvasRef.current.style.pointerEvents = 'none';
-    }
-  };
-
-  const handleRetryButton = () => {
-    window.location.reload();
-  };
-
-  const handleBackToMain = () => {
-    navigation(ROUTER_PATH.MAIN);
-  };
   return (
     <>
       <div className='relative'>
@@ -238,4 +131,5 @@ const LotteryCanvas = ({
     </>
   );
 };
+
 export default LotteryCanvas;
