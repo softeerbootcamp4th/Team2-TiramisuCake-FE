@@ -24,6 +24,7 @@ const ExitModal = ({
       <div className='bg-white flex flex-col items-center gap-10 relative'>
         <img
           src='/svg/closeIcon.svg'
+          alt='close icon'
           onClick={handleClose}
           className='cursor-pointer absolute top-[-4rem] right-0'
         />
@@ -34,6 +35,7 @@ const ExitModal = ({
           <img
             src='https://d1wv99asbppzjv.cloudfront.net/main-page/sad.png'
             className='w-[150px] h-[150px] '
+            alt='sad face'
           />
           <p className='text-red'>
             지금 나가시면 이벤트 참여로 간주되지 않습니다.

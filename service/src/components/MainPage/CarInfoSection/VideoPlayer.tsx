@@ -90,11 +90,15 @@ const VideoPlayer = ({ videoUrl }: VideoPlayerProps) => {
                 onClick={handleMuteUnMute}
                 alt='sound on-off button'
                 src={isMuted ? 'svg/sound-off.svg' : 'svg/sound-on.svg'}
+                width={32}
+                height={33}
               />
               <img
                 onClick={enterFullScreen}
                 src='svg/full.svg'
                 alt='full screen button'
+                width={32}
+                height={33}
               />
             </div>
           )}

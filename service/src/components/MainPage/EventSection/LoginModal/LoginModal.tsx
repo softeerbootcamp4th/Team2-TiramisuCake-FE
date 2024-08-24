@@ -294,6 +294,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
           <div className='mt-6 my-2 flex flex-row items-start'>
             <img
               className='cursor-pointer'
+              alt='checkbox'
               src={privacyConsent ? checked : checkbox}
               onClick={handlePrivacyConsentChange}
             />
@@ -304,6 +305,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
           <div className='mb-2 flex flex-row items-start'>
             <img
               className='cursor-pointer'
+              alt='checkbox'
               src={marketingConsent ? checked : checkbox}
               onClick={handleMarketingConsentChange}
             />
