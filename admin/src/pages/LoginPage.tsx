@@ -9,14 +9,11 @@ import { getCookie, setCookie } from '@/utils/cookie';
 const LoginPage = () => {
   const [id, setId] = useState('');
   const [idError, setIdError] = useState('');
-
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
-
   const [isLook, setIsLook] = useState(false);
 
   const navigate = useNavigate();
-
   const mutation = useMutationPostLogin();
 
   useEffect(() => {
@@ -55,24 +52,30 @@ const LoginPage = () => {
     mutation.mutate(
       { account: id, password: password },
       {
-        onSuccess: (data) => {
-          setCookie('accessToken', data.result.accessToken, {
-            path: '/',
-            maxAge: 100000, // Todo 수정
-            secure: true,
-            sameSite: 'strict',
-          });
+        onSuccess: (response) => {
+          if (response.isSuccess) {
+            setCookie('accessToken', response.result.accessToken, {
+              path: '/',
+              maxAge: 100000, // Todo 수정
+              secure: true,
+              sameSite: 'strict',
+            });
 
-          setCookie('refreshToken', data.result.refreshToken, {
-            path: '/',
-            maxAge: 604800,
-            secure: true,
-            sameSite: 'strict',
-          });
-          navigate(ROUTER_PATH.MAIN);
+            setCookie('refreshToken', response.result.refreshToken, {
+              path: '/',
+              maxAge: 604800,
+              secure: true,
+              sameSite: 'strict',
+            });
+            navigate(ROUTER_PATH.MAIN);
+          } else {
+            alert(response.message);
+            setId('');
+            setPassword('');
+          }
         },
         onError: () => {
-          console.log('로그인 실패 ㅠㅠ');
+          alert('로그인에 실패했습니다.');
           setId('');
           setPassword('');
         },

@@ -7,7 +7,8 @@ import { TabProvider } from './store/provider/TabProvider';
 
 const App = () => {
   const location = useLocation();
-  const isRootPath = location.pathname === '/';
+  const isRootPath =
+    location.pathname === '/' || location.pathname === '/comments-lounge';
 
   return (
     <>
