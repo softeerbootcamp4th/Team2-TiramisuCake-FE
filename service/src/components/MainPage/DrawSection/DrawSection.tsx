@@ -105,7 +105,12 @@ const DrawSection = ({
               {...SCROLL_MOTION}
               className='flex flex-col items-center gap-1'
             >
-              <img src={eventInfo.rewardImage1} alt='경품1' />
+              <img
+                src={eventInfo.rewardImage1}
+                alt='경품1'
+                width={218}
+                height={244}
+              />
               <p className='font-semibold text-b-xl text-white'>
                 {eventInfo.rewardName1}
               </p>
@@ -117,6 +122,7 @@ const DrawSection = ({
               >
                 <img
                   src={eventInfo.rewardImage2}
+                  alt='경품 2'
                   className='w-[21.875rem] h-[9.375rem] object-fit'
                 />
                 <p className='font-semibold text-b-xl text-white'>
@@ -130,6 +136,7 @@ const DrawSection = ({
                 <img
                   src={eventInfo.rewardImage3 as string}
                   className='w-[21.875rem] h-[9.375rem]'
+                  alt='경품 3'
                 />
                 <p className='font-semibold text-b-xl text-white'>
                   {eventInfo.rewardName3}

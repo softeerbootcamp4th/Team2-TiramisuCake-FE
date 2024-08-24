@@ -55,7 +55,12 @@ const FcfsSection = ({
               {...SCROLL_MOTION}
               className='flex flex-col items-center gap-2'
             >
-              <img src={eventInfo.rewardImage1} width={402} height={216} />
+              <img
+                src={eventInfo.rewardImage1}
+                alt='경품 1'
+                width={402}
+                height={216}
+              />
               <p className='font-semibold text-b-xl text-white'>
                 {eventInfo.rewardName1}
               </p>
@@ -68,6 +73,7 @@ const FcfsSection = ({
                 src={eventInfo.rewardImage2}
                 width={402}
                 height={216}
+                alt='경품 2'
                 className='object-cover'
               />
               <p className='font-semibold text-b-xl text-white'>

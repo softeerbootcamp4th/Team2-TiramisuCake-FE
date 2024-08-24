@@ -47,7 +47,12 @@ const Tooltip = () => {
           onMouseLeave={() => handleHover(false)}
           onClick={handleClick}
         >
-          <img src='/floatingButton.svg' alt='Floating Button' />
+          <img
+            src='/floatingButton.svg'
+            alt='Floating Button'
+            width={78}
+            height={79}
+          />
         </button>
       </div>
     </div>

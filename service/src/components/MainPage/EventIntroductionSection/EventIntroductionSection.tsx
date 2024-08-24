@@ -85,7 +85,13 @@ const EventIntroductionSection = () => {
               className={`hover:cursor-pointer ${isLogined ? 'mt-6' : ''}`}
             >
               <p className='text-white text-b-m font-semibold'>자세히 보기</p>
-              <img src={downArrow} alt='arrow' className='mt-1.5' />
+              <img
+                src={downArrow}
+                alt='arrow'
+                className='mt-1.5'
+                width={72}
+                height={22}
+              />
             </div>
           </Bouncing>
         </div>

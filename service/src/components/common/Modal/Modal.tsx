@@ -15,6 +15,9 @@ const Modal = ({ handleClose, children }: PropsWithChildren<ModalProps>) => {
       <div className='bg-white flex flex-col items-center gap-10 relative'>
         <img
           src='/svg/closeIcon.svg'
+          alt='close icon'
+          width={40}
+          height={40}
           onClick={handleClose}
           className='cursor-pointer absolute top-[-4rem] right-0'
         />

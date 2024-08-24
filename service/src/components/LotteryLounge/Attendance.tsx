@@ -77,6 +77,7 @@ const Attendance = ({ counts }: AttendanceProps) => {
             <div className='self-stretch' style={lastStyle}>
               <img
                 className='absolute inset-0 m-auto'
+                alt='starbucks icon'
                 src={
                   counts > 6
                     ? '/svg/출석완료/스벅.svg'

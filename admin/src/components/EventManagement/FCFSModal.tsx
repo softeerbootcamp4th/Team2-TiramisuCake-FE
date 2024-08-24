@@ -18,17 +18,25 @@ interface FCFSModalProps {
   isOpen: boolean;
   handleClose: () => void;
   handleSave: (body: FcFsRequest) => void;
+  startDate: string;
+  endDate: string;
 }
 
-const FCFSModal = ({ isOpen, handleClose, handleSave }: FCFSModalProps) => {
+const FCFSModal = ({
+  isOpen,
+  handleClose,
+  handleSave,
+  startDate,
+  endDate,
+}: FCFSModalProps) => {
   const {
     fcfsRequest,
     endFCFSTime,
     handleStartDateChange,
     handleEndDateChange,
     handleStartTimeChange,
-  } = useFcFsRequest();
-
+  } = useFcFsRequest({ startDate, endDate });
+  const warning = '/svg/경고.svg';
   if (!isOpen) return null;
 
   return (
@@ -38,9 +46,21 @@ const FCFSModal = ({ isOpen, handleClose, handleSave }: FCFSModalProps) => {
         handleButtonClick={() => handleSave(fcfsRequest)}
       >
         <div className='flex flex-row mx-3'>
-          <div className='space-y-3 space-x-2 flex flex-col h-[180px] mt-1'>
-            <div className='ml-2 mt-2'>
-              <div className='mb-2'>시작 날짜</div>
+          <div className='space-x-2 flex flex-col h-[180px]'>
+            <div className='ml-2 my-[9px] '>
+              <div className='mb-2 flex flex-row'>
+                시작 날짜
+                <div className='relative flex items-center space-x-2 group'>
+                  <img
+                    src={warning}
+                    alt='Warning'
+                    className='h-6 w-6 cursor-pointer ml-2'
+                  />
+                  <div className='absolute bottom-full mb-2 hidden group-hover:block w-max bg-gray-700 text-white text-xs rounded-md p-2'>
+                    시작 날짜와 종료 날짜는 같은 주여야 합니다.
+                  </div>
+                </div>
+              </div>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -74,7 +94,7 @@ const FCFSModal = ({ isOpen, handleClose, handleSave }: FCFSModalProps) => {
                 </PopoverContent>
               </Popover>
             </div>
-            <span>종료 날짜</span>
+            <span className='mt-[11px] mb-[7px]'>종료 날짜</span>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -106,7 +126,19 @@ const FCFSModal = ({ isOpen, handleClose, handleSave }: FCFSModalProps) => {
           </div>
           <div className='flex flex-col'>
             <div className='space-y-2 ml-4 my-auto'>
-              <p>오픈 시간</p>
+              <div className='flex flex-row space-x-2'>
+                <p>오픈 시간</p>
+                <div className='relative flex items-center group'>
+                  <img
+                    src={`/svg/경고.svg`}
+                    alt='Warning'
+                    className='h-6 w-6 cursor-pointer'
+                  />
+                  <div className='absolute bottom-full mb-2 hidden group-hover:block w-max bg-gray-700 text-white text-xs rounded-md p-2'>
+                    오픈 시간은 오전 9시부터 6시 사이여야 합니다.
+                  </div>
+                </div>
+              </div>
               <TimePicker
                 date={
                   new Date(`${fcfsRequest.startDate}T${fcfsRequest.startTime}`)
@@ -116,7 +148,7 @@ const FCFSModal = ({ isOpen, handleClose, handleSave }: FCFSModalProps) => {
             </div>
             <div className='space-y-2 ml-4 my-auto'>
               <p>종료 시간</p>
-              <TimePicker date={endFCFSTime} disabled />
+              <TimePicker date={endFCFSTime} />
             </div>
           </div>
         </div>
