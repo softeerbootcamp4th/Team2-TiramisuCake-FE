@@ -7,7 +7,7 @@ import CarDetailInfo from './CarDetailInfo';
 import { useCarInfoContext } from '@/store/context/useCarInfoContext';
 import CarouselBg from './CarouselBg';
 import { motion } from 'framer-motion';
-import { SCROLL_MOTION } from '@/constants/animation';
+import { FLOATING_CAROUSEL } from '@/constants/animation';
 import { CarInfoList } from '@/types/main/type';
 
 interface CarouselProps {
@@ -16,7 +16,6 @@ interface CarouselProps {
 
 const Carousel = ({ carInfoList }: CarouselProps) => {
   const { state, openCarDetail, selectCurrentIndex } = useCarInfoContext();
-
   const handleSlideClick = (index: number) => {
     if (index >= 0 && index < carInfoList.length) {
       selectCurrentIndex({ index: index });
@@ -69,7 +68,7 @@ const Carousel = ({ carInfoList }: CarouselProps) => {
           return (
             <div
               key={item.id}
-              className={`carousel-item ${isActive ? 'active bg-transparent ' : `transform ${getTransformClass(state.currentIndex + 1)} adjacent bg-gradient-light-gray backdrop-blur-blur-40`} ${isDiffTwo ? 'shorter' : ''}`}
+              className={`carousel-item  ${isActive ? 'active bg-transparent ' : `transform ${getTransformClass(state.currentIndex + 1)} adjacent bg-gradient-light-gray backdrop-blur-blur-40`} ${isDiffTwo ? 'shorter' : ''}`}
               onClick={() => handleSlideClick(item.id - 1)}
             >
               <div className='carousel-item-content'>
@@ -79,10 +78,12 @@ const Carousel = ({ carInfoList }: CarouselProps) => {
                     {item.id === 1 ? (
                       <VideoPlayer videoUrl={item.imgUrl} />
                     ) : (
-                      <div
-                        className='w-[784px] h-[422px] relative transform duration-200'
+                      <motion.div
+                        className='h-[422px] relative transform duration-200 px-2'
                         style={{
+                          width: '784px',
                           transform: `translateX(${-(item.id - 3) * 50}px)`,
+                          animation: 'expandWidth 0.5s ease forwards',
                         }}
                       >
                         <img
@@ -91,23 +92,28 @@ const Carousel = ({ carInfoList }: CarouselProps) => {
                           className='w-full h-full object-cover transform duration-200'
                         />
                         <div className='w-full h-full absolute top-0 bg-gradient-bottom-gray' />
-                        <div className='absolute top-12 right-12'>
+                        <motion.div
+                          className={`absolute top-12 right-12 `}
+                          {...FLOATING_CAROUSEL}
+                        >
                           <Button
                             type='square'
                             text='자세히 보기'
                             handleClick={openCarDetail}
                           />
-                        </div>
+                        </motion.div>
                         <motion.div
                           className='flex flex-col gap-4 absolute bottom-12 left-12 text-white'
-                          {...SCROLL_MOTION}
+                          {...FLOATING_CAROUSEL}
                         >
                           <h3 className='text-h-s font-semibold'>
                             {item.imgTitle}
                           </h3>
-                          <p className='text-b-l'>{item.imgContent}</p>
+                          <p className='text-b-l max-w-[694px]'>
+                            {item.imgContent}
+                          </p>
                         </motion.div>
-                      </div>
+                      </motion.div>
                     )}
                   </>
                 )}
