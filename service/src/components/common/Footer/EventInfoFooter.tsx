@@ -12,45 +12,45 @@ const EventInfoFooter = () => {
           <h2 className='font-Pretendard font-bold whitespace-nowrap'>
             이벤트 관련 유의사항
           </h2>
-          <div className='space-y-1 text-[0.9rem] font-normal'>
-            <p className='whitespace-nowrap'>
-              1. 이벤트 기간 : {startDate}
+          <ol className='space-y-1 text-[0.9rem] font-normal list-decimal'>
+            <li className='whitespace-nowrap'>
+              이벤트 기간 : {startDate}
               {startDay} ~ {endDate}
               {endDay} 총 14일
-            </p>
-            <p className='whitespace-nowrap'>
-              2. 본 이벤트는 이벤트 페이지에서 번호 인증을 완료한 고객만 참여할
+            </li>
+            <li className='whitespace-nowrap'>
+              본 이벤트는 이벤트 페이지에서 번호 인증을 완료한 고객만 참여할 수
+              있습니다.
+            </li>
+            <li className='whitespace-nowrap'>
+              비정상적이거나 불법적인 방법(매크로 등)으로 이벤트에 참여한 것이
+              확인될 경우 당첨이 취소되며, 경품은 환수 조치될 수 있습니다.
+            </li>
+            <li className='whitespace-nowrap'>
+              본 이벤트는 현대자동차의 사정에 의해 사전 고지 없이 변경 및 취소될
               수 있습니다.
-            </p>
-            <p className='whitespace-nowrap'>
-              3. 비정상적이거나 불법적인 방법(매크로 등)으로 이벤트에 참여한
-              것이 확인될 경우 당첨이 취소되며, 경품은 환수 조치될 수 있습니다.
-            </p>
-            <p className='whitespace-nowrap'>
-              4. 본 이벤트는 현대자동차의 사정에 의해 사전 고지 없이 변경 및
-              취소될 수 있습니다.
-            </p>
-            <p className='whitespace-nowrap'>
-              5. 경품 혜택은 현대자동차의 사정에 의해 사전 공지 없이 변경될 수
+            </li>
+            <li className='whitespace-nowrap'>
+              경품 혜택은 현대자동차의 사정에 의해 사전 공지 없이 변경될 수
               있으며, 경품 이미지는 연출된 사진으로 실제와 다를 수 있습니다.
-            </p>
-            <p className='whitespace-nowrap'>
-              6. 50만원 이상 경품에 대한 제세공과금은 현대자동차에서 부담합니다.
+            </li>
+            <li className='whitespace-nowrap'>
+              50만원 이상 경품에 대한 제세공과금은 현대자동차에서 부담합니다.
               제세공과금 납부 및 신고를 위한 세부 내용은 대상자에 따라 개별
               안내됩니다.
-            </p>
-            <p className='whitespace-nowrap'>
-              7. 이벤트 당첨 이후 개인정보 제공을 거부하거나 개별 안내를
-              거부하는 경우, 당첨이 취소될 수 있습니다.
-            </p>
-          </div>
+            </li>
+            <li className='whitespace-nowrap'>
+              이벤트 당첨 이후 개인정보 제공을 거부하거나 개별 안내를 거부하는
+              경우, 당첨이 취소될 수 있습니다.
+            </li>
+          </ol>
         </div>
 
         <div className='space-y-2'>
           <h2 className='font-bold whitespace-nowrap'>
             선착순 이벤트 유의사항
           </h2>
-          <div className='space-y-1 text-[0.9rem] font-normal'>
+          <ul className='space-y-1 text-[0.9rem] font-normal list-disc'>
             <li className='whitespace-nowrap'>
               본 이벤트는 (주)쏘카와 함께하며, 쏘카는 유효한 국내/국제
               운전면허증을 보유한 만 21세 이상, 면허 취득 1년 이상 시 회원가입
@@ -71,12 +71,12 @@ const EventInfoFooter = () => {
               The new IONIQ 5 렌트 차량 탑승 시 반드시 운전면허증을 제시해야
               하며 미소지 시 렌트카 불가합니다.
             </li>
-          </div>
+          </ul>
         </div>
 
         <div className='space-y-2'>
           <h2 className='font-bold whitespace-nowrap'>추첨 이벤트 유의사항</h2>
-          <div className='space-y-1 text-[0.9rem] font-normal'>
+          <ul className='space-y-1 text-[0.9rem] font-normal list-disc'>
             <li className='whitespace-nowrap'>
               본 이벤트는 유효한 국내/국제 운전면허증을 보유한 만 18세 이상만
               참여 가능합니다.
@@ -93,7 +93,7 @@ const EventInfoFooter = () => {
               이벤트 경품은 인증된 전화번호로 개별 수령 안내가 진행되며,
               수령인의 변경은 불가능합니다.
             </li>
-          </div>
+          </ul>
         </div>
       </div>
     </footer>
