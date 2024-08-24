@@ -83,7 +83,11 @@ const WinningResultPage = () => {
                       >
                         <span>{formatDate(new Date(item.winningDate))}</span>
                         <span>{item.drawRank} 등</span>
-                        <img src={item.image} className='w-[180px] h-[90px]' />
+                        <img
+                          src={item.image}
+                          className='w-[180px] h-[90px]'
+                          alt='경품'
+                        />
                       </div>
                     )
                   )}
