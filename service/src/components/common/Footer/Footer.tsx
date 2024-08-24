@@ -7,7 +7,9 @@ const Footer = () => {
         <img
           src='/svg/hyundai_logo_white.svg'
           alt='Hyundai logo'
-          className='w-24 mx-auto mb-6'
+          width={96}
+          height={50}
+          className=' mx-auto mb-6'
         />
         <nav className='mb-6 flex justify-center items-center space-x-3'>
           <Link

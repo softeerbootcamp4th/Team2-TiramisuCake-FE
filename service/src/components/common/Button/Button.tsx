@@ -74,7 +74,13 @@ const Button = ({
     >
       <span className={`text-center ${textStyle[type]}`}>{text}</span>
       {isArrow && (
-        <img className='ml-2' src='/svg/arrow-white-small.svg' alt='arrow' />
+        <img
+          className='ml-2'
+          src='/svg/arrow-white-small.svg'
+          alt='arrow'
+          width={24}
+          height={25}
+        />
       )}
     </button>
   );

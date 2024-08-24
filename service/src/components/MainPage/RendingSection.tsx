@@ -41,7 +41,7 @@ const RendingSection = () => {
       className='snap-start bg-cover bg-center bg-no-repeat min-h-screen min-w-screen flex items-center justify-center'
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <div className='flex flex-col justify-center items-center gap-9 z-5'>
+      <div className='flex flex-col justify-center items-center gap-9 z-5 w-fit h-fit'>
         <motion.div
           initial={{ scale: 1.6, y: '50%' }}
           animate={{ scale: 1, y: 0 }}
@@ -107,6 +107,8 @@ const RendingSection = () => {
                 src={downarrow}
                 alt='Arrow'
                 onClick={handleArrowClick}
+                width={72}
+                height={22}
               />
             </Bouncing>
           </div>
