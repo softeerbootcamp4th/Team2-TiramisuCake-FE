@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 interface ErrorResponse {
   status: number; // HTTP 상태 코드
-  errorCode: string; // 서버 정의 에러 코드
+  code: string; // 서버 정의 에러 코드
   message: string; // 에러 메시지
 }
 
@@ -24,7 +24,7 @@ export const useApiError = () => {
         }
 
         const httpMessage = errorResponse?.message || '오류가 발생했습니다.';
-        const httpErrorCode = errorResponse?.errorCode || null;
+        const httpErrorCode = errorResponse?.code || null;
 
         const handle = httpStatus
           ? statusHandlers[httpStatus]
@@ -36,10 +36,8 @@ export const useApiError = () => {
         alert('요청이 성공적으로 처리되었습니다.');
       }
     } else if (error instanceof Error) {
-      //JavaScript 에러 객체가 전달된 경우
       alert(`에러가 발생했습니다: ${error.message}`);
     } else {
-      // 알 수 없는 에러
       alert('알 수 없는 오류가 발생했습니다.');
     }
   }, []);
