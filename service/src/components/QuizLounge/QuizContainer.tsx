@@ -11,7 +11,7 @@ import { useMutationPostAnswer } from '@/apis/quizLounge/query';
 import TutorialResultModal from './TutorialResultModal';
 import { ModalData, QuizContainerProps } from '@/types/quizLounge/type';
 import { useModalContext } from '@/store/context/useModalContext';
-//import { ERROR_MESSAGES, ErrorCode } from '@/constants/error';
+
 const QuizContainer = ({
   answer,
   mode,

@@ -22,8 +22,6 @@ export const sendAuthCode = async (
     body: JSON.stringify(requestBody),
   });
 
-  //const data: codeResponse = await response.json();
-
   return response.json();
 };
 
@@ -39,8 +37,6 @@ export const testAuthCode = async (
     headers: HEADERS,
     body: JSON.stringify(requestBody),
   });
-
-  //const data: codeResponse = await response.json();
 
   return response.json();
 };
@@ -73,7 +69,6 @@ export const login = async (
     body: JSON.stringify(body),
   });
 
-  //const data: loginResponse = await response.json();
   return response.json();
 };
 
@@ -90,6 +85,5 @@ export const reissueToken = async (
     },
   });
 
-  //const data: ReIssueResponse = await response.json();
   return response.json();
 };
