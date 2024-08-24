@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import LoadingPage from '../components/Loading/Loading';
 
-const ShareHandler = () => {
+const ShareHandlerPage = () => {
   const { code } = useParams<{ code: string }>();
   const navigate = useNavigate();
 
@@ -18,4 +18,4 @@ const ShareHandler = () => {
   return <LoadingPage />;
 };
 
-export default ShareHandler;
+export default ShareHandlerPage;
