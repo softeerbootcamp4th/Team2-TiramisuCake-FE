@@ -15,18 +15,28 @@ export const EventDateProvider = ({ children }: EventDateProviderProps) => {
   const [endDate, setEndDate] = useState<string>(() => {
     return localStorage.getItem('endDate') || '';
   });
+  const [startTime, setStartTime] = useState<string>(() => {
+    return localStorage.getItem('startTime') || '';
+  });
+  const [endTime, setEndTime] = useState<string>(() => {
+    return localStorage.getItem('endTime') || '';
+  });
 
   useEffect(() => {
-    localStorage.setItem('startDate', startDate);
-  }, [startDate]);
+    localStorage.setItem('startTime', startTime);
+  }, [startTime]);
 
   useEffect(() => {
-    localStorage.setItem('endDate', endDate);
-  }, [endDate]);
+    localStorage.setItem('endTime', endTime);
+  }, [endTime]);
 
   return (
-    <EventDateContext.Provider value={{ startDate, endDate }}>
-      <EventDateSetterContext.Provider value={{ setStartDate, setEndDate }}>
+    <EventDateContext.Provider
+      value={{ startDate, endDate, startTime, endTime }}
+    >
+      <EventDateSetterContext.Provider
+        value={{ setStartDate, setEndDate, setStartTime, setEndTime }}
+      >
         {children}
       </EventDateSetterContext.Provider>
     </EventDateContext.Provider>

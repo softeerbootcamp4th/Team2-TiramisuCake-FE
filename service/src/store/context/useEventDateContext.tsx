@@ -3,11 +3,15 @@ import { createContext, useContext } from 'react';
 interface EventDateContextType {
   startDate: string;
   endDate: string;
+  startTime: string;
+  endTime: string;
 }
 
 interface EventDateSetterContextType {
   setStartDate: (date: string) => void;
   setEndDate: (date: string) => void;
+  setStartTime: (date: string) => void;
+  setEndTime: (date: string) => void;
 }
 
 export const EventDateContext = createContext<EventDateContextType | undefined>(
