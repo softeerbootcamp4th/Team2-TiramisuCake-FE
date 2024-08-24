@@ -117,6 +117,7 @@ const DrawSection = ({
               >
                 <img
                   src={eventInfo.rewardImage2}
+                  alt='경품 2'
                   className='w-[21.875rem] h-[9.375rem] object-fit'
                 />
                 <p className='font-semibold text-b-xl text-white'>
@@ -130,6 +131,7 @@ const DrawSection = ({
                 <img
                   src={eventInfo.rewardImage3 as string}
                   className='w-[21.875rem] h-[9.375rem]'
+                  alt='경품 3'
                 />
                 <p className='font-semibold text-b-xl text-white'>
                   {eventInfo.rewardName3}

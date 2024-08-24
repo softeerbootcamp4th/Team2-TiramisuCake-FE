@@ -40,7 +40,11 @@ const CarDetail = ({
         className={`transition-all duration-300 relative ${activeImage === 'left' ? 'w-[1000px]' : 'w-[184px] bg-black z-10'} `}
         onClick={handleLeftClick}
       >
-        <img src={leftImageUrl} className='h-full w-full object-cover' />
+        <img
+          src={leftImageUrl}
+          className='h-full w-full object-cover'
+          alt='car detail'
+        />
         {activeImage !== 'left' ? (
           <div className='absolute top-0 left-0 w-full h-full border-none bg-black bg-opacity-50 flex justify-center items-center'>
             <motion.p
@@ -64,7 +68,11 @@ const CarDetail = ({
         className={`transition-all duration-300 relative ${activeImage === 'right' ? 'w-[1000px]' : 'w-[184px]  bg-black z-10'} `}
         onClick={handleRightClick}
       >
-        <img src={rightImageUrl} className='h-full w-full object-cover' />
+        <img
+          src={rightImageUrl}
+          className='h-full w-full object-cover'
+          alt='car detail'
+        />
         {activeImage !== 'right' ? (
           <div className='absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center'>
             <motion.p
@@ -86,6 +94,9 @@ const CarDetail = ({
       </div>
       <img
         src='/svg/closeIcon.svg'
+        alt='close icon'
+        width={40}
+        height={40}
         className='absolute top-[-49px] right-0 cursor-pointer'
         onClick={closeCarDetail}
       />

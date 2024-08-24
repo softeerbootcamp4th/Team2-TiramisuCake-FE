@@ -35,7 +35,7 @@ const EventModal = ({
         </div>
         {image && (
           <div className='flex items-center'>
-            <img src={image} />
+            <img src={image} alt='qrcode image' />
           </div>
         )}
         {isQrModal && (
