@@ -6,9 +6,13 @@ import Button from '@/components/common/Button/Button';
 import { motion } from 'framer-motion';
 import { SCROLL_MOTION } from '@/constants/animation';
 import { EventInfo } from '@/types/main/type';
-import { memo, useCallback, useEffect, useState } from 'react';
-import { useEventDateContext } from '@/store/context/useEventDateContext';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  useEventDateContext,
+  useEventDateSetterContext,
+} from '@/store/context/useEventDateContext';
 import NotEventPeriodPage from '@/components/ErrorPage/NotEventPeriodPage';
+import { checkDrawPeriod } from '@/utils/checkDrawPeriod';
 
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/event_bg_3.webp';
@@ -30,40 +34,28 @@ const DrawSection = ({
   drawEndTime,
 }: EventProps) => {
   const { startDate, endDate } = useEventDateContext();
-  const today = new Date();
+  const { setStartTime, setEndTime } = useEventDateSetterContext();
+  const today = useMemo(() => new Date(), []);
   const navigator = useNavigate();
   const { isLogined } = useLoginContext();
-
-  const checkDrawPeriod = useCallback(() => {
-    const startPeriod = new Date(startDate);
-    const endPeriod = new Date(endDate);
-    const drawStartDateTime = new Date(today);
-    const [startHour, startMinute] = drawStartTime.split(':').map(Number);
-    drawStartDateTime.setHours(startHour, startMinute, 0, 0);
-
-    const drawEndDateTime = new Date(today);
-    const [endHour, endMinute] = drawEndTime.split(':').map(Number);
-    drawEndDateTime.setHours(endHour, endMinute, 0, 0);
-
-    // 조건을 체크하여 결과를 반환
-    if (
-      today >= startPeriod &&
-      today <= endPeriod &&
-      today >= drawStartDateTime &&
-      today <= drawEndDateTime
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  }, [startDate, endDate, drawStartTime, drawEndTime, today]);
 
   const [isDrawPeriod, setIsDrawPeriod] = useState(false);
 
   useEffect(() => {
-    const isPeriod = checkDrawPeriod();
+    setStartTime(drawStartTime);
+    setEndTime(drawEndTime);
+  }, [drawEndTime, drawStartTime]);
+
+  useEffect(() => {
+    const isPeriod = checkDrawPeriod(
+      startDate,
+      endDate,
+      drawStartTime,
+      drawEndTime,
+      today
+    );
     setIsDrawPeriod(isPeriod);
-  }, [checkDrawPeriod]);
+  }, [today]);
 
   const goLotteryLounge = useCallback(() => {
     if (isDrawPeriod) {
