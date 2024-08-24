@@ -105,7 +105,12 @@ const DrawSection = ({
               {...SCROLL_MOTION}
               className='flex flex-col items-center gap-1'
             >
-              <img src={eventInfo.rewardImage1} alt='경품1' />
+              <img
+                src={eventInfo.rewardImage1}
+                alt='경품1'
+                width={218}
+                height={244}
+              />
               <p className='font-semibold text-b-xl text-white'>
                 {eventInfo.rewardName1}
               </p>
