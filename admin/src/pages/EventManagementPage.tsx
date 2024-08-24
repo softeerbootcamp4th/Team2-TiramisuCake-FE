@@ -64,9 +64,12 @@ const EventManagementPage = () => {
       onSuccess: (data) => {
         console.log(data);
         queryClient.invalidateQueries({ queryKey: ['getEventsData'] });
+        if (!data.isSuccess) {
+          alert('이벤트 오픈 시간은 오전 9시부터 6시 사이여야 합니다.');
+        }
       },
       onError: (error) => {
-        console.error('Error:', error);
+        alert(error);
       },
     });
   };
@@ -84,9 +87,12 @@ const EventManagementPage = () => {
       onSuccess: (data) => {
         console.log(data);
         queryClient.invalidateQueries({ queryKey: ['getEventsData'] });
+        if (!data.isSuccess) {
+          alert('이벤트 오픈 시간은 오전 9시부터 가능합니다.');
+        }
       },
       onError: (error) => {
-        console.error('Error:', error);
+        alert(error);
       },
     });
   };
@@ -97,7 +103,7 @@ const EventManagementPage = () => {
     navigator(ROUTER_PATH.EVENT_METRICS);
   };
 
-  if (isLoading) return <LoadingPage />;
+  if (isLoading || !drawData || !fcfsData) return <LoadingPage />;
 
   return (
     <div className='min-w-screen h-full m-10 flex-1 bg-[#F3F5F7] '>
@@ -125,7 +131,7 @@ const EventManagementPage = () => {
           </div>
           <div className='ml-4 py-4 text-center flex items-center'>
             <span className='font-semibold'>복권 긁기 이벤트 </span>
-            <span className='text-sm mx-2'>{text}</span>
+            <span className='text-sm ml-2'>{text}</span>
             <EditButton text='수정하기' onClick={handleWinOpenModal} />
           </div>
         </ListContainer>
@@ -142,11 +148,17 @@ const EventManagementPage = () => {
         isOpen={isModalOpen}
         handleClose={handleCloseModal}
         handleSave={handleSave}
+        startDate={fcfsData[0].startTime}
+        endDate={fcfsData[1].startTime}
       />
       <RaffleModal
         isOpen={isWinModalOpen}
         handleClose={handleWinCloseModal}
         handleSave={handleWinSave}
+        startDate={drawData.startDate}
+        startTime={drawData.startTime}
+        endDate={drawData.endDate}
+        endTime={drawData.endTime}
       />
     </div>
   );
