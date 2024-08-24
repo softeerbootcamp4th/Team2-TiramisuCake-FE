@@ -12,7 +12,14 @@
   display: flex;
   transition: transform 0.5s ease;
 }
-
+@keyframes expandWidth {
+  from {
+    width: 0px;
+  }
+  to {
+    width: 784px;
+  }
+}
 .carousel-item {
   transition:
     flex 0.5s ease-in-out,
