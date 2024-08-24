@@ -11,7 +11,6 @@ async function generateSitemap() {
     resolve(__dirname, '../public/sitemap.xml')
   );
 
-  // 여기에서 사이트의 URL들을 추가합니다.
   sitemap.write({ url: '/', changefreq: 'daily', priority: 1.0 });
   sitemap.write({
     url: '/lottery-lounge',
