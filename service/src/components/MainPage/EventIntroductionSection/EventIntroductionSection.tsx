@@ -34,7 +34,7 @@ const EventIntroductionSection = () => {
     >
       {isOpen && (
         <div className='fixed inset-0 flex items-center justify-center z-[99] backdrop-blur-sm'>
-          <LoginModal onClose={handleModal} />
+          <LoginModal />
         </div>
       )}
       <div className='w-full px-32 my-auto flex flex-col gap-3'>
