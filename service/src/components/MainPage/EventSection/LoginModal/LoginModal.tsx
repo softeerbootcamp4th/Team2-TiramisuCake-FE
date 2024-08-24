@@ -21,6 +21,8 @@ import { validatePhoneNumber } from '@/utils/checkPhoneNumber';
 import { checkAuthCode } from '@/utils/checkAuthCode';
 import { useQueryClient } from '@tanstack/react-query';
 import { setCookie } from '@/utils/cookie';
+import { useUrl } from '@/store/context/useUrl';
+import { getSharedUrl } from '@/apis/shareurl/api';
 
 interface CloseProps {
   onClose: () => void;
@@ -30,8 +32,8 @@ const checkbox = 'svg/check-off.svg';
 const checked = 'svg/check-on.svg';
 
 const LoginModal = ({ onClose }: CloseProps) => {
-  const codeMutation = useMutationCode();
-  //const codeMutation = useMutationTestCode();
+  //const codeMutation = useMutationCode();
+  const codeMutation = useMutationTestCode();
   const codeVerificationMutation = useMutationCodeVerification();
   const loginMutation = useMutationLogin();
 
@@ -50,6 +52,8 @@ const LoginModal = ({ onClose }: CloseProps) => {
 
   const [codeErrorMsg, setCodeErrorMsg] = useState<string>('');
   const [validateErrorMsg, setValidateErrorMsg] = useState<string>('');
+
+  const { setUrl } = useUrl();
 
   const queryClient = useQueryClient();
 
@@ -127,7 +131,7 @@ const LoginModal = ({ onClose }: CloseProps) => {
   const handleVerification = useCallback(
     async (body: ConfirmVerificationRequestBody) => {
       codeVerificationMutation.mutate(body, {
-        onSuccess: (response) => {
+        onSuccess: async (response) => {
           if (response.isSuccess) {
             setCodeErrorMsg('');
             setValidateErrorMsg('');
@@ -157,14 +161,15 @@ const LoginModal = ({ onClose }: CloseProps) => {
   );
 
   const handleLogin = useCallback(
-    (body: LoginRequestBody) => {
+    async (body: LoginRequestBody) => {
       loginMutation.mutate(body, {
-        onSuccess: (response) => {
+        onSuccess: async (response) => {
           console.log(response);
 
           if (response.isSuccess && response.result) {
             setCodeErrorMsg('');
             setValidateErrorMsg('');
+
             const expiresAt = parseISO(response.result.expiredTime);
             const maxAge = differenceInSeconds(expiresAt, new Date());
 
@@ -181,12 +186,21 @@ const LoginModal = ({ onClose }: CloseProps) => {
               secure: true,
               sameSite: 'strict',
             });
-            queryClient.invalidateQueries({
+
+            // 무효화 후 데이터를 다시 가져옴
+            await queryClient.invalidateQueries({
               queryKey: ['sharedUrl', response.result.accessToken],
             });
 
+            const sharedUrlData = await queryClient.fetchQuery({
+              queryKey: ['sharedUrl', response.result.accessToken],
+              queryFn: () => getSharedUrl(response.result?.accessToken),
+            });
+
+            if (sharedUrlData.isSuccess) {
+              setUrl(sharedUrlData.result.shareUrl);
+            }
             setIsLogined(true);
-            window.location.reload();
             onClose();
           } else if (!response.isSuccess && response.code in ERROR_MESSAGES) {
             alert(ERROR_MESSAGES[response.code as ErrorCode]);
