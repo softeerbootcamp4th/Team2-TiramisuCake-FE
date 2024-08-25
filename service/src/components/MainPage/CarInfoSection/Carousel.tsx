@@ -79,7 +79,7 @@ const Carousel = ({ carInfoList }: CarouselProps) => {
                       <VideoPlayer videoUrl={item.imgUrl} />
                     ) : (
                       <motion.div
-                        className='h-[422px] relative transform duration-200 px-2'
+                        className='h-[422px] relative transform duration-200'
                         style={{
                           width: '784px',
                           transform: `translateX(${-(item.id - 3) * 50}px)`,
@@ -91,7 +91,7 @@ const Carousel = ({ carInfoList }: CarouselProps) => {
                           alt={item.title}
                           className='w-full h-full object-cover transform duration-200'
                         />
-                        <div className='w-full h-full absolute top-0 bg-gradient-bottom-gray' />
+                        <div className='w-full h-full absolute top-0 left-0 bg-gradient-bottom-gray' />
                         <motion.div
                           className={`absolute top-12 right-12 `}
                           {...FLOATING_CAROUSEL}
