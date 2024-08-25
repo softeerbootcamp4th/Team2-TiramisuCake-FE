@@ -11,6 +11,7 @@ import { useTabContext } from '@/store/context/useTabContext';
 import LoadingPage from '@/components/Loading/Loading';
 import { useEventDateContext } from '@/store/context/useEventDateContext';
 import NotEventPeriodPage from '@/components/ErrorPage/NotEventPeriodPage';
+import { checkDrawPeriod } from '@/utils/checkDrawPeriod';
 
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/draw_bg.webp';
@@ -19,7 +20,7 @@ const sample = () => {};
 
 const LotteryLoungePage = () => {
   const token = getCookie('accessToken');
-  const { startDate, endDate } = useEventDateContext();
+  const { startDate, endDate, startTime, endTime } = useEventDateContext();
   const { data, isLoading } = useQueryGetDrawAttendance(token);
   const [drawResult, setDrawResult] = useState<DrawResultResponse | null>(null);
   const [isScratched, setIsScratched] = useState(false);
@@ -52,16 +53,13 @@ const LotteryLoungePage = () => {
     setDrawResult(result);
     setIsScratched(true);
   };
-
-  const startPeriod = new Date(startDate);
-  const endPeriod = new Date(endDate);
   const today = new Date();
 
   if (isLoading) {
     return <LoadingPage />;
   }
 
-  if (today < startPeriod || today > endPeriod) {
+  if (!checkDrawPeriod(startDate, endDate, startTime, endTime, today)) {
     return <NotEventPeriodPage />;
   }
 
@@ -101,21 +99,14 @@ const LotteryLoungePage = () => {
                 ))
               ) : (
                 <>
-                  <img
-                    className='w-32 h-32'
-                    src='/svg/복권진함/다이아.svg'
-                    alt='SVG 1'
-                  />
-                  <img
-                    className='w-32 h-32'
-                    src='/svg/복권진함/다이아.svg'
-                    alt='SVG 2'
-                  />
-                  <img
-                    className='w-32 h-32'
-                    src='/svg/복권진함/다이아.svg'
-                    alt='SVG 3'
-                  />
+                  {[...Array(3)].map((_, index) => (
+                    <img
+                      key={index}
+                      className='w-32 h-32'
+                      src='/svg/복권진함/다이아.svg'
+                      alt={`SVG ${index + 1}`}
+                    />
+                  ))}
                 </>
               )}
             </div>

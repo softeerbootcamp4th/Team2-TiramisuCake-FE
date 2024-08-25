@@ -1,3 +1,5 @@
+import { ResponseType } from '../apiType';
+
 export interface SendCodeRequestBody {
   phoneNumber: string;
 }
@@ -14,25 +16,15 @@ export interface LoginRequestBody {
   marketingConsent: boolean;
 }
 
-export type CodeResponse = {
-  isSuccess: boolean;
-  code: string;
-  message: string;
+export interface CodeResponse extends ResponseType {
   result?: {
     timeLimit: number;
   };
-};
-
-export interface ConfirmResponse {
-  isSuccess: boolean;
-  code: string;
-  message: string;
 }
 
-export interface LoginResponse {
-  isSuccess: boolean;
-  code: string;
-  message: string;
+export interface ConfirmResponse extends ResponseType {}
+
+export interface LoginResponse extends ResponseType {
   result?: {
     accessToken: string;
     refreshToken: string;
