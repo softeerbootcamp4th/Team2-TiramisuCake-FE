@@ -43,8 +43,8 @@ const MainPage = () => {
           <div ref={(el) => setRef(el, 3)} id='draw'>
             <DrawSection
               drawInfo={dynamicData?.result.drawInfo as string}
-              drawStartTime={dynamicData?.result.drawStartTime as string}
-              drawEndTime={dynamicData?.result.drawEndTime as string}
+              drawStartTime={dynamicData?.result.drawStartTime ?? '09:00:00'}
+              drawEndTime={dynamicData?.result.drawEndTime ?? '23:00:00'}
               totalDrawWinner={dynamicData?.result.totalDrawWinner as string}
               remainDrawCount={dynamicData?.result.remainDrawCount as string}
               eventInfo={staticData?.result.eventInfoList[1] as EventInfo}
