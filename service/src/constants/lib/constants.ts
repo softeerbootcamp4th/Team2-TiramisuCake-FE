@@ -8,6 +8,7 @@ export const ROUTER_PATH = {
   COMMENTS_LOUNGE: 'comments-lounge',
   SHARE: 'share/:code',
   WINNING_RESULT: 'winning-result',
+  NOT_EVENT_PERIOD: 'not-event-period',
 } as const;
 
 export const HEADERS = {
