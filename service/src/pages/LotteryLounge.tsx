@@ -10,9 +10,9 @@ import { DrawResultResponse } from '@/types/lottery/type';
 import { useTabContext } from '@/store/context/useTabContext';
 import LoadingPage from '@/components/Loading/Loading';
 import { useEventDateContext } from '@/store/context/useEventDateContext';
-import NotEventPeriodPage from '@/components/ErrorPage/NotEventPeriodPage';
 import { checkDrawPeriod } from '@/utils/checkDrawPeriod';
-
+import { ROUTER_PATH } from '@/constants/lib/constants';
+import { useNavigate } from 'react-router-dom';
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/draw_bg.webp';
 
@@ -20,6 +20,7 @@ const sample = () => {};
 
 const LotteryLoungePage = () => {
   const token = getCookie('accessToken');
+  const navigate = useNavigate();
   const { startDate, endDate, startTime, endTime } = useEventDateContext();
   const { data, isLoading } = useQueryGetDrawAttendance(token);
   const [drawResult, setDrawResult] = useState<DrawResultResponse | null>(null);
@@ -27,6 +28,15 @@ const LotteryLoungePage = () => {
   const { setActiveTab } = useTabContext();
   const [isExitModalOpen, setIsExitModalOpen] = useState(false);
   const [remainDrawCount, setRemainDrawCount] = useState(0);
+  const today = new Date();
+
+  const isPeriod = checkDrawPeriod(
+    startDate,
+    endDate,
+    startTime,
+    endTime,
+    today
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -41,7 +51,9 @@ const LotteryLoungePage = () => {
 
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) =>
-      !isScratched && currentLocation.pathname !== nextLocation.pathname
+      !isScratched &&
+      isPeriod &&
+      currentLocation.pathname !== nextLocation.pathname
   );
 
   useEffect(() => {
@@ -53,14 +65,14 @@ const LotteryLoungePage = () => {
     setDrawResult(result);
     setIsScratched(true);
   };
-  const today = new Date();
 
   if (isLoading) {
     return <LoadingPage />;
   }
 
-  if (!checkDrawPeriod(startDate, endDate, startTime, endTime, today)) {
-    return <NotEventPeriodPage />;
+  if (!isPeriod) {
+    navigate(ROUTER_PATH.NOT_EVENT_PERIOD);
+    return null;
   }
 
   return (

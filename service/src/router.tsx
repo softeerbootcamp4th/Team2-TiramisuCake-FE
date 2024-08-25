@@ -10,6 +10,7 @@ import NotFoundPage from './components/ErrorPage/NotFoundPage';
 import ProtectedRoute from '@/components/common/ProtectedRoute/ProtectedRoute';
 import ShareHandlerPage from './pages/ShareHandlerPage';
 import WinningResultPage from './pages/WinningResultPage';
+import NotEventPeriodPage from './components/ErrorPage/NotEventPeriodPage';
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
           {
             element: <WinningResultPage />,
             path: ROUTER_PATH.WINNING_RESULT,
+          },
+          {
+            element: <NotEventPeriodPage />,
+            path: ROUTER_PATH.NOT_EVENT_PERIOD,
           },
         ],
       },
