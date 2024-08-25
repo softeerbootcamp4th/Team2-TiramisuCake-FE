@@ -9,6 +9,8 @@ import CarouselBg from './CarouselBg';
 import { motion } from 'framer-motion';
 import { FLOATING_CAROUSEL } from '@/constants/animation';
 import { CarInfoList } from '@/types/main/type';
+import { getTransformClass } from '@/utils/main/getTransformClass';
+import { getVisibleItems } from '@/utils/main/getVisibleItems';
 
 interface CarouselProps {
   carInfoList: CarInfoList[];
@@ -16,47 +18,15 @@ interface CarouselProps {
 
 const Carousel = ({ carInfoList }: CarouselProps) => {
   const { state, openCarDetail, selectCurrentIndex } = useCarInfoContext();
+
   const handleSlideClick = (index: number) => {
     if (index >= 0 && index < carInfoList.length) {
       selectCurrentIndex({ index: index });
     }
   };
 
-  const getVisibleItems = () => {
-    switch (state.currentIndex) {
-      case 0:
-        return [carInfoList[0], carInfoList[1], carInfoList[2]];
-      case 1:
-        return [carInfoList[0], carInfoList[1], carInfoList[2], carInfoList[3]];
-      case 2:
-        return carInfoList;
-      case 3:
-        return [carInfoList[1], carInfoList[2], carInfoList[3], carInfoList[4]];
-      case 4:
-        return [carInfoList[2], carInfoList[3], carInfoList[4]];
-      default:
-        return carInfoList;
-    }
-  };
+  const visibleItems = getVisibleItems(state.currentIndex, carInfoList);
 
-  const visibleItems = getVisibleItems();
-
-  const getTransformClass = (id: number) => {
-    switch (id) {
-      case 1:
-        return 'translate-x-custom-1';
-      case 2:
-        return 'translate-x-custom-2';
-      case 3:
-        return '';
-      case 4:
-        return 'translate-x-custom-4';
-      case 5:
-        return 'translate-x-custom-5';
-      default:
-        return '';
-    }
-  };
   return (
     <div className='snap-center carousel-container'>
       <CarouselBg currentIdx={state.currentIndex} />
@@ -79,7 +49,7 @@ const Carousel = ({ carInfoList }: CarouselProps) => {
                       <VideoPlayer videoUrl={item.imgUrl} />
                     ) : (
                       <motion.div
-                        className='h-[422px] relative transform duration-200 px-2'
+                        className='h-[422px] relative transform duration-200'
                         style={{
                           width: '784px',
                           transform: `translateX(${-(item.id - 3) * 50}px)`,
@@ -91,7 +61,7 @@ const Carousel = ({ carInfoList }: CarouselProps) => {
                           alt={item.title}
                           className='w-full h-full object-cover transform duration-200'
                         />
-                        <div className='w-full h-full absolute top-0 bg-gradient-bottom-gray' />
+                        <div className='w-full h-full absolute top-0 left-0 bg-gradient-bottom-gray' />
                         <motion.div
                           className={`absolute top-12 right-12 `}
                           {...FLOATING_CAROUSEL}

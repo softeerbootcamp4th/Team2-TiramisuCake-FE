@@ -1,5 +1,6 @@
+import useVideoMetadata from '@/hooks/MainPage/useVideoMetaData';
 import { useCarInfoContext } from '@/store/context/useCarInfoContext';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 interface VideoPlayerProps {
   videoUrl: string;
@@ -12,16 +13,9 @@ const VideoPlayer = ({ videoUrl }: VideoPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [progress, setProgress] = useState(0);
-  const [duration, setDuration] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.addEventListener('loadedmetadata', () => {
-        setDuration(videoRef.current!.duration);
-      });
-    }
-  });
+  const duration = useVideoMetadata(videoRef);
 
   const handlePlayPause = () => {
     if (videoRef.current) {
