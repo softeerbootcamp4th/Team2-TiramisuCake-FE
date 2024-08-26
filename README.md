@@ -216,8 +216,18 @@ feat/issue_num          feat/issue_num
 
 <details>
     <summary>회고</summary>
-    https://www.notion.so/bside/3f4a3606067143fbb54bd5e584afe762
+   
+ https://www.notion.so/bside/3f4a3606067143fbb54bd5e584afe762
+ 
+ 
 </details>
+
+<details>
+    <summary>백로그</summary>
+ https://www.notion.so/bside/7018067e40a8431eb75f3f9bbc065bc7?pvs=4
+  
+</details>
+
 
 
 
