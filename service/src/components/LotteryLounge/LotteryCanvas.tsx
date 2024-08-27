@@ -38,12 +38,16 @@ const LotteryCanvas = ({
     drawing,
     handleRetryButton,
     handleBackToMain,
+    isButtonVisible,
   } = useCanvasDrawing();
 
   const startDrawing = (
     e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
   ) => {
-    if (remainDrawCount === 0) {
+    if (
+      (!isScratched && remainDrawCount === 0) ||
+      (isGameEnded && remainDrawCount === 0)
+    ) {
       alert(
         '기회가 모두 소진되었습니다. \n공유를 하여 기회를 얻거나 내일 다시 시도해주세요.'
       );
@@ -111,7 +115,7 @@ const LotteryCanvas = ({
           )}
         </div>
       )}
-      {isGameEnded && (
+      {isButtonVisible && (
         <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50'>
           {remainDrawCount > 0 ? (
             <Button

@@ -8,6 +8,7 @@ export const useCanvasDrawing = () => {
   const { isOpen, setIsOpen } = useModalContext();
 
   const [isGameEnded, setIsGameEnded] = useState(false);
+  const [isButtonVisible, setIsButtonVisible] = useState(false);
 
   const isCompeletRef = useRef<boolean>(false);
 
@@ -16,6 +17,7 @@ export const useCanvasDrawing = () => {
   const closeModal = () => {
     setIsOpen(false);
     setIsGameEnded(true);
+    if (isGameEnded) setIsButtonVisible(true);
   };
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -100,6 +102,7 @@ export const useCanvasDrawing = () => {
     if (erasePercentage >= 75 && !isCompeletRef.current) {
       fadeOutCanvas();
       craftFireworks(1);
+      setIsGameEnded(true);
       isCompeletRef.current = true;
       setTimeout(() => {
         setIsOpen(true);
@@ -133,5 +136,6 @@ export const useCanvasDrawing = () => {
     drawing,
     handleRetryButton,
     handleBackToMain,
+    isButtonVisible,
   };
 };
