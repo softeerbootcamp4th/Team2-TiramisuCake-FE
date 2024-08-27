@@ -11,7 +11,6 @@ import { useTabContext } from '@/store/context/useTabContext';
 import LoadingPage from '@/components/Loading/Loading';
 import { useEventDateContext } from '@/store/context/useEventDateContext';
 import { checkDrawPeriod } from '@/utils/checkDrawPeriod';
-import { ROUTER_PATH } from '@/constants/lib/constants';
 import { useNavigate } from 'react-router-dom';
 const backgroundImage =
   'https://d1wv99asbppzjv.cloudfront.net/main-page/draw_bg.webp';
@@ -71,7 +70,7 @@ const LotteryLoungePage = () => {
   }
 
   if (!isPeriod) {
-    navigate(ROUTER_PATH.NOT_EVENT_PERIOD);
+    navigate('/not-event-period');
     return null;
   }
 

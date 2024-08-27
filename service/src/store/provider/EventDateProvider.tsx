@@ -16,11 +16,20 @@ export const EventDateProvider = ({ children }: EventDateProviderProps) => {
     return localStorage.getItem('endDate') || '';
   });
   const [startTime, setStartTime] = useState<string>(() => {
-    return localStorage.getItem('startTime') || '';
+    return localStorage.getItem('startTime') ?? '09:00:00'; // null 값을 ''로 처리
   });
+
   const [endTime, setEndTime] = useState<string>(() => {
-    return localStorage.getItem('endTime') || '';
+    return localStorage.getItem('endTime') ?? '23:00:00'; // null 값을 ''로 처리
   });
+
+  useEffect(() => {
+    localStorage.setItem('startDate', startDate);
+  }, [startDate]);
+
+  useEffect(() => {
+    localStorage.setItem('endDate', endDate);
+  }, [endDate]);
 
   useEffect(() => {
     localStorage.setItem('startTime', startTime);
