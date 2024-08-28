@@ -25,7 +25,7 @@
         <td align="center"><img alt="avatar" src="https://github.com/DrRivaski.png" width="100"></td>
     </tr>
     <tr>
-        <td align="center"><a href="https://github.com/jseo9732">김지민</a></td>
+        <td align="center"><a href="https://github.com/moana16">김지민</a></td>
         <td align="center"><a href="https://github.com/fairwheel3027148">박지현</a></td>
         <td align="center"><a href="https://github.com/hyeokson">손찬혁</a></td>
         <td align="center"><a href="https://github.com/DrRivaski">이석민</a></td>
