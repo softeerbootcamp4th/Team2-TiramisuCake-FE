@@ -139,8 +139,12 @@
 // 예시
 
 label: subject
+- feat : 기능 구현
+- refactor : 구조 개선, 코드 분리 등
+- fix : 사용 함수, 변수 변경 
+- style - 디자인(css, animation) 변경 
+- chore - 환경 설정, 주석 제거, 이미지 파일 추가 등
 
-- label은 issue label과 동일
 - subject은 해당 커밋에 대한 내용을 잘 이해할 수 있게 요약 할 것
 ```
 
@@ -159,7 +163,7 @@ feat/issue_num          feat/issue_num
 - feat - 새로운 기능 구현
 - fix - 변경사항(변수, css 등)
 - refactor - 구조 변경 ex) api 전후 데이터 불러오기 변경?
-- Test - 테스트 코드
+- hotfix - 배포 후 버그가 생겼을 경우 급하게 고친 후 배포
 
 ```
 
@@ -181,7 +185,6 @@ feat/issue_num          feat/issue_num
 - feat - 새 기능
 - fix - 변경사항(변수, css 등)
 - refactor - 구조 변경 ex) api 전후 데이터 불러오기 변경?
-- test - 테스트 코드
 - chore - 환경 설정, 주석 제거, 이미지 파일 추가 등
     
 </details>
